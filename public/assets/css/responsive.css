@@ -1,0 +1,49 @@
+@media (min-width: 1400px) {
+
+
+}
+
+@media (max-width: 1440px) {
+    .heading-3 {
+        font-size: 50px;
+        font-weight: 600;
+    }
+    .HomeFrameSlider_framesContent p {
+        width: 60%;
+    }
+
+    .HomeFrameSlider_frameCard p {
+        font-size: 16px;
+        padding-bottom: 0;
+        padding-top: 1rem;
+    }
+    .heading-2 {
+        font-size: 45px;
+    }
+
+    .HomeFrameSlider_sliderWrp .swiper-wrapper {
+        height: 530px !important;
+        justify-self: unset;
+        flex-wrap: wrap;
+        flex-direction: column
+    }
+
+    .HomeEnquire_homeEnquireContent .heading-4 {
+        width: 50%;
+    }
+}
+
+@media (max-width: 1199px) {
+
+}
+
+@media (max-width: 991px) {
+
+}
+@media (max-width: 767px) {
+
+}
+
+@media (max-width: 575px){
+
+}
