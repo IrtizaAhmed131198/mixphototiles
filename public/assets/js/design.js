@@ -1,3 +1,34 @@
+let item_price = $('#price-show').attr('data-val');
+item_price = parseFloat(item_price);
+
+function updateGrandTotal() {
+    const config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
+    let grandTotal = 0;
+
+    for (const key in config) {
+        if (config.hasOwnProperty(key)) {
+            const frameConfig = config[key];
+            const sizePrice = parseFloat(frameConfig.size ? frameConfig.size.frame_price : 0) || 0;
+            const finishPrice = parseFloat(frameConfig.finish ? frameConfig.finish.finish_price : 0) || 0;
+            const ledPrice = parseFloat(frameConfig.led ? frameConfig.led.price : 0) || 0;
+
+            // Total for this frame
+            let total = 0;
+            if(sizePrice == 0 && finishPrice == 0 && ledPrice == 0){
+                total = 399;
+            }else{
+                // Calculate the total price
+                total = sizePrice + finishPrice + ledPrice;
+            }
+            grandTotal += total;
+        }
+    }
+
+    // Update the UI with the grand total (make sure you have an element with id "grand-total")
+    document.getElementById('grand-total').textContent = '₹' + grandTotal;
+}
+
+
 // Load images from Local Storage on page load
 function loadImagesFromLocalStorage() {
     const storedImages = localStorage.getItem('uploadedImages');
@@ -18,38 +49,165 @@ function renderSliderImages(imagesArray) {
     // Clear existing slides
     swiperWrapper.innerHTML = '';
 
-    imagesArray.forEach((imgSrc) => {
+    imagesArray.forEach((imgObj, index) => {
         const slide = document.createElement('div');
         slide.classList.add('swiper-slide');
 
         slide.innerHTML = `
-        <div class="box">
-          <div class="frame-main-wrap" style="
-            padding: 10px;
-            border: 10px solid black;
-            max-width: 310px;
-            margin: auto;
-            height: 100%;
-            width: 100%;
-          ">
-            <div class="frameborder">
-              <div class="frameinner">
-                <img alt="Frame" class="img-fluid" src="${imgSrc}">
+            <div class="box">
+              <div class="frame-main-wrap" style="
+                padding: 10px;
+                border: 10px solid black;
+                max-width: 310px;
+                margin: auto;
+                height: 100%;
+                width: 100%;
+              ">
+                <div class="frameborder">
+                  <div class="frameinner">
+                    <img alt="${imgObj.name}" data-val="${imgObj.name}" class="img-fluid" src="${imgObj.url}">
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      `;
+        `;
         swiperWrapper.appendChild(slide);
     });
 
     // After rendering all slides, update the main preview with the first image (if available)
     if (imagesArray.length > 0) {
-        document.getElementById('uploaded-image').src = imagesArray[0];
+        document.getElementById('uploaded-image').src = imagesArray[0].url;
     }
 }
 
 document.addEventListener('DOMContentLoaded', loadImagesFromLocalStorage);
+
+function initializeDefaultConfig(imageUrl) {
+    let config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
+    if (!config[imageUrl]) {
+        // Set your default configuration values as needed.
+        config[imageUrl] = {
+            design: { designClass: "classic-card-design", displayText: "Classic" },
+            color: { img_src: "assets/images/black-frame.png", color_name: "Black", shadowClass: "box-shadow-black" },
+            size: { width: "309px", height: "318px", max_width: "500px", frame_price: 0, frameSizeText: '8" X 8"' },
+            finish: { finish_price: 0, frameFinishText: "Normal" },
+            led: { price: 0, value: "no", framehangText: "No" },
+        };
+        localStorage.setItem('frameConfigurations', JSON.stringify(config));
+        console.log("Default configuration saved for image:", imageUrl, config[imageUrl]);
+    }
+}
+
+function updateFramePrice(imageUrl) {
+    const config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
+    const frameConfig = config[imageUrl];
+    if (!frameConfig) return;
+
+    // Get prices from the configuration, defaulting to 0 if not provided
+    const sizePrice = parseFloat(frameConfig.size.frame_price) || 0;
+    const finishPrice = parseFloat(frameConfig.finish.finish_price) || 0;
+    const ledPrice = parseFloat(frameConfig.led.price) || 0;
+
+    let total = 0;
+    if(sizePrice == 0 && finishPrice == 0 && ledPrice == 0){
+        total = 399;
+    }else{
+        // Calculate the total price
+        total = sizePrice + finishPrice + ledPrice;
+    }
+
+
+    // Update the element with id "price-show"
+    document.getElementById('price-show').textContent = '₹' + total;
+
+    updateGrandTotal();
+}
+
+
+function applyFrameConfiguration(imageUrl) {
+    console.log(imageUrl);
+    const config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
+    const frameConfig = config[imageUrl];
+    if (!frameConfig) return; // No configuration saved for this image
+
+    const frameWrap = document.getElementById('frameWrap');
+
+    // Apply design configuration
+    if (frameConfig.design) {
+        if (frameWrap) {
+            // Remove any design classes (add others if needed)
+            frameWrap.classList.remove('classic-card-design', 'bold-card-design');
+            // Add the configured design class
+            frameWrap.classList.add(frameConfig.design.designClass);
+        }
+        // Update the design display text
+        const frameShow = document.getElementById('frame-show');
+        if (frameShow) {
+            frameShow.textContent = frameConfig.design.displayText;
+        }
+    }
+
+    // Apply color configuration
+    if (frameConfig.color) {
+        // Update border image
+        updateFrameBorderImage(frameConfig.color.img_src);
+        // Update color display
+        const colorShow = document.getElementById('color-show');
+        if (colorShow) {
+            colorShow.textContent = frameConfig.color.color_name;
+        }
+        if (frameWrap) {
+            // Remove existing box-shadow classes (assumes they start with "box-shadow-")
+            frameWrap.classList.forEach(cls => {
+                if (cls.startsWith('box-shadow-')) {
+                    frameWrap.classList.remove(cls);
+                }
+            });
+            if (frameConfig.color.shadowClass) {
+                frameWrap.classList.add(frameConfig.color.shadowClass);
+            }
+        }
+
+        // Now update the price display
+        updateFramePrice(imageUrl);
+    }
+
+    // Apply size configuration
+    if (frameConfig.size) {
+        if (frameWrap) {
+            frameWrap.style.width = frameConfig.size.width;
+            frameWrap.style.height = frameConfig.size.height;
+            frameWrap.style.maxWidth = frameConfig.size.max_width;
+        }
+        const sizeShow = document.getElementById('size-show');
+        if (sizeShow) {
+            sizeShow.textContent = frameConfig.size.frameSizeText;
+        }
+        // Optionally update pricing based on size here
+    }
+
+    // Apply finish configuration
+    if (frameConfig.finish) {
+        const finishShow = document.getElementById('finish-show');
+        if (finishShow) {
+            finishShow.textContent = frameConfig.finish.frameFinishText;
+        }
+        // Optionally update pricing based on finish here
+    }
+
+    // Apply LED configuration
+    if (frameConfig.led) {
+        const ledShow = document.getElementById('led-show');
+        if (ledShow) {
+            ledShow.textContent = frameConfig.led.framehangText;
+        }
+        const liElement = document.getElementById('frame-finish-li');
+        if (liElement) {
+            liElement.style.display = (frameConfig.led.value === "yes") ? 'none' : 'block';
+        }
+        // Optionally update pricing based on LED option here
+    }
+}
 
 // Call the function on page load
 const uploadPhotoElements = document.querySelectorAll('.upload-photo');
@@ -72,63 +230,93 @@ uploadPhotoElements.forEach(element => {
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const img = new Image();
-                img.src = e.target.result;
+            // Use an object URL for a short src URL
+            const objectURL = URL.createObjectURL(file);
+            const img = new Image();
+            img.src = objectURL;
 
-                img.onload = function () {
-                    if (img.width < 125 || img.height < 112) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Image Too Small',
-                            text: 'One of the images must be at least 125px in width and 112px in height.',
-                        });
-                        return;
+            img.onload = function () {
+                if (img.width < 125 || img.height < 112) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Image Too Small',
+                        text: 'One of the images must be at least 125px in width and 112px in height.',
+                    });
+                    return;
+                }
+
+                // Create an offscreen canvas for processing the image
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+
+                // Perform blur detection
+                if (!isImageBlurred(canvas)) {
+                    // Generate a new file name using the original file name with date/timestamp
+                    const originalName = file.name;
+                    const extension = originalName.split('.').pop();
+                    const baseName = originalName.substring(0, originalName.lastIndexOf('.'));
+                    const timestamp = new Date().toISOString().replace(/[:.-]/g, "");
+                    const newFileName = `${baseName}_${timestamp}.${extension}`;
+
+                    validImages.push({
+                        name: newFileName,
+                        url: objectURL
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Blurry Image',
+                        text: 'One of the images is too blurry. Please upload a clearer image.',
+                    });
+                }
+
+                // Check if all files have been processed
+                if (validImages.length === files.length) {
+                    const existing = localStorage.getItem('uploadedImages');
+                    const existingImages = existing ? JSON.parse(existing) : [];
+                    const newImagesArray = existingImages.concat(validImages);
+
+                    localStorage.setItem('uploadedImages', JSON.stringify(newImagesArray));
+
+                    // Initialize default configuration for each newly uploaded image
+                    validImages.forEach(imageObj => {
+                        initializeDefaultConfig(imageObj.url);
+                    });
+
+                    document.querySelector('.file-uploadSection').style.display = 'none';
+                    document.querySelector('.FrameDesignSection').style.display = 'block';
+
+                    renderSliderImages(newImagesArray);
+
+                    // Ensure the first slide is marked active
+                    const firstSlide = document.querySelector('.Images-frame-slider .swiper-slide');
+                    if (firstSlide) {
+                        firstSlide.classList.add('swiper-slide-active');
                     }
 
-                    // Create an offscreen canvas for processing the image
-                    const canvas = document.createElement("canvas");
-                    const ctx = canvas.getContext("2d");
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0, img.width, img.height);
-
-                    // Perform blur detection
-                    if (!isImageBlurred(canvas)) {
-                        validImages.push(e.target.result);
-                    } else {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Blurry Image',
-                            text: 'One of the images is too blurry. Please upload a clearer image.',
-                        });
+                    // Update the main preview image to the first image
+                    if (newImagesArray.length > 0) {
+                        document.getElementById('uploaded-image').src = newImagesArray[0].url;
                     }
 
-                    if (validImages.length === files.length) {
-                        const existing = localStorage.getItem('uploadedImages');
-                        const existingImages = existing ? JSON.parse(existing) : [];
-                        const newImagesArray = existingImages.concat(validImages);
+                    // Update the price for the active image and the grand total
+                    updateFramePrice(newImagesArray[0].url);
+                    updateGrandTotal();
 
-                        localStorage.setItem('uploadedImages', JSON.stringify(newImagesArray));
-
-                        document.querySelector('.file-uploadSection').style.display = 'none';
-                        document.querySelector('.FrameDesignSection').style.display = 'block';
-
-                        renderSliderImages(newImagesArray);
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Upload Successful',
-                            text: 'Your images have been uploaded successfully!',
-                        });
-                    }
-                };
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Upload Successful',
+                        text: 'Your images have been uploaded successfully!',
+                    });
+                }
             };
-            reader.readAsDataURL(file);
         });
     });
 });
+
 
 // Function to check if an image is blurry using the Variance of Laplacian method
 function isImageBlurred(canvas) {
@@ -165,20 +353,72 @@ function isImageBlurred(canvas) {
 
 // Event listener for removing the images
 document.getElementById('remove-image').addEventListener('click', function () {
-    // Remove images from Local Storage
-    localStorage.removeItem('uploadedImages');
+    // Retrieve the stored images array
+    const storedImages = localStorage.getItem('uploadedImages');
+    if (storedImages) {
+        let imagesArray = JSON.parse(storedImages);
 
-    // Clear slider container
-    const swiperWrapper = document.querySelector('.Images-frame-slider .swiper-wrapper');
-    swiperWrapper.innerHTML = '';
+        // Find the currently active slide and its image src attribute
+        const activeSlide = document.querySelector('.swiper-slide-active');
+        if (activeSlide) {
+            const activeImg = activeSlide.querySelector('img');
+            if (activeImg) {
+                const activeSrc = activeImg.src;
 
-    // Show file upload section and hide editing section
-    document.querySelector('.file-uploadSection').style.display = 'flex';
-    document.querySelector('.FrameDesignSection').style.display = 'none';
+                // Use findIndex to locate the image object whose url matches the activeSrc
+                const indexToRemove = imagesArray.findIndex(item => item.url === activeSrc);
+                if (indexToRemove > -1) {
+                    // Remove that image object from the array
+                    imagesArray.splice(indexToRemove, 1);
 
-    // Reset file input value so files can be re-uploaded if needed
-    document.getElementById('upload-photo').value = '';
+                    // Update localStorage with the new images array
+                    localStorage.setItem('uploadedImages', JSON.stringify(imagesArray));
+
+                    // Also remove the saved configuration for this image, if it exists
+                    let config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
+                    if (config[activeSrc]) {
+                        delete config[activeSrc];
+                        localStorage.setItem('frameConfigurations', JSON.stringify(config));
+                    }
+
+                    // Re-render the slider with the updated array
+                    renderSliderImages(imagesArray);
+
+                    // If no images remain, reload the page
+                    if (imagesArray.length === 0) {
+                        location.reload();
+                        return;
+                    } else {
+                        // Update the main preview image if images remain
+                        document.getElementById('uploaded-image').src = imagesArray[0].url;
+                    }
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Image Removed',
+                        text: 'The selected image has been removed.',
+                    });
+
+                    // Log the updated configurations to the console
+                    console.log("Updated frame configurations:", JSON.parse(localStorage.getItem('frameConfigurations')));
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Not Found',
+                        text: 'Active image was not found in storage.',
+                    });
+                }
+            }
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'No Active Image',
+                text: 'Please select an image before removing.',
+            });
+        }
+    }
 });
+
 
 var swiper = new Swiper('.Images-frame-slider', {
     // Swiper options...
@@ -211,6 +451,7 @@ var swiper = new Swiper(".Images-frame-slider", {
     }
 });
 
+
 // Function to update the #uploaded-image based on the active slide
 function updateActiveImage() {
     setTimeout(() => {
@@ -218,7 +459,11 @@ function updateActiveImage() {
         if (activeSlide) {
             const img = activeSlide.querySelector('img');
             if (img) {
-                document.getElementById('uploaded-image').src = img.src;
+                const activeSrc = img.src;
+                document.getElementById('uploaded-image').src = activeSrc;
+                // Apply the stored configuration for this image
+                applyFrameConfiguration(activeSrc);
+                // Optionally trigger any other events on the active slide if needed
                 $('.swiper-slide-active').find('.frame-main-wrap').trigger('click');
             }
         }
@@ -228,24 +473,18 @@ function updateActiveImage() {
 // Initial call to set the image when the page loads
 updateActiveImage();
 
-// Add a click listener to the slider wrapper
+// Also, keep your click listener for manual slide selection:
 document.querySelector('.Images-frame-slider .swiper-wrapper').addEventListener('click', function (e) {
-    // Find the closest slide element (assumes your slide elements have the class 'swiper-slide')
     const slide = e.target.closest('.swiper-slide');
     if (!slide) return;
-
-    // Remove 'active' class from all slides
     document.querySelectorAll('.Images-frame-slider .swiper-slide').forEach(function (s) {
         s.classList.remove('swiper-slide-active');
     });
-
-    // Add 'active' class to the clicked slide
     slide.classList.add('swiper-slide-active');
-
-    // Update the image source
     const img = slide.querySelector('img');
     if (img) {
         document.getElementById('uploaded-image').src = img.src;
+        applyFrameConfiguration(img.src);
     }
 });
 
@@ -254,30 +493,26 @@ document.querySelector('.Images-frame-slider .swiper-wrapper').addEventListener(
 
 const designOptions = document.querySelectorAll('.frame-change.dropdown-item');
 
-// Add click event listener to each item
 designOptions.forEach(option => {
     option.addEventListener('click', function () {
-        // Retrieve the design class from the data attribute
+        // Retrieve the design class and display text from data attributes
         const designClass = this.getAttribute('data-design');
         const displayText = this.getAttribute('data-text');
 
-        // Select the container element
+        // Update the frame design
         const frameWrap = document.getElementById('frameWrap');
-
-        // Remove existing design classes (you can list all possible ones if more than two exist)
         frameWrap.classList.remove('classic-card-design', 'bold-card-design');
-
-        // Add the selected design class
         frameWrap.classList.add(designClass);
 
-        // Update the text in the element with id "frame-show"
-        const frameShow = document.getElementById('frame-show');
-        frameShow.textContent = displayText;
+        // Update the display text for design
+        document.getElementById('frame-show').textContent = displayText;
 
+        // Remove highlight from all and add to the clicked option
         designOptions.forEach(item => item.classList.remove('li-border-color'));
-
-        // Add the highlight class to the clicked item
         this.classList.add('li-border-color');
+
+        // Save the design selection for the active image
+        saveFrameConfig('design', { designClass, displayText });
     });
 });
 
@@ -299,110 +534,163 @@ document.querySelectorAll('.frame-color').forEach(item => {
         const img_src = this.getAttribute('data-src');
         const color_name = this.getAttribute('data-color');
         const shadowClass = this.getAttribute('data-shadow');
-        // Get the image inside this item
+
+        // Update the border image and color display
         const img = this.querySelector('img.LeftSidebar');
         if (img && img.src) {
             updateFrameBorderImage(img_src);
-            const colorShow = document.getElementById('color-show');
-            colorShow.textContent = color_name;
+            document.getElementById('color-show').textContent = color_name;
         }
 
+        // Update the shadow class on frameWrap
         const frameWrap = document.getElementById('frameWrap');
         if (frameWrap) {
-            // Remove all existing box-shadow classes (only keep one at a time)
             frameWrap.classList.forEach(cls => {
                 if (cls.startsWith('box-shadow-')) {
                     frameWrap.classList.remove(cls);
                 }
             });
-
-            // Add the new shadow class from data-shadow
             if (shadowClass) {
                 frameWrap.classList.add(shadowClass);
             }
         }
+
+        // Save the color selection for the active image
+        saveFrameConfig('color', { img_src, color_name, shadowClass });
     });
 });
+
 
 // Select all size option list items
 const sizeOptions = document.querySelectorAll('.frame-size');
 
-// Add click event listener to each size option
 sizeOptions.forEach(option => {
     option.addEventListener('click', function () {
-
-        // Retrieve the width and height values from data attributes
         const width = this.getAttribute('data-width');
         const height = this.getAttribute('data-height');
         const max_width = this.getAttribute('data-max-width');
-        const frame_price = this.getAttribute('data-price');
+        const frame_price = parseFloat(this.getAttribute('data-price'));
         const frameSizeText = this.querySelector('.propertyName').textContent.trim();
 
-        // Select the frameWrap div
+        // Update frame dimensions
         const frameWrap = document.getElementById('frameWrap');
-
-        // Apply new width and height
         if (frameWrap) {
             frameWrap.style.width = width;
             frameWrap.style.height = height;
             frameWrap.style.maxWidth = max_width;
         }
 
-        // Optional: Highlight selected size option
+        // Update selection highlight
         sizeOptions.forEach(item => item.classList.remove('selected-size'));
         this.classList.add('selected-size');
 
-        const priceShow = document.getElementById('price-show');
-        priceShow.textContent = '₹' + frame_price;
+        // Update pricing (assuming 'item_price' is defined globally)
+        // const priceShow = document.getElementById('price-show');
+        // let final = frame_price + item_price;
+        // priceShow.textContent = '₹' + final;
+        // updateGrandTotal(final);
 
-        const sizeShow = document.getElementById('size-show');
-        sizeShow.textContent = frameSizeText;
+        // Update display text for size
+        document.getElementById('size-show').textContent = frameSizeText;
+
+        // Save the size selection for the active image
+        saveFrameConfig('size', { width, height, max_width, frame_price, frameSizeText });
+
+        const activeImg = document.querySelector('.swiper-slide-active img');
+        if (activeImg) {
+            updateFramePrice(activeImg.src);
+        }
     });
 });
+
 
 
 // Select all size option list items
 const finishOptions = document.querySelectorAll('.frame-finish');
 
-// Add click event listener to each size option
 finishOptions.forEach(option => {
     option.addEventListener('click', function () {
-
-        const finish_price = this.getAttribute('data-price');
+        const finish_price = parseFloat(this.getAttribute('data-price'));
         const frameFinishText = this.querySelector('.propertyName').textContent.trim();
 
-        // Optional: Highlight selected size option
-        // finishOptions.forEach(item => item.classList.remove('selected-size'));
-        // this.classList.add('selected-size');
+        // Update pricing and finish display
+        // const priceShow = document.getElementById('price-show');
+        // let final = finish_price + item_price;
+        // priceShow.textContent = '₹' + final;
+        // updateGrandTotal(final);
 
-        const priceShow = document.getElementById('price-show');
-        priceShow.textContent = '₹' + finish_price;
+        document.getElementById('finish-show').textContent = frameFinishText;
 
-        const finishShow = document.getElementById('finish-show');
-        finishShow.textContent = frameFinishText;
+        // Save the finish selection for the active image
+        saveFrameConfig('finish', { finish_price, frameFinishText });
+
+        const activeImg = document.querySelector('.swiper-slide-active img');
+        if (activeImg) {
+            updateFramePrice(activeImg.src);
+        }
     });
 });
+
 
 
 // Select all size option list items
-const hangOptions = document.querySelectorAll('.frame-hang');
+const hangOptions = document.querySelectorAll('.frame-led');
 
-// Add click event listener to each size option
 hangOptions.forEach(option => {
     option.addEventListener('click', function () {
-
+        const price = parseFloat(this.getAttribute('data-price'));
+        const value = this.getAttribute('data-val');
         const framehangText = this.querySelector('.propertyName').textContent.trim();
 
-        // Optional: Highlight selected size option
-        // hangOptions.forEach(item => item.classList.remove('selected-size'));
-        // this.classList.add('selected-size');
+        // Show or hide related options based on the value
+        const liElement = document.getElementById('frame-finish-li');
+        liElement.style.display = (value === "yes") ? 'none' : 'block';
 
-        const hangShow = document.getElementById('hang-show');
-        hangShow.textContent = framehangText;
+        // Update pricing and LED display
+        // const priceShow = document.getElementById('price-show');
+        // let final = price + item_price;
+        // priceShow.textContent = '₹' + final;
+        // updateGrandTotal(final);
+
+        document.getElementById('led-show').textContent = framehangText;
+
+        // Save the LED selection for the active image
+        saveFrameConfig('led', { price, value, framehangText });
+
+        const activeImg = document.querySelector('.swiper-slide-active img');
+        if (activeImg) {
+            updateFramePrice(activeImg.src);
+        }
     });
 });
 
 
+
+function saveFrameConfig(key, value) {
+    // Retrieve the current configuration object from local storage
+    let config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
+
+    // Get the active swiper image
+    const activeSlide = document.querySelector('.swiper-slide-active');
+    if (activeSlide) {
+        const activeImg = activeSlide.querySelector('img');
+        if (activeImg) {
+            const activeSrc = activeImg.src;
+            // Ensure there is an object for this image
+            if (!config[activeSrc]) {
+                config[activeSrc] = {};
+            }
+            // Update the property (e.g., design, color, etc.)
+            config[activeSrc][key] = value;
+
+            // Save the updated configuration back to local storage
+            localStorage.setItem('frameConfigurations', JSON.stringify(config));
+
+            // Console log the saved configuration
+            console.log("Saved frame configurations:", JSON.parse(localStorage.getItem('frameConfigurations')));
+        }
+    }
+}
 
 // crop js
 // Start upload preview image
@@ -453,9 +741,18 @@ $(document).ready(function () {
             format: 'jpeg',
             size: { width: 500, height: 435 }
         }).then(function (resp) {
+            // Update the preview images with the cropped result
             $('#uploaded-image').attr('src', resp);
             $('#slider-image').attr('src', resp);
             $('#cropImagePop').modal('hide');
+
+            // Initialize a default configuration for the cropped image
+            initializeDefaultConfig(resp);
+
+            // Apply the configuration (update frameWrap, price, etc.)
+            applyFrameConfiguration(resp);
+            updateFramePrice(resp);
+            updateGrandTotal();
         });
     });
 
@@ -476,3 +773,5 @@ $(document).ready(function () {
 
 
 // crop js
+
+

@@ -58,8 +58,8 @@
 <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
 <!-- sweetalert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@livewireScripts
 <script src="{{ asset('assets/js/app.js') }}"></script>
 @stack('scripts')
-
 </body>
 </html>

@@ -1629,9 +1629,6 @@ a {
     justify-content: center;
     position: relative;
     z-index: 0;
-    /* box-shadow: 1px 1px #5b585b, 2px 2px #5b585b, 3px 3px #5b585b, 4px 4px #5b585b, 5px 5px #5b585b, 6px 6px #5b585b, 7px 7px #5b585b;
-    -webkit-transform: translateX(-3px);
-    transform: translateX(-3px); */
 }
 
 .bold-card-design {
@@ -1648,9 +1645,8 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* box-shadow: 1px 1px #5b585b, 2px 2px #5b585b, 3px 3px #5b585b, 4px 4px #5b585b, 5px 5px #5b585b, 6px 6px #5b585b, 7px 7px #5b585b;
-    -webkit-transform: translateX(-3px);
-    transform: translateX(-3px); */
+    position: relative;
+    z-index: 0;
 }
 
 .box-shadow-black:before {

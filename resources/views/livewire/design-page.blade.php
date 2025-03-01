@@ -200,6 +200,70 @@
                             </li>
                             <!-- 2 dropdown -->
 
+                            <!-- 5 dropdown -->
+                            <li class="designToolPropertiesChild btn-group dropend">
+                                <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="24.413"
+                                        viewBox="0 0 18 24.413" class="w-em h-em LeftSidebar_designIcon__3UjGH">
+                                        <g transform="translate(2638 17326.398)">
+                                            <g transform="translate(-2636.575 -17318)">
+                                                <rect width="16" height="15" rx="2"
+                                                    transform="translate(-0.425 -0.397)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></rect>
+                                                <circle cx="1.5" cy="1.5" r="1.5"
+                                                    transform="translate(2.575 3.603)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></circle>
+                                                <path d="M18.611,14.264,16.016,11.8a1.743,1.743,0,0,0-2.378,0L6,19.062"
+                                                    transform="translate(-3.508 -4.46)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></path>
+                                            </g>
+                                            <path d="M-2567-17497.715l5.251-4.811,4.893,4.811"
+                                                transform="translate(-67.072 179.128)" fill="none"
+                                                stroke="currentColor" stroke-width="2"></path>
+                                            <circle r="2" cx="2" cy="2" fill="currentColor"
+                                                transform="translate(-2631 -17326.398)"></circle>
+                                        </g>
+                                    </svg>
+                                    <p class="para">LED</p>
+                                </button>
+                                <ul class="designToolPropertiesLists dropdown-menu">
+                                    <!-- Dropdown menu links -->
+                                    <div class="menuParent">
+                                        <p class="propertyTitle">
+                                            Select LED
+                                        </p>
+                                    </div>
+
+                                    <li type="button" class="parentProperties dropdown-item frame-led"
+                                        data-price="1200" data-val="yes">
+                                        <figure class="PropertiesleftChild">
+                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                src="assets/images/1702976624908.png">
+                                        </figure>
+                                        <div class="PropertiesRightChild">
+                                            <p class="propertyName">Yes</p>
+                                            <p class="propertyPrize">₹1200</p>
+                                        </div>
+                                    </li>
+
+                                    <li type="button" class="parentProperties dropdown-item frame-led"
+                                        data-price="0" data-val="no">
+                                        <figure class="PropertiesleftChild">
+                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                src="assets/images/1702976645152.png">
+                                        </figure>
+                                        <div class="PropertiesRightChild">
+                                            <p class="propertyName">No</p>
+                                            <p class="propertyPrize">₹0</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- 5 dropdown -->
+
                             <!-- 3 dropdown -->
                             <li class="designToolPropertiesChild btn-group dropend">
                                 <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -390,7 +454,7 @@
                             <!-- 3 dropdown -->
 
                             <!-- 4 dropdown -->
-                            <li class="designToolPropertiesChild btn-group dropend">
+                            <li class="designToolPropertiesChild btn-group dropend" id="frame-finish-li">
                                 <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 20 20" class="w-em h-em LeftSidebar_designIcon__3UjGH">
@@ -457,70 +521,6 @@
                                 </ul>
                             </li>
                             <!-- 4 dropdown -->
-
-                            <!-- 5 dropdown -->
-                            <li class="designToolPropertiesChild btn-group dropend" style="display: none;">
-                                <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="24.413"
-                                        viewBox="0 0 18 24.413" class="w-em h-em LeftSidebar_designIcon__3UjGH">
-                                        <g transform="translate(2638 17326.398)">
-                                            <g transform="translate(-2636.575 -17318)">
-                                                <rect width="16" height="15" rx="2"
-                                                    transform="translate(-0.425 -0.397)" fill="none"
-                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                    stroke-width="2"></rect>
-                                                <circle cx="1.5" cy="1.5" r="1.5"
-                                                    transform="translate(2.575 3.603)" fill="none"
-                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                    stroke-width="2"></circle>
-                                                <path d="M18.611,14.264,16.016,11.8a1.743,1.743,0,0,0-2.378,0L6,19.062"
-                                                    transform="translate(-3.508 -4.46)" fill="none"
-                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                    stroke-width="2"></path>
-                                            </g>
-                                            <path d="M-2567-17497.715l5.251-4.811,4.893,4.811"
-                                                transform="translate(-67.072 179.128)" fill="none"
-                                                stroke="currentColor" stroke-width="2"></path>
-                                            <circle r="2" cx="2" cy="2" fill="currentColor"
-                                                transform="translate(-2631 -17326.398)"></circle>
-                                        </g>
-                                    </svg>
-                                    <p class="para">Hang</p>
-                                </button>
-                                <ul class="designToolPropertiesLists dropdown-menu">
-                                    <!-- Dropdown menu links -->
-                                    <div class="menuParent">
-                                        <p class="propertyTitle">
-                                            Select Finish
-                                        </p>
-                                    </div>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-hang"
-                                        data-price="399">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1702976624908.png">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Stickable Tape</p>
-                                            <p class="propertyPrize">₹0</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-hang"
-                                        data-price="453">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1702976645152.png">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Stickable Hook</p>
-                                            <p class="propertyPrize">₹0</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- 5 dropdown -->
 
                             <!-- 6 dropdown -->
                             <li class="designToolPropertiesChild">
@@ -867,41 +867,8 @@
                                                     </g>
                                                 </svg>
                                                 <div class="frame-detail">
-                                                    <p class="para">Hang </p>
-                                                    <h6 class="heading-4" id="hang-show">Free Re-stickable tape roll</h6>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="col-6">
-                                            <div class="d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="18" height="24.413" viewBox="0 0 18 24.413"
-                                                    class="w-em h-em ttl-24 mb-0">
-                                                    <g transform="translate(2638 17326.398)">
-                                                        <g transform="translate(-2636.575 -17318)">
-                                                            <rect width="16" height="15" rx="2"
-                                                                transform="translate(-0.425 -0.397)" fill="none"
-                                                                stroke="currentColor" stroke-linecap="round"
-                                                                stroke-linejoin="round" stroke-width="2"></rect>
-                                                            <circle cx="1.5" cy="1.5" r="1.5"
-                                                                transform="translate(2.575 3.603)" fill="none"
-                                                                stroke="currentColor" stroke-linecap="round"
-                                                                stroke-linejoin="round" stroke-width="2"></circle>
-                                                            <path
-                                                                d="M18.611,14.264,16.016,11.8a1.743,1.743,0,0,0-2.378,0L6,19.062"
-                                                                transform="translate(-3.508 -4.46)" fill="none"
-                                                                stroke="currentColor" stroke-linecap="round"
-                                                                stroke-linejoin="round" stroke-width="2"></path>
-                                                        </g>
-                                                        <path d="M-2567-17497.715l5.251-4.811,4.893,4.811"
-                                                            transform="translate(-67.072 179.128)" fill="none"
-                                                            stroke="currentColor" stroke-width="2"></path>
-                                                        <circle r="2" cx="2" cy="2" fill="currentColor"
-                                                            transform="translate(-2631 -17326.398)"></circle>
-                                                    </g>
-                                                </svg>
-                                                <div class="frame-detail">
-                                                    <p class="para">Hang </p>
-                                                    <h6 class="heading-4" id="hang-show">Free Hanging hooks</h6>
+                                                    <p class="para">LED Frame</p>
+                                                    <h6 class="heading-4" id="led-show">No</h6>
                                                 </div>
                                             </div>
                                         </li>
@@ -909,15 +876,15 @@
                                 </div>
                                 <div class="summary-card-footer">
                                     <p class="para">Item Price</p>
-                                    <h6 class="prizing" id="price-show">₹399</h6>
+                                    <h6 class="prizing" id="price-show" data-val="399">₹399</h6>
                                 </div>
                             </div>
                             <div class="Right-Sidebar-footer">
                                 <div class="GrandTotal">
                                     <p class="">Grand Total</p>
-                                    <h6 class="">₹399</h6>
+                                    <h6 class="" id="grand-total" data-val="399">₹399</h6>
                                 </div>
-                                <button type="button" class="btn custom-btn filled"> Add to Cart
+                                <button type="button" class="btn custom-btn filled" id="add-to-cart"> Add to Cart
                                     <svg width="21" height="21" viewBox="0 0 21 21"
                                         class="w-em h-em RightSidebar_addtocart_btn_icon__nIKa3"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -951,4 +918,30 @@
 
 @push('scripts')
     <script src="{{ asset('assets/js/design.js') }}"></script>
+    <script>
+        document.getElementById('add-to-cart').addEventListener('click', function () {
+            // Get the active image element from the swiper
+            const activeImgElement = document.querySelector('.swiper-slide-active img');
+            if (!activeImgElement) {
+                alert('No active image found.');
+                return;
+            }
+            const activeImageUrl = activeImgElement.src;
+
+            // Retrieve frame configurations from local storage
+            const frameConfigs = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
+            const activeConfig = frameConfigs[activeImageUrl];
+            if (!activeConfig) {
+                alert('No configuration found for the active frame.');
+                return;
+            }
+
+            // Emit a Livewire event with the configuration and image data.
+            // Note: if your image is an object URL and not base64, consider converting it.
+            window.Livewire.emit('addToCart', {
+                config: activeConfig,
+                image: activeImageUrl
+            });
+        });
+    </script>
 @endpush
