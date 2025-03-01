@@ -298,12 +298,28 @@ document.querySelectorAll('.frame-color').forEach(item => {
     item.addEventListener('click', function () {
         const img_src = this.getAttribute('data-src');
         const color_name = this.getAttribute('data-color');
+        const shadowClass = this.getAttribute('data-shadow');
         // Get the image inside this item
         const img = this.querySelector('img.LeftSidebar');
         if (img && img.src) {
             updateFrameBorderImage(img_src);
             const colorShow = document.getElementById('color-show');
             colorShow.textContent = color_name;
+        }
+
+        const frameWrap = document.getElementById('frameWrap');
+        if (frameWrap) {
+            // Remove all existing box-shadow classes (only keep one at a time)
+            frameWrap.classList.forEach(cls => {
+                if (cls.startsWith('box-shadow-')) {
+                    frameWrap.classList.remove(cls);
+                }
+            });
+
+            // Add the new shadow class from data-shadow
+            if (shadowClass) {
+                frameWrap.classList.add(shadowClass);
+            }
         }
     });
 });
