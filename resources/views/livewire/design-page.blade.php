@@ -884,7 +884,7 @@
                                     <p class="">Grand Total</p>
                                     <h6 class="" id="grand-total" data-val="399">₹399</h6>
                                 </div>
-                                <button type="button" class="btn custom-btn filled" id="add-to-cart"> Add to Cart
+                                <button type="button" class="btn custom-btn filled"  onclick="window.location.href='{{ route('cart') }}'" id="add-to-cart"> Add to Cart
                                     <svg width="21" height="21" viewBox="0 0 21 21"
                                         class="w-em h-em RightSidebar_addtocart_btn_icon__nIKa3"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -908,6 +908,11 @@
                                 </button>
                             </div>
 
+                            <input type="hidden" name="url" id="url" value="{{ route('update.frame.config') }}">
+                            <input type="hidden" name="upload_images" id="upload_images" value="{{ route('get.uploaded.images') }}">
+                            <input type="hidden" name="delete_images" id="delete_images" value="{{ route('delete.frame.config') }}">
+                            <input type="hidden" name="add_to_cart_product" id="add_to_cart_product" value="{{ route('add_to_cart_product') }}">
+
                         </div>
                     </div>
                 </div>
@@ -918,30 +923,4 @@
 
 @push('scripts')
     <script src="{{ asset('assets/js/design.js') }}"></script>
-    <script>
-        document.getElementById('add-to-cart').addEventListener('click', function () {
-            // Get the active image element from the swiper
-            const activeImgElement = document.querySelector('.swiper-slide-active img');
-            if (!activeImgElement) {
-                alert('No active image found.');
-                return;
-            }
-            const activeImageUrl = activeImgElement.src;
-
-            // Retrieve frame configurations from local storage
-            const frameConfigs = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
-            const activeConfig = frameConfigs[activeImageUrl];
-            if (!activeConfig) {
-                alert('No configuration found for the active frame.');
-                return;
-            }
-
-            // Emit a Livewire event with the configuration and image data.
-            // Note: if your image is an object URL and not base64, consider converting it.
-            window.Livewire.emit('addToCart', {
-                config: activeConfig,
-                image: activeImageUrl
-            });
-        });
-    </script>
 @endpush

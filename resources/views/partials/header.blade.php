@@ -22,7 +22,7 @@
                                     <a class="nav-link {{ request()->routeIs('design') ? 'active' : '' }}" href="{{ route('design') }}">Design Your Frames</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="javascript:;">Your Collections</a>
+                                    <a class="nav-link {{ request()->routeIs('collections') ? 'active' : '' }}" href="{{ route('collections') }}">Your Collections</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="javascript:;">Installation & Care</a>
@@ -37,16 +37,6 @@
                             <span class="break-line"></span>
                             <div class="right-navbar">
                                 <ul>
-                                    <!-- <li>
-                                        <a href="javascript:;" class="nav-link">
-                                            <span>
-                                                <img src="{{ asset('assets/images/chat-right-text.svg') }}" alt="">
-                                            </span>
-                                            <span>
-                                                Chat
-                                            </span>
-                                        </a>
-                                    </li> -->
                                     <li>
                                         <a href="javascript:;" class="nav-link">
                                             <span>
@@ -58,7 +48,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:;" class="btn custom-btn">Login / Sign up</a>
+                                        <a href="javascript:;" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" class="btn custom-btn">Login / Sign up</a>
                                     </li>
                                 </ul>
                             </div>

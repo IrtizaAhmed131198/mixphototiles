@@ -303,12 +303,55 @@
 
                     </div>
 
-                    <div class="ctaBtnParent text-center">
+                    <div class="ctaBtnParent text-center" onclick="window.location.href='{{ route('collections') }}';">
                         <button type="button" class="btn custom-btn filled">
                             View All Collections
                         </button>
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section py">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="parentRightAbout">
+                        <div class="RightSliderChild whyChooseUs">
+                            <h2 class="heading-3">LED Photo Frames</h2>
+                            <p style=" font-size: 29px; line-height: 52px; ">
+                                Illuminate your memories with MixPhotoTiles
+                                elegant LED photo frames, where sophistication meets sentiment.
+                            </p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn custom-btn filled mt-5" onclick="window.location.href='{{ route('collections') }}';">
+                        View All Collections
+                    </button>
+                </div>
+                <div class="col-lg-6">
+                    <!-- Swiper Slider Start -->
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <figure>
+                                    <img src="assets/images/led_frame_5.jpeg" class="img-fluid" alt="">
+                                </figure>
+                            </div>
+                            <div class="swiper-slide">
+                                <figure>
+                                    <img src="assets/images/led_frame_6.jpeg" class="img-fluid" alt="">
+                                </figure>
+                            </div>
+                        </div>
+                        <!-- Optional Navigation -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <!-- Swiper Slider End -->
                 </div>
             </div>
         </div>

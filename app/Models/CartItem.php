@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CartItem extends Model
 {
-    protected $table = "temp_product";
+    protected $table = "carts";
+
+    protected $fillable = ['user_id', 'session_id', 'product_id', 'quantity', 'price'];
 }

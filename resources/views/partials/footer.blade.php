@@ -77,3 +77,145 @@
         </div>
     </div>
 </footer>
+
+<!-- custom modal html  -->
+<div class="custom-modal">
+
+
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="Login_authWrp">
+                        <h4 class="heading-6">Login</h4>
+                        <p class="text-center">Select method to login</p>
+                        <div class="btnParentlogin">
+                            <button class="btn google-btn">
+                                <span class="googleimg">
+                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="LgbsSe-Bz112c">
+                                        <g>
+                                            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
+                                            </path>
+                                            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
+                                            </path>
+                                            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
+                                            </path>
+                                            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
+                                            </path>
+                                            <path fill="none" d="M0 0h48v48H0z"></path>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="btntext">
+                                    Sign in with Google
+                                </span>
+                            </button>
+                        </div>
+                        <div class="position-relative text-center mb-4 Login_separator"><span class="bg-white px-2 position-relative">or</span></div>
+                        <form class="">
+                            <div class="mb-4 form-floating"><input placeholder="Email or Mobile number" id="emailInput" class="form-control" type="text" value="" name="emailOrMobile"><label for="emailInput">Email or Mobile
+                                    number</label></div>
+                            <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
+                                <input placeholder="Password" id="PasswordInput2" class="form-control" type="password" value="" name="password">
+                                <button type="button" class="position-absolute top-0 end-0 rounded-pill  PasswordInput_showButton btn btn-text"><svg width="16" height="16" fill="currentColor" viewBox="0 -1 18 18" class="w-em h-em" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z">
+                                        </path>
+                                        <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z">
+                                        </path>
+                                        <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z">
+                                        </path>
+                                    </svg>
+                                </button><label for="PasswordInput">Password</label>
+                            </div>
+                            <div class="d-flex Login_forgotBtn"><button type="button" class="ms-auto btn btn-text btn-sm">Forgot password</button></div>
+                            <div class="d-grid pt-3 pb-4">
+                                <button type="submit" class="btn custom-btn">Login</button>
+                            </div>
+                        </form>
+                        <p class="mb-0 text-center d-flex align-items-center justify-content-center">Don't
+                            have an account?<button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" class="Login_authSwitch">Signup</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="Login_authWrp">
+                            <h4 class="heading-6">Sign Up</h4>
+                            <p class="text-center">Select method to signup</p>
+                            <div class="btnParentlogin">
+                                <button class="btn google-btn">
+                                    <span class="googleimg">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="LgbsSe-Bz112c">
+                                            <g>
+                                                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
+                                                </path>
+                                                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
+                                                </path>
+                                                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
+                                                </path>
+                                                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
+                                                </path>
+                                                <path fill="none" d="M0 0h48v48H0z"></path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <span class="btntext">
+                                        Sign up with Google
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="position-relative text-center mb-4 Login_separator"><span class="bg-white px-2 position-relative">or</span></div>
+                            <form class="">
+                                <div class="mb-4 form-floating">
+                                    <input placeholder="Email" id="emailInput3" class="form-control" type="text" value="" name="emailOrMobile">
+                                    <label for="emailInput">Email </label>
+                                </div>
+                                <div class="mb-4 form-floating">
+                                    <input placeholder="Mobile number" id="phone" class="form-control" type="text" value="" name="emailOrMobile">
+                                    <label for="phone">Mobile
+                                        number</label>
+                                </div>
+                                <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
+                                    <input placeholder="Password" id="PasswordInput" class="form-control" type="password" value="" name="password">
+                                    <button type="button" class="position-absolute top-0 end-0 rounded-pill  PasswordInput_showButton btn btn-text"><svg width="16" height="16" fill="currentColor" viewBox="0 -1 18 18" class="w-em h-em" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z">
+                                            </path>
+                                            <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z">
+                                            </path>
+                                            <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z">
+                                            </path>
+                                        </svg>
+                                    </button><label for="PasswordInput">Password</label>
+                                </div>
+                                <div class="d-flex Login_forgotBtn"><button type="button" class="ms-auto btn btn-text btn-sm">Forgot password</button></div>
+                                <div class="d-grid pt-3 pb-4">
+                                    <button type="submit" class="btn custom-btn">Login</button>
+                                </div>
+                            </form>
+                            <p class="mb-0 text-center d-flex align-items-center justify-content-center">Don't
+                                have an account?
+                                <button  data-bs-target="#exampleModalToggle" data-bs-toggle="modal" class="Login_authSwitch">login</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- custom modal html  -->

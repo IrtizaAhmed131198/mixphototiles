@@ -1,6 +1,11 @@
 let item_price = $('#price-show').attr('data-val');
 item_price = parseFloat(item_price);
 
+let config_url = $('#url').val();
+let upload_images_url = $('#upload_images').val();
+let delete_images_url = $('#delete_images').val();
+let add_to_cart_product = $('#add_to_cart_product').val();
+
 function updateGrandTotal() {
     const config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
     let grandTotal = 0;
@@ -30,18 +35,30 @@ function updateGrandTotal() {
 
 
 // Load images from Local Storage on page load
-function loadImagesFromLocalStorage() {
-    const storedImages = localStorage.getItem('uploadedImages');
-    if (storedImages) {
-        const imagesArray = JSON.parse(storedImages);
-        // Hide file upload section and show editing section if there is at least one image
-        if (imagesArray.length > 0) {
+function loadImagesFromDB() {
+    fetch(upload_images_url, {
+        method: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success && data.images.length > 0) {
+            // Hide file upload section and show editing section
             document.querySelector('.file-uploadSection').style.display = 'none';
             document.querySelector('.FrameDesignSection').style.display = 'block';
-            renderSliderImages(imagesArray);
+            renderSliderImages(data.images);
+            // Set main preview image to the first image from DB
+            document.getElementById('uploaded-image').src = data.images[0].url;
         }
-    }
+    })
+    .catch(error => console.error(error));
 }
+
+document.addEventListener('DOMContentLoaded', loadImagesFromDB);
+
 
 // Function to render images into the slider container
 function renderSliderImages(imagesArray) {
@@ -80,8 +97,6 @@ function renderSliderImages(imagesArray) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadImagesFromLocalStorage);
-
 function initializeDefaultConfig(imageUrl) {
     let config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
     if (!config[imageUrl]) {
@@ -95,6 +110,9 @@ function initializeDefaultConfig(imageUrl) {
         };
         localStorage.setItem('frameConfigurations', JSON.stringify(config));
         console.log("Default configuration saved for image:", imageUrl, config[imageUrl]);
+
+        // Now save the configuration in the database
+        saveFrameConfigInDB(imageUrl);
     }
 }
 
@@ -125,7 +143,6 @@ function updateFramePrice(imageUrl) {
 
 
 function applyFrameConfiguration(imageUrl) {
-    console.log(imageUrl);
     const config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
     const frameConfig = config[imageUrl];
     if (!frameConfig) return; // No configuration saved for this image
@@ -286,6 +303,11 @@ uploadPhotoElements.forEach(element => {
                         initializeDefaultConfig(imageObj.url);
                     });
 
+                    // Now update the database for each image by sending the image URL and configuration
+                    newImagesArray.forEach(imageObj => {
+                        saveFrameConfigInDB(imageObj.url);
+                    });
+
                     document.querySelector('.file-uploadSection').style.display = 'none';
                     document.querySelector('.FrameDesignSection').style.display = 'block';
 
@@ -353,7 +375,7 @@ function isImageBlurred(canvas) {
 
 // Event listener for removing the images
 document.getElementById('remove-image').addEventListener('click', function () {
-    // Retrieve the stored images array
+    // Retrieve the stored images array from localStorage
     const storedImages = localStorage.getItem('uploadedImages');
     if (storedImages) {
         let imagesArray = JSON.parse(storedImages);
@@ -365,31 +387,32 @@ document.getElementById('remove-image').addEventListener('click', function () {
             if (activeImg) {
                 const activeSrc = activeImg.src;
 
-                // Use findIndex to locate the image object whose url matches the activeSrc
+                // Find the image object in the array whose url matches the activeSrc
                 const indexToRemove = imagesArray.findIndex(item => item.url === activeSrc);
                 if (indexToRemove > -1) {
-                    // Remove that image object from the array
+                    // Remove the image object from the array
                     imagesArray.splice(indexToRemove, 1);
-
                     // Update localStorage with the new images array
                     localStorage.setItem('uploadedImages', JSON.stringify(imagesArray));
 
-                    // Also remove the saved configuration for this image, if it exists
+                    // Remove the saved configuration for this image, if it exists
                     let config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
                     if (config[activeSrc]) {
                         delete config[activeSrc];
                         localStorage.setItem('frameConfigurations', JSON.stringify(config));
                     }
 
+                    // Send a request to delete the image configuration and file from the server
+                    deleteFrameConfigFromDB(activeSrc);
+
                     // Re-render the slider with the updated array
                     renderSliderImages(imagesArray);
 
-                    // If no images remain, reload the page
+                    // If no images remain, reload the page; otherwise update the main preview image
                     if (imagesArray.length === 0) {
                         location.reload();
                         return;
                     } else {
-                        // Update the main preview image if images remain
                         document.getElementById('uploaded-image').src = imagesArray[0].url;
                     }
 
@@ -402,6 +425,7 @@ document.getElementById('remove-image').addEventListener('click', function () {
                     // Log the updated configurations to the console
                     console.log("Updated frame configurations:", JSON.parse(localStorage.getItem('frameConfigurations')));
                 } else {
+                    localStorage.removeItem("uploadedImages");
                     Swal.fire({
                         icon: 'error',
                         title: 'Not Found',
@@ -418,6 +442,30 @@ document.getElementById('remove-image').addEventListener('click', function () {
         }
     }
 });
+
+// Function to send a deletion request to your Laravel backend
+function deleteFrameConfigFromDB(imageUrl) {
+    const formData = new FormData();
+    formData.append('image', imageUrl);
+
+    fetch(delete_images_url, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Configuration and image file deleted from database successfully.");
+        } else {
+            console.error("Error deleting configuration from database:", data.message);
+        }
+    })
+    .catch(error => console.error("Deletion error:", error));
+}
+
 
 
 var swiper = new Swiper('.Images-frame-slider', {
@@ -688,9 +736,55 @@ function saveFrameConfig(key, value) {
 
             // Console log the saved configuration
             console.log("Saved frame configurations:", JSON.parse(localStorage.getItem('frameConfigurations')));
+
+            // Now save the configuration in the database
+            saveFrameConfigInDB(activeSrc);
         }
     }
 }
+
+function saveFrameConfigInDB(imageUrl) {
+    const config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
+    const frameConfig = config[imageUrl];
+    if (!frameConfig) return;
+
+    // Convert the blob URL to a Base64 Data URL.
+    // This is necessary because blob URLs are not accessible by the server.
+    fetch(imageUrl)
+        .then(response => response.blob())
+        .then(blob => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        }))
+        .then(base64DataUrl => {
+            // Now base64DataUrl is a string like "data:image/jpeg;base64,/9j/4AAQSk..."
+            // Prepare FormData to send to the server.
+            const formData = new FormData();
+            formData.append('image', base64DataUrl); // Send the Base64 data URL.
+            formData.append('config', JSON.stringify(frameConfig));
+
+            fetch(config_url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    console.log("Configuration saved to database successfully");
+                } else {
+                    console.error("Error saving configuration to DB", data.message);
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        })
+        .catch(error => console.error("Error converting blob URL to base64:", error));
+}
+
 
 // crop js
 // Start upload preview image
@@ -773,5 +867,77 @@ $(document).ready(function () {
 
 
 // crop js
+
+document.getElementById('add-to-cart').addEventListener('click', function(){
+    // Collect display data from the UI
+    let design = document.getElementById('frame-show').textContent.trim(); // e.g., "Classic"
+    let color = document.getElementById('color-show').textContent.trim();  // e.g., "Black" or "Light"
+    let size = document.getElementById('size-show').textContent.trim();    // e.g., '8" X 8"'
+    let finish = document.getElementById('finish-show').textContent.trim(); // e.g., "Normal"
+    let led = document.getElementById('led-show').textContent.trim();       // e.g., "Yes" or "No"
+
+    // Build the product name.
+    // Format: "Classic Frame (Black, 8" X 8", Normal, LED Frame)" if LED is "Yes"
+    let productName = design + " Frame";
+    let details = "(" + color + ", " + size + ", " + finish;
+    if(led.toLowerCase() === "yes"){
+       details += ", LED Frame";
+    }
+    details += ")";
+    productName += " " + details;
+
+    // Get the price from the UI (assuming it is displayed as "₹399")
+    let priceText = document.getElementById('price-show').textContent.trim();
+    let price = parseFloat(priceText.replace(/[^\d\.]/g, '')) || 0;
+
+    // Get the main image URL from the preview
+    let imageUrl = document.getElementById('uploaded-image').src;
+
+    // Optionally, if you want to store the entire configuration JSON from localStorage:
+    let config = localStorage.getItem('frameConfigurations'); // You can send all or part of it
+
+    // Prepare the data to send
+    const data = {
+        name: productName,
+        price: price,
+        image: imageUrl,
+        config: config  // This can be optional if you want to store extra details
+    };
+
+    // Send the data to your Laravel backend via a POST request
+    fetch(add_to_cart_product, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(responseData => {
+        if(responseData.success){
+            Swal.fire({
+                icon: 'success',
+                title: 'Added to Cart',
+                text: 'Product has been added to cart.'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: responseData.message || 'An error occurred.'
+            });
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while adding to cart.'
+        });
+    });
+});
+
 
 
