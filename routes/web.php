@@ -23,5 +23,6 @@ Route::post('/upload-image', [MainController::class, 'upload_image'])->name('upl
 Route::get('/get-session-images', [MainController::class, 'get_session_images'])->name('get_session_images');
 Route::post('/delete-session-image', [MainController::class, 'delete_session_image'])->name('delete_session_image');
 Route::post('/get-frame-config', [MainController::class, 'get_frame_config'])->name('get_frame_config');
+Route::post('/save-cropped-image', [MainController::class, 'save_cropped_image'])->name('save_cropped_image');
 
 require __DIR__.'/auth.php';

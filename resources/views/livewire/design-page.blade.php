@@ -872,6 +872,40 @@
                                                 </div>
                                             </div>
                                         </li>
+                                        <li class="col-6">
+                                            <div class="d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg"
+                                                    width="18" height="24.413" viewBox="0 0 18 24.413"
+                                                    class="w-em h-em ttl-24 mb-0">
+                                                    <g transform="translate(2638 17326.398)">
+                                                        <g transform="translate(-2636.575 -17318)">
+                                                            <rect width="16" height="15" rx="2"
+                                                                transform="translate(-0.425 -0.397)" fill="none"
+                                                                stroke="currentColor" stroke-linecap="round"
+                                                                stroke-linejoin="round" stroke-width="2"></rect>
+                                                            <circle cx="1.5" cy="1.5" r="1.5"
+                                                                transform="translate(2.575 3.603)" fill="none"
+                                                                stroke="currentColor" stroke-linecap="round"
+                                                                stroke-linejoin="round" stroke-width="2"></circle>
+                                                            <path
+                                                                d="M18.611,14.264,16.016,11.8a1.743,1.743,0,0,0-2.378,0L6,19.062"
+                                                                transform="translate(-3.508 -4.46)" fill="none"
+                                                                stroke="currentColor" stroke-linecap="round"
+                                                                stroke-linejoin="round" stroke-width="2"></path>
+                                                        </g>
+                                                        <path d="M-2567-17497.715l5.251-4.811,4.893,4.811"
+                                                            transform="translate(-67.072 179.128)" fill="none"
+                                                            stroke="currentColor" stroke-width="2"></path>
+                                                        <circle r="2" cx="2" cy="2" fill="currentColor"
+                                                            transform="translate(-2631 -17326.398)"></circle>
+                                                    </g>
+                                                </svg>
+                                                <div class="frame-detail">
+                                                    <p class="para">Hang</p>
+                                                    <h6 class="heading-4" id="hang1-show">Free Re-stickable tape roll</h6>
+                                                    <h6 class="heading-4" id="hang2-show">Free Hanging hooks</h6>
+                                                </div>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="summary-card-footer">
@@ -918,6 +952,7 @@
                             <input type="hidden" name="upload_image" id="upload_image" value="{{ route('upload_image') }}">
                             <input type="hidden" name="delete_session_image" id="delete_session_image" value="{{ route('delete_session_image') }}">
                             <input type="hidden" name="get_frame_config" id="get_frame_config" value="{{ route('get_frame_config') }}">
+                            <input type="hidden" name="save_cropped_image" id="save_cropped_image" value="{{ route('save_cropped_image') }}">
 
                         </div>
                     </div>

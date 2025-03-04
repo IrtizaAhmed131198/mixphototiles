@@ -253,4 +253,44 @@ class MainController extends Controller
         ]);
     }
 
+    public function save_cropped_image(Request $request)
+    {
+        dd($request);
+        $filename = $request->input('filename');
+
+        // Find the existing record by filename
+        $sessionImage = SessionImage::where('filename', $filename)->first();
+
+        if (!$sessionImage) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Image record not found for filename: ' . $filename,
+            ], 404);
+        }
+
+        // Handle file upload
+        $file = $request->file('image');
+        $newFileName = time() . '_' . $file->getClientOriginalName();
+        $filePath = 'uploads/' . $newFileName;
+
+        // Move the uploaded file to /public/uploads
+        $file->move(public_path('uploads'), $newFileName);
+
+        // Optional: Delete old image file (if you want to remove the old file)
+        $oldFilePath = public_path($sessionImage->file_url);
+        if (file_exists($oldFilePath)) {
+            unlink($oldFilePath);
+        }
+
+        $session_images->filename = $newFileName;
+        $session_images->file_url = $filePath;
+        $session_images->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Image updated successfully.',
+            'file_url' => asset($filePath),
+        ]);
+    }
+
 }

@@ -9,6 +9,7 @@ let get_session_images = $('#get_session_images').val();
 let upload_image = $('#upload_image').val();
 let delete_session_image = $('#delete_session_image').val();
 let get_frame_config = $('#get_frame_config').val();
+let save_cropped_image = $('#save_cropped_image').val();
 
 let allFrameConfigurations = {}; // This should be populated on each frame load
 
@@ -1293,6 +1294,7 @@ function saveFrameConfigInDB(imageUrl) {
 
 // crop js
 // Start upload preview image
+
 $(document).ready(function () {
     $(".gambar").attr("src", "https://user.gadjian.com/static/images/personnel_boy.png");
     let $uploadCrop, rawImg;
@@ -1341,21 +1343,47 @@ $(document).ready(function () {
             size: { width: 500, height: 435 }
         }).then(function (resp) {
             // Update the preview images with the cropped result
+            let filename = $('.swiper-slide .swiper-slide-active img').attr('data-frame-config');
             $('#uploaded-image').attr('src', resp);
             $('#slider-image').attr('src', resp);
+            saveCroppedImageToServer(resp, filename);
             $('#cropImagePop').modal('hide');
 
-            // Initialize a default configuration for the cropped image
-            initializeDefaultConfig(resp);
-
-            // Apply the configuration (update frameWrap, price, etc.)
-            applyFrameConfiguration(resp);
-            updateFramePrice(resp);
-            updateGrandTotal();
         });
     });
 
+    function saveCroppedImageToServer(base64Image, filename) {
+        $.ajax({
+            url: save_cropped_image, // Update with your backend URL
+            type: 'POST',
+            data: {
+                image: base64Image,
+                filename: filename,
+                _token: $('meta[name="csrf-token"]').attr('content') // CSRF token for Laravel
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert('Image saved successfully!');
+                    $('#frameWrap #uploaded-image').attr('src', response.file_url); // Update preview with saved image URL
+                } else {
+                    alert('Failed to save image.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
     $('#openCropModal').on('click', function () {
+        let imgSrc = $('#frameWrap #uploaded-image').attr('src');
+
+        $uploadCrop.croppie('bind', {
+            url: imgSrc
+        }).then(function () {
+            console.log('Image loaded into croppie');
+        });
+
         $('#cropImagePop').modal('show');
     });
 
