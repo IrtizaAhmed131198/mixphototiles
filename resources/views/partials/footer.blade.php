@@ -49,14 +49,14 @@
                         <div><span class=" link">Contact Us </span></div>
                     </div>
                 </div>
-                {{-- <div class="col-md">
-                    <p class="mb-4">Contact</p>
+                <div class="col-md">
+                    {{-- <p class="mb-4">Contact</p>
                     <address class="mb-4">Pearl Venture, First Floor, 190/218,
                         Outer Ring Road, Agara, 1st Sector,
                         HSR Layout, Bangalore - 560102, KA</address>
-                    <p class="mb-2 Footer_footerContact">Call:<a class="text-decoration-none ps-1" href="javascript:;">+917975339182</a></p>
+                    <p class="mb-2 Footer_footerContact">Call:<a class="text-decoration-none ps-1" href="javascript:;">+917975339182</a></p> --}}
                     <p class="mb-2 Footer_footerContact">Email:<a class="text-decoration-none ps-1" href="javascript:;">help@Mixphototiles.com</a></p>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>

@@ -19,7 +19,7 @@
                                     <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" aria-current="page" href="{{ route('home') }}">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('design') ? 'active' : '' }}" href="{{ route('design') }}">Design Your Frames</a>
+                                    <a class="nav-link {{ request()->routeIs('design') ? 'active' : '' }}" href="{{ route('design') }}">Design Your Frame</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link {{ request()->routeIs('collections') ? 'active' : '' }}" href="{{ route('collections') }}">Your Collections</a>

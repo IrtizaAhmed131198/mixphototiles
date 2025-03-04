@@ -327,8 +327,15 @@
                             </p>
                         </div>
                     </div>
-                    <button type="button" class="btn custom-btn filled mt-5" onclick="window.location.href='{{ route('collections') }}';">
-                        View All Collections
+                    <button type="button" class="btn custom-btn filled mt-5"
+                        onclick="window.location.href='{{ route('design') }}';">
+                        <svg width="20" height="20" viewBox="0 0 20 20"
+                            class="w-em h-em me-1 ttl-20 mb-0" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="currentColor" transform="translate(-2 -2)"
+                                d="M10,16.5,16,12,10,7.5ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z">
+                            </path>
+                        </svg>
+                        Design your frame
                     </button>
                 </div>
                 <div class="col-lg-6">
@@ -363,7 +370,7 @@
                 <div class="col-lg-5">
                     <div class="custom-tabs-content">
                         <h2 class="heading-3">
-                            Meet magnetic <span>hanging</span>
+                            Two options for <span>hanging</span>
                         </h2>
                         <div class="d-flex align-items-start">
                             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
@@ -1016,7 +1023,7 @@
                 </div>
                 <div class="col-lg-6">
                     <figure>
-                        <img src="assets/images/why-choose-use-1.jpg" class="img-fluid" alt="">
+                        <img src="assets/images/why-choose-use-1.jpg" class="img-fluid" alt="" style=" margin-left: 41px; ">
                     </figure>
                 </div>
             </div>
