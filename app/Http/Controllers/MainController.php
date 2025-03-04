@@ -100,7 +100,8 @@ class MainController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => ucfirst($type) . ' updated successfully'
+            'message' => ucfirst($type) . ' updated successfully',
+            'data' => $sessionImage
         ]);
     }
 

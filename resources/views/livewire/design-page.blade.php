@@ -149,7 +149,7 @@
                                         </p>
                                     </div>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-color"
+                                    <li type="button" class="parentProperties dropdown-item frame-color" data-price="0"
                                         data-color="Black" data-src="assets/images/black-frame.png" data-shadow="box-shadow-black">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -161,7 +161,7 @@
                                         </div>
                                     </li>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-color"
+                                    <li type="button" class="parentProperties dropdown-item frame-color" data-price="0"
                                         data-color="Dark" data-src="assets/images/brown-frame.png" data-shadow="box-shadow-dark">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -173,7 +173,7 @@
                                         </div>
                                     </li>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-color"
+                                    <li type="button" class="parentProperties dropdown-item frame-color" data-price="0"
                                         data-color="White" data-src="assets/images/white-frame.png" data-shadow="box-shadow-white">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -185,7 +185,7 @@
                                         </div>
                                     </li>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-color"
+                                    <li type="button" class="parentProperties dropdown-item frame-color" data-price="0"
                                         data-color="Light" data-src="assets/images/light-frame.png" data-shadow="box-shadow-light">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -907,6 +907,8 @@
                                     </svg>
                                 </button>
                             </div>
+
+                            <input type="hidden" name="active_config" id="active_config" value="">
 
                             <input type="hidden" name="url" id="url" value="{{ route('update.frame.config') }}">
                             <input type="hidden" name="upload_images" id="upload_images" value="{{ route('get.uploaded.images') }}">

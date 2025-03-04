@@ -10,30 +10,34 @@ let upload_image = $('#upload_image').val();
 let delete_session_image = $('#delete_session_image').val();
 let get_frame_config = $('#get_frame_config').val();
 
+let allFrameConfigurations = {}; // This should be populated on each frame load
+
 function updateGrandTotal() {
-    const config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
     let grandTotal = 0;
 
-    for (const key in config) {
-        if (config.hasOwnProperty(key)) {
-            const frameConfig = config[key];
-            const sizePrice = parseFloat(frameConfig.size ? frameConfig.size.frame_price : 0) || 0;
-            const finishPrice = parseFloat(frameConfig.finish ? frameConfig.finish.finish_price : 0) || 0;
-            const ledPrice = parseFloat(frameConfig.led ? frameConfig.led.price : 0) || 0;
+    for (const key in allFrameConfigurations) {
+        if (allFrameConfigurations.hasOwnProperty(key)) {
+            const frameConfig = allFrameConfigurations[key];
 
-            // Total for this frame
+            const designPrice = parseFloat(frameConfig.design?.design_price) || 0;
+            const colorPrice = parseFloat(frameConfig.color?.color_price) || 0;
+            const sizePrice = parseFloat(frameConfig.size?.frame_price) || 0;
+            const finishPrice = parseFloat(frameConfig.finish?.finish_price) || 0;
+            const ledPrice = parseFloat(frameConfig.led?.price) || 0;
+
             let total = 0;
-            if(sizePrice == 0 && finishPrice == 0 && ledPrice == 0){
-                total = 399;
-            }else{
-                // Calculate the total price
-                total = sizePrice + finishPrice + ledPrice;
+
+            if (designPrice === 0 && colorPrice === 0 && sizePrice === 0 && finishPrice === 0 && ledPrice === 0) {
+                total = 399; // Default price when all options are free
+            } else {
+                total = designPrice + colorPrice + sizePrice + finishPrice + ledPrice;
             }
+
             grandTotal += total;
         }
     }
 
-    // Update the UI with the grand total (make sure you have an element with id "grand-total")
+    // Update the grand total in UI
     document.getElementById('grand-total').textContent = '₹' + grandTotal;
 }
 
@@ -165,6 +169,11 @@ function fetchAndRenderSessionImages() {
                 document.querySelector('.FrameDesignSection').style.display = 'block';
                 renderSliderImages(images);
                 applyInitialFrameDesign(images[0]);
+                applyInitialFrameColor(images[0]);
+                applyInitialFrameSize(images[0]);
+                applyInitialFrameFinish(images[0]);
+                applyInitialFrameLED(images[0]);
+                updateFramePrice(images[0]);
             }else{
                 document.querySelector('.file-uploadSection').style.display = 'flex';
                 document.querySelector('.FrameDesignSection').style.display = 'none';
@@ -209,6 +218,9 @@ function renderSliderImages(imagesArray) {
 
     if (imagesArray.length > 0) {
         document.getElementById('uploaded-image').src = imagesArray[0].file_url;
+        let set_active_config = JSON.stringify(imagesArray[0]);
+        console.log(set_active_config);
+        document.getElementById('active_config').value = set_active_config;
     }
 }
 
@@ -250,10 +262,151 @@ function applyInitialFrameDesign(imageObj) {
     frameWrap.classList.add(initialDesignClass);
 }
 
+function applyInitialFrameColor(imageObj) {
+    if (!imageObj || !imageObj.frame_configuration) {
+        return; // No frame configuration found
+    }
+
+    const frameConfig = JSON.parse(imageObj.frame_configuration);
+
+    const initialColor = frameConfig.color || {
+        img_src: "assets/images/black-frame.png",
+        color_name: "Black",
+        shadowClass: "box-shadow-black"
+    };
+
+    // Update frame-show text (color name instead of design name)
+    const frameShow = document.getElementById('frame-show');
+    if (frameShow) {
+        frameShow.textContent = initialColor.color_name;
+    }
+
+    const frameWrap = document.getElementById('frameWrap'); // Using frameWrap directly
+    if (!frameWrap) return;
+
+    // Clear existing shadow class
+    frameWrap.classList.forEach(cls => {
+        if (cls.startsWith('box-shadow-')) {
+            frameWrap.classList.remove(cls);
+        }
+    });
+
+    // Apply new shadow class
+    if (initialColor.shadowClass) {
+        frameWrap.classList.add(initialColor.shadowClass);
+    }
+
+    // Apply the frame border image using the existing function
+    updateFrameBorderImage(initialColor.img_src);
+}
+
+function applyInitialFrameSize(imageObj) {
+    if (!imageObj || !imageObj.frame_configuration) {
+        return; // No frame configuration found
+    }
+
+    const frameConfig = JSON.parse(imageObj.frame_configuration);
+
+    const initialSize = frameConfig.size || {
+        width: "309px",
+        height: "318px",
+        max_width: "500px",
+        frame_price: 0,
+        frameSizeText: '8" X 8"'
+    };
+
+    const frameWrap = document.getElementById('frameWrap'); // Ensure your frame container has this ID
+    if (!frameWrap) return;
+
+    // Apply size styles
+    frameWrap.style.width = initialSize.width;
+    frameWrap.style.height = initialSize.height;
+    frameWrap.style.maxWidth = initialSize.max_width;
+
+    // Optionally display the size text somewhere
+    const frameSizeShow = document.getElementById('frame-size-show'); // Make sure you have an element for this
+    if (frameSizeShow) {
+        frameSizeShow.textContent = initialSize.frameSizeText;
+    }
+
+    // (Optional) If you want to log or display price somewhere
+    const framePriceShow = document.getElementById('frame-price-show'); // Optional price display
+    if (framePriceShow) {
+        framePriceShow.textContent = initialSize.frame_price > 0 ? `$${initialSize.frame_price}` : 'Free';
+    }
+}
+
+function applyInitialFrameFinish(imageObj) {
+    if (!imageObj || !imageObj.frame_configuration) {
+        return; // No frame configuration found
+    }
+
+    const frameConfig = JSON.parse(imageObj.frame_configuration);
+
+    const initialFinish = frameConfig.finish || {
+        finish_price: 0,
+        frameFinishText: 'Normal'
+    };
+
+    console.log()
+
+    // Update finish text display
+    const frameFinishShow = document.getElementById('finish-show');
+    if (frameFinishShow) {
+        frameFinishShow.textContent = initialFinish.frameFinishText;
+    }
+
+    // Optionally show finish price if needed
+    // const frameFinishPriceShow = document.getElementById('frame-finish-price-show');
+    // if (frameFinishPriceShow) {
+    //     frameFinishPriceShow.textContent = initialFinish.finish_price > 0 ? `$${initialFinish.finish_price}` : 'Free';
+    // }
+}
+
+function applyInitialFrameLED(imageObj) {
+    if (!imageObj || !imageObj.frame_configuration) {
+        return; // No frame configuration found
+    }
+
+    const frameConfig = JSON.parse(imageObj.frame_configuration);
+
+    const initialLED = frameConfig.led || {
+        price: 0,
+        value: "no",
+        framehangText: "No"
+    };
+
+    // Update LED display text
+    const frameLEDShow = document.getElementById('frame-led-show');
+    if (frameLEDShow) {
+        frameLEDShow.textContent = initialLED.framehangText;
+    }
+
+    // Optionally update LED price if needed
+    // const frameLEDPriceShow = document.getElementById('frame-led-price-show');
+    // if (frameLEDPriceShow) {
+    //     frameLEDPriceShow.textContent = initialLED.price > 0 ? `$${initialLED.price}` : 'Free';
+    // }
+
+    // Enable/disable the "frame-finish-li" button based on LED value (yes/no)
+    const liElement = document.getElementById('frame-finish-li');
+    if (liElement) {
+        const buttonElement = liElement.querySelector('button');
+        if (buttonElement) {
+            if (initialLED.value === "yes") {
+                buttonElement.disabled = true;
+            } else {
+                buttonElement.disabled = false;
+            }
+        }
+    }
+}
+
+
 function getDefaultFrameConfig() {
     return {
-        design: { designClass: "classic-card-design", displayText: "Classic" },
-        color: { img_src: "assets/images/black-frame.png", color_name: "Black", shadowClass: "box-shadow-black" },
+        design: { designClass: "classic-card-design", displayText: "Classic", design_price: 0 },
+        color: { img_src: "assets/images/black-frame.png", color_name: "Black", shadowClass: "box-shadow-black", color_price: 0 },
         size: { width: "309px", height: "318px", max_width: "500px", frame_price: 0, frameSizeText: '8" X 8"' },
         finish: { finish_price: 0, frameFinishText: "Normal" },
         led: { price: 0, value: "no", framehangText: "No" },
@@ -279,115 +432,32 @@ function getDefaultFrameConfig() {
 //     }
 // }
 
-function updateFramePrice(imageUrl) {
-    const config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
-    const frameConfig = config[imageUrl];
+function updateFramePrice(frameConfig) {
     if (!frameConfig) return;
+    let frame_config = JSON.parse(frameConfig.frame_configuration);
 
-    // Get prices from the configuration, defaulting to 0 if not provided
-    const sizePrice = parseFloat(frameConfig.size.frame_price) || 0;
-    const finishPrice = parseFloat(frameConfig.finish.finish_price) || 0;
-    const ledPrice = parseFloat(frameConfig.led.price) || 0;
+    // Get prices directly from the frame configuration
+    const designPrice = parseFloat(frame_config.design?.design_price) || 0;
+    const colorPrice = parseFloat(frame_config.color?.color_price) || 0;
+    const sizePrice = parseFloat(frame_config.size?.frame_price) || 0;
+    const finishPrice = parseFloat(frame_config.finish?.finish_price) || 0;
+    const ledPrice = parseFloat(frame_config.led?.price) || 0;
 
     let total = 0;
-    if(sizePrice == 0 && finishPrice == 0 && ledPrice == 0){
-        total = 399;
-    }else{
-        // Calculate the total price
-        total = sizePrice + finishPrice + ledPrice;
+
+    if (designPrice === 0 && colorPrice === 0 && sizePrice === 0 && finishPrice === 0 && ledPrice === 0) {
+        total = 399; // Default price when all options are free
+    } else {
+        total = designPrice + colorPrice + sizePrice + finishPrice + ledPrice;
     }
 
-
-    // Update the element with id "price-show"
+    // Update the price on the UI
     document.getElementById('price-show').textContent = '₹' + total;
 
+    // Optionally update the grand total if you are tracking all frames (for multiple frames setup)
     updateGrandTotal();
 }
 
-
-function applyFrameConfiguration(imageUrl) {
-    const config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
-    const frameConfig = config[imageUrl];
-    if (!frameConfig) return; // No configuration saved for this image
-
-    const frameWrap = document.getElementById('frameWrap');
-
-    // Apply design configuration
-    if (frameConfig.design) {
-        if (frameWrap) {
-            // Remove any design classes (add others if needed)
-            frameWrap.classList.remove('classic-card-design', 'bold-card-design');
-            // Add the configured design class
-            frameWrap.classList.add(frameConfig.design.designClass);
-        }
-        // Update the design display text
-        const frameShow = document.getElementById('frame-show');
-        if (frameShow) {
-            frameShow.textContent = frameConfig.design.displayText;
-        }
-    }
-
-    // Apply color configuration
-    if (frameConfig.color) {
-        // Update border image
-        updateFrameBorderImage(frameConfig.color.img_src);
-        // Update color display
-        const colorShow = document.getElementById('color-show');
-        if (colorShow) {
-            colorShow.textContent = frameConfig.color.color_name;
-        }
-        if (frameWrap) {
-            // Remove existing box-shadow classes (assumes they start with "box-shadow-")
-            frameWrap.classList.forEach(cls => {
-                if (cls.startsWith('box-shadow-')) {
-                    frameWrap.classList.remove(cls);
-                }
-            });
-            if (frameConfig.color.shadowClass) {
-                frameWrap.classList.add(frameConfig.color.shadowClass);
-            }
-        }
-
-        // Now update the price display
-        updateFramePrice(imageUrl);
-    }
-
-    // Apply size configuration
-    if (frameConfig.size) {
-        if (frameWrap) {
-            frameWrap.style.width = frameConfig.size.width;
-            frameWrap.style.height = frameConfig.size.height;
-            frameWrap.style.maxWidth = frameConfig.size.max_width;
-        }
-        const sizeShow = document.getElementById('size-show');
-        if (sizeShow) {
-            sizeShow.textContent = frameConfig.size.frameSizeText;
-        }
-        // Optionally update pricing based on size here
-    }
-
-    // Apply finish configuration
-    if (frameConfig.finish) {
-        const finishShow = document.getElementById('finish-show');
-        if (finishShow) {
-            finishShow.textContent = frameConfig.finish.frameFinishText;
-        }
-        // Optionally update pricing based on finish here
-    }
-
-    // Apply LED configuration
-    if (frameConfig.led) {
-        const ledShow = document.getElementById('led-show');
-        if (ledShow) {
-            ledShow.textContent = frameConfig.led.framehangText;
-        }
-        const liElement = document.getElementById('frame-finish-li');
-        if (liElement) {
-            liElement.style.display = (frameConfig.led.value === "yes") ? 'none' : 'block';
-        }
-        // Optionally update pricing based on LED option here
-    }
-}
 
 // Call the function on page load
 const uploadPhotoElements = document.querySelectorAll('.upload-photo');
@@ -841,10 +911,34 @@ function updateActiveImage() {
             if (img) {
                 const activeSrc = img.src;
                 document.getElementById('uploaded-image').src = activeSrc;
-                // Apply the stored configuration for this image
-                // applyFrameConfiguration(activeSrc);
-                // Optionally trigger any other events on the active slide if needed
-                $('.swiper-slide-active').find('.frame-main-wrap').trigger('click');
+
+                // Fetch and apply frame configuration
+                const filename = img.getAttribute('data-frame-config') || '';
+                if (filename) {
+                    fetch(get_frame_config, {
+                        method: 'POST',
+                        body: JSON.stringify({ filename: filename }),
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Apply all initial frame configurations here
+                            applyInitialFrameDesign(data.frame_configuration);
+                            applyInitialFrameColor(data.frame_configuration);
+                            applyInitialFrameSize(data.frame_configuration);
+                            applyInitialFrameFinish(data.frame_configuration);
+                            applyInitialFrameLED(data.frame_configuration);
+                            updateFramePrice(data.frame_configuration);
+                        } else {
+                            console.error('Failed to fetch frame configuration:', data.message);
+                        }
+                    })
+                    .catch(err => console.error('Error fetching frame configuration:', err));
+                }
             }
         }
     }, 100);
@@ -868,21 +962,28 @@ document.querySelector('.Images-frame-slider .swiper-wrapper').addEventListener(
         const filename = img.getAttribute('data-frame-config') || '';
         if(filename){
             fetch(get_frame_config, {
-                    method: 'POST',
-                    body: JSON.stringify({ filename: filename }),
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        applyInitialFrameDesign(data);
-                    } else {
-                        console.error('Failed to fetch frame configuration:', data.message);
-                    }
-                })
-                .catch(err => console.error('Error fetching frame configuration:', err));
+                method: 'POST',
+                body: JSON.stringify({ filename: filename }),
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json'  // <- This is MISSING in your code
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    applyInitialFrameDesign(data.frame_configuration);
+                    applyInitialFrameColor(data.frame_configuration);
+                    applyInitialFrameSize(data.frame_configuration);
+                    applyInitialFrameFinish(data.frame_configuration);
+                    applyInitialFrameLED(data.frame_configuration);
+                    updateFramePrice(data.frame_configuration);
+                } else {
+                    console.error('Failed to fetch frame configuration:', data.message);
+                }
+            })
+            .catch(err => console.error('Error fetching frame configuration:', err));
+
         }
     }
 });
@@ -896,6 +997,7 @@ designOptions.forEach(option => {
     option.addEventListener('click', function () {
         const designClass = this.getAttribute('data-design');
         const displayText = this.getAttribute('data-text');
+        const design_price = this.getAttribute('data-price');
 
         // Apply design change visually
         const frameWrap = document.getElementById('frameWrap');
@@ -907,10 +1009,15 @@ designOptions.forEach(option => {
         designOptions.forEach(item => item.classList.remove('li-border-color'));
         this.classList.add('li-border-color');
 
+        let get_active_config = JSON.parse($('#active_config').val());
+
+        updateFramePrice(get_active_config);
+
         // Save the selected design into the session_images table for the active image
         saveFrameConfigToDatabase({
             designClass: designClass,
-            displayText: displayText
+            displayText: displayText,
+            design_price: design_price
         }, 'design');
     });
 });
@@ -933,6 +1040,7 @@ document.querySelectorAll('.frame-color').forEach(item => {
         const img_src = this.getAttribute('data-src');
         const color_name = this.getAttribute('data-color');
         const shadowClass = this.getAttribute('data-shadow');
+        const color_price = this.getAttribute('data-price');
 
         // Update the border image and color display
         const img = this.querySelector('img.LeftSidebar');
@@ -954,10 +1062,16 @@ document.querySelectorAll('.frame-color').forEach(item => {
             }
         }
 
+        let get_active_config = JSON.parse($('#active_config').val());
+
+        updateFramePrice(get_active_config);
+
         // Save the color selection for the active image
         saveFrameConfigToDatabase({
-            colorName: color_name,
-            shadowClass: shadowClass
+            img_src: img_src,
+            color_name: color_name,
+            shadowClass: shadowClass,
+            color_price: color_price
         }, 'color');
     });
 });
@@ -986,14 +1100,12 @@ sizeOptions.forEach(option => {
         sizeOptions.forEach(item => item.classList.remove('selected-size'));
         this.classList.add('selected-size');
 
-        // Update pricing (assuming 'item_price' is defined globally)
-        // const priceShow = document.getElementById('price-show');
-        // let final = frame_price + item_price;
-        // priceShow.textContent = '₹' + final;
-        // updateGrandTotal(final);
-
         // Update display text for size
         document.getElementById('size-show').textContent = frameSizeText;
+
+        let get_active_config = JSON.parse($('#active_config').val());
+
+        updateFramePrice(get_active_config);
 
         // Save the size selection for the active image
         saveFrameConfigToDatabase({
@@ -1003,11 +1115,6 @@ sizeOptions.forEach(option => {
             frame_price: frame_price,
             frameSizeText: frameSizeText,
         }, 'size');
-
-        // const activeImg = document.querySelector('.swiper-slide-active img');
-        // if (activeImg) {
-        //     updateFramePrice(activeImg.src);
-        // }
     });
 });
 
@@ -1021,13 +1128,11 @@ finishOptions.forEach(option => {
         const finish_price = parseFloat(this.getAttribute('data-price'));
         const frameFinishText = this.querySelector('.propertyName').textContent.trim();
 
-        // Update pricing and finish display
-        // const priceShow = document.getElementById('price-show');
-        // let final = finish_price + item_price;
-        // priceShow.textContent = '₹' + final;
-        // updateGrandTotal(final);
-
         document.getElementById('finish-show').textContent = frameFinishText;
+
+        let get_active_config = JSON.parse($('#active_config').val());
+
+        updateFramePrice(get_active_config);
 
         // Save the finish selection for the active image
         saveFrameConfigToDatabase({
@@ -1035,10 +1140,6 @@ finishOptions.forEach(option => {
             frameFinishText: frameFinishText
         }, 'finish');
 
-        // const activeImg = document.querySelector('.swiper-slide-active img');
-        // if (activeImg) {
-        //     updateFramePrice(activeImg.src);
-        // }
     });
 });
 
@@ -1053,17 +1154,20 @@ hangOptions.forEach(option => {
         const value = this.getAttribute('data-val');
         const framehangText = this.querySelector('.propertyName').textContent.trim();
 
-        // Show or hide related options based on the value
         const liElement = document.getElementById('frame-finish-li');
-        liElement.style.display = (value === "yes") ? 'none' : 'block';
+        const buttonElement = liElement.querySelector('button'); // Assuming there's a button inside liElement
 
-        // Update pricing and LED display
-        // const priceShow = document.getElementById('price-show');
-        // let final = price + item_price;
-        // priceShow.textContent = '₹' + final;
-        // updateGrandTotal(final);
+        if (value === "yes") {
+            buttonElement.disabled = true;
+        } else {
+            buttonElement.disabled = false;
+        }
 
         document.getElementById('led-show').textContent = framehangText;
+
+        let get_active_config = JSON.parse($('#active_config').val());
+
+        updateFramePrice(get_active_config);
 
         // Save the LED selection for the active image
         saveFrameConfigToDatabase({
@@ -1071,11 +1175,6 @@ hangOptions.forEach(option => {
             value: value,
             framehangText: framehangText
         }, 'led');
-
-        // const activeImg = document.querySelector('.swiper-slide-active img');
-        // if (activeImg) {
-        //     updateFramePrice(activeImg.src);
-        // }
     });
 });
 
@@ -1143,6 +1242,7 @@ async function sendFrameConfigToServer(imageName, frameConfig, type) {
     const result = await response.json();
     if (result.success) {
         console.log("Frame configuration saved to database for", imageName);
+        document.getElementById('active_config').value = JSON.stringify(result.data);
     } else {
         console.error("Failed to save frame configuration:", result.message);
     }
