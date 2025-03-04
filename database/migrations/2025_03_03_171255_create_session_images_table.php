@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('frame_configurations', function (Blueprint $table) {
+        Schema::create('session_images', function (Blueprint $table) {
             $table->id();
-            $table->text('image_url');
-            $table->json('config')->nullable();
-            $table->string('session_id')->nullable();
+            $table->string('session_id');
+            $table->string('filename');
+            $table->string('file_url');
+            $table->json('frame_configuration')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('frame_configurations');
+        Schema::dropIfExists('session_images');
     }
 };

@@ -667,7 +667,7 @@
                             </div>
                     <div class="grid-2">
                         <div class="box">
-                            <div class="frame-main-wrap classic-card-design box-shadow-black" id="frameWrap">
+                            <div class="frame-main-wrap classic-card-design box-shadow-black frame-main-wrap-main" id="frameWrap">
                                 <div class="frameborder inherit-design">
                                     <div class="frameinner child-inherit-design">
                                         <!-- Placeholder for uploaded image -->
@@ -912,6 +912,10 @@
                             <input type="hidden" name="upload_images" id="upload_images" value="{{ route('get.uploaded.images') }}">
                             <input type="hidden" name="delete_images" id="delete_images" value="{{ route('delete.frame.config') }}">
                             <input type="hidden" name="add_to_cart_product" id="add_to_cart_product" value="{{ route('add_to_cart_product') }}">
+                            <input type="hidden" name="get_session_images" id="get_session_images" value="{{ route('get_session_images') }}">
+                            <input type="hidden" name="upload_image" id="upload_image" value="{{ route('upload_image') }}">
+                            <input type="hidden" name="delete_session_image" id="delete_session_image" value="{{ route('delete_session_image') }}">
+                            <input type="hidden" name="get_frame_config" id="get_frame_config" value="{{ route('get_frame_config') }}">
 
                         </div>
                     </div>
