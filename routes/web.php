@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Livewire\HomePage;
 use App\Livewire\DesignPage;
 use App\Livewire\Collections;
 use App\Livewire\CollectionDetail;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', HomePage::class)->name('home');
 Route::get('/design', DesignPage::class)->name('design');
@@ -34,5 +35,10 @@ Route::get('/get-applied-coupon', [MainController::class, 'get_applied_coupon'])
 Route::post('/remove-from-cart', [MainController::class, 'remove_from_cart'])->name('remove_from_cart');
 Route::post('/update-cart-grand-total', [MainController::class, 'update_cart_grand_total'])->name('update_cart_grand_total');
 Route::post('/place-order', [MainController::class, 'place_order'])->name('place_order');
+
+Route::get('/myprofile',[ProfileController::class,'profile'])->name('profile');
+Route::get('/orders',[ProfileController::class,'orders'])->name('orders');
+Route::get('/address',[ProfileController::class,'address'])->name('address');
+Route::get('/resetpassword',[ProfileController::class,'resetpassword'])->name('resetpassword');
 
 require __DIR__.'/auth.php';
