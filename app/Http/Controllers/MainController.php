@@ -7,6 +7,10 @@ use App\Models\FrameConfiguration;
 use App\Models\Product;
 use App\Models\CartItem;
 use App\Models\SessionImage;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Address;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -165,11 +169,6 @@ class MainController extends Controller
         return view('cart', compact('cartItems', 'discount', 'gift'));
     }
 
-    public function order_summary()
-    {
-        return view('order_summary');
-    }
-
     public function upload_image(Request $request)
     {
         $sessionId = session()->getId();  // Get current session ID
@@ -295,6 +294,7 @@ class MainController extends Controller
         // Update database record
         $sessionImage->filename = $newFileName;
         $sessionImage->file_url = $filePath;
+        $sessionImage->crop = 1;
         $sessionImage->save();
 
         return response()->json([
@@ -335,6 +335,8 @@ class MainController extends Controller
 
     public function add_to_cart(Request $request)
     {
+        session()->forget('cart');
+
         $sessionId = session()->getId();
         $sessionImages = SessionImage::where('session_id', $sessionId)->get();
 
@@ -387,6 +389,7 @@ class MainController extends Controller
                 'stock' => 1,
                 'image' => $sessionImage->file_url,
                 'status' => 1,
+                'type' => 'manual',
             ]);
 
             // Add product to `carts` table
@@ -452,4 +455,160 @@ class MainController extends Controller
         }
     }
 
+    public function remove_from_cart(Request $request)
+    {
+        $productId = $request->input('product_id');
+        $imageName = $request->input('image_name'); // Receive image name from AJAX
+
+        // 1. Remove product from session cart
+        $sessionCart = session()->get('cart', []);
+
+        $updatedCart = array_filter($sessionCart, function ($item) use ($productId) {
+            return $item['product_id'] != $productId;
+        });
+
+        session()->put('cart', array_values($updatedCart)); // Reindex and update cart
+
+        // 2. Delete image from SessionImage table and public folder
+        // $deleted = SessionImage::where('filename', $imageName)->delete();
+
+        // if ($deleted) {
+        //     $filePath = public_path($imageName);
+        //     if (file_exists($filePath)) {
+        //         unlink($filePath);  // Delete the image file
+        //     }
+        // }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product removed from cart successfully.'
+        ]);
+    }
+
+    public function update_cart_grand_total(Request $request)
+    {
+        session()->forget('cart_grand_total');
+        session()->forget('gift_card');
+
+        $grandTotal = $request->input('grand_total');
+        $giftCard = $request->input('gift_card');
+
+        // Get existing cart session
+        $sessionCart = session()->get('cart', []);
+
+        // Add grand total to session cart
+        session()->put('cart_grand_total', $grandTotal);
+        session()->put('gift_card', $giftCard);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Grand total updated in cart session.'
+        ]);
+    }
+
+    public function order_summary()
+    {
+        $cart = session()->get('cart', []); // Product details
+        $cartGrandTotal = session()->get('cart_grand_total', 0); // Total price
+        $giftCard = session()->get('gift_card', 0); // Gift card (optional)
+
+        // Example: Assume you set coupon data in session somewhere earlier
+        $appliedCoupon = session()->get('applied_coupon', [
+            'code' => null,
+            'discount' => 0
+        ]);
+
+        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon'));
+    }
+
+    public function place_order(Request $request)
+    {
+        // Validate address form (You can customize validation rules as per your needs)
+        $validated = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:10',
+            'email' => 'required|email|max:255',
+            'pincode' => 'required|string|max:6',
+            'address_line1' => 'required|string',
+            'address_line2' => 'nullable|string',
+            'city' => 'required|string',
+            'alternate_phone_number' => 'nullable|string|max:10',
+        ]);
+
+        // Fetch cart items (assuming cart stored in session)
+        $cart = session()->get('cart', []);
+        if (empty($cart)) {
+            return redirect()->back()->with('error', 'Cart is empty!');
+        }
+
+        // Calculate total price
+        $subTotal = 0;
+        foreach ($cart as $product) {
+            $subTotal += $product['price'] * $product['quantity'];
+        }
+
+        // Apply coupon if exists
+        $couponDiscount = 0;
+        if (Session::has('applied_coupon')) {
+            $coupon = Session::get('applied_coupon');
+            $couponDiscount = $coupon['discount'] ?? 0;
+        }
+
+        // Gift Card (optional, if you are using it)
+        $giftCardDiscount = session()->get('gift_card', 0);
+
+        // Grand Total Calculation
+        $grandTotal = $subTotal - $couponDiscount - $giftCardDiscount;
+
+        // $user = new User();
+        // $user->name = $request->full_name;
+        // $user->email = $request->email;
+        // $user->phone = $request->phone_number;
+        // $user->password = bcrypt($request->password);
+        // $user->save();
+
+
+        // Create order
+        $order = new Order();
+        $order->user_id = 1;  // or $request->user_id if guest user
+        $order->status = 'pending';
+        $order->total_amount = $grandTotal;
+        $order->payment_method = 'cod';  // Or you can get it from the form e.g. $request->payment_method
+        $order->save();
+
+        $address = new Address();
+        $address->order_id = $order->id;
+        $address->user_id = 1;
+        $address->full_name = $request->full_name;
+        $address->phone_number = $request->phone_number;
+        $address->email = $request->email;
+        $address->pincode = $request->pincode;
+        $address->address_line1 = $request->address_line1;
+        $address->address_line2 = $request->address_line2;
+        $address->city = $request->city;
+        $address->alternate_phone_number = $request->alternate_phone_number;
+        $address->save();
+
+        // Store each cart item into order_items
+        foreach ($cart as $productId => $product) {
+            $orderItem = new OrderItem();
+            $orderItem->order_id = $order->id;
+            $orderItem->product_id = $productId;
+            $orderItem->quantity = $product['quantity'];
+            $orderItem->price = $product['price'];
+            $orderItem->save();
+
+        }
+
+        // Clear cart and session items after order placed
+        session()->forget(['cart', 'applied_coupon', 'gift_card']);
+
+        return redirect()->route('order.summary', ['order' => $order->id])->with('success', 'Order placed successfully!');
+    }
+
+
+    public function save_address(Request $request)
+    {
+
+    }
 }

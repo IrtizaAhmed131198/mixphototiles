@@ -36,10 +36,10 @@
                 <div class="col-md">
                     <p class="mb-4">Quick Links</p>
                     <div class="flex-column Footer_footerLinks nav nav-underline">
-                        <div><span class="active link">Home </span></div>
-                        <div><span class=" link">Design </span></div>
-                        <div><span class=" link">Your Collections </span></div>
-                        <div><span class=" link">Installation &amp; Care </span></div>
+                        <div><a href="{{ route('home') }}" class="active link" style=" text-decoration: none; ">Home</a></div>
+                        <div><a href="{{ route('design') }}" class="link" style=" text-decoration: none; ">Design</a></div>
+                        <div><a href="{{ route('collections') }}" class="link" style=" text-decoration: none; ">Your Collections</a></div>
+                        <div><a href="#" class="link" style=" text-decoration: none; ">Installation &amp; Care</a></div>
                     </div>
                 </div>
                 <div class="col-md">

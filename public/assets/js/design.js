@@ -13,6 +13,7 @@ let save_cropped_image = $('#save_cropped_image').val();
 let get_grand_total = $('#get_grand_total').val();
 let get_all_images = $('#get_all_images').val();
 let add_to_cart = $('#add_to_cart').val();
+let cart_page = $('#cart_page').val();
 
 let allFrameConfigurations = {}; // This should be populated on each frame load
 
@@ -55,123 +56,38 @@ function updateGrandTotal() {
 }
 
 
-// Load images from Local Storage on page load
-// function loadImagesFromDB() {
-//     fetch(upload_images_url, {
-//         method: 'GET',
-//         headers: {
-//             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-//             'Accept': 'application/json'
-//         }
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         if (data.success && data.images.length > 0) {
-//             // Hide file upload section and show editing section
-//             document.querySelector('.file-uploadSection').style.display = 'none';
-//             document.querySelector('.FrameDesignSection').style.display = 'block';
-//             renderSliderImages(data.images);
-//             // Set main preview image to the first image from DB
-//             document.getElementById('uploaded-image').src = data.images[0].url;
-//         }
-//     })
-//     .catch(error => console.error(error));
-// }
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const imageName = urlParams.get('image_name');
 
-// document.addEventListener('DOMContentLoaded', loadImagesFromDB);
+    if (imageName) {
+        // Render single image directly from URL parameter
+        const imageUrl = `/${imageName}`;  // Update this path if needed based on your folder structure
 
+        document.querySelector('.file-uploadSection').style.display = 'none';
+        document.querySelector('.FrameDesignSection').style.display = 'block';
 
-// Function to render images into the slider container
-// function renderSliderImages(imagesArray) {
-//     const swiperWrapper = document.querySelector('.Images-frame-slider .swiper-wrapper');
-//     // Clear existing slides
-//     swiperWrapper.innerHTML = '';
+        const imageObj = {
+            file_url: imageUrl,
+            filename: imageName,
+            crop: 0 // Default, update this if you have crop data elsewhere
+        };
 
-//     imagesArray.forEach((imgObj, index) => {
-//         const slide = document.createElement('div');
-//         slide.classList.add('swiper-slide');
+        renderSliderImages([imageObj]);
 
-//         slide.innerHTML = `
-//             <div class="box">
-//               <div class="frame-main-wrap" style="
-//                 padding: 10px;
-//                 border: 10px solid black;
-//                 max-width: 310px;
-//                 margin: auto;
-//                 height: 100%;
-//                 width: 100%;
-//               ">
-//                 <div class="frameborder">
-//                   <div class="frameinner">
-//                     <img alt="${imgObj.name}" data-val="${imgObj.name}" class="img-fluid" src="${imgObj.url}">
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//         `;
-//         swiperWrapper.appendChild(slide);
-//     });
+        // Apply all initial functions with this single image object
+        applyInitialFrameDesign(imageObj);
+        applyInitialFrameColor(imageObj);
+        applyInitialFrameSize(imageObj);
+        applyInitialFrameFinish(imageObj);
+        applyInitialFrameLED(imageObj);
+        updateFramePrice(imageObj);
 
-//     // After rendering all slides, update the main preview with the first image (if available)
-//     if (imagesArray.length > 0) {
-//         document.getElementById('uploaded-image').src = imagesArray[0].url;
-//     }
-// }
-
-// function loadImagesFromLocalStorage() {
-//     const storedImages = localStorage.getItem('uploadedImages');
-//     if (storedImages) {
-//         const imagesArray = JSON.parse(storedImages);
-//         // Hide file upload section and show editing section if there is at least one image
-//         if (imagesArray.length > 0) {
-//             document.querySelector('.file-uploadSection').style.display = 'none';
-//             document.querySelector('.FrameDesignSection').style.display = 'block';
-//             renderSliderImages(imagesArray);
-//         }
-//     }
-// }
-
-// // Function to render images into the slider container
-// function renderSliderImages(imagesArray) {
-//     const swiperWrapper = document.querySelector('.Images-frame-slider .swiper-wrapper');
-//     swiperWrapper.innerHTML = ''; // Clear existing slides
-
-//     imagesArray.forEach((imageObj) => {
-//         const imgSrc = imageObj.url; // Extract the image URL
-
-//         const slide = document.createElement('div');
-//         slide.classList.add('swiper-slide');
-
-//         slide.innerHTML = `
-//             <div class="box">
-//                 <div class="frame-main-wrap" style="
-//                     padding: 10px;
-//                     border: 10px solid black;
-//                     max-width: 310px;
-//                     margin: auto;
-//                     height: 100%;
-//                     width: 100%;
-//                 ">
-//                     <div class="frameborder">
-//                         <div class="frameinner">
-//                             <img alt="Frame" class="img-fluid" src="${imgSrc}">
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         `;
-
-//         swiperWrapper.appendChild(slide);
-//     });
-
-//     // Set the first image to the preview if available
-//     if (imagesArray.length > 0) {
-//         document.getElementById('uploaded-image').src = imagesArray[0].url;  // Use the first image's URL
-//     }
-// }
-
-
-// document.addEventListener('DOMContentLoaded', loadImagesFromLocalStorage);
+    } else {
+        // No image_name, fetch session images instead
+        fetchAndRenderSessionImages();
+    }
+});
 
 function fetchAndRenderSessionImages() {
     fetch(get_session_images)
@@ -187,6 +103,16 @@ function fetchAndRenderSessionImages() {
                 applyInitialFrameFinish(images[0]);
                 applyInitialFrameLED(images[0]);
                 updateFramePrice(images[0]);
+
+                if (images[0].crop === 1) {
+                    // Apply CSS to the inherit-design div
+                    const inheritDesignDiv = document.querySelector('#frameWrap .inherit-design');
+                    if (inheritDesignDiv) {
+                        inheritDesignDiv.style.position = 'absolute';
+                        inheritDesignDiv.style.zIndex = '-1';
+                        inheritDesignDiv.style.padding = '15px';
+                    }
+                }
             }else{
                 document.querySelector('.file-uploadSection').style.display = 'flex';
                 document.querySelector('.FrameDesignSection').style.display = 'none';
@@ -232,7 +158,6 @@ function renderSliderImages(imagesArray) {
     if (imagesArray.length > 0) {
         document.getElementById('uploaded-image').src = imagesArray[0].file_url;
         let set_active_config = JSON.stringify(imagesArray[0]);
-        console.log(set_active_config);
         document.getElementById('active_config').value = set_active_config;
     }
 }
@@ -426,25 +351,6 @@ function getDefaultFrameConfig() {
     };
 }
 
-// function initializeDefaultConfig(imageUrl) {
-//     let config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
-//     if (!config[imageUrl]) {
-//         // Set your default configuration values as needed.
-//         config[imageUrl] = {
-//             design: { designClass: "classic-card-design", displayText: "Classic" },
-//             color: { img_src: "assets/images/black-frame.png", color_name: "Black", shadowClass: "box-shadow-black" },
-//             size: { width: "309px", height: "318px", max_width: "500px", frame_price: 0, frameSizeText: '8" X 8"' },
-//             finish: { finish_price: 0, frameFinishText: "Normal" },
-//             led: { price: 0, value: "no", framehangText: "No" },
-//         };
-//         localStorage.setItem('frameConfigurations', JSON.stringify(config));
-//         console.log("Default configuration saved for image:", imageUrl, config[imageUrl]);
-
-//         // Now save the configuration in the database
-//         saveFrameConfigInDB(imageUrl);
-//     }
-// }
-
 function updateFramePrice(frameConfig) {
     if (!frameConfig) return;
     let frame_config = JSON.parse(frameConfig.frame_configuration);
@@ -480,112 +386,6 @@ uploadPhotoElements.forEach(element => {
     element.addEventListener('change', function (event) {
         processAndUploadImages(event.target.files);
     });
-    // element.addEventListener('change', function (event) {
-    //     const files = event.target.files;
-    //     if (!files.length) return;
-
-    //     let validImages = []; // Store valid images after checking blur
-
-    //     Array.from(files).forEach(file => {
-    //         if (!file.type.startsWith('image/')) {
-    //             Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Invalid File',
-    //                 text: 'Only image files are allowed!',
-    //             });
-    //             return;
-    //         }
-
-    //         // Use an object URL for a short src URL
-    //         const objectURL = URL.createObjectURL(file);
-    //         const img = new Image();
-    //         img.src = objectURL;
-
-    //         img.onload = function () {
-    //             if (img.width < 125 || img.height < 112) {
-    //                 Swal.fire({
-    //                     icon: 'warning',
-    //                     title: 'Image Too Small',
-    //                     text: 'One of the images must be at least 125px in width and 112px in height.',
-    //                 });
-    //                 return;
-    //             }
-
-    //             // Create an offscreen canvas for processing the image
-    //             const canvas = document.createElement("canvas");
-    //             const ctx = canvas.getContext("2d");
-    //             canvas.width = img.width;
-    //             canvas.height = img.height;
-    //             ctx.drawImage(img, 0, 0, img.width, img.height);
-
-    //             // Perform blur detection
-    //             if (!isImageBlurred(canvas)) {
-    //                 // Generate a new file name using the original file name with date/timestamp
-    //                 const originalName = file.name;
-    //                 const extension = originalName.split('.').pop();
-    //                 const baseName = originalName.substring(0, originalName.lastIndexOf('.'));
-    //                 const timestamp = new Date().toISOString().replace(/[:.-]/g, "");
-    //                 const newFileName = `${baseName}_${timestamp}.${extension}`;
-
-    //                 validImages.push({
-    //                     name: newFileName,
-    //                     url: objectURL
-    //                 });
-    //             } else {
-    //                 Swal.fire({
-    //                     icon: 'warning',
-    //                     title: 'Blurry Image',
-    //                     text: 'One of the images is too blurry. Please upload a clearer image.',
-    //                 });
-    //             }
-
-    //             // Check if all files have been processed
-    //             if (validImages.length === files.length) {
-    //                 const existing = localStorage.getItem('uploadedImages');
-    //                 const existingImages = existing ? JSON.parse(existing) : [];
-    //                 const newImagesArray = existingImages.concat(validImages);
-
-    //                 localStorage.setItem('uploadedImages', JSON.stringify(newImagesArray));
-
-    //                 // Initialize default configuration for each newly uploaded image
-    //                 validImages.forEach(imageObj => {
-    //                     initializeDefaultConfig(imageObj.url);
-    //                 });
-
-    //                 // Now update the database for each image by sending the image URL and configuration
-    //                 // newImagesArray.forEach(imageObj => {
-    //                 //     saveFrameConfigInDB(imageObj.url);
-    //                 // });
-
-    //                 document.querySelector('.file-uploadSection').style.display = 'none';
-    //                 document.querySelector('.FrameDesignSection').style.display = 'block';
-
-    //                 renderSliderImages(newImagesArray);
-
-    //                 // Ensure the first slide is marked active
-    //                 const firstSlide = document.querySelector('.Images-frame-slider .swiper-slide');
-    //                 if (firstSlide) {
-    //                     firstSlide.classList.add('swiper-slide-active');
-    //                 }
-
-    //                 // Update the main preview image to the first image
-    //                 if (newImagesArray.length > 0) {
-    //                     document.getElementById('uploaded-image').src = newImagesArray[0].url;
-    //                 }
-
-    //                 // Update the price for the active image and the grand total
-    //                 updateFramePrice(newImagesArray[0].url);
-    //                 updateGrandTotal();
-
-    //                 Swal.fire({
-    //                     icon: 'success',
-    //                     title: 'Upload Successful',
-    //                     text: 'Your images have been uploaded successfully!',
-    //                 });
-    //             }
-    //         };
-    //     });
-    // });
 });
 
 function uploadImageToServer(file, newFileName) {
@@ -772,117 +572,6 @@ document.getElementById('remove-image').addEventListener('click', async function
 
 
 
-// Event listener for removing the images
-// document.getElementById('remove-image').addEventListener('click', function () {
-//     // Retrieve the stored images array from localStorage
-//     const storedImages = localStorage.getItem('uploadedImages');
-//     if (storedImages) {
-//         let imagesArray = JSON.parse(storedImages);
-
-//         // Find the currently active slide and its image src attribute
-//         const activeSlide = document.querySelector('.swiper-slide-active');
-//         if (activeSlide) {
-//             const activeImg = activeSlide.querySelector('img');
-//             if (activeImg) {
-//                 const activeSrc = activeImg.src;
-
-//                 // Find the image object in the array whose url matches the activeSrc
-//                 const indexToRemove = imagesArray.findIndex(item => item.url === activeSrc);
-//                 if (indexToRemove > -1) {
-//                     // Remove the image object from the array
-//                     imagesArray.splice(indexToRemove, 1);
-//                     // Update localStorage with the new images array
-//                     localStorage.setItem('uploadedImages', JSON.stringify(imagesArray));
-
-//                     // Remove the saved configuration for this image, if it exists
-//                     let config = JSON.parse(localStorage.getItem('frameConfigurations')) || {};
-//                     if (config[activeSrc]) {
-//                         delete config[activeSrc];
-//                         localStorage.setItem('frameConfigurations', JSON.stringify(config));
-//                     }
-
-//                     // Send a request to delete the image configuration and file from the server
-//                     deleteFrameConfigFromDB(activeSrc);
-
-//                     // Re-render the slider with the updated array
-//                     renderSliderImages(imagesArray);
-
-//                     // If no images remain, reload the page; otherwise update the main preview image
-//                     if (imagesArray.length === 0) {
-//                         location.reload();
-//                         return;
-//                     } else {
-//                         document.getElementById('uploaded-image').src = imagesArray[0].url;
-//                     }
-
-//                     Swal.fire({
-//                         icon: 'success',
-//                         title: 'Image Removed',
-//                         text: 'The selected image has been removed.',
-//                     });
-
-//                     // Log the updated configurations to the console
-//                     console.log("Updated frame configurations:", JSON.parse(localStorage.getItem('frameConfigurations')));
-//                 } else {
-//                     localStorage.removeItem("uploadedImages");
-//                     Swal.fire({
-//                         icon: 'error',
-//                         title: 'Not Found',
-//                         text: 'Active image was not found in storage.',
-//                     });
-//                 }
-//             }
-//         } else {
-//             Swal.fire({
-//                 icon: 'warning',
-//                 title: 'No Active Image',
-//                 text: 'Please select an image before removing.',
-//             });
-//         }
-//     }
-// });
-
-// document.getElementById('remove-image').addEventListener('click', function () {
-//     // Remove images from Local Storage
-//     localStorage.removeItem('uploadedImages');
-
-//     // Clear slider container
-//     const swiperWrapper = document.querySelector('.Images-frame-slider .swiper-wrapper');
-//     swiperWrapper.innerHTML = '';
-
-//     // Show file upload section and hide editing section
-//     document.querySelector('.file-uploadSection').style.display = 'flex';
-//     document.querySelector('.FrameDesignSection').style.display = 'none';
-
-//     // Reset file input value so files can be re-uploaded if needed
-//     document.getElementById('upload-photo').value = '';
-// });
-
-// Function to send a deletion request to your Laravel backend
-// function deleteFrameConfigFromDB(imageUrl) {
-//     const formData = new FormData();
-//     formData.append('image', imageUrl);
-
-//     fetch(delete_images_url, {
-//         method: 'POST',
-//         body: formData,
-//         headers: {
-//             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-//         }
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         if (data.success) {
-//             console.log("Configuration and image file deleted from database successfully.");
-//         } else {
-//             console.error("Error deleting configuration from database:", data.message);
-//         }
-//     })
-//     .catch(error => console.error("Deletion error:", error));
-// }
-
-
-
 var swiper = new Swiper('.Images-frame-slider', {
     // Swiper options...
     on: {
@@ -946,6 +635,24 @@ function updateActiveImage() {
                             applyInitialFrameFinish(data.frame_configuration);
                             applyInitialFrameLED(data.frame_configuration);
                             updateFramePrice(data.frame_configuration);
+
+                            if (data.frame_configuration.crop === 1) {
+                                const inheritDesignDiv = document.querySelector('#frameWrap .inherit-design');
+                                if (inheritDesignDiv) {
+                                    inheritDesignDiv.style.position = 'absolute';
+                                    inheritDesignDiv.style.zIndex = '-1';
+                                    inheritDesignDiv.style.padding = '15px';
+                                }
+                            } else {
+                                // Optionally reset styles if crop is not 1 (in case user switches images)
+                                const inheritDesignDiv = document.querySelector('#frameWrap .inherit-design');
+                                if (inheritDesignDiv) {
+                                    inheritDesignDiv.style.position = '';
+                                    inheritDesignDiv.style.zIndex = '';
+                                    inheritDesignDiv.style.padding = '';
+                                }
+                            }
+
                         } else {
                             console.error('Failed to fetch frame configuration:', data.message);
                         }
@@ -991,6 +698,24 @@ document.querySelector('.Images-frame-slider .swiper-wrapper').addEventListener(
                     applyInitialFrameFinish(data.frame_configuration);
                     applyInitialFrameLED(data.frame_configuration);
                     updateFramePrice(data.frame_configuration);
+
+                    if (data.frame_configuration.crop === 1) {
+                        const inheritDesignDiv = document.querySelector('#frameWrap .inherit-design');
+                        if (inheritDesignDiv) {
+                            inheritDesignDiv.style.position = 'absolute';
+                            inheritDesignDiv.style.zIndex = '-1';
+                            inheritDesignDiv.style.padding = '15px';
+                        }
+                    } else {
+                        // Optionally reset styles if crop is not 1 (in case user switches images)
+                        const inheritDesignDiv = document.querySelector('#frameWrap .inherit-design');
+                        if (inheritDesignDiv) {
+                            inheritDesignDiv.style.position = '';
+                            inheritDesignDiv.style.zIndex = '';
+                            inheritDesignDiv.style.padding = '';
+                        }
+                    }
+
                 } else {
                     console.error('Failed to fetch frame configuration:', data.message);
                 }
@@ -1357,10 +1082,9 @@ $(document).ready(function () {
             // Update the preview images with the cropped result
             let imgElement = document.querySelector('.swiper-slide-active img');
             let filename = imgElement.getAttribute('data-frame-config');
-            console.log(filename);
             $('#uploaded-image').attr('src', resp);
             $('#slider-image').attr('src', resp);
-            // saveCroppedImageToServer(resp, filename);
+            saveCroppedImageToServer(resp, filename);
             $('#cropImagePop').modal('hide');
 
         });
@@ -1383,6 +1107,13 @@ $(document).ready(function () {
                         text: 'Image saved successfully!'
                     });
                     $('#frameWrap #uploaded-image').attr('src', response.file_url); // Update preview with saved image URL
+
+                    $('#frameWrap .inherit-design').css({
+                        'position': 'absolute',
+                        'z-index': '-1',
+                        'padding': '15px'
+                    });
+
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -1452,6 +1183,9 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
                         icon: 'success',
                         title: 'Added to Cart',
                         text: responseData.message
+                    }).then(() => {
+                        // Redirect to cart page after success message
+                        window.location.href = cart_page; // Update URL as needed
                     });
                 } else {
                     Swal.fire({
@@ -1479,6 +1213,7 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
             });
         });
 });
+
 
 
 

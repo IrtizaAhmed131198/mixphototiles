@@ -31,5 +31,8 @@ Route::post('/add-to-cart', [MainController::class, 'add_to_cart'])->name('add_t
 Route::post('/save-coupon', [MainController::class, 'save_coupon'])->name('save_coupon');
 Route::post('/remove-coupon', [MainController::class, 'remove_coupon'])->name('remove_coupon');
 Route::get('/get-applied-coupon', [MainController::class, 'get_applied_coupon'])->name('get_applied_coupon');
+Route::post('/remove-from-cart', [MainController::class, 'remove_from_cart'])->name('remove_from_cart');
+Route::post('/update-cart-grand-total', [MainController::class, 'update_cart_grand_total'])->name('update_cart_grand_total');
+Route::post('/place-order', [MainController::class, 'place_order'])->name('place_order');
 
 require __DIR__.'/auth.php';

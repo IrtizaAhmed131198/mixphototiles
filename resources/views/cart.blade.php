@@ -45,7 +45,7 @@
                                         </svg>
                                         Remove
                                     </button>
-                                    <button type="button" class="CartListItem_action edit-item" data-product-id="{{ $item['product_id'] }}">
+                                    <button type="button" class="CartListItem_action edit-item" data-product-id="{{ $item['product_id'] }}" data-image-name="{{ $item['image'] }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="15.615" height="14.926" viewBox="0 0 15.615 14.926" class="w-em h-em pe-1 fs-16">
                                             <g transform="translate(-2.25 -2.129)">
                                                 <path d="M12,20h7.058" transform="translate(-1.942 -3.695)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
@@ -177,7 +177,7 @@
                                 </ul>
                             </div>
 
-                            <button type="button" class="btn custom-btn filled" onclick="window.location.href='{{ route('order_summary') }}'">
+                            <button type="button" class="btn custom-btn filled" onclick="updateCartAndRedirect()">
                                 Continue
                             </button>
 
@@ -625,6 +625,90 @@
 
 
     });
+
+    document.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = button.getAttribute('data-product-id');
+            const listGroup = button.closest('.listGroup');
+            const fullImagePath = listGroup.querySelector('img').getAttribute('src');
+            const imageName = fullImagePath.replace(`${window.location.origin}/`, ''); // Remove domain part to match stored filename
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to remove this product from the cart?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, remove it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('{{ route('remove_from_cart') }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            product_id: productId,
+                            image_name: imageName  // <-- Send the image name
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted!',
+                                text: data.message
+                            }).then(() => {
+                                location.reload(); // Reload the page after success
+                            });
+                        } else {
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    })
+                    .catch(() => {
+                        Swal.fire('Error', 'Something went wrong.', 'error');
+                    });
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.edit-item').forEach(button => {
+        button.addEventListener('click', function() {
+            const imageNameO = button.getAttribute('data-image-name'); // Get image name from data attribute
+            const imageName = imageNameO.replace(`${window.location.origin}/`, '');
+            const designUrl = `{{ route('design') }}?image_name=${encodeURIComponent(imageNameO)}`;
+
+            window.location.href = designUrl; // Redirect to design page with query param
+        });
+    });
+
+    function updateCartAndRedirect() {
+        const grandTotalElement = document.getElementById('grand_total');
+        const gift_card = $('#gift').attr('data-val');
+        const grandTotal = grandTotalElement ? grandTotalElement.getAttribute('data-val') : 0;
+
+        fetch('{{ route('update_cart_grand_total') }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ grand_total: grandTotal, gift_card: gift_card })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = '{{ route('order_summary') }}'; // Redirect after update
+            } else {
+                alert('Failed to update cart. Try again.');
+            }
+        })
+        .catch(error => console.error('Error updating cart:', error));
+    }
+
 
 </script>
 @endpush

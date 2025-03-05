@@ -2,6 +2,22 @@
 
 @section('title', 'Design Page')
 
+@push('css')
+<style>
+    .ordered-list {
+        padding-left: 20px;
+        margin: 0;
+        list-style-type: decimal; /* Numbers (1, 2, 3, ...) */
+    }
+
+    .ordered-list li {
+        margin-bottom: 5px; /* Optional spacing between items */
+        font-size: 14px; /* Optional - adjust font size */
+    }
+
+</style>
+@endpush
+
 @section('content')
     <style>
         /* Hide the editing section initially */
@@ -203,30 +219,7 @@
                             <!-- 5 dropdown -->
                             <li class="designToolPropertiesChild btn-group dropend">
                                 <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="24.413"
-                                        viewBox="0 0 18 24.413" class="w-em h-em LeftSidebar_designIcon__3UjGH">
-                                        <g transform="translate(2638 17326.398)">
-                                            <g transform="translate(-2636.575 -17318)">
-                                                <rect width="16" height="15" rx="2"
-                                                    transform="translate(-0.425 -0.397)" fill="none"
-                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                    stroke-width="2"></rect>
-                                                <circle cx="1.5" cy="1.5" r="1.5"
-                                                    transform="translate(2.575 3.603)" fill="none"
-                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                    stroke-width="2"></circle>
-                                                <path d="M18.611,14.264,16.016,11.8a1.743,1.743,0,0,0-2.378,0L6,19.062"
-                                                    transform="translate(-3.508 -4.46)" fill="none"
-                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                    stroke-width="2"></path>
-                                            </g>
-                                            <path d="M-2567-17497.715l5.251-4.811,4.893,4.811"
-                                                transform="translate(-67.072 179.128)" fill="none"
-                                                stroke="currentColor" stroke-width="2"></path>
-                                            <circle r="2" cx="2" cy="2" fill="currentColor"
-                                                transform="translate(-2631 -17326.398)"></circle>
-                                        </g>
-                                    </svg>
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 102.94 122.88" style="enable-background:new 0 0 102.94 122.88;width: 16px;" xml:space="preserve"><g><path d="M1.69,0.03h99.55c0.44-0.08,0.91,0.04,1.25,0.38c0.27,0.27,0.41,0.63,0.41,0.99v0v0l0,0.03v119.71 c0.1,0.44-0.02,0.93-0.36,1.28c-0.07,0.07-0.14,0.13-0.22,0.18c-0.23,0.17-0.52,0.27-0.83,0.27H1.42c-0.78,0-1.4-0.63-1.4-1.4V1.61 c-0.06-0.42,0.07-0.87,0.4-1.2C0.76,0.06,1.24-0.06,1.69,0.03L1.69,0.03z M90.58,109l9.52,9.13V4.8l-9.52,9.54V109L90.58,109z M98.08,120.07l-9.53-9.14H14.46l-9.55,9.14H98.08L98.08,120.07z M2.82,118.19l9.52-9.12V14.33L2.82,4.81V118.19L2.82,118.19z M88.44,12.51l9.65-9.68H4.82l9.67,9.68H88.44L88.44,12.51z M87.76,15.33h-72.6v92.77h72.6V15.33L87.76,15.33z"></path></g></svg>
                                     <p class="para">LED</p>
                                 </button>
                                 <ul class="designToolPropertiesLists dropdown-menu">
@@ -840,32 +833,8 @@
                                             </div>
                                         </li>
                                         <li class="col-6">
-                                            <div class="d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="18" height="24.413" viewBox="0 0 18 24.413"
-                                                    class="w-em h-em ttl-24 mb-0">
-                                                    <g transform="translate(2638 17326.398)">
-                                                        <g transform="translate(-2636.575 -17318)">
-                                                            <rect width="16" height="15" rx="2"
-                                                                transform="translate(-0.425 -0.397)" fill="none"
-                                                                stroke="currentColor" stroke-linecap="round"
-                                                                stroke-linejoin="round" stroke-width="2"></rect>
-                                                            <circle cx="1.5" cy="1.5" r="1.5"
-                                                                transform="translate(2.575 3.603)" fill="none"
-                                                                stroke="currentColor" stroke-linecap="round"
-                                                                stroke-linejoin="round" stroke-width="2"></circle>
-                                                            <path
-                                                                d="M18.611,14.264,16.016,11.8a1.743,1.743,0,0,0-2.378,0L6,19.062"
-                                                                transform="translate(-3.508 -4.46)" fill="none"
-                                                                stroke="currentColor" stroke-linecap="round"
-                                                                stroke-linejoin="round" stroke-width="2"></path>
-                                                        </g>
-                                                        <path d="M-2567-17497.715l5.251-4.811,4.893,4.811"
-                                                            transform="translate(-67.072 179.128)" fill="none"
-                                                            stroke="currentColor" stroke-width="2"></path>
-                                                        <circle r="2" cx="2" cy="2" fill="currentColor"
-                                                            transform="translate(-2631 -17326.398)"></circle>
-                                                    </g>
-                                                </svg>
+                                            <div class="d-flex align-items-center">
+                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 102.94 122.88" style="enable-background:new 0 0 102.94 122.88;width: 16px;" xml:space="preserve"><g><path d="M1.69,0.03h99.55c0.44-0.08,0.91,0.04,1.25,0.38c0.27,0.27,0.41,0.63,0.41,0.99v0v0l0,0.03v119.71 c0.1,0.44-0.02,0.93-0.36,1.28c-0.07,0.07-0.14,0.13-0.22,0.18c-0.23,0.17-0.52,0.27-0.83,0.27H1.42c-0.78,0-1.4-0.63-1.4-1.4V1.61 c-0.06-0.42,0.07-0.87,0.4-1.2C0.76,0.06,1.24-0.06,1.69,0.03L1.69,0.03z M90.58,109l9.52,9.13V4.8l-9.52,9.54V109L90.58,109z M98.08,120.07l-9.53-9.14H14.46l-9.55,9.14H98.08L98.08,120.07z M2.82,118.19l9.52-9.12V14.33L2.82,4.81V118.19L2.82,118.19z M88.44,12.51l9.65-9.68H4.82l9.67,9.68H88.44L88.44,12.51z M87.76,15.33h-72.6v92.77h72.6V15.33L87.76,15.33z"></path></g></svg>
                                                 <div class="frame-detail">
                                                     <p class="para">LED Frame</p>
                                                     <h6 class="heading-4" id="led-show">No</h6>
@@ -873,7 +842,8 @@
                                             </div>
                                         </li>
                                         <li class="col-6">
-                                            <div class="d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg"
+                                            <div class="d-flex align-items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="font-size: 26px; margin-top: -157px"
                                                     width="18" height="24.413" viewBox="0 0 18 24.413"
                                                     class="w-em h-em ttl-24 mb-0">
                                                     <g transform="translate(2638 17326.398)">
@@ -901,8 +871,10 @@
                                                 </svg>
                                                 <div class="frame-detail">
                                                     <p class="para">Hang</p>
-                                                    <h6 class="heading-4" id="hang1-show">Free Re-stickable tape roll</h6>
-                                                    <h6 class="heading-4" id="hang2-show">Free Hanging hooks</h6>
+                                                    <ul class="ordered-list">
+                                                        <li id="hang1-show" class="heading-4">Free Re-stickable tape roll</li>
+                                                        <li id="hang2-show" class="heading-4">Free Hanging hooks</li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </li>
@@ -956,6 +928,7 @@
                             <input type="hidden" name="get_grand_total" id="get_grand_total" value="{{ route('get_grand_total') }}">
                             <input type="hidden" name="get_all_images" id="get_all_images" value="{{ route('get_all_images') }}">
                             <input type="hidden" name="add_to_cart" id="add_to_cart" value="{{ route('add_to_cart') }}">
+                            <input type="hidden" name="cart_page" id="cart_page" value="{{ route('cart') }}">
 
                         </div>
                     </div>

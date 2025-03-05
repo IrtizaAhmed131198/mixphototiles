@@ -172,6 +172,10 @@ var swiper = new Swiper(".frame-layout-slider", {
 
 var swiper = new Swiper(".mySwiper", {
     loop: true,
+    autoplay: {
+        delay: 1200,
+        disableOnInteraction: false,
+    },
     pagination: {
         el: ".swiper-pagination",
         clickable: true,

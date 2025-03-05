@@ -4,10 +4,11 @@
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
-                        <!-- <a class="navbar-brand main-logo" href="javascript:;"> -->
+                        <a class="" href="{{ route('home') }}">
                             <img src="{{ asset('assets/images/logo.png') }}" alt="" style=" height: 131px; ">
                             <!-- MixPhotoTiles -->
-                        <!-- </a> -->
+                        </a>
+
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +39,7 @@
                             <div class="right-navbar">
                                 <ul>
                                     <li>
-                                        <a href="javascript:;" class="nav-link">
+                                        <a href="{{ route('cart') }}" class="nav-link">
                                             <span>
                                                 <img src="{{ asset('assets/images/bag.svg') }}" alt="">
                                             </span>

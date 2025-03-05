@@ -20,7 +20,8 @@
                                 <div class="accordion-body">
 
                                     <div class="GuestAddress_faqContent">
-                                        <form>
+                                        <form action="{{ route('place_order') }}" method="POST">
+                                            @csrf
                                             <div class="row GuestAddress_addressFormRow__Tupge">
                                                 <div class="col-lg-6">
                                                     <div label="Full Name">
@@ -79,53 +80,49 @@
                     <div class="paymentdetailsbody">
                         <div class="cartheader">
                             <div class="ApplyCoupon_couponApply">
-                                <p>
-                                    Cart Summary
-                                </p>
-                                <button type="button" class="CartListItem_action"><svg xmlns="http://www.w3.org/2000/svg" width="15.615" height="14.926" viewBox="0 0 15.615 14.926" class="w-em h-em pe-1 fs-16">
-                                        <g transform="translate(-2.25 -2.129)">
-                                            <path d="M12,20h7.058" transform="translate(-1.942 -3.695)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                            <path d="M13.586,3.366a1.663,1.663,0,1,1,2.353,2.353l-9.8,9.8L3,16.3l.784-3.137Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                        </g>
-                                    </svg>Edit Items
-                                </button>
+                                <p>Cart Summary</p>
                             </div>
                         </div>
 
+                        @foreach ($cart as $item)
                         <div class="purchaseditem">
                             <figure class="carditemimage">
-                                <img src="assets/images/1702965251740.jpeg" class="img-fluid" alt="">
+                                <img src="{{ asset($item['image']) }}" class="img-fluid" alt="{{ $item['name'] }}">
                             </figure>
                             <div class="cardlistdetail">
-                                <p class="heading-6">
-                                    Symmetry
-                                </p>
-                                <h5>₹3674.00</h5>
-
+                                <p class="heading-6">{{ $item['name'] }}</p>
+                                <h5>₹{{ number_format($item['total'], 2) }}</h5>
                             </div>
                         </div>
+                        @endforeach
 
                         <div class="parentcardlistdetail">
                             <div class="cartParent">
-                                <h5 class="pricedetails">
-                                    Price Details
-                                </h5>
+                                <h5 class="pricedetails">Price Details</h5>
                                 <ul class="cartListpaymentdetails">
                                     <li>
-                                        <p class="customTilename">Sub Total
-                                            <span class="text-body-tertiary">includes ₹394 GST @ 12%</span>
-                                        </p>
-                                        <span> ₹3674 </span>
+                                        <p class="customTilename">Sub Total</p>
+                                        <span>₹{{ number_format($cartGrandTotal, 2) }}</span>
                                     </li>
+
+                                    @if ($appliedCoupon['code'])
                                     <li>
-                                        <p class="customTilename">Discount
-                                        </p>
-                                        <span class="discounttag"> ₹0 </span>
+                                        <p class="customTilename">Coupon Applied ({{ $appliedCoupon['code'] }})</p>
+                                        <span class="discounttag">- ₹{{ number_format($appliedCoupon['discount'], 2) }}</span>
                                     </li>
+                                    @endif
+
+                                    <li>
+                                        <p class="customTilename">Gift Card</p>
+                                        <span class="discounttag">- ₹{{ number_format($giftCard, 2) }}</span>
+                                    </li>
+
                                     <li class="grandTotal">
-                                        <p class="customTilename">Grand Total
-                                        </p>
-                                        <span> ₹59 </span>
+                                        <p class="customTilename">Grand Total</p>
+                                        @php
+                                            $finalTotal = $cartGrandTotal - $appliedCoupon['discount'] - $giftCard;
+                                        @endphp
+                                        <span>₹{{ number_format($finalTotal, 2) }}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -133,26 +130,29 @@
                             <div class="pt-3">
                                 <div class="pay_options">
                                     <label>
-                                        <input type="radio" value="razorpay" checked="" name="flexRadioDefault" id="flexRadioDefault1" checked>
-                                        <img alt="razorPay" width="80" height="17" class="img" class="img-fluid" src="assets/images/razorpay.png" for="flexRadioDefault1">
+                                        <input type="radio" value="razorpay" checked name="payment_method">
+                                        <img src="{{ asset('assets/images/razorpay.png') }}" alt="Razorpay" class="img-fluid">
                                     </label>
                                     <label>
-                                        <input type="radio" value="paytm" name="flexRadioDefault" id="flexRadioDefault2">
-                                        <img alt="paytm" width="40" height="13" class="img-fluid" src="assets/images/paytm.png" for="flexRadioDefault2" >
+                                        <input type="radio" value="paytm" name="payment_method">
+                                        <img src="{{ asset('assets/images/paytm.png') }}" alt="Paytm" class="img-fluid">
                                     </label>
                                 </div>
+
                                 <div class="form-check">
                                     <input id="agreeTc" class="form-check-input" type="checkbox">
-                                    <label for="agreeTc" class="fs-14 fw-medium form-check-label">I here by agree to the <a href="#" class="text-decoration-underline fw-semibold px-1">Terms and Conditions</a> mentioned herewith.</label>
+                                    <label for="agreeTc" class="fs-14 fw-medium form-check-label">
+                                        I hereby agree to the <a href="#" class="text-decoration-underline fw-semibold px-1">Terms and Conditions</a>.
+                                    </label>
                                 </div>
+
+                                <button type="button" class="btn custom-btn filled">
+                                    Pay Now
+                                </button>
                             </div>
-
-                            <button type="button" class="btn custom-btn filled">
-                                Pay Now
-                            </button>
-
                         </div>
                     </div>
+
 
                     <div class="noticeproductdetail">
                         <p>
