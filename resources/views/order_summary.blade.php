@@ -2,6 +2,27 @@
 
 @section('title', 'Order Summary')
 
+@push('css')
+<style>
+    .show_address {
+        padding: 10px 20px;
+        list-style: none;
+        width: 100%;
+        border: 1px solid #fff;
+    }
+
+    .show_address_first {
+        margin: 10px 0;
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+
+    .show_address li {
+        margin: 10px 0;
+    }
+</style>
+@endpush
+
 @section('content')
 
 <section class="myinformatinfoamsection">
@@ -12,15 +33,15 @@
                     <div class="accordion" id="accordionPanelsStayOpenExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
                                     My information
                                 </button>
                             </h2>
-                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
                                 <div class="accordion-body">
 
                                     <div class="GuestAddress_faqContent">
-                                        <form action="{{ route('place_order') }}" method="POST">
+                                        <form id="addressForm">
                                             @csrf
                                             <div class="row GuestAddress_addressFormRow__Tupge">
                                                 <div class="col-lg-6">
@@ -48,11 +69,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <select class="form-select form-control" aria-label="Default select example">
-                                                        <option selected>Open this select menu</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                    <select class="form-select form-control" aria-label="Default select example" id="stateDropdown" name="state">
+                                                        <option value="">---Select State---</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -63,7 +81,7 @@
                                                         <input placeholder="Alternative Phone Number" maxlength="10" id="altPhoneInput" class="form-control" type="text" name="alternate_phone_number">
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6"><button type="submit" class="btn custom-btn filled">Save</button></div>
+                                                <div class="col-lg-6"><button type="button" id="saveAddressBtn" class="btn custom-btn filled">Save</button></div>
                                             </div>
                                         </form>
                                     </div>
@@ -71,6 +89,18 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div id="addressDisplay">
+                        @if(session()->has('user_address'))
+                            @php
+                                $address = session('user_address');
+                            @endphp
+                            <ul class="show_address">
+                                <li class="show_address_first">{{ $address['full_name'] }}</li>
+                                <li>{{ $address['email'] }}</li>
+                                <li>{{ $address['address_line1'] }}, {{ $address['address_line2'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['pincode'] }}, India</li>
+                            </ul>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -114,14 +144,19 @@
 
                                     <li>
                                         <p class="customTilename">Gift Card</p>
-                                        <span class="discounttag">- ₹{{ number_format($giftCard, 2) }}</span>
+                                        <span class="">₹{{ number_format($giftCard, 2) }}</span>
                                     </li>
 
+                                    <li>
+                                        <p class="customTilename">Shipping</p>
+                                        <span class="">₹{{ number_format($shipping, 2) }}</span>
+                                    </li>
+
+                                    @php
+                                        $finalTotal = ($cartGrandTotal + $giftCard + $shipping) - $appliedCoupon['discount'];
+                                    @endphp
                                     <li class="grandTotal">
                                         <p class="customTilename">Grand Total</p>
-                                        @php
-                                            $finalTotal = $cartGrandTotal - $appliedCoupon['discount'] - $giftCard;
-                                        @endphp
                                         <span>₹{{ number_format($finalTotal, 2) }}</span>
                                     </li>
                                 </ul>
@@ -146,9 +181,11 @@
                                     </label>
                                 </div>
 
-                                <button type="button" class="btn custom-btn filled">
+                                <button type="button" class="btn custom-btn filled"
+                                        onclick="window.location.href='{{ route('place_order') }}'">
                                     Pay Now
                                 </button>
+
                             </div>
                         </div>
                     </div>
@@ -173,4 +210,93 @@
 @endsection
 
 @push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch("{{ url('states') }}")
+            .then(response => response.json())
+            .then(states => {
+                const dropdown = document.getElementById('stateDropdown');
+                states.forEach(state => {
+                    const option = document.createElement('option');
+                    option.value = state;
+                    option.textContent = state;
+                    dropdown.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching states:', error));
+    });
+
+    $('#saveAddressBtn').on('click', function () {
+        let formData = $('#addressForm').serialize();
+
+        $.ajax({
+            url: "{{ route('add_address') }}",
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                if (response.success) {
+                    // Show success alert
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Address saved successfully!',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+
+                    // Update the address display
+                    showAddress(response.address);
+
+                    // Collapse the accordion
+                    let accordionElement = document.getElementById('panelsStayOpen-collapseOne');
+                    let bsCollapse = new bootstrap.Collapse(accordionElement, {
+                        toggle: false // Prevent auto-toggle (because it's open already)
+                    });
+                    bsCollapse.hide();  // This will close the accordion section
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to save address.'
+                    });
+                }
+            },
+            error: function (xhr) {
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    let errorHtml = '<ul>';
+                    $.each(errors, function (key, value) {
+                        errorHtml += '<li>' + value[0] + '</li>';
+                    });
+                    errorHtml += '</ul>';
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        html: errorHtml
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Something went wrong. Please try again.'
+                    });
+                }
+            }
+        });
+    });
+
+    function showAddress(address) {
+        let html = `
+            <ul class="show_address">
+                <li class="show_address_first">${address.full_name}</li>
+                <li>${address.email}</li>
+                <li>${address.address_line1}, ${address.address_line2}, ${address.city}, ${address.state}, ${address.pincode}, India</li>
+            </ul>
+        `;
+        $('#addressDisplay').html(html);
+    }
+
+
+</script>
 @endpush

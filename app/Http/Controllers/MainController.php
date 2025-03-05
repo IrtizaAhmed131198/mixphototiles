@@ -8,7 +8,7 @@ use App\Models\Product;
 use App\Models\CartItem;
 use App\Models\SessionImage;
 use App\Models\Order;
-use App\Models\OrderItem;
+use App\Models\OrderItems;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -488,17 +488,20 @@ class MainController extends Controller
     public function update_cart_grand_total(Request $request)
     {
         session()->forget('cart_grand_total');
-        session()->forget('gift_card');
+        session()->forget('gift_card_applied');
+        session()->forget('shipping');
 
         $grandTotal = $request->input('grand_total');
         $giftCard = $request->input('gift_card');
+        $shipping = $request->input('shipping');
 
         // Get existing cart session
         $sessionCart = session()->get('cart', []);
 
         // Add grand total to session cart
         session()->put('cart_grand_total', $grandTotal);
-        session()->put('gift_card', $giftCard);
+        session()->put('gift_card_applied', $giftCard);
+        session()->put('shipping', $shipping);
 
         return response()->json([
             'success' => true,
@@ -510,7 +513,8 @@ class MainController extends Controller
     {
         $cart = session()->get('cart', []); // Product details
         $cartGrandTotal = session()->get('cart_grand_total', 0); // Total price
-        $giftCard = session()->get('gift_card', 0); // Gift card (optional)
+        $giftCard = session()->get('gift_card_applied', 0); // Gift card (optional)
+        $shipping = session()->get('shipping', 0); // Gift card (optional)
 
         // Example: Assume you set coupon data in session somewhere earlier
         $appliedCoupon = session()->get('applied_coupon', [
@@ -518,23 +522,12 @@ class MainController extends Controller
             'discount' => 0
         ]);
 
-        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon'));
+        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon', 'shipping'));
     }
 
     public function place_order(Request $request)
     {
-        // Validate address form (You can customize validation rules as per your needs)
-        $validated = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:10',
-            'email' => 'required|email|max:255',
-            'pincode' => 'required|string|max:6',
-            'address_line1' => 'required|string',
-            'address_line2' => 'nullable|string',
-            'city' => 'required|string',
-            'alternate_phone_number' => 'nullable|string|max:10',
-        ]);
-
+        $get_address = session('user_address');
         // Fetch cart items (assuming cart stored in session)
         $cart = session()->get('cart', []);
         if (empty($cart)) {
@@ -552,48 +545,58 @@ class MainController extends Controller
         if (Session::has('applied_coupon')) {
             $coupon = Session::get('applied_coupon');
             $couponDiscount = $coupon['discount'] ?? 0;
+            $code = $coupon['code'];
+        }else{
+            $code = null;
+            $couponDiscount = null;
         }
 
         // Gift Card (optional, if you are using it)
         $giftCardDiscount = session()->get('gift_card', 0);
 
-        // Grand Total Calculation
-        $grandTotal = $subTotal - $couponDiscount - $giftCardDiscount;
+        $shipping = session()->get('shipping', 0);
 
-        // $user = new User();
-        // $user->name = $request->full_name;
-        // $user->email = $request->email;
-        // $user->phone = $request->phone_number;
-        // $user->password = bcrypt($request->password);
-        // $user->save();
+        // Grand Total Calculation
+        $grandTotal = ($subTotal + $giftCardDiscount + $shipping) - $couponDiscount;
+
+        $user = new User();
+        $user->name = $get_address['full_name'];
+        $user->email = $get_address['email'];
+        $user->phone = $get_address['phone_number'];
+        $user->password = bcrypt('123456789');
+        $user->save();
 
 
         // Create order
         $order = new Order();
-        $order->user_id = 1;  // or $request->user_id if guest user
+        $order->user_id = $user->id;  // or $request->user_id if guest user
         $order->status = 'pending';
         $order->total_amount = $grandTotal;
         $order->payment_method = 'cod';  // Or you can get it from the form e.g. $request->payment_method
+        $order->coupon = $code;
+        $order->discount = $couponDiscount;
+        $order->shipping = $shipping;
+        $order->gift = $giftCardDiscount;
         $order->save();
 
         $address = new Address();
         $address->order_id = $order->id;
-        $address->user_id = 1;
-        $address->full_name = $request->full_name;
-        $address->phone_number = $request->phone_number;
-        $address->email = $request->email;
-        $address->pincode = $request->pincode;
-        $address->address_line1 = $request->address_line1;
-        $address->address_line2 = $request->address_line2;
-        $address->city = $request->city;
-        $address->alternate_phone_number = $request->alternate_phone_number;
+        $address->user_id = $user->id;
+        $address->full_name = $get_address['full_name'];
+        $address->phone_number = $get_address['phone_number'];
+        $address->email = $get_address['email'];
+        $address->pincode = $get_address['pincode'];
+        $address->address_line1 = $get_address['address_line1'];
+        $address->address_line2 = $get_address['address_line2'];
+        $address->city = $get_address['city'];
+        $address->alternate_phone_number = $get_address['alternate_phone_number'];
         $address->save();
 
         // Store each cart item into order_items
         foreach ($cart as $productId => $product) {
-            $orderItem = new OrderItem();
+            $orderItem = new OrderItems();
             $orderItem->order_id = $order->id;
-            $orderItem->product_id = $productId;
+            $orderItem->product_id = $product['product_id'];
             $orderItem->quantity = $product['quantity'];
             $orderItem->price = $product['price'];
             $orderItem->save();
@@ -601,14 +604,37 @@ class MainController extends Controller
         }
 
         // Clear cart and session items after order placed
-        session()->forget(['cart', 'applied_coupon', 'gift_card']);
+        session()->forget(['cart', 'applied_coupon', 'gift_card', 'shipping']);
 
-        return redirect()->route('order.summary', ['order' => $order->id])->with('success', 'Order placed successfully!');
+        $deleted = SessionImage::where('session_id', session()->getId())
+            ->delete();
+
+        return redirect()->route('home')->with('success', 'Order placed successfully!');
     }
 
 
-    public function save_address(Request $request)
+    public function add_address(Request $request)
     {
+        $validated = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'phone_number' => 'required',
+            'email' => 'required|email',
+            'pincode' => 'required|digits:6',
+            'address_line1' => 'required|string|max:500',
+            'address_line2' => 'nullable|string|max:500',
+            'state' => 'required|string',
+            'city' => 'required|string|max:255',
+            'alternate_phone_number' => 'nullable',
+        ]);
 
+        Session::forget('user_address');
+
+        // Save to session (you can also save to database if needed)
+        Session::put('user_address', $validated);
+
+        return response()->json([
+            'success' => true,
+            'address' => $validated
+        ]);
     }
 }

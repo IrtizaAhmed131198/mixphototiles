@@ -16,13 +16,13 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('full_name');
-            $table->string('phone_number', 15);
+            $table->string('phone_number');
             $table->string('email')->nullable();
             $table->string('pincode', 10);
             $table->text('address_line1');
             $table->text('address_line2')->nullable();
             $table->string('city');
-            $table->string('alternate_phone_number', 15)->nullable();
+            $table->string('alternate_phone_number')->nullable();
             $table->timestamps();
 
             // Foreign keys (optional, depends on your schema)

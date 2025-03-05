@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('address_line2')->nullable();
             $table->string('city');
             $table->string('state');
-            $table->string('postal_code');
+            $table->string('pin_code');
             $table->string('country');
             $table->string('phone')->nullable();
+            $table->string('alt_phone')->nullable();
             $table->timestamps();
         });
     }

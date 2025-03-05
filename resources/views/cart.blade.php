@@ -3,21 +3,25 @@
 @section('title', 'Cart')
 
 @section('content')
+@php
+    $subtotal = 0;
+    $shipping = 39
+@endphp
+{{-- <input type="checkbox" id="send-gift-checkbox" {{ session('gift_card_applied') ? 'checked' : '' }}> --}}
+
 <section class="cartSection">
     <div class="container">
         <div class="row">
+            @if(!empty($cartItems))
             <div class="col-lg-8">
                 <div class="parentCart">
                     <h4 class="">
                         Your Cart
-                        <span class="itemsCount">(1 Items)</span>
+                        <span class="itemsCount">({{ count($cartItems) ?? 0 }} Items)</span>
                     </h4>
                 </div>
 
                 <div class="cardList">
-                    @php
-                        $subtotal = 0;
-                    @endphp
 
                     @foreach($cartItems as $item)
                         @php
@@ -64,7 +68,7 @@
 
 
                     <div class="pt-4 form-check giftcheck">
-                        <input id="send-gift-checkbox" class="form-check-input" type="checkbox">
+                        <input id="send-gift-checkbox" class="form-check-input" type="checkbox" {{ session('gift_card_applied') ? 'checked' : '' }}>
                         <label for="send-gift-checkbox" class="form-check-label">Send this as a gift
                             <svg xmlns="http://www.w3.org/2000/svg" width="19.053" height="17.5" viewBox="0 0 19.053 17.5" class="w-em h-em ps-1 fs-20">
                                 <g transform="translate(0 -1029.356)">
@@ -157,7 +161,7 @@
                                         <p class="customTilename">Sub Total
                                             {{-- <span class="text-body-tertiary">includes ₹394 GST @ 12%</span> --}}
                                         </p>
-                                        <span> ₹{{ number_format($subtotal, 2) }} </span>
+                                        <span id="subtotal" data-val="{{ $subtotal }}"> ₹{{ number_format($subtotal, 2) }} </span>
                                     </li>
                                     <li>
                                         <p class="customTilename">Discount
@@ -169,10 +173,15 @@
                                         </p>
                                         <span id="gift" data-val="{{ $gift }}"> ₹{{ number_format($gift, 2) }} </span>
                                     </li>
+                                    <li>
+                                        <p class="customTilename">Shipping
+                                        </p>
+                                        <span id="shipping" data-val="{{ $shipping }}"> ₹{{ number_format($shipping, 2) }} </span>
+                                    </li>
                                     <li class="grandTotal">
                                         <p class="customTilename">Grand Total
                                         </p>
-                                        <span id="grand_total" data-val="{{ $subtotal + $discount }}"> ₹{{ number_format($subtotal + $discount, 2) }} </span>
+                                        <span id="grand_total" data-val="{{ $subtotal + $discount + $shipping }}"> ₹{{ number_format($subtotal + $discount + $shipping, 2) }} </span>
                                     </li>
                                 </ul>
                             </div>
@@ -196,6 +205,11 @@
 
                 </div>
             </div>
+            @else
+            <div class="col-lg-12">
+                <h3 class="text-center">Your Cart Is Empty</h3>
+            </div>
+            @endif
         </div>
     </div>
 </section>
@@ -355,33 +369,57 @@
 
 
 
-    document.getElementById('send-gift-checkbox').addEventListener('change', function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const giftCheckbox = document.getElementById('send-gift-checkbox');
         const giftAmountWrapper = document.querySelector('.gift-amount-wrapper');
         const giftPriceRow = document.getElementById('gift-price');
         const giftAmount = parseFloat(document.getElementById('gift').getAttribute('data-val')) || 0;
 
-        // Show/hide gift section
-        giftAmountWrapper.style.display = this.checked ? 'grid' : 'none';
-        giftPriceRow.style.display = this.checked ? 'flex' : 'none';
+        // Function to handle showing/hiding and updating total
+        function handleGiftSection() {
+            const isChecked = giftCheckbox.checked;
 
-        // Update grand total
-        updateGrandTotal(giftAmount, this.checked);
-    });
+            // Show/hide sections
+            giftAmountWrapper.style.display = isChecked ? 'grid' : 'none';
+            giftPriceRow.style.display = isChecked ? 'flex' : 'none';
 
-    function updateGrandTotal(giftAmount, isGiftChecked) {
-        const subtotal = parseFloat({{ $subtotal }});
-        const discount = parseFloat({{ $discount }});
+            // Update session using AJAX
+            fetch('{{ url('/update-gift-session') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ gift_card_applied: isChecked })
+            });
 
-        let grandTotal = subtotal + discount;
-
-        if (isGiftChecked) {
-            grandTotal += giftAmount;
+            // Update grand total
+            updateGrandTotal(giftAmount, isChecked);
         }
 
-        const grandTotalElement = document.getElementById('grand_total');
-        grandTotalElement.setAttribute('data-val', grandTotal);
-        grandTotalElement.innerText = `₹${grandTotal.toFixed(2)}`;
-    }
+        // Attach change event
+        giftCheckbox.addEventListener('change', handleGiftSection);
+
+        // Run once on page load
+        handleGiftSection();
+
+        // Grand total function
+        function updateGrandTotal(giftAmount, isGiftChecked) {
+            const subtotal = parseFloat({{ $subtotal }});
+            const discount = parseFloat({{ $discount }});
+            const shipping = parseFloat({{ $shipping }});
+
+            let grandTotal = subtotal + discount + shipping;
+
+            if (isGiftChecked) {
+                grandTotal += giftAmount;
+            }
+
+            const grandTotalElement = document.getElementById('grand_total');
+            grandTotalElement.setAttribute('data-val', grandTotal);
+            grandTotalElement.innerText = `₹${grandTotal.toFixed(2)}`;
+        }
+    });
 
     document.addEventListener('DOMContentLoaded', function() {
         const staticCoupons = {
@@ -686,8 +724,9 @@
     });
 
     function updateCartAndRedirect() {
-        const grandTotalElement = document.getElementById('grand_total');
+        const grandTotalElement = document.getElementById('subtotal');
         const gift_card = $('#gift').attr('data-val');
+        const shipping = $('#shipping').attr('data-val');
         const grandTotal = grandTotalElement ? grandTotalElement.getAttribute('data-val') : 0;
 
         fetch('{{ route('update_cart_grand_total') }}', {
@@ -696,7 +735,7 @@
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ grand_total: grandTotal, gift_card: gift_card })
+            body: JSON.stringify({ grand_total: grandTotal, gift_card: gift_card, shipping: shipping })
         })
         .then(response => response.json())
         .then(data => {
