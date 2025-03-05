@@ -10,36 +10,48 @@ let upload_image = $('#upload_image').val();
 let delete_session_image = $('#delete_session_image').val();
 let get_frame_config = $('#get_frame_config').val();
 let save_cropped_image = $('#save_cropped_image').val();
+let get_grand_total = $('#get_grand_total').val();
+let get_all_images = $('#get_all_images').val();
+let add_to_cart = $('#add_to_cart').val();
 
 let allFrameConfigurations = {}; // This should be populated on each frame load
 
 function updateGrandTotal() {
-    let grandTotal = 0;
+    fetch(get_grand_total) // Update this to match your route
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                let grandTotal = 0;
 
-    for (const key in allFrameConfigurations) {
-        if (allFrameConfigurations.hasOwnProperty(key)) {
-            const frameConfig = allFrameConfigurations[key];
+                data.data.forEach(sessionImage => {
+                    const frameConfig = sessionImage.frame_configuration;
 
-            const designPrice = parseFloat(frameConfig.design?.design_price) || 0;
-            const colorPrice = parseFloat(frameConfig.color?.color_price) || 0;
-            const sizePrice = parseFloat(frameConfig.size?.frame_price) || 0;
-            const finishPrice = parseFloat(frameConfig.finish?.finish_price) || 0;
-            const ledPrice = parseFloat(frameConfig.led?.price) || 0;
+                    const designPrice = parseFloat(frameConfig?.design?.design_price) || 0;
+                    const colorPrice = parseFloat(frameConfig?.color?.color_price) || 0;
+                    const sizePrice = parseFloat(frameConfig?.size?.frame_price) || 0;
+                    const finishPrice = parseFloat(frameConfig?.finish?.finish_price) || 0;
+                    const ledPrice = parseFloat(frameConfig?.led?.price) || 0;
 
-            let total = 0;
+                    let total = 0;
 
-            if (designPrice === 0 && colorPrice === 0 && sizePrice === 0 && finishPrice === 0 && ledPrice === 0) {
-                total = 399; // Default price when all options are free
+                    if (designPrice === 0 && colorPrice === 0 && sizePrice === 0 && finishPrice === 0 && ledPrice === 0) {
+                        total = 399; // Default price when all options are free
+                    } else {
+                        total = designPrice + colorPrice + sizePrice + finishPrice + ledPrice;
+                    }
+
+                    grandTotal += total;
+                });
+
+                // Update the grand total in UI
+                document.getElementById('grand-total').textContent = '₹' + grandTotal;
             } else {
-                total = designPrice + colorPrice + sizePrice + finishPrice + ledPrice;
+                console.error('Failed to fetch frame configurations');
             }
-
-            grandTotal += total;
-        }
-    }
-
-    // Update the grand total in UI
-    document.getElementById('grand-total').textContent = '₹' + grandTotal;
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
 }
 
 
@@ -1343,10 +1355,12 @@ $(document).ready(function () {
             size: { width: 500, height: 435 }
         }).then(function (resp) {
             // Update the preview images with the cropped result
-            let filename = $('.swiper-slide .swiper-slide-active img').attr('data-frame-config');
+            let imgElement = document.querySelector('.swiper-slide-active img');
+            let filename = imgElement.getAttribute('data-frame-config');
+            console.log(filename);
             $('#uploaded-image').attr('src', resp);
             $('#slider-image').attr('src', resp);
-            saveCroppedImageToServer(resp, filename);
+            // saveCroppedImageToServer(resp, filename);
             $('#cropImagePop').modal('hide');
 
         });
@@ -1357,16 +1371,24 @@ $(document).ready(function () {
             url: save_cropped_image, // Update with your backend URL
             type: 'POST',
             data: {
-                image: base64Image,
+                cropped_image: base64Image,
                 filename: filename,
                 _token: $('meta[name="csrf-token"]').attr('content') // CSRF token for Laravel
             },
             success: function (response) {
                 if (response.success) {
-                    alert('Image saved successfully!');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Crop Image',
+                        text: 'Image saved successfully!'
+                    });
                     $('#frameWrap #uploaded-image').attr('src', response.file_url); // Update preview with saved image URL
                 } else {
-                    alert('Failed to save image.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Crop Image',
+                        text: 'Failed to save image.'
+                    });
                 }
             },
             error: function (xhr, status, error) {
@@ -1401,75 +1423,61 @@ $(document).ready(function () {
 
 // crop js
 
-document.getElementById('add-to-cart').addEventListener('click', function(){
-    // Collect display data from the UI
-    let design = document.getElementById('frame-show').textContent.trim(); // e.g., "Classic"
-    let color = document.getElementById('color-show').textContent.trim();  // e.g., "Black" or "Light"
-    let size = document.getElementById('size-show').textContent.trim();    // e.g., '8" X 8"'
-    let finish = document.getElementById('finish-show').textContent.trim(); // e.g., "Normal"
-    let led = document.getElementById('led-show').textContent.trim();       // e.g., "Yes" or "No"
+document.getElementById('add-to-cart').addEventListener('click', function() {
+    fetch(get_all_images) // Adjust URL if needed
+        .then(response => response.json())
+        .then(response => {
+            if (!response.success) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.message || 'No images found.'
+                });
+                return;
+            }
 
-    // Build the product name.
-    // Format: "Classic Frame (Black, 8" X 8", Normal, LED Frame)" if LED is "Yes"
-    let productName = design + " Frame";
-    let details = "(" + color + ", " + size + ", " + finish;
-    if(led.toLowerCase() === "yes"){
-       details += ", LED Frame";
-    }
-    details += ")";
-    productName += " " + details;
-
-    // Get the price from the UI (assuming it is displayed as "₹399")
-    let priceText = document.getElementById('price-show').textContent.trim();
-    let price = parseFloat(priceText.replace(/[^\d\.]/g, '')) || 0;
-
-    // Get the main image URL from the preview
-    let imageUrl = document.getElementById('uploaded-image').src;
-
-    // Optionally, if you want to store the entire configuration JSON from localStorage:
-    let config = localStorage.getItem('frameConfigurations'); // You can send all or part of it
-
-    // Prepare the data to send
-    const data = {
-        name: productName,
-        price: price,
-        image: imageUrl,
-        config: config  // This can be optional if you want to store extra details
-    };
-
-    // Send the data to your Laravel backend via a POST request
-    fetch(add_to_cart_product, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(responseData => {
-        if(responseData.success){
-            Swal.fire({
-                icon: 'success',
-                title: 'Added to Cart',
-                text: 'Product has been added to cart.'
+            // Call add_to_cart_product after getting all images
+            fetch(add_to_cart, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(responseData => {
+                if (responseData.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Added to Cart',
+                        text: responseData.message
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: responseData.message || 'An error occurred.'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to add products to cart.'
+                });
             });
-        } else {
+        })
+        .catch(error => {
+            console.error(error);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: responseData.message || 'An error occurred.'
+                text: 'Failed to get images.'
             });
-        }
-    })
-    .catch(error => {
-        console.error(error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'An error occurred while adding to cart.'
         });
-    });
 });
 
 

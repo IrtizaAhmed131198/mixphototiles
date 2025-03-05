@@ -9,6 +9,7 @@ use App\Models\CartItem;
 use App\Models\SessionImage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class MainController extends Controller
 {
@@ -158,7 +159,10 @@ class MainController extends Controller
 
     public function cart()
     {
-        return view('cart');
+        $cartItems = session()->get('cart', []);
+        $discount = 0;
+        $gift = 30;
+        return view('cart', compact('cartItems', 'discount', 'gift'));
     }
 
     public function order_summary()
@@ -255,10 +259,12 @@ class MainController extends Controller
 
     public function save_cropped_image(Request $request)
     {
-        dd($request);
-        $filename = $request->input('filename');
+        $request->validate([
+            'filename' => 'required|string',
+            'cropped_image' => 'required|string',  // This will be the base64 image string
+        ]);
 
-        // Find the existing record by filename
+        $filename = $request->input('filename');
         $sessionImage = SessionImage::where('filename', $filename)->first();
 
         if (!$sessionImage) {
@@ -268,29 +274,182 @@ class MainController extends Controller
             ], 404);
         }
 
-        // Handle file upload
-        $file = $request->file('image');
-        $newFileName = time() . '_' . $file->getClientOriginalName();
+        // Decode Base64 image
+        $base64Image = $request->input('cropped_image');
+        $imageData = explode(',', $base64Image)[1]; // Remove "data:image/jpeg;base64," part
+        $imageData = base64_decode($imageData);
+
+        // Generate new filename
+        $newFileName = time() . '_cropped.jpg'; // or you can keep original name
         $filePath = 'uploads/' . $newFileName;
 
-        // Move the uploaded file to /public/uploads
-        $file->move(public_path('uploads'), $newFileName);
+        // Save new image file
+        file_put_contents(public_path($filePath), $imageData);
 
-        // Optional: Delete old image file (if you want to remove the old file)
+        // Delete old image file
         $oldFilePath = public_path($sessionImage->file_url);
         if (file_exists($oldFilePath)) {
             unlink($oldFilePath);
         }
 
-        $session_images->filename = $newFileName;
-        $session_images->file_url = $filePath;
-        $session_images->save();
+        // Update database record
+        $sessionImage->filename = $newFileName;
+        $sessionImage->file_url = $filePath;
+        $sessionImage->save();
 
         return response()->json([
             'success' => true,
             'message' => 'Image updated successfully.',
             'file_url' => asset($filePath),
         ]);
+    }
+
+    public function get_grand_total()
+    {
+        $sessionId = session()->getId();
+        $sessionImages = SessionImage::where('session_id', $sessionId)->select('frame_configuration')->get();
+
+        // Decode frame_configuration if stored as JSON
+        foreach ($sessionImages as $image) {
+            $image->frame_configuration = json_decode($image->frame_configuration, true);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Get Frame Config.',
+            'data' => $sessionImages,
+        ]);
+    }
+
+    public function get_all_images()
+    {
+        $sessionId = session()->getId();
+        $sessionImages = SessionImage::where('session_id', $sessionId)->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Get Frame Config.',
+            'data' => $sessionImages,
+        ]);
+    }
+
+    public function add_to_cart(Request $request)
+    {
+        $sessionId = session()->getId();
+        $sessionImages = SessionImage::where('session_id', $sessionId)->get();
+
+        if ($sessionImages->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No images found in your session to add to cart.',
+            ]);
+        }
+
+        $userId = auth()->id();  // Assuming user is logged in
+        $sessionCart = session()->get('cart', []);
+        $productsAdded = [];
+
+        foreach ($sessionImages as $sessionImage) {
+            // Build product name using frame configuration details (assume frame_configuration has JSON data)
+            $frameConfig = json_decode($sessionImage->frame_configuration, true);
+
+            $name = $frameConfig['design']['displayText'] . " Frame (" .
+                    $frameConfig['color']['color_name'] . ", " .
+                    $frameConfig['size']['frameSizeText'] . ", " .
+                    $frameConfig['finish']['frameFinishText'];
+            if (strtolower($frameConfig['led']['value']) === 'yes') {
+                $name .= ', LED Frame';
+            }
+            $name .= ')';
+
+            // Slug (make unique slug from name)
+            $slug = Str::slug($name . '-' . time(). '-'.$sessionImage['id']);
+
+            //price
+            $price =
+                (float) ($frameConfig['led']['price'] ?? 0) +
+                (float) ($frameConfig['size']['frame_price'] ?? 0) +
+                (float) ($frameConfig['color']['color_price'] ?? 0) +
+                (float) ($frameConfig['design']['design_price'] ?? 0) +
+                (float) ($frameConfig['finish']['finish_price'] ?? 0);
+
+            if ($price == 0) {
+                $price = 399;
+            }
+
+            // Create product in `products` table
+            $product = Product::create([
+                'name' => $name,
+                'slug' => $slug,
+                'description' => 'Custom frame product', // You can adjust
+                'price' => $price, // Assuming price is in frame_configuration
+                'discount' => 0,
+                'stock' => 1,
+                'image' => $sessionImage->file_url,
+                'status' => 1,
+            ]);
+
+            // Add product to `carts` table
+            $sessionCart[] = [
+                'product_id' => $product->id,
+                'name' => $product->name,
+                'image' => $product->image,
+                'quantity' => 1,
+                'price' => $product->price,
+                'total' => $product->price, // (quantity * price)
+            ];
+
+            $productsAdded[] = $product;
+        }
+
+        // Save updated cart to session
+        session()->put('cart', $sessionCart);
+
+        return response()->json([
+            'success' => true,
+            'message' => count($productsAdded) . ' product(s) added to cart.',
+            'products' => $productsAdded,
+        ]);
+    }
+
+    public function save_coupon(Request $request)
+    {
+        $coupon = $request->input('coupon');
+        $discount = $request->input('discount');
+
+        Session::put('applied_coupon', [
+            'code' => $coupon,
+            'discount' => $discount
+        ]);
+
+        return response()->json([
+            'message' => 'Coupon saved successfully',
+            'coupon' => Session::get('applied_coupon')
+        ]);
+    }
+
+    public function remove_coupon()
+    {
+        Session::forget('applied_coupon');
+
+        return response()->json([
+            'message' => 'Coupon removed successfully'
+        ]);
+    }
+
+    public function get_applied_coupon()
+    {
+        $coupon = Session::get('applied_coupon');
+
+        if ($coupon) {
+            return response()->json([
+                'coupon' => $coupon
+            ]);
+        } else {
+            return response()->json([
+                'coupon' => null
+            ]);
+        }
     }
 
 }

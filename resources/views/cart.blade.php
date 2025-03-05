@@ -15,41 +15,53 @@
                 </div>
 
                 <div class="cardList">
-                    <div class="listGroup">
-                        <figure class="carditemimage">
-                            <img src="{{ asset('assets/images/1702965251740.jpeg') }}" class="img-fluid" alt="">
-                        </figure>
-                        <div class="cardlistdetail">
-                            <p class="heading-6">
-                                Symmetry
-                            </p>
-                            <div class="cardlistaction">
-                                <button type="button" class="CartListItem_action">
-                                    <svg width="15.9" height="17.5" class="w-em h-em pe-1 fs-16" viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
-                                        <g transform="translate(-2.25 -1.25)">
-                                            <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                            <path d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6" transform="translate(-0.4 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                            <path d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2" transform="translate(-1)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                            <line y2="5" transform="translate(8.2 9)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
-                                            <line y2="5" transform="translate(12.2 9)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
-                                        </g>
-                                    </svg>
-                                    Remove
-                                </button>
-                                <button type="button" class="CartListItem_action"><svg xmlns="http://www.w3.org/2000/svg" width="15.615" height="14.926" viewBox="0 0 15.615 14.926" class="w-em h-em pe-1 fs-16">
-                                        <g transform="translate(-2.25 -2.129)">
-                                            <path d="M12,20h7.058" transform="translate(-1.942 -3.695)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                            <path d="M13.586,3.366a1.663,1.663,0,1,1,2.353,2.353l-9.8,9.8L3,16.3l.784-3.137Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                        </g>
-                                    </svg>Edit Items
-                                </button>
-                            </div>
+                    @php
+                        $subtotal = 0;
+                    @endphp
 
+                    @foreach($cartItems as $item)
+                        @php
+                            $product = App\Models\Product::find($item['product_id']);
+                            $subtotal += (float) $item['price'];
+                        @endphp
+                        <div class="listGroup">
+                            <figure class="carditemimage">
+                                <img src="{{ asset($item['image']) }}" class="img-fluid" alt="{{ $item['name'] }}">
+                            </figure>
+                            <div class="cardlistdetail">
+                                <p class="heading-6">
+                                    {{ $item['name'] }}
+                                </p>
+                                <div class="cardlistaction">
+                                    <button type="button" class="CartListItem_action remove-item" data-product-id="{{ $item['product_id'] }}">
+                                        <svg width="15.9" height="17.5" class="w-em h-em pe-1 fs-16" viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
+                                            <g transform="translate(-2.25 -1.25)">
+                                                <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                                <path d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6" transform="translate(-0.4 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                                <path d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2" transform="translate(-1)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                                <line y2="5" transform="translate(8.2 9)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
+                                                <line y2="5" transform="translate(12.2 9)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
+                                            </g>
+                                        </svg>
+                                        Remove
+                                    </button>
+                                    <button type="button" class="CartListItem_action edit-item" data-product-id="{{ $item['product_id'] }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15.615" height="14.926" viewBox="0 0 15.615 14.926" class="w-em h-em pe-1 fs-16">
+                                            <g transform="translate(-2.25 -2.129)">
+                                                <path d="M12,20h7.058" transform="translate(-1.942 -3.695)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                                <path d="M13.586,3.366a1.663,1.663,0,1,1,2.353,2.353l-9.8,9.8L3,16.3l.784-3.137Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                            </g>
+                                        </svg>
+                                        Edit Items
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cartPrice">
+                                <h5>₹{{ number_format($item['price'], 2) }}</h5>
+                            </div>
                         </div>
-                        <div class="cartPrice">
-                            <h5>₹3674.00</h5>
-                        </div>
-                    </div>
+                    @endforeach
+
 
                     <div class="pt-4 form-check giftcheck">
                         <input id="send-gift-checkbox" class="form-check-input" type="checkbox">
@@ -69,7 +81,7 @@
                         </label>
                     </div>
 
-                    <div class="listGroup giftitemparent">
+                    <div class="listGroup giftitemparent gift-amount-wrapper" style="display: none">
                         <figure class="carditemimage">
                             <svg xmlns="http://www.w3.org/2000/svg" width="19.053" height="17.5" viewBox="0 0 19.053 17.5" class="w-em h-em ps-1 ttl-36 m-0">
                                 <g transform="translate(0 -1029.356)">
@@ -86,7 +98,7 @@
                         </figure>
                         <div class="cardlistdetail">
                             <p class="heading-6">
-                                Symmetry
+                                Gift Wrap
                             </p>
                             <div class="cardlistaction">
                                 <button type="button" class="CartListItem_action">
@@ -112,7 +124,7 @@
 
                         </div>
                         <div class="cartPrice">
-                            <h5>₹3674.00</h5>
+                            <h5>₹{{ number_format($gift, 2) }}</h5>
                         </div>
                     </div>
                 </div>
@@ -123,13 +135,15 @@
 
                     <div class="paymentdetailsbody">
                         <div class="cartheader">
-                            <div class="ApplyCoupon_couponApply">
-                                <p>
-                                    <span>
-                                        <img src="{{ asset('assets/images/tags.svg') }}" class="img-fluid" alt="">
-                                    </span> Apply Coupon
-                                </p>
-                                <button class="btn custom-btn">Apply</button>
+                            <div id="couponContainer">
+                                <div class="ApplyCoupon_couponApply">
+                                    <p>
+                                        <span>
+                                            <img src="{{ asset('assets/images/tags.svg') }}" class="img-fluid" alt="">
+                                        </span> Apply Coupon
+                                    </p>
+                                    <a href="javascript:;" data-bs-target="#applycoupon" data-bs-toggle="modal" class="btn custom-btn" id="applyCouponButton">Apply</a>
+                                </div>
                             </div>
                         </div>
 
@@ -141,19 +155,24 @@
                                 <ul class="cartListpaymentdetails">
                                     <li>
                                         <p class="customTilename">Sub Total
-                                            <span class="text-body-tertiary">includes ₹394 GST @ 12%</span>
+                                            {{-- <span class="text-body-tertiary">includes ₹394 GST @ 12%</span> --}}
                                         </p>
-                                        <span> ₹3674 </span>
+                                        <span> ₹{{ number_format($subtotal, 2) }} </span>
                                     </li>
                                     <li>
                                         <p class="customTilename">Discount
                                         </p>
-                                        <span class="discounttag"> ₹0 </span>
+                                        <span class="discounttag"> ₹{{ number_format($discount, 2) }} </span>
+                                    </li>
+                                    <li style="display: none" id="gift-price">
+                                        <p class="customTilename">Gift
+                                        </p>
+                                        <span id="gift" data-val="{{ $gift }}"> ₹{{ number_format($gift, 2) }} </span>
                                     </li>
                                     <li class="grandTotal">
-                                        <p class="customTilename">Sub Total
+                                        <p class="customTilename">Grand Total
                                         </p>
-                                        <span> ₹59 </span>
+                                        <span id="grand_total" data-val="{{ $subtotal + $discount }}"> ₹{{ number_format($subtotal + $discount, 2) }} </span>
                                     </li>
                                 </ul>
                             </div>
@@ -180,7 +199,432 @@
         </div>
     </div>
 </section>
+
+<div class="custom-modal">
+
+
+    <div class="modal fade" id="applycoupon" aria-hidden="true" aria-labelledby="applycouponLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="Login_authWrp">
+                        <div class="pb-4">
+                            <h4 class="ttl-20 fw-semibold mb-sm-3 mb-2">Apply Benefits</h4>
+                            <h6 class="fs-16 fw-semibold mb-2 pb-1">Add Coupon Code</h6>
+                            <div class="d-flex pb-2 mb-1">
+                                <input placeholder="Enter coupon code" class="ApplyCoupon_couponInput form-control" value="" id="manualCoupon">
+                                <button type="button" class="btn-apply-coupon" id="btnManualApply">Apply</button>
+                                <span id="manualCouponError" style="color: red; display: none; margin-top: 5px; font-size: 13px;">Invalid Coupon Code</span>
+                            </div>
+                         </div>
+                         <div class="pb-3">
+                            <h4 class="ttl-20 fw-semibold mb-sm-3 mb-2">Available Offers</h4>
+                            <div class="available_offers card">
+                               <div class="card-body">
+                                  <div>
+                                     <h6 class="fs-16 fw-semibold">10 % off on all products</h6>
+                                     <p class="text-black text-opacity-50 fs-14">Launch Offer! 10% OFF On All Products (Not Applicable To Clusters).</p>
+                                     <div class="d-flex justify-content-between align-items-center pt-3 coupon-container">
+                                        <button type="button" class="rounded-pill d-flex align-items-center AvailableOffers_btnCopyCoupon__zYN7a btn btn-light btn-sm copy-coupon-btn" data-coupon="10FLY">
+                                           <div>
+                                              10FLY
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="12.58" height="12.58" viewBox="0 0 12.58 12.58" class="w-em h-em ms-4">
+                                                 <g transform="translate(0.5 0.5)">
+                                                    <path d="M14.8,13.5h5.867a1.3,1.3,0,0,1,1.3,1.3v5.867a1.3,1.3,0,0,1-1.3,1.3H14.8a1.3,1.3,0,0,1-1.3-1.3V14.8A1.3,1.3,0,0,1,14.8,13.5Z" transform="translate(-10.395 -10.395)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+                                                    <path d="M4.956,11.475H4.3a1.3,1.3,0,0,1-1.3-1.3V4.3A1.3,1.3,0,0,1,4.3,3h5.867a1.3,1.3,0,0,1,1.3,1.3v.652" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+                                                 </g>
+                                              </svg>
+                                           </div>
+                                        </button>
+                                        <span class="coupon-copied-message" style="display:none; color:green; margin-left:-55px;">Copied</span>
+                                        <button type="button" class="btn-input-apply" data-coupon="10FLY">Apply</button>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                            <div class="available_offers card">
+                               <div class="card-body">
+                                  <div>
+                                     <h6 class="fs-16 fw-semibold">Buy 10 8x8" Frames And Get 2 For Free!</h6>
+                                     <p class="text-black text-opacity-50 fs-14">upload twelve images, pay for ten, get two absolutely FREE!</p>
+                                     <div class="d-flex justify-content-between align-items-center pt-3 coupon-container">
+                                        <button type="button" class="rounded-pill d-flex align-items-center AvailableOffers_btnCopyCoupon__zYN7a btn btn-light btn-sm copy-coupon-btn" data-coupon="B10G2">
+                                           <div>
+                                              B10G2
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="12.58" height="12.58" viewBox="0 0 12.58 12.58" class="w-em h-em ms-4">
+                                                 <g transform="translate(0.5 0.5)">
+                                                    <path d="M14.8,13.5h5.867a1.3,1.3,0,0,1,1.3,1.3v5.867a1.3,1.3,0,0,1-1.3,1.3H14.8a1.3,1.3,0,0,1-1.3-1.3V14.8A1.3,1.3,0,0,1,14.8,13.5Z" transform="translate(-10.395 -10.395)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+                                                    <path d="M4.956,11.475H4.3a1.3,1.3,0,0,1-1.3-1.3V4.3A1.3,1.3,0,0,1,4.3,3h5.867a1.3,1.3,0,0,1,1.3,1.3v.652" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+                                                 </g>
+                                              </svg>
+                                           </div>
+                                        </button>
+                                        <span class="coupon-copied-message" style="display:none; color:green; margin-left:-55px;">Copied</span>
+                                        <button type="button" class="btn-input-apply" data-coupon="B10G2">Apply</button>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                            <div class="available_offers card">
+                               <div class="card-body">
+                                  <div>
+                                     <h6 class="fs-16 fw-semibold">Get 20% off on our Poster Size Frames</h6>
+                                     <p class="text-black text-opacity-50 fs-14">Get 20% Off On Our Poster Size Frames!</p>
+                                     <div class="d-flex justify-content-between align-items-center pt-3 coupon-container">
+                                        <button type="button" class="rounded-pill d-flex align-items-center AvailableOffers_btnCopyCoupon__zYN7a btn btn-light btn-sm copy-coupon-btn" data-coupon="20BIG">
+                                           <div>
+                                              20BIG
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="12.58" height="12.58" viewBox="0 0 12.58 12.58" class="w-em h-em ms-4">
+                                                 <g transform="translate(0.5 0.5)">
+                                                    <path d="M14.8,13.5h5.867a1.3,1.3,0,0,1,1.3,1.3v5.867a1.3,1.3,0,0,1-1.3,1.3H14.8a1.3,1.3,0,0,1-1.3-1.3V14.8A1.3,1.3,0,0,1,14.8,13.5Z" transform="translate(-10.395 -10.395)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+                                                    <path d="M4.956,11.475H4.3a1.3,1.3,0,0,1-1.3-1.3V4.3A1.3,1.3,0,0,1,4.3,3h5.867a1.3,1.3,0,0,1,1.3,1.3v.652" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+                                                 </g>
+                                              </svg>
+                                           </div>
+                                        </button>
+                                        <span class="coupon-copied-message" style="display:none; color:green; margin-left:-55px;">Copied</span>
+                                        <button type="button" class="btn-input-apply" data-coupon="20BIG">Apply</button>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="couponAppliedModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="couponsuccess">
+                        <div>
+                            <img alt="modal" loading="lazy" width="73" height="73" decoding="async"
+                                 data-nimg="1" class="flex-shrink-0"
+                                 src="{{ asset('assets/images/success-animation.gif') }}"
+                                 style="color: transparent;width: 100%;height: 100%;">
+                        </div>
+                        <div class="couponsuccess_heading1" id="appliedCouponCode">10FLY applied</div>
+                        <div class="couponsuccess_price" id="discountedPrice">₹80</div>
+                        <div class="couponsuccess_desc1">savings with this coupon</div>
+                        <div class="couponsuccess_successText">Woohoo! Your coupon is successfully applied</div>
+                        <div class="couponsuccess_btn" id="closeSuccessModal">Yay!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('scripts')
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const couponButtons = document.querySelectorAll('.copy-coupon-btn');
+
+        couponButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const couponCode = button.getAttribute('data-coupon');
+
+                // Copy coupon code to clipboard
+                navigator.clipboard.writeText(couponCode).then(function() {
+                    // Find the nearest copied message span
+                    const copiedMessage = button.closest('.coupon-container').querySelector('.coupon-copied-message');
+                    if (copiedMessage) {
+                        copiedMessage.style.display = 'inline';
+
+                        // Hide after 2 seconds
+                        setTimeout(() => {
+                            copiedMessage.style.display = 'none';
+                        }, 2000);
+                    }
+                }).catch(function(err) {
+                    console.error('Failed to copy coupon:', err);
+                });
+            });
+        });
+    });
+
+
+
+    document.getElementById('send-gift-checkbox').addEventListener('change', function() {
+        const giftAmountWrapper = document.querySelector('.gift-amount-wrapper');
+        const giftPriceRow = document.getElementById('gift-price');
+        const giftAmount = parseFloat(document.getElementById('gift').getAttribute('data-val')) || 0;
+
+        // Show/hide gift section
+        giftAmountWrapper.style.display = this.checked ? 'grid' : 'none';
+        giftPriceRow.style.display = this.checked ? 'flex' : 'none';
+
+        // Update grand total
+        updateGrandTotal(giftAmount, this.checked);
+    });
+
+    function updateGrandTotal(giftAmount, isGiftChecked) {
+        const subtotal = parseFloat({{ $subtotal }});
+        const discount = parseFloat({{ $discount }});
+
+        let grandTotal = subtotal + discount;
+
+        if (isGiftChecked) {
+            grandTotal += giftAmount;
+        }
+
+        const grandTotalElement = document.getElementById('grand_total');
+        grandTotalElement.setAttribute('data-val', grandTotal);
+        grandTotalElement.innerText = `₹${grandTotal.toFixed(2)}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const staticCoupons = {
+            '10FLY': 10, // 10% discount
+            'B10G2': 15, // Flat 15% discount
+            '20BIG': 20  // 20% discount
+        };
+
+        const subTotal = $('#grand_total').attr('data-val'); // Example subtotal (can be dynamically fetched)
+        console.log(subTotal);
+
+        // Handle static coupon apply buttons
+        document.querySelectorAll('.btn-input-apply').forEach(button => {
+            button.addEventListener('click', function() {
+                const couponCode = this.getAttribute('data-coupon');
+                applyCoupon(couponCode);
+            });
+        });
+
+        // Handle manual coupon apply button
+        document.getElementById('btnManualApply').addEventListener('click', function() {
+            const couponCode = document.getElementById('manualCoupon').value.trim().toUpperCase();
+            if (couponCode && staticCoupons[couponCode] !== undefined) {
+                applyCoupon(couponCode);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Invalid Coupon Code'
+                });
+            }
+        });
+
+        function applyCoupon(couponCode) {
+            const discountPercent = staticCoupons[couponCode];
+            const discountAmount = (subTotal * discountPercent) / 100;
+            const discountedPrice = discountAmount.toFixed(2);
+
+            const discountSpan = document.querySelector('.discounttag');
+            if (discountSpan) {
+                discountSpan.textContent = `-₹${discountAmount.toFixed(2)}`;
+            }
+
+            const grandTotalElement = document.getElementById('grand_total');
+            if (grandTotalElement) {
+                const originalGrandTotal = parseFloat(grandTotalElement.getAttribute('data-val'));
+                const newGrandTotal = (originalGrandTotal - discountAmount).toFixed(2);
+
+                grandTotalElement.textContent = `₹${newGrandTotal}`;
+            }
+
+
+            // Update modal content
+            document.getElementById('appliedCouponCode').textContent = couponCode + " applied";
+            document.getElementById('discountedPrice').textContent = "₹" + discountedPrice;
+
+            // Hide apply coupon modal if open
+            let applyCouponModal = bootstrap.Modal.getInstance(document.getElementById('applycoupon'));
+            if (applyCouponModal) {
+                applyCouponModal.hide();
+            }
+
+            // Show success modal
+            let successModal = new bootstrap.Modal(document.getElementById('couponAppliedModal'));
+            successModal.show();
+
+            // Hide apply coupon section and show applied coupon section
+            const couponApplyDiv = document.querySelector('.ApplyCoupon_couponApply');
+            const couponContainer = document.getElementById('couponContainer');
+
+            if (couponApplyDiv) {
+                couponApplyDiv.style.display = 'none';
+            }
+
+            // Add applied coupon section dynamically
+            const appliedCouponHTML = `
+                <div class="ApplyCoupon_couponItem" id="appliedCouponSection">
+                    <div class="ApplyCoupon_textContainer">
+                        <div class="ApplyCoupon_heading">${couponCode}</div>
+                        <div class="ApplyCoupon_description">Offer applied on the bill</div>
+                    </div>
+                    <span class="ApplyCoupon_button_remove" id="removeCouponButton">remove</span>
+                </div>
+            `;
+
+            couponContainer.innerHTML = appliedCouponHTML;
+
+            // Add remove coupon functionality
+            attachRemoveCouponListener();
+
+            saveCouponToSession(couponCode, discountAmount);
+        }
+
+        function saveCouponToSession(couponCode, discountAmount) {
+            fetch("{{ route('save_coupon') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')  // Ensure CSRF token for Laravel
+                },
+                body: JSON.stringify({
+                    coupon: couponCode,
+                    discount: discountAmount
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Coupon saved to session:', data);
+                loadCouponSection();
+            })
+            .catch(error => {
+                console.error('Error saving coupon to session:', error);
+            });
+        }
+
+        function attachRemoveCouponListener() {
+            const removeButton = document.getElementById('removeCouponButton');
+            if (removeButton) {
+                removeButton.addEventListener('click', function() {
+                    // Show the apply coupon section again
+                    const couponContainer = document.getElementById('couponContainer');
+
+                    const appliedCouponHTML = `
+                        <div class="ApplyCoupon_couponApply">
+                            <p>
+                                <span>
+                                    <img src="{{ asset('assets/images/tags.svg') }}" class="img-fluid" alt="">
+                                </span> Apply Coupon
+                            </p>
+                            <a href="javascript:;" data-bs-target="#applycoupon" data-bs-toggle="modal" class="btn custom-btn" id="applyCouponButton">Apply</a>
+                        </div>
+                    `;
+
+                    couponContainer.innerHTML = appliedCouponHTML;
+
+                    const discountSpan = document.querySelector('.discounttag');
+                    if (discountSpan) {
+                        discountSpan.textContent = `₹0.00`;
+                    }
+
+                    // Reset Grand Total to Original
+                    const grandTotalElement = document.getElementById('grand_total');
+                    if (grandTotalElement) {
+                        const originalGrandTotal = parseFloat(grandTotalElement.getAttribute('data-val'));
+                        grandTotalElement.textContent = `₹${originalGrandTotal.toFixed(2)}`;
+                    }
+
+                    removeCouponFromSession();
+                });
+            }
+        }
+
+        function removeCouponFromSession() {
+            fetch("{{ route('remove_coupon') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')  // CSRF token for Laravel
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Coupon removed from session:', data);
+                loadCouponSection();
+            })
+            .catch(error => {
+                console.error('Error removing coupon from session:', error);
+            });
+        }
+
+        function loadCouponSection() {
+            fetch("{{ route('get_applied_coupon') }}", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const couponContainer = document.getElementById('couponContainer');
+                if (data.coupon) {
+                    // Coupon exists, show applied coupon
+                    const appliedCouponHTML = `
+                        <div class="ApplyCoupon_couponItem" id="appliedCouponSection">
+                            <div class="ApplyCoupon_textContainer">
+                                <div class="ApplyCoupon_heading">${data.coupon.code}</div>
+                                <div class="ApplyCoupon_description">Offer applied on the bill</div>
+                            </div>
+                            <span class="ApplyCoupon_button_remove" id="removeCouponButton">remove</span>
+                        </div>
+                    `;
+                    couponContainer.innerHTML = appliedCouponHTML;
+                    const discountSpan = document.querySelector('.discounttag');
+                    if (discountSpan) {
+                        discountSpan.textContent = `-₹${data.coupon.discount.toFixed(2)}`;
+                    }
+
+                    const grandTotalElement = document.getElementById('grand_total');
+                    if (grandTotalElement) {
+                        const originalGrandTotal = parseFloat(grandTotalElement.getAttribute('data-val'));
+                        const newGrandTotal = (originalGrandTotal - data.coupon.discount).toFixed(2);
+                        grandTotalElement.textContent = `₹${newGrandTotal}`;
+                    }
+                    attachRemoveCouponListener();
+                } else {
+                    // No coupon, show Apply Coupon button
+                    const applyCouponHTML = `
+                        <div class="ApplyCoupon_couponApply">
+                            <p>
+                                <span>
+                                    <img src="${document.querySelector('#applyCouponButton')?.getAttribute('data-img-src')}" class="img-fluid" alt="">
+                                </span> Apply Coupon
+                            </p>
+                            <a href="javascript:;" data-bs-target="#applycoupon" data-bs-toggle="modal" class="btn custom-btn" id="applyCouponButton">Apply</a>
+                        </div>
+                    `;
+                    couponContainer.innerHTML = applyCouponHTML;
+
+                    const discountSpan = document.querySelector('.discounttag');
+                    if (discountSpan) {
+                        discountSpan.textContent = `₹0.00`;
+                    }
+
+                    // Reset Grand Total to Original
+                    const grandTotalElement = document.getElementById('grand_total');
+                    if (grandTotalElement) {
+                        const originalGrandTotal = parseFloat(grandTotalElement.getAttribute('data-val'));
+                        grandTotalElement.textContent = `₹${originalGrandTotal.toFixed(2)}`;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error loading coupon section:', error);
+            });
+        }
+
+        loadCouponSection();
+
+        // Call on page load
+        // document.addEventListener('DOMContentLoaded', loadCouponSection);
+
+
+    });
+
+</script>
 @endpush

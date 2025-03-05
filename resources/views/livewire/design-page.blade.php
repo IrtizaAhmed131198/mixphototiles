@@ -918,7 +918,7 @@
                                     <p class="">Grand Total</p>
                                     <h6 class="" id="grand-total" data-val="399">₹399</h6>
                                 </div>
-                                <button type="button" class="btn custom-btn filled"  onclick="window.location.href='{{ route('cart') }}'" id="add-to-cart"> Add to Cart
+                                <button type="button" class="btn custom-btn filled"  id="add-to-cart"> Add to Cart
                                     <svg width="21" height="21" viewBox="0 0 21 21"
                                         class="w-em h-em RightSidebar_addtocart_btn_icon__nIKa3"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -953,6 +953,9 @@
                             <input type="hidden" name="delete_session_image" id="delete_session_image" value="{{ route('delete_session_image') }}">
                             <input type="hidden" name="get_frame_config" id="get_frame_config" value="{{ route('get_frame_config') }}">
                             <input type="hidden" name="save_cropped_image" id="save_cropped_image" value="{{ route('save_cropped_image') }}">
+                            <input type="hidden" name="get_grand_total" id="get_grand_total" value="{{ route('get_grand_total') }}">
+                            <input type="hidden" name="get_all_images" id="get_all_images" value="{{ route('get_all_images') }}">
+                            <input type="hidden" name="add_to_cart" id="add_to_cart" value="{{ route('add_to_cart') }}">
 
                         </div>
                     </div>

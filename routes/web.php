@@ -24,5 +24,12 @@ Route::get('/get-session-images', [MainController::class, 'get_session_images'])
 Route::post('/delete-session-image', [MainController::class, 'delete_session_image'])->name('delete_session_image');
 Route::post('/get-frame-config', [MainController::class, 'get_frame_config'])->name('get_frame_config');
 Route::post('/save-cropped-image', [MainController::class, 'save_cropped_image'])->name('save_cropped_image');
+Route::get('/get-grand-total', [MainController::class, 'get_grand_total'])->name('get_grand_total');
+Route::get('/get-all-images', [MainController::class, 'get_all_images'])->name('get_all_images');
+Route::post('/add-to-cart', [MainController::class, 'add_to_cart'])->name('add_to_cart');
+
+Route::post('/save-coupon', [MainController::class, 'save_coupon'])->name('save_coupon');
+Route::post('/remove-coupon', [MainController::class, 'remove_coupon'])->name('remove_coupon');
+Route::get('/get-applied-coupon', [MainController::class, 'get_applied_coupon'])->name('get_applied_coupon');
 
 require __DIR__.'/auth.php';
