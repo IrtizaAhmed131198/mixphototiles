@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Livewire\HomePage;
 use App\Livewire\DesignPage;
 use App\Livewire\Collections;
 use App\Livewire\CollectionDetail;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', HomePage::class)->name('home');
 Route::get('/design', DesignPage::class)->name('design');
@@ -58,5 +59,10 @@ Route::get('/states', function () {
     ]);
 });
 
+
+Route::get('/myprofile',[ProfileController::class,'profile'])->name('profile');
+Route::get('/orders',[ProfileController::class,'orders'])->name('orders');
+Route::get('/address',[ProfileController::class,'address'])->name('address');
+Route::get('/resetpassword',[ProfileController::class,'resetpassword'])->name('resetpassword');
 
 require __DIR__.'/auth.php';
