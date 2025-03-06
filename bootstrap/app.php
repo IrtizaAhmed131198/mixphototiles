@@ -11,8 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Example of adding global middleware (you can add more as needed)
+        // $middleware->web([\App\Http\Middleware\VerifyCsrfToken::class]);
+        // $middleware->api([\App\Http\Middleware\Authenticate::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })->create();
+        // You could customize exception handling here if needed
+    })
+    ->create();

@@ -87,10 +87,8 @@
                                         </div>
 
                                     </div>
-
-
+                                    <div class="swiper-pagination"></div>
                                 </div>
-                                <div class="swiper-pagination"></div>
                             </div>
                         </div>
                     </div>
@@ -513,486 +511,128 @@
         <div class="HomeFrameSlider_sliderWrp position-relative">
             <div class="swiper mySwiper-grid px-0 mx-0 HomeFrameSlider_sliderFrames">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Wedding image" class="img-fluid" src="assets/images/Animal_1.webp">
+                    @for($i = 1; $i <= 3; $i++)
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-sm card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="Wedding image" class="img-fluid" src="assets/images/Animal_1.webp">
+                                    </div>
+                                    <p>Animal</p>
                                 </div>
-                                <p>Animal</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="nature image" class="img-fluid" src="assets/images/Birds.avif">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-xl card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="nature image" class="img-fluid" src="assets/images/Birds.avif">
+                                    </div>
+                                    <p>Birds</p>
                                 </div>
-                                <p>Birds</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-lg card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Childhood image" class="img-fluid" src="assets/images/Child.jpeg">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-lg card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="Childhood image" class="img-fluid" src="assets/images/Child.jpeg">
+                                    </div>
+                                    <p>Childhood</p>
                                 </div>
-                                <p>Childhood</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-md card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
+                                    </div>
+                                    <p>Dog</p>
                                 </div>
-                                <p>Dog</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Memory image" class="img-fluid" src="assets/images/Food.webp">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-sm card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="Memory image" class="img-fluid" src="assets/images/Food.webp">
+                                    </div>
+                                    <p>Food</p>
                                 </div>
-                                <p>Food</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/Memories_1.jpg">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-xl card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="Art image" class="img-fluid" src="assets/images/Memories_1.jpg">
+                                    </div>
+                                    <p>Memories</p>
                                 </div>
-                                <p>Memories</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-lg card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Travel image" class="img-fluid" src="assets/images/Nature.jpeg">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-lg card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="Travel image" class="img-fluid" src="assets/images/Nature.jpeg">
+                                    </div>
+                                    <p>Nature</p>
                                 </div>
-                                <p>Nature</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Passion image" class="img-fluid" src="assets/images/Passion.webp">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-md card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="Passion image" class="img-fluid" src="assets/images/Passion.webp">
+                                    </div>
+                                    <p>Passion</p>
                                 </div>
-                                <p>Passion</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_1.jpeg">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-sm card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="Art image" class="img-fluid" src="assets/images/wedding_1.jpeg">
+                                    </div>
+                                    <p>Wedding</p>
                                 </div>
-                                <p>Wedding</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_2.jpeg">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-xl card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="Art image" class="img-fluid" src="assets/images/wedding_2.jpeg">
+                                    </div>
+                                    <p>Wedding</p>
                                 </div>
-                                <p>Wedding</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Passion image" class="img-fluid" src="assets/images/Passion.webp">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-md card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="Passion image" class="img-fluid" src="assets/images/Passion.webp">
+                                    </div>
+                                    <p>Passion</p>
                                 </div>
-                                <p>Passion</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Memory image" class="img-fluid" src="assets/images/Food.webp">
+                        <div class="swiper-slide">
+                            <div class="HomeFrameSlider_frameCard fr-sm card">
+                                <div class="card-body">
+                                    <div class="HomeFrameSlider_frameImg ratio">
+                                        <img alt="Memory image" class="img-fluid" src="assets/images/Food.webp">
+                                    </div>
+                                    <p>Food</p>
                                 </div>
-                                <p>Food</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Wedding image" class="img-fluid" src="assets/images/Animal_1.webp">
-                                </div>
-                                <p>Animal</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Passion image" class="img-fluid" src="assets/images/Passion.webp">
-                                </div>
-                                <p>Passion</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Wedding image" class="img-fluid" src="assets/images/Animal_1.webp">
-                                </div>
-                                <p>Animal</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Wedding image" class="img-fluid" src="assets/images/Animal_1.webp">
-                                </div>
-                                <p>Animal</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Memory image" class="img-fluid" src="assets/images/Food.webp">
-                                </div>
-                                <p>Food</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Wedding image" class="img-fluid" src="assets/images/Animal_1.webp">
-                                </div>
-                                <p>Animal</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-lg card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Childhood image" class="img-fluid" src="assets/images/Child.jpeg">
-                                </div>
-                                <p>Childhood</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
-                                </div>
-                                <p>Dog</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
-                                </div>
-                                <p>Dog</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-lg card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Childhood image" class="img-fluid" src="assets/images/Child.jpeg">
-                                </div>
-                                <p>Childhood</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Memory image" class="img-fluid" src="assets/images/Food.webp">
-                                </div>
-                                <p>Food</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-lg card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Childhood image" class="img-fluid" src="assets/images/Child.jpeg">
-                                </div>
-                                <p>Childhood</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-lg card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Childhood image" class="img-fluid" src="assets/images/Child.jpeg">
-                                </div>
-                                <p>Childhood</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-lg card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Childhood image" class="img-fluid" src="assets/images/Child.jpeg">
-                                </div>
-                                <p>Childhood</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-lg card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Childhood image" class="img-fluid" src="assets/images/Child.jpeg">
-                                </div>
-                                <p>Childhood</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/Memories_1.jpg">
-                                </div>
-                                <p>Memories</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/Memories_1.jpg">
-                                </div>
-                                <p>Memories</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/Memories_1.jpg">
-                                </div>
-                                <p>Memories</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
-                                </div>
-                                <p>Dog</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/Memories_1.jpg">
-                                </div>
-                                <p>Memories</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
-                                </div>
-                                <p>Dog</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
-                                </div>
-                                <p>Dog</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_1.jpeg">
-                                </div>
-                                <p>Wedding</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
-                                </div>
-                                <p>Dog</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_1.jpeg">
-                                </div>
-                                <p>Wedding</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
-                                </div>
-                                <p>Dog</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_1.jpeg">
-                                </div>
-                                <p>Wedding</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_2.jpeg">
-                                </div>
-                                <p>Wedding</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-sm card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Memory image" class="img-fluid" src="assets/images/1704698493736.jpeg">
-                                </div>
-                                <p>Memory</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
-                                </div>
-                                <p>Dog</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_2.jpeg">
-                                </div>
-                                <p>Wedding</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_2.jpeg">
-                                </div>
-                                <p>Wedding</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_2.jpeg">
-                                </div>
-                                <p>Wedding</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-md card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
-                                </div>
-                                <p>Dog</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_2.jpeg">
-                                </div>
-                                <p>Wedding</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="HomeFrameSlider_frameCard fr-xl card">
-                            <div class="card-body">
-                                <div class="HomeFrameSlider_frameImg ratio">
-                                    <img alt="Art image" class="img-fluid" src="assets/images/wedding_2.jpeg">
-                                </div>
-                                <p>Wedding</p>
-                            </div>
-                        </div>
-                    </div>
+                    @endfor
                 </div>
             </div>
         </div>

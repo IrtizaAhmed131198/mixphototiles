@@ -176,8 +176,14 @@ class MainController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
 
+            // Original filename
+            // $originalFileName = $file->getClientOriginalName();
+
+            // // Replace spaces with hyphens in the filename
+            // $sanitizedFileName = str_replace(' ', '-', $originalFileName);
+
             // Generate a timestamped filename
-            $newFileName = time() . '_' . $file->getClientOriginalName();
+            $newFileName = time();
 
             // Save to public/uploads (make sure /public/uploads directory exists and is writable)
             $file->move(public_path('uploads'), $newFileName);
@@ -559,12 +565,22 @@ class MainController extends Controller
         // Grand Total Calculation
         $grandTotal = ($subTotal + $giftCardDiscount + $shipping) - $couponDiscount;
 
-        $user = new User();
-        $user->name = $get_address['full_name'];
-        $user->email = $get_address['email'];
-        $user->phone = $get_address['phone_number'];
-        $user->password = bcrypt('123456789');
-        $user->save();
+        $user = User::where('email', $get_address['email'])->first();
+
+        if ($user) {
+            // Update existing user
+            $user->name = $get_address['full_name'];
+            $user->phone = $get_address['phone_number'];
+            $user->save();
+        } else {
+            // Create new user
+            $user = new User();
+            $user->name = $get_address['full_name'];
+            $user->email = $get_address['email'];
+            $user->phone = $get_address['phone_number'];
+            $user->password = bcrypt('123456789');  // Set default password (optional)
+            $user->save();
+        }
 
 
         // Create order
@@ -604,7 +620,7 @@ class MainController extends Controller
         }
 
         // Clear cart and session items after order placed
-        session()->forget(['cart', 'applied_coupon', 'gift_card', 'shipping']);
+        session()->forget(['cart', 'applied_coupon', 'gift_card_applied', 'shipping', 'user_address']);
 
         $deleted = SessionImage::where('session_id', session()->getId())
             ->delete();

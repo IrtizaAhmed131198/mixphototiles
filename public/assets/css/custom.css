@@ -488,6 +488,7 @@ header {
 
 .main-banner-section {
     padding-bottom: 5rem;
+    margin-top: -5rem;
 }
 
 .heading-2 {
@@ -3426,3 +3427,27 @@ button.btn.custom-btn.transparent.copied svg {
 }
 
 /* order pg css end */
+
+
+.swiper.main-banner-slider .swiper-wrapper {
+    padding-bottom: 37px;
+}
+
+.swiper.main-banner-slider {
+    padding-bottom: 90px;
+}
+
+.main-banner-slider .swiper-pagination {
+    top: 358px;
+    z-index: 99999999999;
+}
+
+.frames-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.frames-main button {
+    margin-bottom: 40px;
+}

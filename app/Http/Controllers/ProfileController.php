@@ -24,4 +24,8 @@ class ProfileController extends Controller
     public function resetpassword() {
         return view('profile.resetpassword');
     }
+
+    public function frames() {
+        return view('profile.frames');
+    }
 }

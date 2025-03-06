@@ -7,7 +7,6 @@
     $subtotal = 0;
     $shipping = 39
 @endphp
-{{-- <input type="checkbox" id="send-gift-checkbox" {{ session('gift_card_applied') ? 'checked' : '' }}> --}}
 
 <section class="cartSection">
     <div class="container">
@@ -67,7 +66,7 @@
                     @endforeach
 
 
-                    <div class="pt-4 form-check giftcheck">
+                    {{-- <div class="pt-4 form-check giftcheck">
                         <input id="send-gift-checkbox" class="form-check-input" type="checkbox" {{ session('gift_card_applied') ? 'checked' : '' }}>
                         <label for="send-gift-checkbox" class="form-check-label">Send this as a gift
                             <svg xmlns="http://www.w3.org/2000/svg" width="19.053" height="17.5" viewBox="0 0 19.053 17.5" class="w-em h-em ps-1 fs-20">
@@ -83,7 +82,7 @@
                                 </g>
                             </svg>
                         </label>
-                    </div>
+                    </div> --}}
 
                     <div class="listGroup giftitemparent gift-amount-wrapper" style="display: none">
                         <figure class="carditemimage">

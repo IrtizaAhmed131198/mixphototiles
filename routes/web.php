@@ -1,6 +1,7 @@
 <?php
 
 use Livewire\Volt\Volt;
+use Livewire\Livewire;
 use App\Livewire\HomePage;
 use App\Livewire\DesignPage;
 use App\Livewire\Collections;
@@ -68,6 +69,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/myprofile',[ProfileController::class,'profile'])->name('profile');
 Route::get('/orders',[ProfileController::class,'orders'])->name('orders');
+Route::get('/frames',[ProfileController::class,'frames'])->name('frames');
 Route::get('/address',[ProfileController::class,'address'])->name('address');
 Route::get('/resetpassword',[ProfileController::class,'resetpassword'])->name('resetpassword');
 

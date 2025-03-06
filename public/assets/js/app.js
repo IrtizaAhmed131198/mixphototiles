@@ -1,3 +1,6 @@
+
+
+
 var swiper = new Swiper(".swiper-horizontal", {
     // slidesPerView: 4,
     spaceBetween: 30,
@@ -115,31 +118,6 @@ var swiper = new Swiper(".swiper-horizontal-2", {
     },
 });
 
-var swiper = new Swiper(".main-banner-slider", {
-    effect: "coverflow",
-    speed: 1000, // Transition duration in milliseconds for smooth animations
-    loop: true,
-    centeredSlides: true,
-    spaceBetween: 55,
-    grabCursor: true,
-    slidesPerView: "auto",
-    autoplay: {
-        delay: 1200,
-        disableOnInteraction: false,
-    },
-    coverflowEffect: {
-        rotate: 0,
-        stretch: 0,
-        depth: 45,
-        modifier: 2,
-        slideShadows: true,
-    },
-    pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-        dynamicBullets: true, // Enables dynamic bullet pagination
-    },
-});
 
 $(document).ready(function () {
     $(".popup-youtube, .popup-vimeo, .popup-gmaps").magnificPopup({
@@ -183,5 +161,32 @@ var swiper = new Swiper(".mySwiper", {
     navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
+    },
+});
+
+
+var swiper = new Swiper(".main-banner-slider", {
+    effect: "coverflow",
+    speed: 1000, // Transition duration in milliseconds for smooth animations
+    loop: true,
+    centeredSlides: true,
+    spaceBetween: 55,
+    grabCursor: true,
+    slidesPerView: "auto",
+    autoplay: {
+        delay: 1200,
+        disableOnInteraction: false,
+    },
+    coverflowEffect: {
+        rotate: 0,
+        stretch: 0,
+        depth: 45,
+        modifier: 2,
+        slideShadows: true,
+    },
+    pagination: {
+        el: ".swiper-pagination",
+        // clickable: true,
+        dynamicBullets: true, // Enables dynamic bullet pagination
     },
 });
