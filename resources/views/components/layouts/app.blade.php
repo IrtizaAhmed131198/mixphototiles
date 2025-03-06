@@ -76,6 +76,8 @@
 @livewireScripts
 <script src="{{ asset('assets/js/app.js') }}"></script>
 
+@include('ajax')
+
 @stack('scripts')
 
 @if (session('success'))

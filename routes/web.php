@@ -8,6 +8,7 @@ use App\Livewire\CollectionDetail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', HomePage::class)->name('home');
 Route::get('/design', DesignPage::class)->name('design');
@@ -58,6 +59,11 @@ Route::get('/states', function () {
         "Lakshadweep", "Puducherry"
     ]);
 });
+
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('forgot.password.post');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::get('/myprofile',[ProfileController::class,'profile'])->name('profile');
