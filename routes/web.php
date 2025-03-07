@@ -15,7 +15,7 @@ use App\Http\Controllers\ProductController;
 Route::get('/', HomePage::class)->name('home');
 Route::get('/design', DesignPage::class)->name('design');
 Route::get('/your-collection', Collections::class)->name('collections');
-Route::get('/collection/symmetry', CollectionDetail::class)->name('collections_detail');
+Route::get('/collection/{slug}', CollectionDetail::class)->name('collections_detail');
 
 Route::post('/update-frame-config', [MainController::class, 'update_config'])->name('update.frame.config');
 Route::get('/get-uploaded-images', [MainController::class, 'get_images'])->name('get.uploaded.images');

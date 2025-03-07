@@ -11,8 +11,7 @@ class Collections extends Component
 
     public function mount()
     {
-        $this->products = Product::select('id', 'name', 'price', 'discount', 'image')
-            ->where('type', 'collections')
+        $this->products = Product::where('type', 'collections')
             ->where('status', 1)
             ->get();
     }

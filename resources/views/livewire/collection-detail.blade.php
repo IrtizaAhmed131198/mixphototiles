@@ -25,12 +25,11 @@
 
                             <div class="Parentframe">
                                 <figure class="frameBackground">
-                                    <img src="{{ asset('assets/images/1700549009188.png') }}" class="imgfluid" alt="">
+                                    <img src="{{ asset($product->image) }}" class="imgfluid" alt="">
                                 </figure>
                                 <div class="framelayoutsParent">
                                     <!-- dynamic frames -->
                                     @for ($i = 1; $i <= 8; $i++)
-                                        <!-- frame {{ $i }} -->
                                         <div class="clusterFrameWrp" id="cluster-block-{{ $i }}">
                                             <div class="frame-main-wrap">
                                                 <div class="frameborder">
@@ -48,7 +47,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- frame {{ $i }} -->
                                     @endfor
 
                                     <!-- dynamic frames -->
@@ -59,10 +57,17 @@
                             </div>
                         </div>
 
+
+
                         <div class="swiper-slide">
-                            <figure class="frameBackground">
+                            @foreach ($product->additionalImages as $image)
+                                <figure class="frameBackground">
+                                    <img src="{{ asset($image->image_path) }}" alt="Additional Image" width="100">
+                                </figure>
+                            @endforeach
+                            {{-- <figure class="frameBackground">
                                 <img src="{{ asset('assets/images/1700549009289.webp') }}" class="imgfluid" alt="">
-                            </figure>
+                            </figure> --}}
                         </div>
                     </div>
                     <div class="swiper-button-next"></div>
@@ -74,14 +79,18 @@
                 <div class="parentRightAccordiance">
                     <div class="accordingheader">
                         <h3 class="heading-5">
-                            Symmetry
+                            {{ $product->name }}
                         </h3>
                         <div class="pricedetails">
                             <h5>
-                                <span class="currency">₹</span>3674
+                                @php
+                                    $discountAmount = ($product->price * $product->discount) / 100;
+                                    $finalPrice = $product->price - $discountAmount;
+                                @endphp
+                                <span class="currency">₹</span>{{ number_format($finalPrice, 2) }}
                             </h5>
                             <p class="discount">
-                                20% OFF
+                                {{ $product->discount }}% OFF
                             </p>
                         </div>
                         <p class="noted">
@@ -281,13 +290,7 @@
                     <div class="productdeatailslist">
                         <h5 class="heading-6">Product Details</h5>
                         <ul class="ClusterDetails_detailsList">
-                            <li>All sizes are in inches</li>
-                            <li>Box will contain frames with your images on the corresponding frames</li>
-                            <li>Frames are thin and super light, easy to ship and install</li>
-                            <li>Frames do not contain glass</li>
-                            <li>Frames with tape option are not re-stickable</li>
-                            <li>Frames are made from eco-friendly recycled polystyrene and printed on paper-free</li>
-                            <li>Vinyl media with water based inks that are easier on the environment</li>
+                            {!! $product->description !!}
                         </ul>
                     </div>
 

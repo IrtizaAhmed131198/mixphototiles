@@ -24,10 +24,11 @@
                 @php
                 $discountAmount = ($product->price * $product->discount) / 100;
                 $finalPrice = $product->price - $discountAmount;
+                $url = url('collection') . '/' . $product->slug;
                 @endphp
                 <div class="col-lg-3">
                     <div class="ClusterCard">
-                        <a href="{{ url('frames/' . $product->slug) }}">
+                        <a href="{{ $url }}">
                             <div class="ImgFrame">
                                 <img alt="{{ $product->name }}" class="img-fluid" src="{{ asset($product->image) }}">
                             </div>
