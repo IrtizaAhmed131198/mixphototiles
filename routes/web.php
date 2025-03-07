@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', HomePage::class)->name('home');
 Route::get('/design', DesignPage::class)->name('design');
@@ -69,8 +70,15 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/myprofile',[ProfileController::class,'profile'])->name('profile');
 Route::get('/orders',[ProfileController::class,'orders'])->name('orders');
-Route::get('/frames',[ProfileController::class,'frames'])->name('frames');
 Route::get('/address',[ProfileController::class,'address'])->name('address');
 Route::get('/resetpassword',[ProfileController::class,'resetpassword'])->name('resetpassword');
+
+Route::get('/frames',[ProductController::class,'index'])->name('frames.index');
+Route::get('/frames/data', [ProductController::class, 'getData'])->name('frames.data');
+Route::post('/frames/store', [ProductController::class, 'store'])->name('frames.store');
+Route::get('/frames/{id}/edit', [ProductController::class, 'edit'])->name('frames.edit');
+Route::post('/frames/{id}', [ProductController::class, 'update'])->name('frames.update');
+Route::delete('/frames/{id}', [ProductController::class, 'destroy'])->name('frames.destroy');
+Route::delete('/frames/{id}/delete-image', [ProductController::class, 'deleteAdditionalImage'])->name('frames.deleteImage');
 
 require __DIR__.'/auth.php';

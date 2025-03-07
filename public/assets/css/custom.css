@@ -3394,7 +3394,7 @@ button.btn.custom-btn.transparent.copied svg {
 }
 
 .address-modal .modal-dialog .modal-content {
-    height: 750px;
+    height: 1060px;
     border-radius: 0;
 }
 
@@ -3450,4 +3450,17 @@ button.btn.custom-btn.transparent.copied svg {
 
 .frames-main button {
     margin-bottom: 40px;
+}
+
+.ImgFrame {
+    overflow: hidden;
+}
+
+.ImgFrame:hover img {
+    transform: scale(1.1);
+    transition: all ease 0.5s;
+}
+
+.ImgFrame img {
+    transition: all ease 0.5s;
 }

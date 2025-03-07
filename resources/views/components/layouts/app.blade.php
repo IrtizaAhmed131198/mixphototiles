@@ -35,6 +35,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <!-- Dropify CSS -->
+    {{-- <link rel="stylesheet" href="{{ asset('vendor/dropify/dist/css/dropify.min.css') }}"> --}}
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -67,12 +70,19 @@
 <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
 <!-- sweetalert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- ckedor js -->
+<script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+<!-- Dropify JS -->
+{{-- <script src="{{asset('vendor/dropify/dist/js/dropify.min.js')}}"></script> --}}
+<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+<script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+<script>
+    CKEDITOR.replace('descriptionEditor');
+    CKEDITOR.replace('descriptionEditor2');
+</script>
+
 <script src="{{ asset('assets/js/dataTables.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.bootstrap5.js') }}"></script>
-
-<script>
-    new DataTable('#example');
-</script>
 @livewireScripts
 <script src="{{ asset('assets/js/app.js') }}"></script>
 

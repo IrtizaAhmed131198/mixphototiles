@@ -9,4 +9,9 @@ class Product extends Model
     protected $table = "products";
 
     protected $fillable = ['name', 'slug', 'description', 'price', 'discount', 'stock', 'image', 'status', 'type'];
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 }

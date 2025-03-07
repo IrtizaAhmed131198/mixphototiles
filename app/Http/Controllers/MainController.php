@@ -17,66 +17,6 @@ use Illuminate\Support\Facades\Session;
 
 class MainController extends Controller
 {
-    // public function update_config(Request $request)
-    // {
-    //     $imageData = $request->input('image');  // This is now a Base64 data URL (optional).
-    //     $configJson = $request->input('config');
-    //     $sessionId = session()->getId();
-
-    //     $imagePath = null;
-
-    //     if ($imageData) {
-    //         // Check if the image data is a Base64 data URL.
-    //         if (preg_match('/^data:image\/(\w+);base64,/', $imageData, $type)) {
-    //             $dataString = substr($imageData, strpos($imageData, ',') + 1);
-    //             $dataString = base64_decode($dataString);
-    //             // Determine file extension (default to jpg if not found)
-    //             $extension = strtolower($type[1]) ?: 'jpg';
-    //             // Generate a unique file name
-    //             $fileName = time().'_'.\Illuminate\Support\Str::random(10).'.'.$extension;
-    //             $imagePath = 'uploads/' . $fileName;
-
-    //             // Ensure the uploads directory exists in the public folder
-    //             $uploadDir = public_path('uploads');
-    //             if (!is_dir($uploadDir)) {
-    //                 mkdir($uploadDir, 0777, true);
-    //             }
-
-    //             // Save the file to the public/uploads folder
-    //             file_put_contents(public_path($imagePath), $dataString);
-    //         } else {
-    //             return response()->json([
-    //                 'success' => false,
-    //                 'message' => 'Invalid image data provided.'
-    //             ], 400);
-    //         }
-    //     }
-
-    //     // Find existing record (optional step - you need to decide what you match on)
-    //     $frameConfig = FrameConfiguration::where('session_id', $sessionId)->first();
-
-    //     if ($frameConfig) {
-    //         // Update existing record
-    //         $frameConfig->config = $configJson;
-
-    //         // Only update image_url if new image data was provided
-    //         if ($imagePath) {
-    //             $frameConfig->image_url = $imagePath;
-    //         }
-
-    //         $frameConfig->save();
-    //     } else {
-    //         // Create new record if no existing one found
-    //         $frameConfig = FrameConfiguration::create([
-    //             'config' => $configJson,
-    //             'image_url' => $imagePath,
-    //             'session_id' => $sessionId
-    //         ]);
-    //     }
-
-    //     return response()->json(['success' => true, 'data' => $frameConfig]);
-    // }
-
     public function update_config(Request $request)
     {
         $imageName = $request->input('image_name');
