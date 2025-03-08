@@ -2235,6 +2235,21 @@ button.clusterAddBtn__Rreup:hover {
     opacity: .8;
 }
 
+.clusterAddBtn__Rreup {
+    transition: all .3s ease-in-out;
+    background: #8e0e6d;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    opacity: 1;
+}
+
+.clusterAddBtn__Rreup:hover {
+    opacity: .8;
+}
+
 #cluster-block-1 {
     top: 200px;
     left: 165px;
@@ -2787,21 +2802,6 @@ figure.frameBackground img {
     align-items: center;
     justify-content: center;
     position: absolute;
-}
-
-button.clusterAddBtn__Rreup {
-    transition: all .3s ease-in-out;
-    background: #8e0e6d;
-    color: white;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: none;
-    opacity: 1;
-}
-
-button.clusterAddBtn__Rreup:hover {
-    opacity: .8;
 }
 
 #cluster-block-1 {

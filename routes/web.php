@@ -80,5 +80,11 @@ Route::get('/frames/{id}/edit', [ProductController::class, 'edit'])->name('frame
 Route::post('/frames/{id}', [ProductController::class, 'update'])->name('frames.update');
 Route::delete('/frames/{id}', [ProductController::class, 'destroy'])->name('frames.destroy');
 Route::delete('/frames/{id}/delete-image', [ProductController::class, 'deleteAdditionalImage'])->name('frames.deleteImage');
+Route::get('/frames/get-image-url', [ProductController::class, 'getProductImage'])->name('frames.getProductImage');
+Route::get('/frames/coordinates', [ProductController::class, 'post_coordinates'])->name('frames.post_coordinates');
+
+Route::get('/canvas', function () {
+    return view('canvas');
+});
 
 require __DIR__.'/auth.php';

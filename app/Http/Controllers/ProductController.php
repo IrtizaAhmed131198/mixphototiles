@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -22,7 +23,8 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'discount' => 'nullable|numeric',
             'main_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'additional_images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'no_coordinates_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'coordinates_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'status' => 'required|boolean',
         ]);
 
@@ -43,6 +45,24 @@ class ProductController extends Controller
             $mainImagePath = 'uploads/frames/' . $mainImageName;
         }
 
+        // Handle main image upload
+        $noCordImagePath = null;
+        if ($request->hasFile('no_coordinates_image')) {
+            $noCordImage = $request->file('no_coordinates_image');
+            $noCordImageName = uniqid('no_cord_') . '.' . $noCordImage->getClientOriginalExtension();
+            $noCordImage->move($uploadPath, $noCordImageName);
+            $noCordImagePath = 'uploads/frames/' . $noCordImageName;
+        }
+
+        // Handle main image upload
+        $cordImagePath = null;
+        if ($request->hasFile('coordinates_image')) {
+            $cordImage = $request->file('coordinates_image');
+            $cordImageName = uniqid('cord_') . '.' . $cordImage->getClientOriginalExtension();
+            $cordImage->move($uploadPath, $cordImageName);
+            $cordImagePath = 'uploads/frames/' . $cordImageName;
+        }
+
         // Save product to database
         $product = Product::create([
             'name' => $request->name,
@@ -51,21 +71,23 @@ class ProductController extends Controller
             'price' => $request->price,
             'discount' => $request->discount ?? 0,
             'image' => $mainImagePath,
+            'no_coordinates_image' => $noCordImagePath,
+            'coordinates_image' => $cordImagePath,
             'status' => $request->status,
             'type' => 'collections',
         ]);
 
-        if ($request->hasFile('additional_images')) {
-            foreach ($request->file('additional_images') as $image) {
-                $imageName = uniqid('additional_') . '.' . $image->getClientOriginalExtension();
-                $image->move($uploadPath, $imageName);
+        // if ($request->hasFile('additional_images')) {
+        //     foreach ($request->file('additional_images') as $image) {
+        //         $imageName = uniqid('additional_') . '.' . $image->getClientOriginalExtension();
+        //         $image->move($uploadPath, $imageName);
 
-                ProductImage::create([
-                    'product_id' => $product->id,
-                    'image_path' => 'uploads/frames/' . $imageName,
-                ]);
-            }
-        }
+        //         ProductImage::create([
+        //             'product_id' => $product->id,
+        //             'image_path' => 'uploads/frames/' . $imageName,
+        //         ]);
+        //     }
+        // }
 
         return redirect()->back()->with('success', 'Product created successfully!');
     }
@@ -88,7 +110,9 @@ class ProductController extends Controller
             })
             ->addColumn('action', function ($product) {
                 return '<button class="btn btn-sm btn-primary edit-frame" data-id="'.$product->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-product" data-id="'.$product->id.'">Delete</button>';
+                        <button class="btn btn-sm btn-danger delete-product" data-id="'.$product->id.'">Delete</button>
+                        <button class="btn btn-sm btn-success set-coordinates" data-id="'.$product->id.'" data-bs-toggle="modal"
+                                    data-bs-target="#coordinates">Set Coordinates</button>';
             })
             ->rawColumns(['id', 'image', 'action'])
             ->make(true);
@@ -109,12 +133,14 @@ class ProductController extends Controller
             'discount' => $product->discount,
             'status' => $product->status,
             'main_image' => asset($product->image),
-            'additional_images' => $additionalImages->map(function ($image) {
-                return [
-                    'id' => $image->id,
-                    'url' => asset($image->image_path),
-                ];
-            })
+            'no_coordinates_image' => asset($product->no_coordinates_image),
+            'coordinates_image' => asset($product->coordinates_image),
+            // 'additional_images' => $additionalImages->map(function ($image) {
+            //     return [
+            //         'id' => $image->id,
+            //         'url' => asset($image->image_path),
+            //     ];
+            // })
         ]);
     }
 
@@ -138,18 +164,32 @@ class ProductController extends Controller
             $product->image = 'uploads/frames/' . $mainImageName;
         }
 
-        // Handle Additional Images
-        if ($request->hasFile('additional_images')) {
-            foreach ($request->file('additional_images') as $image) {
-                $imageName = uniqid('additional_') . '.' . $image->getClientOriginalExtension();
-                $image->move($uploadPath, $imageName);
-
-                ProductImage::create([
-                    'product_id' => $product->id,
-                    'image_path' => 'uploads/frames/' . $imageName,
-                ]);
-            }
+        if ($request->hasFile('no_coordinates_image')) {
+            $noCordImage = $request->file('no_coordinates_image');
+            $noCordImageName = uniqid('no_cord_') . '.' . $noCordImage->getClientOriginalExtension();
+            $noCordImage->move($uploadPath, $noCordImageName);
+            $product->no_coordinates_image = 'uploads/frames/' . $noCordImageName;
         }
+
+        if ($request->hasFile('coordinates_image')) {
+            $cordImage = $request->file('coordinates_image');
+            $cordImageName = uniqid('cord_') . '.' . $cordImage->getClientOriginalExtension();
+            $cordImage->move($uploadPath, $cordImageName);
+            $product->coordinates_image = 'uploads/frames/' . $cordImageName;
+        }
+
+        // // Handle Additional Images
+        // if ($request->hasFile('additional_images')) {
+        //     foreach ($request->file('additional_images') as $image) {
+        //         $imageName = uniqid('additional_') . '.' . $image->getClientOriginalExtension();
+        //         $image->move($uploadPath, $imageName);
+
+        //         ProductImage::create([
+        //             'product_id' => $product->id,
+        //             'image_path' => 'uploads/frames/' . $imageName,
+        //         ]);
+        //     }
+        // }
 
         $product->save();
 
@@ -214,5 +254,35 @@ class ProductController extends Controller
             'success' => true,
             'message' => 'Product deleted successfully.'
         ]);
+    }
+
+    public function getProductImage(Request $request)
+    {
+        $product = Product::find($request->id);
+
+        if ($product && $product->coordinates_image) {
+            return response()->json(['success' => true, 'image_url' => asset($product->coordinates_image)]);
+        }
+    }
+
+    public function post_coordinates(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:products,id',
+            'coordinates' => 'required|json'
+        ]);
+
+        // Retrieve product using Eloquent
+        $product = Product::find($request->id);
+
+        if (!$product) {
+            return response()->json(['success' => false, 'message' => 'Product not found.'], 404);
+        }
+
+        // Save coordinates
+        $product->coordinates = $request->coordinates;
+        $product->save();
+
+        return response()->json(['success' => true, 'message' => 'Coordinates saved successfully.']);
     }
 }

@@ -2,6 +2,10 @@
 
 @section('title', 'Collectio Detail')
 
+@php
+    $clusters = json_decode($product->coordinates);
+@endphp
+
 @section('content')
 <section class="productDetailSection">
     <div class="container">
@@ -9,9 +13,9 @@
             <div class="col-lg-12">
                 <nav aria-label="breadcrumb" class="">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item text-decoration-none"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item text-decoration-none"><a href="/clusters">Clusters</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Symmetry</li>
+                        <li class="breadcrumb-item text-decoration-none"><a href="{{ route('home') }}">Home</a></li>
+                        <li class="breadcrumb-item text-decoration-none"><a href="{{ route('collections') }}">Collections</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $product->name }}</li>
                     </ol>
                 </nav>
             </div>
@@ -25,30 +29,40 @@
 
                             <div class="Parentframe">
                                 <figure class="frameBackground">
-                                    <img src="{{ asset($product->image) }}" class="imgfluid" alt="">
+                                    <img src="{{ asset($product->no_coordinates_image) }}" class="imgfluid" alt="">
                                 </figure>
                                 <div class="framelayoutsParent">
+
                                     <!-- dynamic frames -->
-                                    @for ($i = 1; $i <= 8; $i++)
-                                        <div class="clusterFrameWrp" id="cluster-block-{{ $i }}">
+                                    @foreach ($clusters as $cluster)
+                                        <div class="clusterFrameWrp" id="cluster-block-{{ $cluster->id }}"
+                                            style="position: absolute;
+                                                top: {{ $cluster->y }}px;
+                                                left: {{ $cluster->x }}px;
+                                                width: {{ $cluster->width }}px;
+                                                height: {{ $cluster->height }}px;"
+                                            onclick="document.getElementById('upload-photo-cluster-{{ $cluster->id }}').click();">
+
+                                            <input type="file" id="upload-photo-cluster-{{ $cluster->id }}" class="image-input d-none" accept="image/*"
+                                                onchange="previewImage(event, '{{ $cluster->id }}')">
+
                                             <div class="frame-main-wrap">
                                                 <div class="frameborder">
-                                                    <div class="frameinner">
-                                                        <label for="upload-photo-cluster">
-                                                            <button type="button" class="clusterAddBtn__Rreup">
-                                                                <div class="ratio ratio-1x1 d-flex align-items-center justify-content-center">
-                                                                    <svg width="16" height="16" class="w-em h-em d-block mw-100 mh-100 top-50 start-50 translate-middle" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"></path>
-                                                                    </svg>
-                                                                </div>
-                                                            </button>
-                                                        </label>
+                                                    <div class="frameinner d-flex align-items-center justify-content-center">
+                                                        <!-- Default Plus Icon -->
+                                                        <svg width="32" height="32" class="image-placeholder" fill="currentColor" viewBox="0 0 16 16">
+                                                            <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
+                                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
+                                                            </path>
+                                                        </svg>
+
+                                                        <!-- Image Preview -->
+                                                        <img src="" id="preview-{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    @endfor
-
+                                    @endforeach
                                     <!-- dynamic frames -->
                                 </div>
 
@@ -59,16 +73,13 @@
 
 
 
+                        {{-- @foreach ($product->additionalImages as $image) --}}
                         <div class="swiper-slide">
-                            @foreach ($product->additionalImages as $image)
                                 <figure class="frameBackground">
-                                    <img src="{{ asset($image->image_path) }}" alt="Additional Image" width="100">
+                                    <img src="{{ asset($product->coordinates_image) }}" alt="Additional Image" width="100">
                                 </figure>
-                            @endforeach
-                            {{-- <figure class="frameBackground">
-                                <img src="{{ asset('assets/images/1700549009289.webp') }}" class="imgfluid" alt="">
-                            </figure> --}}
-                        </div>
+                            </div>
+                        {{-- @endforeach --}}
                     </div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
@@ -312,5 +323,22 @@
 @endsection
 
 @push('scripts')
+<script>
+function previewImage(event, clusterId) {
+    let input = event.target;
+    let preview = document.getElementById(`preview-${clusterId}`);
+    let placeholder = document.querySelector(`#cluster-block-${clusterId} .image-placeholder`);
 
+    if (input.files && input.files[0]) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove("d-none"); // Show image preview
+            placeholder.classList.add("d-none"); // Hide the plus icon
+        };
+        reader.readAsDataURL(input.files[0]); // Convert image to Base64 for preview
+    }
+}
+
+</script>
 @endpush
