@@ -293,6 +293,10 @@
 
 @push('scripts')
 <script>
+    CKEDITOR.replace('descriptionEditor');
+    CKEDITOR.replace('descriptionEditor2');
+</script>
+<script>
     document.getElementById('mainImageInput').addEventListener('change', function(event) {
         const previewContainer = document.getElementById('mainImagePreview');
         previewContainer.innerHTML = ''; // Clear existing preview

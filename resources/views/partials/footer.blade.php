@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md">
-                    <img alt="Fremeley" src="assets/images/logo-white.png" style=" width: 44%; height: 131px; ">
+                    <img alt="Fremeley" src="{{ asset('assets/images/logo-white.png') }}" style=" width: 44%; height: 131px; ">
                     <div class="Footer_socialNav nav">
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"

@@ -2,6 +2,63 @@
 
 @section('title', 'Collectio Detail')
 
+@push('css')
+<style>
+    .black-frame {
+        border-image : url("{{ asset('assets/images/black-frame.png') }}");
+        border-image-slice: 30;
+        border-image-width: 3px;
+        border-image-outset: 0;
+        border-image-repeat: stretch;
+    }
+    .dark-frame {
+        border-image : url("{{ asset('assets/images/brown-frame.png') }}");
+        border-image-slice: 30;
+        border-image-width: 3px;
+        border-image-outset: 0;
+        border-image-repeat: stretch;
+    }
+    .white-frame {
+        border-image : url("{{ asset('assets/images/white-frame.png') }}");
+        border-image-slice: 30;
+        border-image-width: 3px;
+        border-image-outset: 0;
+        border-image-repeat: stretch;
+    }
+    .light-frame {
+        border-image : url("{{ asset('assets/images/light-frame.png') }}");
+        border-image-slice: 30;
+        border-image-width: 3px;
+        border-image-outset: 0;
+        border-image-repeat: stretch;
+    }
+
+    .frameinner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .frameinner-pad {
+        padding: 14px
+    }
+
+    .bold-image-width {
+        border-image-width: 4px !important;
+        border-image-slice: 30 fill !important;
+        border-image-repeat: round !important;
+        border: 4px solid !important;
+    }
+</style>
+@endpush
+
 @php
     $clusters = json_decode($product->coordinates);
 @endphp
@@ -27,15 +84,15 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
 
-                            <div class="Parentframe">
+                            <div class="Parentframe" id="zoomContainer">
                                 <figure class="frameBackground">
-                                    <img src="{{ asset($product->no_coordinates_image) }}" class="imgfluid" alt="">
+                                    <img id="zoomImage" src="{{ asset($product->no_coordinates_image) }}" class="imgfluid" alt="">
                                 </figure>
                                 <div class="framelayoutsParent">
 
                                     <!-- dynamic frames -->
                                     @foreach ($clusters as $cluster)
-                                        <div class="clusterFrameWrp" id="cluster-block-{{ $cluster->id }}"
+                                        <div class="clusterFrameWrp black-frame" id="cluster-block-{{ $cluster->id }}"
                                             style="position: absolute;
                                                 top: {{ $cluster->y }}px;
                                                 left: {{ $cluster->x }}px;
@@ -48,7 +105,7 @@
 
                                             <div class="frame-main-wrap">
                                                 <div class="frameborder">
-                                                    <div class="frameinner d-flex align-items-center justify-content-center">
+                                                    <div class="frameinner frameinner-pad d-flex align-items-center justify-content-center">
                                                         <!-- Default Plus Icon -->
                                                         <svg width="32" height="32" class="image-placeholder" fill="currentColor" viewBox="0 0 16 16">
                                                             <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
@@ -56,9 +113,9 @@
                                                             </path>
                                                         </svg>
 
-                                                        <!-- Image Preview -->
                                                         <img src="" id="preview-{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview">
                                                     </div>
+                                                    <!-- Image Preview -->
                                                 </div>
                                             </div>
                                         </div>
@@ -66,7 +123,7 @@
                                     <!-- dynamic frames -->
                                 </div>
 
-                                <button type="button" id="#zoombtn" class="btn custom-btn filled rounded">Zoom 1.5x</button>
+                                <button type="button" id="zoombtn" class="btn custom-btn filled rounded">Zoom 1.5x</button>
 
                             </div>
                         </div>
@@ -98,7 +155,7 @@
                                     $discountAmount = ($product->price * $product->discount) / 100;
                                     $finalPrice = $product->price - $discountAmount;
                                 @endphp
-                                <span class="currency">₹</span>{{ number_format($finalPrice, 2) }}
+                                <span class="currency" data-val="{{ $finalPrice }}">₹{{ number_format($finalPrice, 2) }}</span>
                             </h5>
                             <p class="discount">
                                 {{ $product->discount }}% OFF
@@ -136,11 +193,11 @@
                                 <div id="flush-collapse1" class="accordion-collapse collapse" data-bs-parent="#customizedoptions">
                                     <div class="accordion-body">
 
-                                        <ul class="designToolPropertiesLists CustomizeOption">
+                                        <ul class="designToolPropertiesLists CustomizeOption select-finish">
                                             <!-- Dropdown menu links -->
 
 
-                                            <li type="button" class="parentProperties frame-change active">
+                                            <li type="button" class="parentProperties frame-change active" data-name="Normal" data-price="399">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
                                                 </figure>
@@ -149,7 +206,7 @@
                                                 </div>
                                             </li>
 
-                                            <li type="button" class="parentProperties frame-change">
+                                            <li type="button" class="parentProperties frame-change" data-name="Matte" data-price="453">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
                                                 </figure>
@@ -158,7 +215,7 @@
                                                 </div>
                                             </li>
 
-                                            <li type="button" class="parentProperties frame-change">
+                                            <li type="button" class="parentProperties frame-change" data-name="Gloss" data-price="492">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
                                                 </figure>
@@ -167,7 +224,7 @@
                                                 </div>
                                             </li>
 
-                                            <li type="button" class="parentProperties frame-change">
+                                            <li type="button" class="parentProperties frame-change" data-name="Canvas" data-price="537">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
                                                 </figure>
@@ -194,11 +251,12 @@
                                 <div id="flush-collapse2" class="accordion-collapse collapse" data-bs-parent="#customizedoptions">
                                     <div class="accordion-body">
 
-                                        <ul class="designToolPropertiesLists CustomizeOption">
+                                        <ul class="designToolPropertiesLists CustomizeOption select-color">
                                             <!-- Dropdown menu links -->
 
 
-                                            <li type="button" class="parentProperties frame-change active">
+                                            <li type="button" class="parentProperties frame-change active" data-price="0"
+                                                data-color="Black" data-class="black-frame">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
                                                 </figure>
@@ -207,7 +265,8 @@
                                                 </div>
                                             </li>
 
-                                            <li type="button" class="parentProperties frame-change">
+                                            <li type="button" class="parentProperties frame-change" data-price="0"
+                                                data-color="Dark" data-class="dark-frame">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
                                                 </figure>
@@ -216,7 +275,8 @@
                                                 </div>
                                             </li>
 
-                                            <li type="button" class="parentProperties frame-change">
+                                            <li type="button" class="parentProperties frame-change" data-price="0"
+                                                data-color="White" data-class="white-frame">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
                                                 </figure>
@@ -225,7 +285,8 @@
                                                 </div>
                                             </li>
 
-                                            <li type="button" class="parentProperties frame-change">
+                                            <li type="button" class="parentProperties frame-change" data-price="0"
+                                                data-color="Light" data-class="light-frame">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
                                                 </figure>
@@ -252,10 +313,11 @@
                                 <div id="flush-collapse3" class="accordion-collapse collapse" data-bs-parent="#customizedoptions">
                                     <div class="accordion-body">
 
-                                        <ul class="designToolPropertiesLists CustomizeOption">
+                                        <ul class="designToolPropertiesLists CustomizeOption select-frame">
                                             <!-- Dropdown menu links -->
 
-                                            <li type="button" class="parentProperties frame-change active">
+                                            <li type="button" class="parentProperties frame-change active" data-name="classic"
+                                                data-class="classic-image-width">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
                                                 </figure>
@@ -264,7 +326,8 @@
                                                 </div>
                                             </li>
 
-                                            <li type="button" class="parentProperties frame-change">
+                                            <li type="button" class="parentProperties frame-change" data-name="bold"
+                                                data-class="bold-image-width">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
                                                 </figure>
@@ -285,10 +348,10 @@
                     </div>
 
                     <div class="addtocardbtn">
-                        <button type="button" class="btn custom-btn filled">
+                        <button type="button" id="add-to-cart-btn" onclick="validateImages()" class="btn custom-btn filled">
                             Add to Cart
                         </button>
-                        <button type="button" class="btn custom-btn transparent copied">
+                        <button type="button" id="copyUrlBtn" class="btn custom-btn transparent copied">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12.58" height="12.58" viewBox="0 0 12.58 12.58" class="w-em h-em">
                                 <g transform="translate(0.5 0.5)">
                                     <path d="M14.8,13.5h5.867a1.3,1.3,0,0,1,1.3,1.3v5.867a1.3,1.3,0,0,1-1.3,1.3H14.8a1.3,1.3,0,0,1-1.3-1.3V14.8A1.3,1.3,0,0,1,14.8,13.5Z" transform="translate(-10.395 -10.395)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
@@ -296,6 +359,7 @@
                                 </g>
                             </svg>
                         </button>
+                        <p id="copyMessage" style="display: none; font-size: 14px; color: #ff0168; margin-top: 2px; margin-left: 23rem;">Copied!</p>
                     </div>
 
                     <div class="productdeatailslist">
@@ -338,6 +402,149 @@ function previewImage(event, clusterId) {
         };
         reader.readAsDataURL(input.files[0]); // Convert image to Base64 for preview
     }
+}
+
+
+document.querySelectorAll('.select-frame .parentProperties.frame-change').forEach(item => {
+    item.addEventListener('click', function() {
+        document.querySelectorAll('.select-frame .parentProperties.frame-change').forEach(li => li.classList.remove('active'));
+        this.classList.add('active');
+
+        // Get the selected frame color attributes
+        let newFrameClass = this.getAttribute('data-class'); // Use 'data-class' instead of 'data-src'
+        let name = this.getAttribute('data-name'); // Use 'data-class' instead of 'data-src'
+        let framinners = document.querySelectorAll('.frameinner'); // Note: It's now framinners (plural)
+
+        if(name == "bold") {
+            framinners.forEach(framinner => { // Loop over the NodeList
+                framinner.classList.remove('frameinner-pad');
+            });
+        } else {
+            framinners.forEach(framinner => { // Loop over the NodeList
+                framinner.classList.add('frameinner-pad');
+            });
+        }
+
+
+        // Update all clusters with the new frame class
+        document.querySelectorAll('.clusterFrameWrp').forEach(cluster => {
+            cluster.classList.remove('bold-image-width', 'box-shadow-dark'); // Remove all possible classes
+            cluster.classList.add(newFrameClass);
+        });
+    });
+});
+
+document.querySelectorAll('.select-color .parentProperties.frame-change').forEach(item => {
+    item.addEventListener('click', function() {
+        // Remove active class from all color options
+        document.querySelectorAll('.select-color .parentProperties.frame-change').forEach(li => li.classList.remove('active'));
+        this.classList.add('active');
+
+        // Get the selected frame color attributes
+        let newFrameClass = this.getAttribute('data-class'); // Use 'data-class' instead of 'data-src'
+        let newPrice = parseFloat(this.getAttribute('data-price')) || 0;
+
+        // Update all clusters with the new frame class
+        document.querySelectorAll('.clusterFrameWrp').forEach(cluster => {
+            cluster.classList.remove('black-frame', 'dark-frame', 'white-frame', 'light-frame'); // Remove all possible classes
+            cluster.classList.add(newFrameClass);
+        });
+
+        // Update the total price
+        let currencyElement = document.querySelector('.currency');
+        let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
+        let finalPrice = basePrice + newPrice;
+        currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+    });
+});
+
+document.querySelectorAll('.select-finish .parentProperties.frame-change').forEach(item => {
+    item.addEventListener('click', function() {
+        document.querySelectorAll('.select-finish .parentProperties.frame-change').forEach(li => li.classList.remove('active'));
+        this.classList.add('active');
+
+        let name = this.getAttribute('data-name');
+        let newPrice = parseFloat(this.getAttribute('data-price')) || 0;
+
+        // Always get the base price from the currency element
+        let currencyElement = document.querySelector('.currency');
+        let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
+
+        // Calculate final price correctly
+        let finalPrice = basePrice + newPrice;
+        currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+    });
+});
+
+document.getElementById("zoombtn").addEventListener("click", function() {
+    let zoomContainer = document.getElementById("zoomContainer");
+    let button = document.getElementById("zoombtn");
+
+    if (zoomContainer.style.transform === "scale(2)") {
+        zoomContainer.style.transform = "scale(1)"; // Zoom out
+        button.textContent = "Zoom In"; // Change button text
+    } else {
+        zoomContainer.style.transform = "scale(2)"; // Zoom in
+        button.textContent = "Zoom Out"; // Change button text
+    }
+
+    zoomContainer.style.transition = "transform 0.3s ease-in-out"; // Smooth effect
+});
+
+document.getElementById("copyUrlBtn").addEventListener("click", function() {
+    let currentUrl = window.location.href; // Get current page URL
+    navigator.clipboard.writeText(currentUrl).then(() => {
+        let copyMessage = document.getElementById("copyMessage");
+        copyMessage.style.display = "block"; // Show 'Copied' label
+
+        // Hide the label after 2 seconds
+        setTimeout(() => {
+            copyMessage.style.display = "none";
+        }, 2000);
+    }).catch(err => {
+        console.error("Failed to copy URL: ", err);
+    });
+});
+
+function validateImages() {
+    let isValid = true;
+    const clusters = @json($clusters);  // Pass the clusters data to JavaScript
+    let currentUrl = window.location.href;
+
+    clusters.forEach(cluster => {
+        let imagePreview = document.getElementById(`preview-${cluster.id}`);
+        console.log(imagePreview, imagePreview.src);
+
+        if (!imagePreview.src || imagePreview.src === currentUrl) {
+            // Handle the empty or uninitialized state
+            isValid = false;
+            document.getElementById(`cluster-block-${cluster.id}`).style.border = '2px solid red';
+        } else {
+            document.getElementById(`cluster-block-${cluster.id}`).style.border = ''; // Remove any previous highlight
+        }
+    });
+
+    if (!isValid) {
+        // Show a SweetAlert2 error message
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please upload an image for all frames before adding to cart.',
+            confirmButtonText: 'OK'
+        });
+        return false;  // Prevent form submission or action
+    }
+
+    // Proceed with add to cart logic if all images are uploaded
+    // You can add your logic to add the item to the cart here
+    Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'All images uploaded! Proceeding to add to cart.',
+        confirmButtonText: 'Proceed'
+    });
+
+    return true;
 }
 
 </script>

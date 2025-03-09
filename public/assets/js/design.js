@@ -549,6 +549,7 @@ document.getElementById('remove-image').addEventListener('click', async function
         if (imgElement) {
             const imageSrc = imgElement.getAttribute('src');
             const imageName = imageSrc.split('/').pop(); // Extract filename from src
+            console.log(imageName);
 
             // Confirm before deleting
             const confirmDelete = await Swal.fire({
@@ -1113,6 +1114,11 @@ $(document).ready(function () {
                         'z-index': '-1',
                         'padding': '15px'
                     });
+
+                    let imgElement = document.querySelector('.swiper-slide-active img');
+                    if (imgElement) {
+                        imgElement.src = response.file_url; // Replace with your new image path
+                    }
 
                 } else {
                     Swal.fire({

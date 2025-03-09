@@ -11,8 +11,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('assets/favicon/site.webmanifest') }}">
-    <link rel="icon" type="image/png" sizes="192x192"
-        href="{{ asset('assets/favicon/android-chrome-192x192.png') }}">
     <link rel="icon" type="image/png" sizes="512x512"
         href="{{ asset('assets/favicon/android-chrome-512x512.png') }}">
     <link rel="shortcut icon" href="{{ asset('assets/favicon/favicon.ico') }}">
@@ -76,10 +74,6 @@
 {{-- <script src="{{asset('vendor/dropify/dist/js/dropify.min.js')}}"></script> --}}
 <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
 <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
-<script>
-    CKEDITOR.replace('descriptionEditor');
-    CKEDITOR.replace('descriptionEditor2');
-</script>
 
 <script src="{{ asset('assets/js/dataTables.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.bootstrap5.js') }}"></script>
