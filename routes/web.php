@@ -51,14 +51,14 @@ Route::post('/update-gift-session', function (\Illuminate\Http\Request $request)
 
 Route::get('/states', function () {
     return response()->json([
-        "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
-        "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
-        "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
-        "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
-        "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
-        "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands",
-        "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi",
-        "Lakshadweep", "Puducherry"
+        "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+        "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+        "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
+        "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+        "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+        "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+        "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
+        "Wisconsin", "Wyoming"
     ]);
 });
 
@@ -82,6 +82,8 @@ Route::delete('/frames/{id}', [ProductController::class, 'destroy'])->name('fram
 Route::delete('/frames/{id}/delete-image', [ProductController::class, 'deleteAdditionalImage'])->name('frames.deleteImage');
 Route::get('/frames/get-image-url', [ProductController::class, 'getProductImage'])->name('frames.getProductImage');
 Route::get('/frames/coordinates', [ProductController::class, 'post_coordinates'])->name('frames.post_coordinates');
+
+Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 
 Route::get('/canvas', function () {
     return view('canvas');

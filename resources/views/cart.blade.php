@@ -36,7 +36,7 @@
                                     {{ $item['name'] }}
                                 </p>
                                 <div class="cardlistaction">
-                                    <button type="button" class="CartListItem_action remove-item" data-product-id="{{ $item['product_id'] }}">
+                                    <button type="button" class="CartListItem_action remove-item" data-product-id="{{ $item['product_id'] }}" data-type="{{ $item['type'] }}">
                                         <svg width="15.9" height="17.5" class="w-em h-em pe-1 fs-16" viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
                                             <g transform="translate(-2.25 -1.25)">
                                                 <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
@@ -48,7 +48,7 @@
                                         </svg>
                                         Remove
                                     </button>
-                                    <button type="button" class="CartListItem_action edit-item" data-product-id="{{ $item['product_id'] }}" data-image-name="{{ $item['image'] }}">
+                                    <button type="button" class="CartListItem_action edit-item" data-product-id="{{ $item['product_id'] }}" data-image-name="{{ $item['image'] }}" data-type="{{ $item['type'] }}" data-slug="{{ $item['slug'] }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="15.615" height="14.926" viewBox="0 0 15.615 14.926" class="w-em h-em pe-1 fs-16">
                                             <g transform="translate(-2.25 -2.129)">
                                                 <path d="M12,20h7.058" transform="translate(-1.942 -3.695)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
@@ -714,13 +714,28 @@
 
     document.querySelectorAll('.edit-item').forEach(button => {
         button.addEventListener('click', function() {
-            const imageNameO = button.getAttribute('data-image-name'); // Get image name from data attribute
-            const imageName = imageNameO.replace(`${window.location.origin}/`, '');
-            const designUrl = `{{ route('design') }}?image_name=${encodeURIComponent(imageNameO)}`;
+            const imageType = button.getAttribute('data-type');
+            const imageSlug = button.getAttribute('data-slug');
+            const imageName = button.getAttribute('data-image-name'); // Get image name from data attribute\
+            let filePath = imageName.split('/').pop();
+            console.log(filePath);
 
-            window.location.href = designUrl; // Redirect to design page with query param
+            if (imageType === "manual") {
+                // Case: User uploaded a manual image
+                const designUrl = `{{ route('design') }}?image_name=${encodeURIComponent(imageName)}`;
+                window.location.href = designUrl; // Redirect to design page
+            }
+            else if (imageType === "collection") {
+                // Case: Image generated from collection
+                const editUrl = `{{ url('collection') }}/${imageSlug}?image_name=${encodeURIComponent(filePath)}`;
+                window.location.href = editUrl; // Redirect to edit collection product
+            }
+            else {
+                alert("Editing is not supported for this item.");
+            }
         });
     });
+
 
     function updateCartAndRedirect() {
         const grandTotalElement = document.getElementById('subtotal');

@@ -62,6 +62,7 @@
 
 @php
     $clusters = json_decode($product->coordinates);
+    // dd($collectionImages[0]['image']);
 @endphp
 
 @section('content')
@@ -91,37 +92,69 @@
                                 </figure>
                                 <div class="framelayoutsParent">
 
-                                    <!-- dynamic frames -->
-                                    @foreach ($clusters as $cluster)
-                                        <div class="clusterFrameWrp black-frame" id="cluster-block-{{ $cluster->id }}"
-                                            style="position: absolute;
-                                                top: {{ $cluster->y }}px;
-                                                left: {{ $cluster->x }}px;
-                                                width: {{ $cluster->width }}px;
-                                                height: {{ $cluster->height }}px;"
-                                            onclick="document.getElementById('upload-photo-cluster-{{ $cluster->id }}').click();">
+                                    @if($collectionImages != null)
+                                        <!-- dynamic frames -->
+                                        @foreach ($clusters as $key => $cluster)
+                                            <div class="clusterFrameWrp black-frame" id="cluster-block-{{ $cluster->id }}"
+                                                style="position: absolute;
+                                                    top: {{ $cluster->y }}px;
+                                                    left: {{ $cluster->x }}px;
+                                                    width: {{ $cluster->width }}px;
+                                                    height: {{ $cluster->height }}px;"
+                                                onclick="document.getElementById('upload-photo-cluster-{{ $cluster->id }}').click();">
 
-                                            <input type="file" id="upload-photo-cluster-{{ $cluster->id }}" class="image-input d-none" accept="image/*"
-                                                onchange="previewImage(event, '{{ $cluster->id }}')">
+                                                <input type="file" id="upload-photo-cluster-{{ $cluster->id }}" class="image-input d-none" accept="image/*"
+                                                    onchange="previewImage(event, '{{ $cluster->id }}')">
 
-                                            <div class="frame-main-wrap">
-                                                <div class="frameborder">
-                                                    <div class="frameinner d-flex align-items-center justify-content-center">
-                                                        <!-- Default Plus Icon -->
-                                                        <svg width="32" height="32" class="image-placeholder" fill="currentColor" viewBox="0 0 16 16">
-                                                            <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
-                                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
-                                                            </path>
-                                                        </svg>
+                                                <div class="frame-main-wrap">
+                                                    <div class="frameborder">
+                                                        <div class="frameinner d-flex align-items-center justify-content-center">
 
-                                                        <img src="" id="preview-{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview">
+                                                            @php
+                                                            $image_path = $collectionImages[$key]['image'];
+                                                            @endphp
+
+                                                            <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview">
+                                                        </div>
+                                                        <!-- Image Preview -->
                                                     </div>
-                                                    <!-- Image Preview -->
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
-                                    <!-- dynamic frames -->
+                                        @endforeach
+                                        <!-- dynamic frames -->
+                                    @else
+                                        <!-- dynamic frames -->
+                                        @foreach ($clusters as $key => $cluster)
+                                            <div class="clusterFrameWrp black-frame" id="cluster-block-{{ $cluster->id }}"
+                                                style="position: absolute;
+                                                    top: {{ $cluster->y }}px;
+                                                    left: {{ $cluster->x }}px;
+                                                    width: {{ $cluster->width }}px;
+                                                    height: {{ $cluster->height }}px;"
+                                                onclick="document.getElementById('upload-photo-cluster-{{ $cluster->id }}').click();">
+
+                                                <input type="file" id="upload-photo-cluster-{{ $cluster->id }}" class="image-input d-none" accept="image/*"
+                                                    onchange="previewImage(event, '{{ $cluster->id }}')">
+
+                                                <div class="frame-main-wrap">
+                                                    <div class="frameborder">
+                                                        <div class="frameinner d-flex align-items-center justify-content-center">
+                                                            <!-- Default Plus Icon -->
+                                                            <svg width="32" height="32" class="image-placeholder" fill="currentColor" viewBox="0 0 16 16">
+                                                                <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
+                                                                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
+                                                                </path>
+                                                            </svg>
+
+                                                            <img src="" id="preview-{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview">
+                                                        </div>
+                                                        <!-- Image Preview -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <!-- dynamic frames -->
+                                    @endif
                                 </div>
 
 
@@ -349,9 +382,15 @@
                     </div>
 
                     <div class="addtocardbtn">
-                        <button type="button" id="add-to-cart-btn" onclick="addToCart()" class="btn custom-btn filled">
-                            Add to Cart
-                        </button>
+                        @if($collectionImages != null)
+                            <button type="button" id="continue-to-cart-btn" onclick="continueToCart()" class="btn custom-btn filled">
+                                Continue to Cart
+                            </button>
+                        @else
+                            <button type="button" id="add-to-cart-btn" onclick="addToCart()" class="btn custom-btn filled">
+                                Add to Cart
+                            </button>
+                        @endif
                         <button type="button" id="copyUrlBtn" class="btn custom-btn transparent copied">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12.58" height="12.58" viewBox="0 0 12.58 12.58" class="w-em h-em">
                                 <g transform="translate(0.5 0.5)">
@@ -552,17 +591,19 @@ function addToCart() {
     let isValid = true;
     const clusters = @json($clusters);  // Pass the clusters data to JavaScript
     let currentUrl = window.location.href;
+    let colImageArr = [];
 
     clusters.forEach(cluster => {
         let imagePreview = document.getElementById(`preview-${cluster.id}`);
-        console.log(imagePreview, imagePreview.src);
 
         if (!imagePreview.src || imagePreview.src === currentUrl) {
             // Handle the empty or uninitialized state
             isValid = false;
-            document.getElementById(`cluster-block-${cluster.id}`).style.border = '2px solid red';
+            // document.getElementById(`cluster-block-${cluster.id}`).style.border = '2px solid red';
+
         } else {
-            document.getElementById(`cluster-block-${cluster.id}`).style.border = ''; // Remove any previous highlight
+            colImageArr.push(imagePreview.src);
+            // document.getElementById(`cluster-block-${cluster.id}`).style.border = ''; // Remove any previous highlight
         }
     });
 
@@ -579,24 +620,145 @@ function addToCart() {
 
     // Proceed with add to cart logic if all images are uploaded
     // You can add your logic to add the item to the cart here
-    Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'All images uploaded! Proceeding to add to cart.',
-        confirmButtonText: 'Proceed'
-    });
+    // Swal.fire({
+    //     icon: 'success',
+    //     title: 'Success!',
+    //     text: 'All images uploaded! Proceeding to add to cart.',
+    //     confirmButtonText: 'Proceed'
+    // });
 
     html2canvas(document.getElementById('zoomContainer')).then(function(canvas) {
-        // Convert the canvas to an image
-        const screenshotImage = canvas.toDataURL("image/png");
+        canvas.toBlob(function(blob) {
 
-        // Create a temporary link to download the image
-        const downloadLink = document.createElement('a');
-        downloadLink.href = screenshotImage;
-        downloadLink.download = "screenshot.png"; // Set the filename
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink); // Remove the link after download
+            let price = $('.currency').attr('data-val');
+
+            let formData = new FormData();
+            formData.append("image", blob, `{{ $product->name }}_${Date.now()}.png`);
+            formData.append("_token", "{{ csrf_token() }}");
+            formData.append("product_id", "{{ $product->id }}");
+            formData.append("name", "{{ $product->name }}");
+            formData.append("quantity", 1);
+            formData.append("price", price);
+            formData.append("total", price);
+            formData.append("slug", "{{ $product->slug }}");
+            formData.append("colImageArr", JSON.stringify(colImageArr));
+
+            // Send AJAX request to save image and add to cart
+            $.ajax({
+                url: "{{ route('add_to_cart_collection') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Added to Cart',
+                        text: 'Your frame has been added to the cart.'
+                    }).then(() => {
+                        // Redirect to cart page after success message
+                        window.location.href = "{{ route('cart') }}"; // Update URL as needed
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Something went wrong. Please try again.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }, "image/png");
+    });
+
+    return true;
+}
+
+function continueToCart() {
+    let isValid = true;
+    const clusters = @json($clusters);  // Pass the clusters data to JavaScript
+    let currentUrl = window.location.href;
+    let colImageArr = [];
+
+    clusters.forEach(cluster => {
+        let imagePreview = document.getElementById(`preview-${cluster.id}`);
+
+        if (!imagePreview.src || imagePreview.src === currentUrl) {
+            // Handle the empty or uninitialized state
+            isValid = false;
+            // document.getElementById(`cluster-block-${cluster.id}`).style.border = '2px solid red';
+
+        } else {
+            colImageArr.push(imagePreview.src);
+            // document.getElementById(`cluster-block-${cluster.id}`).style.border = ''; // Remove any previous highlight
+        }
+    });
+
+    if (!isValid) {
+        // Show a SweetAlert2 error message
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please upload an image for all frames before adding to cart.',
+            confirmButtonText: 'OK'
+        });
+        return false;  // Prevent form submission or action
+    }
+
+    // Proceed with add to cart logic if all images are uploaded
+    // You can add your logic to add the item to the cart here
+    // Swal.fire({
+    //     icon: 'success',
+    //     title: 'Success!',
+    //     text: 'All images uploaded! Proceeding to add to cart.',
+    //     confirmButtonText: 'Proceed'
+    // });
+
+    html2canvas(document.getElementById('zoomContainer')).then(function(canvas) {
+        canvas.toBlob(function(blob) {
+
+            let price = $('.currency').attr('data-val');
+
+            let formData = new FormData();
+            formData.append("image", blob, `{{ $product->name }}_${Date.now()}.png`);
+            formData.append("_token", "{{ csrf_token() }}");
+            formData.append("product_id", "{{ $product->id }}");
+            formData.append("name", "{{ $product->name }}");
+            formData.append("quantity", 1);
+            formData.append("price", price);
+            formData.append("total", price);
+            formData.append("slug", "{{ $product->slug }}");
+            formData.append("exist_image", "{{ $image_name }}");
+            formData.append("colImageArr", JSON.stringify(colImageArr));
+
+            // Send AJAX request to save image and add to cart
+            $.ajax({
+                url: "{{ route('add_to_cart_collection') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Added to Cart',
+                        text: 'Your frame has been added to the cart.'
+                    }).then(() => {
+                        // Redirect to cart page after success message
+                        window.location.href = "{{ route('cart') }}"; // Update URL as needed
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Something went wrong. Please try again.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }, "image/png");
     });
 
     return true;

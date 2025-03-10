@@ -10,6 +10,8 @@ use App\Models\SessionImage;
 use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Address;
+use App\Models\CollectionImages;
+use App\Models\SessionCollection;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -345,7 +347,9 @@ class MainController extends Controller
                 'image' => $product->image,
                 'quantity' => 1,
                 'price' => $product->price,
-                'total' => $product->price, // (quantity * price)
+                'total' => $product->price,
+                'type' => 'manual',
+                'slug' => ''
             ];
 
             $productsAdded[] = $product;
@@ -359,6 +363,109 @@ class MainController extends Controller
             'message' => count($productsAdded) . ' product(s) added to cart.',
             'products' => $productsAdded,
         ]);
+    }
+
+    public function add_to_cart_collection(Request $request)
+    {
+        $image_name = asset('uploads/cart_images/'.$request->input('exist_image'));
+        $getCart = session()->get('cart'); // Get the current cart session
+
+        if ($getCart != null) {
+            $existingImageIndex = null;
+            foreach ($getCart as $index => $item) {
+                if ($item['image'] == $image_name) {
+                    $existingImageIndex = $index;
+                    break;
+                }
+            }
+
+            if ($existingImageIndex !== null) {
+                // If image with the same name exists, remove it from the cart
+                unset($getCart[$existingImageIndex]);
+
+                // Re-index the array to ensure no gaps in indices
+                $getCart = array_values($getCart);
+
+                // Update the session with the modified cart
+                session()->put('cart', $getCart);
+            }
+        }
+
+        // Retrieve the updated cart session and dump it
+        $sessionCart = session()->get('cart', []);
+
+
+        // Define upload path in public folder
+        $uploadPath = public_path('uploads/cart_images/');
+
+        // Ensure directory exists
+        if (!file_exists($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+
+        // Save the uploaded image
+        $imageUrl = null;
+        if ($request->hasFile('image')) {
+            $mainImage = $request->file('image');
+            $mainImageName = uniqid('cart_') . '.' . $mainImage->getClientOriginalExtension();
+
+            // Move image to public/uploads/cart_images
+            $mainImage->move($uploadPath, $mainImageName);
+
+            // Public accessible URL
+            $imageUrl = asset('uploads/cart_images/' . $mainImageName);
+        }
+
+        // Add product to session cart
+        $sessionCart[] = [
+            'product_id' => $request->input('product_id'),
+            'name' => $request->input('name'),
+            'image' => $imageUrl, // Image stored in public folder
+            'quantity' => 1,
+            'price' => $request->input('price'),
+            'total' => $request->input('total'),
+            'type' => 'collection',
+            'slug' => $request->input('slug'),
+        ];
+
+        session()->put('cart', $sessionCart);
+
+        $sessionCollection = new SessionCollection();
+        $sessionCollection->product_id = $request->input('product_id');
+        $sessionCollection->session_id = session()->getId();
+        $sessionCollection->image_name = 'uploads/cart_images/' . $mainImageName;
+        $sessionCollection->save();
+
+        if($sessionCollection->id){
+            $tempArr = json_decode($request->input('colImageArr'));
+            $count = 1;
+            foreach ($tempArr as $imageSrc) {
+                if (preg_match('/^data:image\/(\w+);base64,/', $imageSrc, $type)) {
+                    // Remove the base64 metadata and get the actual image data
+                    $imageData = substr($imageSrc, strpos($imageSrc, ',') + 1);
+                    $imageData = base64_decode($imageData);
+
+                    // Generate a filename based on product name and timestamp
+                    $imageName = $request->input('name') . '_' . time() .'_'.$count. '.png';
+
+                    // Save the image to the public images directory
+                    $imagePath = public_path('uploads/collections/' . $imageName);
+
+                    // Save the image file
+                    file_put_contents($imagePath, $imageData);
+
+                    // Save the image file path in CollectionImages table (relative path)
+                    $collectionImage = new CollectionImages();
+                    $collectionImage->collection_id = $sessionCollection->id;
+                    $collectionImage->image = 'uploads/collections/' . $imageName;  // Save relative path
+                    $collectionImage->save();
+
+                    $count++;
+                }
+            }
+        }
+
+        return response()->json(['success' => true, 'message' => 'Added to cart successfully!', 'image' => $imageUrl]);
     }
 
     public function save_coupon(Request $request)
