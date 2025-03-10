@@ -60,7 +60,7 @@
                                             data-bs-toggle="modal" class="btn custom-btn">Login / Sign up</a>
                                     </li>
 
-                                    @if(Auth::check())
+                                    {{-- @if(Auth::check()) --}}
                                         <li class="porfile-dropdown">
                                             <a href="javascript:;" class="btn custom-btn" type="button"
                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -235,7 +235,7 @@
                                                 </ul>
                                             </div>
                                         </li>
-                                    @endif
+                                    {{-- @endif --}}
                                 </ul>
                             </div>
                         </div>

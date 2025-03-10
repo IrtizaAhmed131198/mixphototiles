@@ -13,6 +13,7 @@ class Collections extends Component
     {
         $this->products = Product::where('type', 'collections')
             ->where('status', 1)
+            ->where('coordinates', '!=', null)
             ->get();
     }
 

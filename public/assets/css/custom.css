@@ -3418,3 +3418,19 @@ button.btn.custom-btn.transparent.copied svg {
 .ImgFrame img {
     transition: all ease 0.5s;
 }
+
+.Cart_cartNoData {
+    min-height: calc(100vh - 125px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Cart_cartNoData .heading-5 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.Cart_cartNoData p.para {
+    font-size: 16px;
+}

@@ -106,7 +106,7 @@
                                 photos into a masterpiece</span>
                             <span class="heading-1">let your walls tell your story</span>
                         </h1>
-                        <button type="button" class="btn custom-btn filled" onclick="window.location.href='design.html';">
+                        <button type="button" class="btn custom-btn filled" onclick="window.location.href='{{ route('design') }}';">
                             <svg width="26.122" height="26.849" class="w-em h-em me-2 ttl-26 mb-0"
                                 viewBox="0 0 26.122 26.849" xmlns="http://www.w3.org/2000/svg">
                                 <g transform="translate(-858.42 -842.908)">

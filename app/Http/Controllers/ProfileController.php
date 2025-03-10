@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class ProfileController extends Controller
 {
@@ -12,7 +13,8 @@ class ProfileController extends Controller
 
 
     public function orders() {
-        return view('profile.order');
+        $orders = Order::with('orderItems')->get();
+        return view('profile.order', compact('order'));
     }
 
 
