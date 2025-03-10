@@ -34,6 +34,7 @@
     }
 
     .frameinner {
+        padding: 14px;
         position: absolute;
         top: 0;
         left: 0;
@@ -47,14 +48,14 @@
     }
 
     .frameinner-pad {
-        padding: 14px
+        padding: 3px !important;
     }
 
     .bold-image-width {
         border-image-width: 4px !important;
         border-image-slice: 30 fill !important;
         border-image-repeat: round !important;
-        border: 4px solid !important;
+        /* border: 4px solid !important; */
     }
 </style>
 @endpush
@@ -105,7 +106,7 @@
 
                                             <div class="frame-main-wrap">
                                                 <div class="frameborder">
-                                                    <div class="frameinner frameinner-pad d-flex align-items-center justify-content-center">
+                                                    <div class="frameinner d-flex align-items-center justify-content-center">
                                                         <!-- Default Plus Icon -->
                                                         <svg width="32" height="32" class="image-placeholder" fill="currentColor" viewBox="0 0 16 16">
                                                             <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
@@ -123,9 +124,9 @@
                                     <!-- dynamic frames -->
                                 </div>
 
-                                <button type="button" id="zoombtn" class="btn custom-btn filled rounded">Zoom 1.5x</button>
 
                             </div>
+                            <button type="button" id="zoombtn" class="btn custom-btn filled rounded">Zoom 1.5x</button>
                         </div>
 
 
@@ -348,7 +349,7 @@
                     </div>
 
                     <div class="addtocardbtn">
-                        <button type="button" id="add-to-cart-btn" onclick="validateImages()" class="btn custom-btn filled">
+                        <button type="button" id="add-to-cart-btn" onclick="addToCart()" class="btn custom-btn filled">
                             Add to Cart
                         </button>
                         <button type="button" id="copyUrlBtn" class="btn custom-btn transparent copied">
@@ -417,11 +418,11 @@ document.querySelectorAll('.select-frame .parentProperties.frame-change').forEac
 
         if(name == "bold") {
             framinners.forEach(framinner => { // Loop over the NodeList
-                framinner.classList.remove('frameinner-pad');
+                framinner.classList.add('frameinner-pad');
             });
         } else {
             framinners.forEach(framinner => { // Loop over the NodeList
-                framinner.classList.add('frameinner-pad');
+                framinner.classList.remove('frameinner-pad');
             });
         }
 
@@ -476,10 +477,12 @@ document.querySelectorAll('.select-finish .parentProperties.frame-change').forEa
     });
 });
 
-document.getElementById("zoombtn").addEventListener("click", function() {
-    let zoomContainer = document.getElementById("zoomContainer");
-    let button = document.getElementById("zoombtn");
+let zoomContainer = document.getElementById("zoomContainer");
+let button = document.getElementById("zoombtn");
+let isDragging = false;
+let startX, startY;
 
+document.getElementById("zoombtn").addEventListener("click", function() {
     if (zoomContainer.style.transform === "scale(2)") {
         zoomContainer.style.transform = "scale(1)"; // Zoom out
         button.textContent = "Zoom In"; // Change button text
@@ -490,6 +493,45 @@ document.getElementById("zoombtn").addEventListener("click", function() {
 
     zoomContainer.style.transition = "transform 0.3s ease-in-out"; // Smooth effect
 });
+
+// Mouse Dragging functionality
+zoomContainer.addEventListener("mousedown", function(e) {
+    isDragging = true;
+    startX = e.clientX - zoomContainer.offsetLeft;
+    startY = e.clientY - zoomContainer.offsetTop;
+    zoomContainer.style.transition = "none"; // Disable transition during dragging
+});
+
+document.addEventListener("mousemove", function(e) {
+    if (isDragging) {
+        let newX = e.clientX - startX;
+        let newY = e.clientY - startY;
+        zoomContainer.style.left = newX + "px";
+        zoomContainer.style.top = newY + "px";
+    }
+});
+
+document.addEventListener("mouseup", function() {
+    isDragging = false;
+    zoomContainer.style.transition = "transform 0.3s ease-in-out"; // Enable transition after dragging
+});
+
+// Mouse Wheel Zoom functionality
+zoomContainer.addEventListener("wheel", function(e) {
+    e.preventDefault(); // Prevent default scroll behavior
+    let scale = parseFloat(zoomContainer.style.transform.replace("scale(", "").replace(")", "")) || 1;
+
+    if (e.deltaY < 0) {
+        // Zoom In
+        scale += 0.1;
+    } else {
+        // Zoom Out
+        scale = Math.max(1, scale - 0.1); // Prevent zooming out too much
+    }
+
+    zoomContainer.style.transform = `scale(${scale})`;
+});
+
 
 document.getElementById("copyUrlBtn").addEventListener("click", function() {
     let currentUrl = window.location.href; // Get current page URL
@@ -506,7 +548,7 @@ document.getElementById("copyUrlBtn").addEventListener("click", function() {
     });
 });
 
-function validateImages() {
+function addToCart() {
     let isValid = true;
     const clusters = @json($clusters);  // Pass the clusters data to JavaScript
     let currentUrl = window.location.href;
@@ -542,6 +584,19 @@ function validateImages() {
         title: 'Success!',
         text: 'All images uploaded! Proceeding to add to cart.',
         confirmButtonText: 'Proceed'
+    });
+
+    html2canvas(document.getElementById('zoomContainer')).then(function(canvas) {
+        // Convert the canvas to an image
+        const screenshotImage = canvas.toDataURL("image/png");
+
+        // Create a temporary link to download the image
+        const downloadLink = document.createElement('a');
+        downloadLink.href = screenshotImage;
+        downloadLink.download = "screenshot.png"; // Set the filename
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink); // Remove the link after download
     });
 
     return true;

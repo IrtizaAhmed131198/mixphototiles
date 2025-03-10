@@ -2308,6 +2308,8 @@ button.clusterAddBtn__Rreup:hover {
 
 .btn.custom-btn.rounded {
     border-radius: 22px !important;
+    bottom: 50px;
+    left: 20px;
 }
 
 .Parentframe .btn.custom-btn.rounded {
@@ -2810,55 +2812,6 @@ figure.frameBackground img {
     left: 165px;
     width: 58px;
     height: 58px;
-}
-
-#cluster-block-2 {
-    width: 126px;
-    height: 189px;
-    left: 235px;
-    top: 70px;
-}
-
-#cluster-block-3 {
-    width: 77px;
-    height: 96px;
-    left: 371px;
-    top: 129px;
-}
-
-#cluster-block-4 {
-    width: 58px;
-    height: 58px;
-    left: 460px;
-    top: 168px;
-}
-
-#cluster-block-5 {
-    width: 58px;
-    height: 58px;
-    left: 214px;
-    top: 269px;
-}
-
-#cluster-block-6 {
-    width: 77px;
-    height: 96px;
-    left: 283px;
-    top: 269px;
-}
-
-#cluster-block-7 {
-    width: 126px;
-    height: 189px;
-    left: 371px;
-    top: 236px;
-}
-
-#cluster-block-8 {
-    width: 58px;
-    height: 58px;
-    left: 508px;
-    top: 237px;
 }
 
 .btn.custom-btn.rounded {
