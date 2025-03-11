@@ -220,7 +220,7 @@
 
                                         <span class="customTilename">Finish</span>
                                         <span class="text-body-tertiary">(4)</span>
-                                        <span>
+                                        {{-- <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="17.5" height="17.5" viewBox="0 0 17.5 17.5" class="w-em h-em ClusterDetails_infoBtn__5lLNm">
                                                 <g transform="translate(-1.021 -1.021)">
                                                     <circle cx="8" cy="8" r="8" transform="translate(1.771 1.771)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
@@ -228,7 +228,7 @@
                                                     <path d="M12,8h.008" transform="translate(-2.229 -1.337)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
                                                 </g>
                                             </svg>
-                                        </span>
+                                        </span> --}}
 
                                     </button>
                                 </h2>

@@ -13,8 +13,8 @@ class ProfileController extends Controller
 
 
     public function orders() {
-        $orders = Order::with('orderItems')->get();
-        return view('profile.order', compact('order'));
+        // $orders = Order::with('orderItems')->get();
+        return view('profile.order');
     }
 
 

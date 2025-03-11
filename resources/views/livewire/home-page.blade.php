@@ -144,156 +144,46 @@
                 <div class="col-lg-12">
                     <div class="swiper swiper-horizontal">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="ClusterCard">
-                                    <div class="ImgFrame">
-                                        <img alt="" class="img-fluid" src="assets/images/1702965251740.jpeg">
-                                    </div>
-                                    <div class="custom-card-body">
-                                        <h3 class="card-title">Shizuko</h3>
-                                        <div class="card-prize">
-                                            <h4 class="product-prize">
-                                                <span class="realPize">
-                                                    ₹ 3414
-                                                </span>
-                                                <span class="cutPrize">
-                                                    <del>
-                                                        ₹ 4268
-                                                    </del>
-                                                </span>
-                                            </h4>
-                                            <span class="discountPercent">
-                                                20 % OFF
-                                            </span>
+
+                            @foreach($products as $product)
+                                @php
+                                    $discountAmount = ($product->price * $product->discount) / 100;
+                                    $finalPrice = $product->price - $discountAmount;
+                                    $url = url('collection') . '/' . $product->slug;
+                                @endphp
+                                <div class="swiper-slide">
+                                    <div class="ClusterCard" onclick="redirectTo('{{ $url }}')">
+                                        <div class="ImgFrame">
+                                            <img alt="{{ $product->name }}" class="img-fluid" src="{{ asset($product->image) }}">
+                                        </div>
+                                        <div class="custom-card-body">
+                                            <h3 class="card-title">{{ $product->name }}</h3>
+                                            <div class="card-prize">
+                                                <h4 class="product-prize">
+                                                    <span class="realPize">
+                                                        ₹ {{ number_format($finalPrice, 2) }}
+                                                    </span>
+                                                    @if ($product->discount > 0)
+                                                        <span class="cutPrize">
+                                                            <del>₹ {{ number_format($product->price, 2) }}</del>
+                                                        </span>
+                                                    @endif
+                                                </h4>
+                                                @if ($product->discount > 0)
+                                                    <span class="discountPercent">
+                                                        {{ round($product->discount) }}% OFF
+                                                    </span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="ClusterCard">
-                                    <div class="ImgFrame">
-                                        <img alt="" class="img-fluid" src="assets/images/1702965877930.jpeg">
-                                    </div>
-                                    <div class="custom-card-body">
-                                        <h3 class="card-title">Shizuko</h3>
-                                        <div class="card-prize">
-                                            <h4 class="product-prize">
-                                                <span class="realPize">
-                                                    ₹ 3414
-                                                </span>
-                                                <span class="cutPrize">
-                                                    <del>
-                                                        ₹ 4268
-                                                    </del>
-                                                </span>
-                                            </h4>
-                                            <span class="discountPercent">
-                                                20 % OFF
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="ClusterCard">
-                                    <div class="ImgFrame">
-                                        <img alt="" class="img-fluid" src="assets/images/170313954987.jpeg">
-                                    </div>
-                                    <div class="custom-card-body">
-                                        <h3 class="card-title">Shizuko</h3>
-                                        <div class="card-prize">
-                                            <h4 class="product-prize">
-                                                <span class="realPize">
-                                                    ₹ 3414
-                                                </span>
-                                                <span class="cutPrize">
-                                                    <del>
-                                                        ₹ 4268
-                                                    </del>
-                                                </span>
-                                            </h4>
-                                            <span class="discountPercent">
-                                                20 % OFF
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="ClusterCard">
-                                    <div class="ImgFrame">
-                                        <img alt="" class="img-fluid" src="assets/images/1703139615323.jpeg">
-                                    </div>
-                                    <div class="custom-card-body">
-                                        <h3 class="card-title">Shizuko</h3>
-                                        <div class="card-prize">
-                                            <h4 class="product-prize">
-                                                <span class="realPize">
-                                                    ₹ 3414
-                                                </span>
-                                                <span class="cutPrize">
-                                                    <del>
-                                                        ₹ 4268
-                                                    </del>
-                                                </span>
-                                            </h4>
-                                            <span class="discountPercent">
-                                                20 % OFF
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="ClusterCard">
-                                    <div class="ImgFrame">
-                                        <img alt="" class="img-fluid" src="assets/images/1701080089395.jpeg">
-                                    </div>
-                                    <div class="custom-card-body">
-                                        <h3 class="card-title">Shizuko</h3>
-                                        <div class="card-prize">
-                                            <h4 class="product-prize">
-                                                <span class="realPize">
-                                                    ₹ 3414
-                                                </span>
-                                                <span class="cutPrize">
-                                                    <del>
-                                                        ₹ 4268
-                                                    </del>
-                                                </span>
-                                            </h4>
-                                            <span class="discountPercent">
-                                                20 % OFF
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="ClusterCard">
-                                    <div class="ImgFrame">
-                                        <img alt="" class="img-fluid" src="assets/images/1701079969549.jpeg">
-                                    </div>
-                                    <div class="custom-card-body">
-                                        <h3 class="card-title">Shizuko</h3>
-                                        <div class="card-prize">
-                                            <h4 class="product-prize">
-                                                <span class="realPize">
-                                                    ₹ 3414
-                                                </span>
-                                                <span class="cutPrize">
-                                                    <del>
-                                                        ₹ 4268
-                                                    </del>
-                                                </span>
-                                            </h4>
-                                            <span class="discountPercent">
-                                                20 % OFF
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+                            <script>
+                                function redirectTo(url) {
+                                    window.location.href = url;
+                                }
+                            </script>
                         </div>
 
                         <div class="swiper-button-next"></div>
@@ -302,7 +192,7 @@
                     </div>
 
                     <div class="ctaBtnParent text-center" onclick="window.location.href='{{ route('collections') }}';">
-                        <button type="button" class="btn custom-btn filled">
+                        <button type="button" onclick="window.location.href='{{ route('collections') }}';" class="btn custom-btn filled">
                             View All Collections
                         </button>
                     </div>

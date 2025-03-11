@@ -3440,3 +3440,8 @@ div#cke_descriptionEditor {
 div#cke_descriptionEditor {
     margin-bottom: 20px;
 }
+
+button.accordion-button:disabled .customTilename,
+button.accordion-button:disabled .text-body-tertiary {
+    color: rgba(108, 117, 125, 0.5) !important; /* Dim the text color */
+}
