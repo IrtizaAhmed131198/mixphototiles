@@ -648,6 +648,7 @@ document.querySelectorAll('.select-color .parentProperties.frame-change').forEac
         let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
         let finalPrice = basePrice + newPrice;
         currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+        currencyElement.setAttribute('data-val', finalPrice.toFixed(2));
 
         updateSelectedConfig();
     });
@@ -668,6 +669,7 @@ document.querySelectorAll('.select-finish .parentProperties.frame-change').forEa
         // Calculate final price correctly
         let finalPrice = basePrice + newPrice;
         currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+        currencyElement.setAttribute('data-val', finalPrice.toFixed(2));
 
         updateSelectedConfig();
     });
@@ -688,6 +690,7 @@ document.querySelectorAll('.select-led .parentProperties.led-change').forEach(it
         // Calculate final price correctly
         let finalPrice = basePrice + newPrice;
         currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+        currencyElement.setAttribute('data-val', finalPrice.toFixed(2));
 
         // Disable the button if value is "yes", otherwise enable it
         let accordionButton = document.querySelector('[data-bs-target="#flush-collapse1"]');
