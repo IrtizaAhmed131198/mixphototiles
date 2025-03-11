@@ -13,6 +13,8 @@ class CollectionDetail extends Component
     public $product;
     public $imageName;
     public $collectionImages;
+    public $config;
+    public $price;
 
     public function mount($slug)
     {
@@ -28,6 +30,8 @@ class CollectionDetail extends Component
             ->where('product_id', $this->product->id)
             ->first();
         if($data){
+            $this->config = json_decode($data->configuration);
+            $this->price = $data->price;
             $this->collectionImages = CollectionImages::where('collection_id', $data->id)->get();
         }
 
@@ -38,7 +42,9 @@ class CollectionDetail extends Component
         return view('livewire.collection-detail', [
             'product' => $this->product,
             'collectionImages' => $this->collectionImages,
-            'image_name' => $this->imageName
+            'image_name' => $this->imageName,
+            'config' => $this->config,
+            'total_price' => $this->price
         ]);
     }
 }

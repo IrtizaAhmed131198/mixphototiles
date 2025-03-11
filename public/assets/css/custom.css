@@ -2783,17 +2783,6 @@ span.itemsCount {
     height: 100%;
 }
 
-figure.frameBackground img {
-    object-fit: cover;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    max-width: 744px;
-    height: 744px;
-    width: 744px;
-}
-
 .clusterFrameWrp {
     /* border: 0px solid black; */
     box-shadow: inset 0 4px 8px 0 rgba(0, 0, 0, .11);
@@ -3347,9 +3336,14 @@ button.btn.custom-btn.transparent.copied svg {
     max-width: 1000px;
 }
 
+.modal-dialog.modal-dialog-centered.set-coordinates-modal {
+    max-width: 100%;
+}
+
 .address-modal .modal-dialog .modal-content {
     height: 1060px;
     border-radius: 0;
+    overflow: auto;
 }
 
 .address-modal .modal-dialog .modal-content .modal-header h5 {
@@ -3433,4 +3427,16 @@ button.btn.custom-btn.transparent.copied svg {
 
 .Cart_cartNoData p.para {
     font-size: 16px;
+}
+
+#mainImagePreview, #noCordmagePreview, #cordmagePreview, #editMainImagePreview, #editNoCordmagePreview, #editCordmagePreview {
+    margin-bottom: 20px;
+}
+
+div#cke_descriptionEditor {
+    margin-bottom: 20px;
+}
+
+div#cke_descriptionEditor {
+    margin-bottom: 20px;
 }

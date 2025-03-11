@@ -88,14 +88,18 @@
 
                             <div class="Parentframe" id="zoomContainer">
                                 <figure class="frameBackground">
-                                    <img id="zoomImage" src="{{ asset($product->no_coordinates_image) }}" class="imgfluid" alt="">
+                                    <img id="zoomImage" src="{{ asset($product->no_coordinates_image) }}" class="img-fluid" alt="">
                                 </figure>
                                 <div class="framelayoutsParent">
 
                                     @if($collectionImages != null)
+                                        @php
+                                        $colorClass = $config->color->class ?? 'black-frame';
+                                        $frameClass = $config->frame->class ?? '';
+                                        @endphp
                                         <!-- dynamic frames -->
                                         @foreach ($clusters as $key => $cluster)
-                                            <div class="clusterFrameWrp black-frame" id="cluster-block-{{ $cluster->id }}"
+                                            <div class="clusterFrameWrp {{ $colorClass }} {{ $frameClass }}" id="cluster-block-{{ $cluster->id }}"
                                                 style="position: absolute;
                                                     top: {{ $cluster->y }}px;
                                                     left: {{ $cluster->x }}px;
@@ -189,7 +193,11 @@
                                     $discountAmount = ($product->price * $product->discount) / 100;
                                     $finalPrice = $product->price - $discountAmount;
                                 @endphp
-                                <span class="currency" data-val="{{ $finalPrice }}">₹{{ number_format($finalPrice, 2) }}</span>
+                                @if($total_price != null)
+                                    <span class="currency" data-val="{{ $total_price }}">₹{{ number_format($total_price, 2) }}</span>
+                                @else
+                                    <span class="currency" data-val="{{ $finalPrice }}">₹{{ number_format($finalPrice, 2) }}</span>
+                                @endif
                             </h5>
                             <p class="discount">
                                 {{ $product->discount }}% OFF
@@ -376,6 +384,46 @@
                                 </div>
                             </div>
 
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse4" aria-expanded="false" aria-controls="flush-collapse4">
+
+                                        <span class="customTilename">Led</span>
+                                        <span class="text-body-tertiary">(2)</span>
+
+
+                                    </button>
+                                </h2>
+                                <div id="flush-collapse4" class="accordion-collapse collapse" data-bs-parent="#customizedoptions">
+                                    <div class="accordion-body">
+
+                                        <ul class="designToolPropertiesLists CustomizeOption select-led">
+                                            <!-- Dropdown menu links -->
+
+                                            <li type="button" class="parentProperties led-change active" data-price="0" data-val="no">
+                                                <figure class="PropertiesleftChild">
+                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1702976645152.png') }}">
+                                                </figure>
+                                                <div class="PropertiesRightChild">
+                                                    <p class="propertyName">No</p>
+                                                </div>
+                                            </li>
+
+                                            <li type="button" class="parentProperties led-change" data-price="1200" data-val="yes">
+                                                <figure class="PropertiesleftChild">
+                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1702976624908.png') }}">
+                                                </figure>
+                                                <div class="PropertiesRightChild">
+                                                    <p class="propertyName">Yes</p>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+
 
 
                         </div>
@@ -428,6 +476,109 @@
 
 @push('scripts')
 <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    let config = @json($config);
+
+    // Check if config is empty or null before proceeding
+    if (!config || Object.keys(config).length === 0) {
+        return; // Exit the script if config is empty or null
+    }
+
+    function updateActiveClass(selector, attribute, value) {
+        let items = document.querySelectorAll(selector);
+        items.forEach(item => {
+            item.classList.remove("active");
+            if (item.getAttribute(attribute) === value) {
+                item.classList.add("active");
+            }
+        });
+    }
+
+    // Update selections only if config is valid
+    if (config.color) {
+        updateActiveClass(".select-color .parentProperties.frame-change", "data-class", config.color.class);
+    }
+
+    if (config.frame) {
+        updateActiveClass(".select-frame .parentProperties.frame-change", "data-class", config.frame.class);
+        if(config.frame.name == "bold") {
+            let framinners = document.querySelectorAll('.frameinner'); // Note: It's now framinners (plural)
+            framinners.forEach(framinner => { // Loop over the NodeList
+                framinner.classList.add('frameinner-pad');
+            });
+        }
+    }
+
+    if (config.finish) {
+        updateActiveClass(".select-finish .parentProperties.frame-change", "data-name", config.finish.name);
+    }
+
+    if (config.led) {
+        updateActiveClass(".select-finish .parentProperties.led-change", "data-val", config.led.val);
+        // Disable button if LED value is "yes"
+        let accordionButton = document.querySelector('[data-bs-target="#flush-collapse1"]');
+        if (accordionButton) {
+            if (config.led.val === "yes") {
+                accordionButton.setAttribute("disabled", "disabled");
+            } else {
+                accordionButton.removeAttribute("disabled");
+            }
+        }
+    }
+});
+
+
+let selectedConfig = {};
+
+function updateSelectedConfig() {
+
+    // Get the active finish
+    let activeFinish = document.querySelector(".select-finish .parentProperties.active");
+    if (activeFinish) {
+        selectedConfig.finish = {
+            name: activeFinish.getAttribute("data-name"),
+            price: activeFinish.getAttribute("data-price"),
+        };
+    }
+
+    // Get the active color
+    let activeColor = document.querySelector(".select-color .parentProperties.active");
+    if (activeColor) {
+        selectedConfig.color = {
+            name: activeColor.getAttribute("data-color"),
+            price: activeColor.getAttribute("data-price"),
+            class: activeColor.getAttribute("data-class"),
+        };
+    }
+
+    // Get the active frame
+    let activeFrame = document.querySelector(".select-frame .parentProperties.active");
+    if (activeFrame) {
+        selectedConfig.frame = {
+            name: activeFrame.getAttribute("data-name"),
+            class: activeFrame.getAttribute("data-class"),
+        };
+    }
+
+    // Get the active led
+    let activeLed = document.querySelector(".select-led .parentProperties.active");
+    if (activeLed) {
+        selectedConfig.led = {
+            price: activeLed.getAttribute("data-price"),
+            val: activeLed.getAttribute("data-val"),
+        };
+    }
+
+    console.log(selectedConfig);
+
+    return selectedConfig;
+}
+
+// Example usage: Call this function when you need the selected configurations
+// console.log(updateSelectedConfig());
+
+
 function previewImage(event, clusterId) {
     let input = event.target;
     let preview = document.getElementById(`preview-${clusterId}`);
@@ -471,6 +622,8 @@ document.querySelectorAll('.select-frame .parentProperties.frame-change').forEac
             cluster.classList.remove('bold-image-width', 'box-shadow-dark'); // Remove all possible classes
             cluster.classList.add(newFrameClass);
         });
+
+        updateSelectedConfig();
     });
 });
 
@@ -495,6 +648,8 @@ document.querySelectorAll('.select-color .parentProperties.frame-change').forEac
         let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
         let finalPrice = basePrice + newPrice;
         currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+
+        updateSelectedConfig();
     });
 });
 
@@ -513,6 +668,36 @@ document.querySelectorAll('.select-finish .parentProperties.frame-change').forEa
         // Calculate final price correctly
         let finalPrice = basePrice + newPrice;
         currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+
+        updateSelectedConfig();
+    });
+});
+
+document.querySelectorAll('.select-led .parentProperties.led-change').forEach(item => {
+    item.addEventListener('click', function() {
+        document.querySelectorAll('.select-led .parentProperties.led-change').forEach(li => li.classList.remove('active'));
+        this.classList.add('active');
+
+        let value = this.getAttribute('data-val');
+        let newPrice = parseFloat(this.getAttribute('data-price')) || 0;
+
+        // Always get the base price from the currency element
+        let currencyElement = document.querySelector('.currency');
+        let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
+
+        // Calculate final price correctly
+        let finalPrice = basePrice + newPrice;
+        currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+
+        // Disable the button if value is "yes", otherwise enable it
+        let accordionButton = document.querySelector('[data-bs-target="#flush-collapse1"]');
+        if (value === "yes") {
+            accordionButton.setAttribute("disabled", "disabled");
+        } else {
+            accordionButton.removeAttribute("disabled");
+        }
+
+        updateSelectedConfig();
     });
 });
 
@@ -592,6 +777,7 @@ function addToCart() {
     const clusters = @json($clusters);  // Pass the clusters data to JavaScript
     let currentUrl = window.location.href;
     let colImageArr = [];
+    let selectedConfigurations = {};
 
     clusters.forEach(cluster => {
         let imagePreview = document.getElementById(`preview-${cluster.id}`);
@@ -642,6 +828,7 @@ function addToCart() {
             formData.append("total", price);
             formData.append("slug", "{{ $product->slug }}");
             formData.append("colImageArr", JSON.stringify(colImageArr));
+            formData.append("configuration", JSON.stringify(selectedConfig));
 
             // Send AJAX request to save image and add to cart
             $.ajax({
@@ -731,6 +918,7 @@ function continueToCart() {
             formData.append("slug", "{{ $product->slug }}");
             formData.append("exist_image", "{{ $image_name }}");
             formData.append("colImageArr", JSON.stringify(colImageArr));
+            formData.append("configuration", JSON.stringify(selectedConfig));
 
             // Send AJAX request to save image and add to cart
             $.ajax({

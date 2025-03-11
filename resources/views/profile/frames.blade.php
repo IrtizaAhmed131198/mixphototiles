@@ -78,7 +78,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="modal-form">
-                        <form action="{{ route('frames.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('frames.store') }}" id="add-frames" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-6">
@@ -216,7 +216,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="file" class="form-control" name="main_image" id="mainImageInput">
+                                        <input type="file" class="form-control" name="main_image" id="editMainImageInput">
                                         <span>Main Thumbnail Frame</span>
                                         <div id="editMainImagePreview" style="margin-top: 10px;"></div>
                                     </div>
@@ -224,7 +224,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="file" class="form-control" name="no_coordinates_image" id="noCordImageInput">
+                                        <input type="file" class="form-control" name="no_coordinates_image" id="editNoCordImageInput">
                                         <span>No Cordinates Frame</span>
                                         <div id="editNoCordmagePreview" style="margin-top: 10px;"></div>
                                     </div>
@@ -232,7 +232,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="file" class="form-control" name="coordinates_image" id="cordImageInput">
+                                        <input type="file" class="form-control" name="coordinates_image" id="editCordImageInput">
                                         <span>Cordinates Frame</span>
                                         <div id="editCordmagePreview" style="margin-top: 10px;"></div>
                                     </div>
@@ -271,8 +271,8 @@
 
 
     <div class="modal fade address-modal" id="coordinates" tabindex="-1" aria-labelledby="coordinatesLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered set-coordinates-modal">
+            <div class="modal-content" style="height: auto;">
                 <div class="modal-header">
                     <h5 class="modal-title" id="coordinatesLabel">Set Coordinates</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
@@ -297,127 +297,42 @@
     CKEDITOR.replace('descriptionEditor2');
 </script>
 <script>
-    document.getElementById('mainImageInput').addEventListener('change', function(event) {
-        const previewContainer = document.getElementById('mainImagePreview');
-        previewContainer.innerHTML = ''; // Clear existing preview
+    function setupImagePreview(inputId, previewId) {
+        document.getElementById(inputId).addEventListener('change', function(event) {
+            const previewContainer = document.getElementById(previewId);
+            previewContainer.innerHTML = ''; // Clear existing preview
 
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '150px';
-                img.style.cursor = 'pointer';
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.maxWidth = '100px';
+                    img.style.cursor = 'pointer';
 
-                // Add remove functionality
-                img.onclick = () => {
-                    document.getElementById('mainImageInput').value = '';
-                    previewContainer.innerHTML = '';
+                    // Add remove functionality
+                    img.onclick = () => {
+                        document.getElementById(inputId).value = '';
+                        previewContainer.innerHTML = '';
+                    };
+
+                    previewContainer.appendChild(img);
                 };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 
-                previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+    // Initialize the previews for different image inputs
+    setupImagePreview('mainImageInput', 'mainImagePreview');
+    setupImagePreview('noCordImageInput', 'noCordmagePreview');
+    setupImagePreview('cordImageInput', 'cordmagePreview');
 
-    document.getElementById('noCordImageInput').addEventListener('change', function(event) {
-        const previewContainer = document.getElementById('noCordImagePreview');
-        previewContainer.innerHTML = ''; // Clear existing preview
+    setupImagePreview('editMainImageInput', 'editMainImagePreview');
+    setupImagePreview('editNoCordImageInput', 'editNoCordmagePreview');
+    setupImagePreview('editCordImageInput', 'editCordmagePreview');
 
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '150px';
-                img.style.cursor = 'pointer';
-
-                // Add remove functionality
-                img.onclick = () => {
-                    document.getElementById('noCordImageInput').value = '';
-                    previewContainer.innerHTML = '';
-                };
-
-                previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    document.getElementById('cordImageInput').addEventListener('change', function(event) {
-        const previewContainer = document.getElementById('cordImagePreview');
-        previewContainer.innerHTML = ''; // Clear existing preview
-
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '150px';
-                img.style.cursor = 'pointer';
-
-                // Add remove functionality
-                img.onclick = () => {
-                    document.getElementById('cordImageInput').value = '';
-                    previewContainer.innerHTML = '';
-                };
-
-                previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Preview and Remove for Multiple Images
-    // document.getElementById('additionalImagesInput').addEventListener('change', function(event) {
-    //     const previewContainer = document.getElementById('additionalImagesPreview');
-    //     previewContainer.innerHTML = ''; // Clear existing preview
-
-    //     Array.from(event.target.files).forEach((file, index) => {
-    //         const reader = new FileReader();
-    //         reader.onload = function(e) {
-    //             const imageWrapper = document.createElement('div');
-    //             imageWrapper.style.position = 'relative';
-    //             imageWrapper.style.display = 'inline-block';
-
-    //             const img = document.createElement('img');
-    //             img.src = e.target.result;
-    //             img.style.maxWidth = '100px';
-    //             img.style.height = '100px';
-    //             img.style.objectFit = 'cover';
-    //             img.style.border = '1px solid #ddd';
-
-    //             const removeButton = document.createElement('span');
-    //             removeButton.innerHTML = '&times;';
-    //             removeButton.style.position = 'absolute';
-    //             removeButton.style.top = '0';
-    //             removeButton.style.right = '0';
-    //             removeButton.style.backgroundColor = 'red';
-    //             removeButton.style.color = 'white';
-    //             removeButton.style.cursor = 'pointer';
-    //             removeButton.style.padding = '2px 5px';
-    //             removeButton.style.fontSize = '12px';
-
-    //             removeButton.onclick = () => {
-    //                 const filesArray = Array.from(document.getElementById('additionalImagesInput').files);
-    //                 filesArray.splice(index, 1); // Remove the selected file
-    //                 const dataTransfer = new DataTransfer();
-    //                 filesArray.forEach(file => dataTransfer.items.add(file));
-    //                 document.getElementById('additionalImagesInput').files = dataTransfer.files;
-    //                 imageWrapper.remove();
-    //             };
-
-    //             imageWrapper.appendChild(img);
-    //             imageWrapper.appendChild(removeButton);
-    //             previewContainer.appendChild(imageWrapper);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     });
-    // });
 
     $(document).ready(function() {
         $('#example').DataTable({
@@ -492,6 +407,16 @@
             });
         });
 
+        $('#framesModal').on('hidden.bs.modal', function () {
+            $('#add-frames')[0].reset(); // Reset form fields
+            $('#editMainImagePreview').html('');
+            $('#editNoCordmagePreview').html('');
+            $('#editCordmagePreview').html('');
+
+            if (CKEDITOR.instances['descriptionEditor2']) {
+                CKEDITOR.instances['descriptionEditor2'].setData('');
+            }
+        });
 
         $(document).on('click', '.remove-additional-image', function () {
             var imageId = $(this).data('id');
@@ -570,9 +495,9 @@
         let productId;
 
         // Load image when modal opens
+        // Load image when modal opens
         $(document).on("click", ".set-coordinates", function () {
             productId = $(this).data("id");
-
             rectangles = [];
 
             $.ajax({
@@ -583,9 +508,23 @@
                     if (response.success) {
                         img.src = response.image_url;
                         img.onload = function () {
-                            canvas.width = img.width;
-                            canvas.height = img.height;
-                            ctx.drawImage(img, 0, 0, img.width, img.height);
+                            const fixedWidth = 746;
+                            const fixedHeight = 744;
+
+                            canvas.width = fixedWidth;
+                            canvas.height = fixedHeight;
+
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                            // Maintain aspect ratio
+                            let scale = Math.min(fixedWidth / img.width, fixedHeight / img.height);
+                            let newWidth = img.width * scale;
+                            let newHeight = img.height * scale;
+
+                            let offsetX = (fixedWidth - newWidth) / 2;
+                            let offsetY = (fixedHeight - newHeight) / 2;
+
+                            ctx.drawImage(img, offsetX, offsetY, newWidth, newHeight);
                         };
                     } else {
                         $("#coordinates .modal-body").html('<p class="text-danger">Image not found.</p>');
@@ -596,6 +535,7 @@
                 }
             });
         });
+
 
         // Start Drawing
         canvas.addEventListener("mousedown", function (e) {

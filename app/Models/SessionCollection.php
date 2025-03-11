@@ -8,5 +8,5 @@ class SessionCollection extends Model
 {
     protected $table = "session_collection";
 
-    protected $fillable = ['product_id', 'session_id', 'image_name'];
+    protected $fillable = ['product_id', 'session_id', 'image_name', 'configuration'];
 }

@@ -423,7 +423,7 @@ class MainController extends Controller
             'image' => $imageUrl, // Image stored in public folder
             'quantity' => 1,
             'price' => $request->input('price'),
-            'total' => $request->input('total'),
+            'total' => $request->input('price'),
             'type' => 'collection',
             'slug' => $request->input('slug'),
         ];
@@ -434,6 +434,8 @@ class MainController extends Controller
         $sessionCollection->product_id = $request->input('product_id');
         $sessionCollection->session_id = session()->getId();
         $sessionCollection->image_name = 'uploads/cart_images/' . $mainImageName;
+        $sessionCollection->configuration = $request->input('configuration');
+        $sessionCollection->price = $request->input('price');
         $sessionCollection->save();
 
         if($sessionCollection->id){
