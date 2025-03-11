@@ -16,73 +16,73 @@
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-8.webp">
+                                                    src="{{ asset('assets/images/banner/samp-8.webp') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-9.jpg">
+                                                    src="{{ asset('assets/images/banner/samp-9.jpg') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-10.webp">
+                                                    src="{{ asset('assets/images/banner/samp-10.webp') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-11.jpg">
+                                                    src="{{ asset('assets/images/banner/samp-11.jpg') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-12.jpg">
+                                                    src="{{ asset('assets/images/banner/samp-12.jpg') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-14.jpg">
+                                                    src="{{ asset('assets/images/banner/samp-14.jpg') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-15.jpg">
+                                                    src="{{ asset('assets/images/banner/samp-15.jpg') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-16.jpg">
+                                                    src="{{ asset('assets/images/banner/samp-16.jpg') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-17.jpg">
+                                                    src="{{ asset('assets/images/banner/samp-17.jpg') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-18.jpg">
+                                                    src="{{ asset('assets/images/banner/samp-18.jpg') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-19.jpg">
+                                                    src="{{ asset('assets/images/banner/samp-19.jpg') }}">
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="innerFrame">
                                                 <img alt="Banner image" width="450px" height="500px"
-                                                    src="assets/images/banner/samp-20.jpg">
+                                                    src="{{ asset('assets/images/banner/samp-20.jpg') }}">
                                             </div>
                                         </div>
 
@@ -232,12 +232,12 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <figure>
-                                    <img src="assets/images/led_frame_5.jpeg" class="img-fluid" alt="">
+                                    <img src="{{ asset('assets/images/led_frame_5.jpeg') }}" class="img-fluid" alt="">
                                 </figure>
                             </div>
                             <div class="swiper-slide">
                                 <figure>
-                                    <img src="assets/images/led_frame_6.jpeg" class="img-fluid" alt="">
+                                    <img src="{{ asset('assets/images/led_frame_6.jpeg') }}" class="img-fluid" alt="">
                                 </figure>
                             </div>
                         </div>
@@ -297,25 +297,25 @@
                         <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
                             aria-labelledby="v-pills-tap-tab" tabindex="0">
                             <figure class="Tabframed">
-                                <img src="assets/images/frame11.jpg" class="img-fluid" alt="">
+                                <img src="{{ asset('assets/images/frame11.jpg') }}" class="img-fluid" alt="">
                             </figure>
                         </div>
                         <div class="tab-pane fade" id="v-pills-home" role="tabpanel"
                             aria-labelledby="v-pills-home-tab" tabindex="0">
                             <figure class="Tabframed">
-                                <img src="assets/images/frame1.webp" class="img-fluid" alt="">
+                                <img src="{{ asset('assets/images/frame1.webp') }}" class="img-fluid" alt="">
                             </figure>
                         </div>
                         <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel"
                             aria-labelledby="v-pills-hooks-tab" tabindex="0">
                             <figure class="Tabframed">
-                                <img src="assets/images/frame22.jpg" class="img-fluid" alt="">
+                                <img src="{{ asset('assets/images/frame22.jpg') }}" class="img-fluid" alt="">
                             </figure>
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
                             aria-labelledby="v-pills-profile-tab" tabindex="0">
                             <figure class="Tabframed">
-                                <img src="assets/images/frame2.jpg" class="img-fluid" alt="">
+                                <img src="{{ asset('assets/images/frame2.jpg') }}" class="img-fluid" alt="">
                             </figure>
                         </div>
                         {{-- <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
@@ -383,7 +383,7 @@
                 </div>
                 <div class="col-lg-5">
                     <figure>
-                        <img src="assets/images/home-company-img.png" class="img-fluid" alt="">
+                        <img src="{{ asset('assets/images/home-company-img.png') }}" class="img-fluid" alt="">
                     </figure>
                 </div>
             </div>
@@ -406,7 +406,7 @@
                             <div class="HomeFrameSlider_frameCard fr-sm card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Wedding image" class="img-fluid" src="assets/images/Animal_1.webp">
+                                        <img alt="Wedding image" class="img-fluid" src="{{ asset('assets/images/Animal_1.webp') }}">
                                     </div>
                                     <p>Animal</p>
                                 </div>
@@ -416,7 +416,7 @@
                             <div class="HomeFrameSlider_frameCard fr-xl card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="nature image" class="img-fluid" src="assets/images/Birds.avif">
+                                        <img alt="nature image" class="img-fluid" src="{{ asset('assets/images/Birds.avif') }}">
                                     </div>
                                     <p>Birds</p>
                                 </div>
@@ -426,7 +426,7 @@
                             <div class="HomeFrameSlider_frameCard fr-lg card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Childhood image" class="img-fluid" src="assets/images/Child.jpeg">
+                                        <img alt="Childhood image" class="img-fluid" src="{{ asset('assets/images/Child.jpeg') }}">
                                     </div>
                                     <p>Childhood</p>
                                 </div>
@@ -436,7 +436,7 @@
                             <div class="HomeFrameSlider_frameCard fr-md card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="sea image" class="img-fluid" src="assets/images/Dog_1.jpg">
+                                        <img alt="sea image" class="img-fluid" src="{{ asset('assets/images/Dog_1.jpg') }}">
                                     </div>
                                     <p>Dog</p>
                                 </div>
@@ -446,7 +446,7 @@
                             <div class="HomeFrameSlider_frameCard fr-sm card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Memory image" class="img-fluid" src="assets/images/Food.webp">
+                                        <img alt="Memory image" class="img-fluid" src="{{ asset('assets/images/Food.webp') }}">
                                     </div>
                                     <p>Food</p>
                                 </div>
@@ -456,7 +456,7 @@
                             <div class="HomeFrameSlider_frameCard fr-xl card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Art image" class="img-fluid" src="assets/images/Memories_1.jpg">
+                                        <img alt="Art image" class="img-fluid" src="{{ asset('assets/images/Memories_1.jpg') }}">
                                     </div>
                                     <p>Memories</p>
                                 </div>
@@ -466,7 +466,7 @@
                             <div class="HomeFrameSlider_frameCard fr-lg card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Travel image" class="img-fluid" src="assets/images/Nature.jpeg">
+                                        <img alt="Travel image" class="img-fluid" src="{{ asset('assets/images/Nature.jpeg') }}">
                                     </div>
                                     <p>Nature</p>
                                 </div>
@@ -476,7 +476,7 @@
                             <div class="HomeFrameSlider_frameCard fr-md card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Passion image" class="img-fluid" src="assets/images/Passion.webp">
+                                        <img alt="Passion image" class="img-fluid" src="{{ asset('assets/images/Passion.webp') }}">
                                     </div>
                                     <p>Passion</p>
                                 </div>
@@ -486,7 +486,7 @@
                             <div class="HomeFrameSlider_frameCard fr-sm card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Art image" class="img-fluid" src="assets/images/wedding_1.jpeg">
+                                        <img alt="Art image" class="img-fluid" src="{{ asset('assets/images/wedding_1.jpeg') }}">
                                     </div>
                                     <p>Wedding</p>
                                 </div>
@@ -496,7 +496,7 @@
                             <div class="HomeFrameSlider_frameCard fr-xl card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Art image" class="img-fluid" src="assets/images/wedding_2.jpeg">
+                                        <img alt="Art image" class="img-fluid" src="{{ asset('assets/images/wedding_2.jpeg') }}">
                                     </div>
                                     <p>Wedding</p>
                                 </div>
@@ -506,7 +506,7 @@
                             <div class="HomeFrameSlider_frameCard fr-md card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Passion image" class="img-fluid" src="assets/images/Passion.webp">
+                                        <img alt="Passion image" class="img-fluid" src="{{ asset('assets/images/Passion.webp') }}">
                                     </div>
                                     <p>Passion</p>
                                 </div>
@@ -516,7 +516,7 @@
                             <div class="HomeFrameSlider_frameCard fr-sm card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Memory image" class="img-fluid" src="assets/images/Food.webp">
+                                        <img alt="Memory image" class="img-fluid" src="{{ asset('assets/images/Food.webp') }}">
                                     </div>
                                     <p>Food</p>
                                 </div>
@@ -553,7 +553,7 @@
                 </div>
                 <div class="col-lg-6">
                     <figure>
-                        <img src="assets/images/why-choose-use-1.jpg" class="img-fluid" alt="" style=" margin-left: 41px; ">
+                        <img src="{{ asset('assets/images/why-choose-use-1.jpg') }}" class="img-fluid" alt="" style=" margin-left: 41px; ">
                     </figure>
                 </div>
             </div>

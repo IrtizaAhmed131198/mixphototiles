@@ -108,7 +108,7 @@
                                         data-design="classic-card-design" data-price="0" data-text="Classic">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704186592728.png">
+                                                src="{{ asset('assets/images/1704186592728.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Classic</p>
@@ -120,7 +120,7 @@
                                         data-design="bold-card-design" data-price="0" data-text="Bold">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704186603683.png">
+                                                src="{{ asset('assets/images/1704186603683.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Bold</p>
@@ -169,7 +169,7 @@
                                         data-color="Black" data-src="assets/images/black-frame.png" data-shadow="box-shadow-black">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1703756434121.jpeg">
+                                                src="{{ asset('assets/images/1703756434121.jpeg') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Black</p>
@@ -181,7 +181,7 @@
                                         data-color="Dark" data-src="assets/images/brown-frame.png" data-shadow="box-shadow-dark">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1708685596474.jpeg">
+                                                src="{{ asset('assets/images/1708685596474.jpeg') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Dark</p>
@@ -193,7 +193,7 @@
                                         data-color="White" data-src="assets/images/white-frame.png" data-shadow="box-shadow-white">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/170868561394.jpeg">
+                                                src="{{ asset('assets/images/170868561394.jpeg') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">White</p>
@@ -205,7 +205,7 @@
                                         data-color="Light" data-src="assets/images/light-frame.png" data-shadow="box-shadow-light">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1708685632234.jpeg">
+                                                src="{{ asset('assets/images/1708685632234.jpeg') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Light</p>
@@ -234,7 +234,7 @@
                                         data-price="1200" data-val="yes">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1702976624908.png">
+                                                src="{{ asset('assets/images/1702976624908.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Yes</p>
@@ -246,7 +246,7 @@
                                         data-price="0" data-val="no">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1702976645152.png">
+                                                src="{{ asset('assets/images/1702976645152.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">No</p>
@@ -291,7 +291,7 @@
                                         data-height="318px" data-width="309px" data-max-width="500px" data-price="399">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195283683.png">
+                                                src="{{ asset('assets/images/1704195283683.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">8" X 8"</p>
@@ -303,7 +303,7 @@
                                         data-height="483px" data-width="261px" data-max-width="500px" data-price="504">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195388737.png">
+                                                src="{{ asset('assets/images/1704195388737.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">8" X 10"</p>
@@ -315,7 +315,7 @@
                                         data-height="389px" data-width="460px" data-max-width="500px" data-price="504">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195457270.png">
+                                                src="{{ asset('assets/images/1704195457270.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">10" X 8"</p>
@@ -327,7 +327,7 @@
                                         data-height="500px" data-width="261px" data-max-width="500px" data-price="682">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195503983.png">
+                                                src="{{ asset('assets/images/1704195503983.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">9" X 12"</p>
@@ -339,7 +339,7 @@
                                         data-height="261px" data-width="500px" data-max-width="500px" data-price="682">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195521559.png">
+                                                src="{{ asset('assets/images/1704195521559.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">12" X 9"</p>
@@ -351,7 +351,7 @@
                                         data-height="362px" data-width="451px" data-max-width="500px" data-price="897">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195535660.png">
+                                                src="{{ asset('assets/images/1704195535660.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">12" X 12"</p>
@@ -363,7 +363,7 @@
                                         data-height="509px" data-width="263px" data-max-width="500px" data-price="1318">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195552341.png">
+                                                src="{{ asset('assets/images/1704195552341.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">12" X 18"</p>
@@ -375,7 +375,7 @@
                                         data-height="263px" data-width="509px" data-max-width="500px" data-price="1318">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195567601.png">
+                                                src="{{ asset('assets/images/1704195567601.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">18" X 12"</p>
@@ -387,7 +387,7 @@
                                         data-height="362px" data-width="451px" data-max-width="500px" data-price="2022">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195580863.png">
+                                                src="{{ asset('assets/images/1704195580863.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">18" X 18"</p>
@@ -399,7 +399,7 @@
                                         data-height="509px" data-width="263px" data-max-width="500px" data-price="2638">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195597135.png">
+                                                src="{{ asset('assets/images/1704195597135.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">18" X 24"</p>
@@ -411,7 +411,7 @@
                                         data-height="263px" data-width="509px" data-max-width="500px" data-price="2638">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195794113.png">
+                                                src="{{ asset('assets/images/1704195794113.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">24" X 18"</p>
@@ -423,7 +423,7 @@
                                         data-height="509px" data-width="263px" data-max-width="500px" data-price="4558">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195815647.png">
+                                                src="{{ asset('assets/images/1704195815647.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">24" X 32"</p>
@@ -435,7 +435,7 @@
                                         data-height="265px" data-width="510px" data-max-width="500px" data-price="4558">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1704195831826.png">
+                                                src="{{ asset('assets/images/1704195831826.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">32" X 24"</p>
@@ -470,7 +470,7 @@
                                         data-price="399">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1701851447650.png">
+                                                src="{{ asset('assets/images/1701851447650.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Normal</p>
@@ -482,7 +482,7 @@
                                         data-price="453">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1701851447650.png">
+                                                src="{{ asset('assets/images/1701851447650.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Matte</p>
@@ -493,7 +493,7 @@
                                         data-price="492">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1701851447650.png">
+                                                src="{{ asset('assets/images/1701851447650.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Gloss</p>
@@ -504,7 +504,7 @@
                                         data-price="537">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="assets/images/1701851447650.png">
+                                                src="{{ asset('assets/images/1701851447650.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Canvas</p>
