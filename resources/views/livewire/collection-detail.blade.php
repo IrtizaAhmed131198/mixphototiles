@@ -1,6 +1,6 @@
 @extends('components.layouts.app')
 
-@section('title', 'Collectio Detail')
+@section('title', 'Collection Detail')
 
 @push('css')
 <style>
@@ -144,7 +144,7 @@
                                                     <div class="frameborder">
                                                         <div class="frameinner d-flex align-items-center justify-content-center">
                                                             <!-- Default Plus Icon -->
-                                                            <svg width="32" height="32" class="image-placeholder" fill="currentColor" viewBox="0 0 16 16">
+                                                            <svg width="32" height="32" class="image-placeholder clusterAddBtn__Rreup" fill="currentColor" viewBox="0 0 16 16">
                                                                 <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
                                                                     d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
                                                                 </path>
