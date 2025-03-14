@@ -300,7 +300,7 @@
                                             <li type="button" class="parentProperties frame-change active" data-price="0"
                                                 data-color="Black" data-class="black-frame">
                                                 <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
+                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1703756434121.jpeg') }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
                                                     <p class="propertyName">Black</p>
@@ -310,7 +310,7 @@
                                             <li type="button" class="parentProperties frame-change" data-price="0"
                                                 data-color="Dark" data-class="dark-frame">
                                                 <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
+                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1708685596474.jpeg') }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
                                                     <p class="propertyName">Dark</p>
@@ -320,7 +320,7 @@
                                             <li type="button" class="parentProperties frame-change" data-price="0"
                                                 data-color="White" data-class="white-frame">
                                                 <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
+                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/170868561394.jpeg') }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
                                                     <p class="propertyName">White</p>
@@ -330,7 +330,7 @@
                                             <li type="button" class="parentProperties frame-change" data-price="0"
                                                 data-color="Light" data-class="light-frame">
                                                 <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
+                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1708685632234.jpeg') }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
                                                     <p class="propertyName">Light</p>

@@ -3445,3 +3445,10 @@ button.accordion-button:disabled .customTilename,
 button.accordion-button:disabled .text-body-tertiary {
     color: rgba(108, 117, 125, 0.5) !important; /* Dim the text color */
 }
+
+span.caption-crop {
+    margin-left: 31rem;
+    margin-top: 1rem;
+    font-weight: 800;
+    font-size: 15px;
+}

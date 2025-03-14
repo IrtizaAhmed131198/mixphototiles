@@ -426,18 +426,22 @@ async function processAndUploadImages(files) {
             continue;
         }
 
+        if (file.size < 500 * 1024) { // Minimum file size check (500KB)
+            await Swal.fire('Low Quality Image', 'Please upload a higher quality image (min 500KB)', 'warning');
+            continue;
+        }
+
         const objectURL = URL.createObjectURL(file);
         const img = new Image();
         img.src = objectURL;
 
-        // Use a promise to wait for the image to load
         await new Promise((resolve, reject) => {
             img.onload = resolve;
             img.onerror = reject;
         });
 
         if (img.width < 125 || img.height < 112) {
-            await Swal.fire('Image Too Small', 'Minimum size: 125x112px', 'warning');
+            await Swal.fire('Image Too Small', 'Minimum resolution: 125x112px', 'warning');
             continue;
         }
 
@@ -456,11 +460,10 @@ async function processAndUploadImages(files) {
 
             uploadPromises.push(uploadImageToServer(file, newFileName));
         } else {
-            await Swal.fire('Blurry Image', 'Please upload a clearer image.', 'warning');
+            await Swal.fire('Blurry Image', 'Please upload a clearer and high-quality image.', 'warning');
         }
     }
 
-    // Now wait for all uploads to finish
     try {
         const images = await Promise.all(uploadPromises);
 
@@ -470,7 +473,7 @@ async function processAndUploadImages(files) {
 
             fetchAndRenderSessionImages();
 
-            await Swal.fire('Upload Successful', 'Your images have been uploaded successfully!', 'success');
+            await Swal.fire('Upload Successful', 'Your high-quality images have been uploaded!', 'success');
         }
     } catch (err) {
         console.error('Image upload failed', err);
@@ -507,7 +510,7 @@ function isImageBlurred(canvas) {
     }
 
     const variance = laplacianSqSum / (canvas.width * canvas.height);
-    const threshold = 100; // Adjust based on required blur sensitivity
+    const threshold = 300; // Increased threshold for higher quality images
     return variance < threshold;
 }
 
@@ -773,6 +776,8 @@ function updateFrameBorderImage(imageUrl) {
     }
 }
 
+const colorOptions = document.querySelectorAll('.frame-color.dropdown-item');
+
 // Attach click event listener to all property list items
 document.querySelectorAll('.frame-color').forEach(item => {
     item.addEventListener('click', function () {
@@ -780,6 +785,9 @@ document.querySelectorAll('.frame-color').forEach(item => {
         const color_name = this.getAttribute('data-color');
         const shadowClass = this.getAttribute('data-shadow');
         const color_price = this.getAttribute('data-price');
+
+        colorOptions.forEach(item => item.classList.remove('li-border-color'));
+        this.classList.add('li-border-color');
 
         // Update the border image and color display
         const img = this.querySelector('img.LeftSidebar');
@@ -836,8 +844,8 @@ sizeOptions.forEach(option => {
         }
 
         // Update selection highlight
-        sizeOptions.forEach(item => item.classList.remove('selected-size'));
-        this.classList.add('selected-size');
+        sizeOptions.forEach(item => item.classList.remove('li-border-color'));
+        this.classList.add('li-border-color');
 
         // Update display text for size
         document.getElementById('size-show').textContent = frameSizeText;
@@ -866,6 +874,9 @@ finishOptions.forEach(option => {
     option.addEventListener('click', function () {
         const finish_price = parseFloat(this.getAttribute('data-price'));
         const frameFinishText = this.querySelector('.propertyName').textContent.trim();
+
+        finishOptions.forEach(item => item.classList.remove('li-border-color'));
+        this.classList.add('li-border-color');
 
         document.getElementById('finish-show').textContent = frameFinishText;
 
@@ -901,6 +912,9 @@ hangOptions.forEach(option => {
         } else {
             buttonElement.disabled = false;
         }
+
+        hangOptions.forEach(item => item.classList.remove('li-border-color'));
+        this.classList.add('li-border-color');
 
         document.getElementById('led-show').textContent = framehangText;
 

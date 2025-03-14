@@ -165,7 +165,7 @@
                                         </p>
                                     </div>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-color" data-price="0"
+                                    <li type="button" class="parentProperties dropdown-item frame-color li-border-color" data-price="0"
                                         data-color="Black" data-src="assets/images/black-frame.png" data-shadow="box-shadow-black">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -230,7 +230,7 @@
                                         </p>
                                     </div>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-led"
+                                    <li type="button" class="parentProperties dropdown-item frame-led li-border-color"
                                         data-price="1200" data-val="yes">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -287,7 +287,7 @@
                                         </p>
                                     </div>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
+                                    <li type="button" class="parentProperties dropdown-item frame-size li-border-color"
                                         data-height="318px" data-width="309px" data-max-width="500px" data-price="399">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -466,7 +466,7 @@
                                         </p>
                                     </div>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-finish"
+                                    <li type="button" class="parentProperties dropdown-item frame-finish li-border-color"
                                         data-price="399">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -659,6 +659,7 @@
                                 </div>
                             </div>
                     <div class="grid-2">
+                        <span class="caption-crop">If needed, use the Crop button to adjust your pictures</span>
                         <div class="box">
                             <div class="frame-main-wrap classic-card-design box-shadow-black frame-main-wrap-main" id="frameWrap">
                                 <div class="frameborder inherit-design">

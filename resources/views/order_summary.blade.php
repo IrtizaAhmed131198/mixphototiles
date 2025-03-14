@@ -37,9 +37,8 @@
                                     My information
                                 </button>
                             </h2>
-                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse {{ session()->has('user_address') ? '' : 'show' }}">
                                 <div class="accordion-body">
-
                                     <div class="GuestAddress_faqContent">
                                         <form id="addressForm">
                                             @csrf
@@ -50,13 +49,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <div label="Mobile Number"><input placeholder="Mobile number" maxlength="10" id="phoneInput" class="form-control" type="tel" name="phone_number"></div>
+                                                    <div label="Mobile Number">
+                                                        <input placeholder="Mobile number" maxlength="10" id="phoneInput" class="form-control" type="tel" name="phone_number">
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <div label="Email"><input placeholder="Email" id="emailInput" class="form-control" type="email" name="email"></div>
+                                                    <div label="Email">
+                                                        <input placeholder="Email" id="emailInput" class="form-control" type="email" name="email">
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <div label="Pin Code"><input placeholder="Pin Code" maxlength="6" id="pinCodeInput" class="form-control" type="tel" name="pincode"></div>
+                                                    <div label="Pin Code">
+                                                        <input placeholder="Pin Code" maxlength="6" id="pinCodeInput" class="form-control" type="tel" name="pincode">
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div label="Address Line 1 (Flat/House Number, Building/Community)">
@@ -74,22 +79,26 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <div label="City"><input placeholder="City" id="pinCodeInput" class="form-control" name="city"></div>
+                                                    <div label="City">
+                                                        <input placeholder="City" id="cityInput" class="form-control" name="city">
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div label="Alternative Phone Number">
                                                         <input placeholder="Alternative Phone Number" maxlength="10" id="altPhoneInput" class="form-control" type="text" name="alternate_phone_number">
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6"><button type="button" id="saveAddressBtn" class="btn custom-btn filled">Save</button></div>
+                                                <div class="col-lg-6">
+                                                    <button type="button" id="saveAddressBtn" class="btn custom-btn filled">Save</button>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div id="addressDisplay">
                         @if(session()->has('user_address'))
                             @php
@@ -102,6 +111,7 @@
                             </ul>
                         @endif
                     </div>
+
                 </div>
             </div>
             <div class="col-lg-4">
