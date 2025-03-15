@@ -17,45 +17,6 @@ let cart_page = $('#cart_page').val();
 
 let allFrameConfigurations = {}; // This should be populated on each frame load
 
-function updateGrandTotal() {
-    fetch(get_grand_total) // Update this to match your route
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                let grandTotal = 0;
-
-                data.data.forEach(sessionImage => {
-                    const frameConfig = sessionImage.frame_configuration;
-
-                    const designPrice = parseFloat(frameConfig?.design?.design_price) || 0;
-                    const colorPrice = parseFloat(frameConfig?.color?.color_price) || 0;
-                    const sizePrice = parseFloat(frameConfig?.size?.frame_price) || 0;
-                    const finishPrice = parseFloat(frameConfig?.finish?.finish_price) || 0;
-                    const ledPrice = parseFloat(frameConfig?.led?.price) || 0;
-
-                    let total = 0;
-
-                    if (designPrice === 0 && colorPrice === 0 && sizePrice === 0 && finishPrice === 0 && ledPrice === 0) {
-                        total = 399; // Default price when all options are free
-                    } else {
-                        total = designPrice + colorPrice + sizePrice + finishPrice + ledPrice;
-                    }
-
-                    grandTotal += total;
-                });
-
-                // Update the grand total in UI
-                document.getElementById('grand-total').textContent = '₹' + grandTotal;
-            } else {
-                console.error('Failed to fetch frame configurations');
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-}
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const imageName = urlParams.get('image_name');
@@ -351,6 +312,45 @@ function getDefaultFrameConfig() {
     };
 }
 
+function updateGrandTotal() {
+    fetch(get_grand_total) // Update this to match your route
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                let grandTotal = 0;
+
+                data.data.forEach(sessionImage => {
+                    const frameConfig = sessionImage.frame_configuration;
+
+                    const designPrice = parseFloat(frameConfig?.design?.design_price) || 0;
+                    const colorPrice = parseFloat(frameConfig?.color?.color_price) || 0;
+                    const sizePrice = parseFloat(frameConfig?.size?.frame_price) || 0;
+                    const finishPrice = parseFloat(frameConfig?.finish?.finish_price) || 0;
+                    const ledPrice = parseFloat(frameConfig?.led?.price) || 0;
+
+                    let total = 0;
+
+                    if (designPrice === 0 && colorPrice === 0 && sizePrice === 0 && finishPrice === 0 && ledPrice === 0) {
+                        total = 399; // Default price when all options are free
+                    } else {
+                        total = designPrice + colorPrice + sizePrice + finishPrice + ledPrice;
+                    }
+
+                    grandTotal += total;
+                });
+
+                // Update the grand total in UI
+                document.getElementById('grand-total').textContent = '₹' + grandTotal;
+            } else {
+                console.error('Failed to fetch frame configurations');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+}
+
+
 function updateFramePrice(frameConfig) {
     if (!frameConfig) return;
     let frame_config = JSON.parse(frameConfig.frame_configuration);
@@ -426,22 +426,18 @@ async function processAndUploadImages(files) {
             continue;
         }
 
-        if (file.size < 500 * 1024) { // Minimum file size check (500KB)
-            await Swal.fire('Low Quality Image', 'Please upload a higher quality image (min 500KB)', 'warning');
-            continue;
-        }
-
         const objectURL = URL.createObjectURL(file);
         const img = new Image();
         img.src = objectURL;
 
+        // Use a promise to wait for the image to load
         await new Promise((resolve, reject) => {
             img.onload = resolve;
             img.onerror = reject;
         });
 
-        if (img.width < 125 || img.height < 112) {
-            await Swal.fire('Image Too Small', 'Minimum resolution: 125x112px', 'warning');
+        if (img.width < 1500 || img.height < 1500) {
+            await Swal.fire('Image Too Small', 'Your Image Quality is Low', 'warning');
             continue;
         }
 
@@ -460,10 +456,11 @@ async function processAndUploadImages(files) {
 
             uploadPromises.push(uploadImageToServer(file, newFileName));
         } else {
-            await Swal.fire('Blurry Image', 'Please upload a clearer and high-quality image.', 'warning');
+            await Swal.fire('Blurry Image', 'Please upload a clearer image.', 'warning');
         }
     }
 
+    // Now wait for all uploads to finish
     try {
         const images = await Promise.all(uploadPromises);
 
@@ -473,7 +470,7 @@ async function processAndUploadImages(files) {
 
             fetchAndRenderSessionImages();
 
-            await Swal.fire('Upload Successful', 'Your high-quality images have been uploaded!', 'success');
+            await Swal.fire('Upload Successful', 'Your images have been uploaded successfully!', 'success');
         }
     } catch (err) {
         console.error('Image upload failed', err);
@@ -510,7 +507,7 @@ function isImageBlurred(canvas) {
     }
 
     const variance = laplacianSqSum / (canvas.width * canvas.height);
-    const threshold = 300; // Increased threshold for higher quality images
+    const threshold = 100; // Adjust based on required blur sensitivity
     return variance < threshold;
 }
 

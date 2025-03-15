@@ -41,7 +41,7 @@
         }
     </style>
     <main>
-        <section class="file-uploadSection">
+        <section class="file-uploadSection" style="display: {{ count($images) > 0 ? 'none' : 'flex' }};">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="file-uploadMain">
@@ -68,7 +68,7 @@
             </div>
         </section>
 
-        <section class="FrameDesignSection">
+        <section class="FrameDesignSection" style="display: {{ count($images) > 0 ? 'block' : 'none' }};">
             <div class="wrapper">
                 <div class="grid-parent">
                     <div class="grid-1">
