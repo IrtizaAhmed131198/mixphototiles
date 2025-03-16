@@ -21,3 +21,4 @@ yarn-error.log
 composer.lock
 .env.example
 *.rar
+*.zip
