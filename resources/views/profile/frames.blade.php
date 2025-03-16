@@ -80,77 +80,105 @@
                     <div class="modal-form">
                         <form action="{{ route('frames.store') }}" id="add-frames" method="POST" enctype="multipart/form-data">
                             @csrf
+
+                            <!-- Validation Error Messages -->
+                            @if ($errors->any())
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        var modal = new bootstrap.Modal(document.getElementById('frames'));
+                                        modal.show();
+                                    });
+                                </script>
+                            @endif
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="text" class="form-control" name="name" placeholder="Name" required>
+                                        <input type="text" class="form-control" name="name" placeholder="Name" required value="{{ old('name') }}">
+                                        @error('name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="text" class="form-control" name="slug" placeholder="Slug (Unique)" required>
+                                        <input type="text" class="form-control" name="slug" placeholder="Slug (Unique)" required value="{{ old('slug') }}">
+                                        @error('slug')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-group label-hover">
-                                        <textarea name="description" class="form-control" id="descriptionEditor" placeholder="Description" rows="4"></textarea>
+                                        <textarea name="description" class="form-control" id="descriptionEditor" placeholder="Description" rows="4">{{ old('description') }}</textarea>
+                                        @error('description')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" step="0.01" class="form-control" name="price" placeholder="Price" required>
+                                        <input type="number" step="0.01" class="form-control" name="price" placeholder="Price" required value="{{ old('price') }}">
+                                        @error('price')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" step="0.01" class="form-control" name="discount" placeholder="Discount">
+                                        <input type="number" step="0.01" class="form-control" name="discount" placeholder="Discount" value="{{ old('discount') }}">
+                                        @error('discount')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
-                                <!-- Main Image Upload with Preview -->
+                                <!-- Main Image Upload with Error -->
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <input type="file" class="form-control" name="main_image" id="mainImageInput">
                                         <span>Main Thumbnail Frame</span>
                                         <div id="mainImagePreview" style="margin-top: 10px;"></div>
+                                        @error('main_image')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <input type="file" class="form-control" name="no_coordinates_image" id="noCordImageInput">
-                                        <span>No Cordinates Frame</span>
+                                        <span>No Coordinates Frame</span>
                                         <div id="noCordmagePreview" style="margin-top: 10px;"></div>
+                                        @error('no_coordinates_image')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <input type="file" class="form-control" name="coordinates_image" id="cordImageInput">
-                                        <span>Cordinates Frame</span>
+                                        <span>Coordinates Frame</span>
                                         <div id="cordmagePreview" style="margin-top: 10px;"></div>
+                                        @error('coordinates_image')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-
-                                <!-- Multiple Images Upload with Preview -->
-                                {{-- <div class="col-6">
-                                    <div class="form-group label-hover">
-                                        <input type="file" class="form-control" name="additional_images[]" id="additionalImagesInput" multiple>
-                                        <span>Additional Frame (You can select multiple)</span>
-                                        <div id="additionalImagesPreview" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <select name="status" class="form-control" required>
-                                            <option value="1">Active</option>
-                                            <option value="0">Inactive</option>
+                                            <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Active</option>
+                                            <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
                                         </select>
+                                        @error('status')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -180,6 +208,7 @@
                     <div class="modal-form">
                         <form id="framesForm" method="POST" enctype="multipart/form-data">
                             @csrf
+
                             <input type="hidden" name="_method" id="formMethod" value="POST">
                             <input type="hidden" name="product_id" id="product_id">
 
@@ -379,44 +408,78 @@
                 }
 
                 if (data.no_coordinates_image) {
-                    $('#editNoCordmagePreview').html('<img src="' + data.no_coordinates_image + '" alt="Main Image" width="100">');
+                    $('#editNoCordmagePreview').html('<img src="' + data.no_coordinates_image + '" alt="No Coordinates Image" width="100">');
                 } else {
                     $('#editNoCordmagePreview').html('');
                 }
 
                 if (data.coordinates_image) {
-                    $('#editCordmagePreview').html('<img src="' + data.coordinates_image + '" alt="Main Image" width="100">');
+                    $('#editCordmagePreview').html('<img src="' + data.coordinates_image + '" alt="Coordinates Image" width="100">');
                 } else {
                     $('#editCordmagePreview').html('');
                 }
 
-                // if (CKEDITOR.instances['descriptionEditor2']) {
-                //     CKEDITOR.instances['descriptionEditor2'].setData(data.description);
-                // }
-
                 setDescriptionEditor2Data(data.description);
 
-                // Load additional images preview
-                // $('#existingImagesPreview').html('');
-                // if (data.additional_images.length > 0) {
-                //     data.additional_images.forEach(function (image) {
-                //         $('#existingImagesPreview').append(`
-                //             <div class="additional-image-item" data-id="${image.id}" style="position: relative;">
-                //                 <img src="${image.url}" alt="Additional Image" width="100">
-                //                 <button type="button" class="btn btn-sm btn-danger remove-additional-image" data-id="${image.id}" style="position: absolute; top: 0; right: 0;">&times;</button>
-                //             </div>
-                //         `);
-                //     });
-                // }
-
                 let editUrl = "{{ url('frames') }}/" + data.id;
-
                 $('#framesForm').attr('action', editUrl);
                 $('#formMethod').val('POST'); // Laravel method spoofing
 
                 $('#framesModal').modal('show');
             });
         });
+
+        // **Validation Before Form Submission**
+        $('#framesForm').submit(function (e) {
+            let isValid = true;
+            $('.error-message').remove(); // Remove previous error messages
+
+            // Validate Name
+            if ($('[name="name"]').val().trim() === '') {
+                isValid = false;
+                $('[name="name"]').after('<span class="error-message text-danger">Name is required</span>');
+            }
+
+            // Validate Slug (Only alphanumeric and dashes)
+            let slugPattern = /^[a-zA-Z0-9-]+$/;
+            if (!slugPattern.test($('[name="slug"]').val())) {
+                isValid = false;
+                $('[name="slug"]').after('<span class="error-message text-danger">Invalid slug format</span>');
+            }
+
+            // Validate Price (Positive number)
+            let price = parseFloat($('[name="price"]').val());
+            if (isNaN(price) || price <= 0) {
+                isValid = false;
+                $('[name="price"]').after('<span class="error-message text-danger">Price must be a positive number</span>');
+            }
+
+            // Validate Discount (Should not be negative)
+            let discount = parseFloat($('[name="discount"]').val());
+            if (!isNaN(discount) && discount < 0) {
+                isValid = false;
+                $('[name="discount"]').after('<span class="error-message text-danger">Discount cannot be negative</span>');
+            }
+
+            // Validate Images (Optional but must be valid format if provided)
+            let validImageFormats = ['image/jpeg', 'image/png', 'image/webp'];
+            function validateImage(input, errorMessage) {
+                if (input.files.length > 0 && !validImageFormats.includes(input.files[0].type)) {
+                    isValid = false;
+                    $(input).after(`<span class="error-message text-danger">${errorMessage}</span>`);
+                }
+            }
+
+            validateImage($('#editMainImageInput')[0], 'Invalid main image format. Allowed: JPG, PNG, WebP');
+            validateImage($('#editNoCordImageInput')[0], 'Invalid no coordinates image format. Allowed: JPG, PNG, WebP');
+            validateImage($('#editCordImageInput')[0], 'Invalid coordinates image format. Allowed: JPG, PNG, WebP');
+
+            // If any validation fails, prevent form submission
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+
 
         $('#framesModal').on('hidden.bs.modal', function () {
             $('#add-frames')[0].reset(); // Reset form fields
@@ -427,7 +490,7 @@
             // if (CKEDITOR.instances['descriptionEditor2']) {
             //     CKEDITOR.instances['descriptionEditor2'].setData('');
             // }.
-            data.description
+            setDescriptionEditor2Data('');
         });
 
         $(document).on('click', '.remove-additional-image', function () {

@@ -21,10 +21,10 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'required|string|unique:products,slug',
             'price' => 'required|numeric',
-            'discount' => 'nullable|numeric',
-            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'no_coordinates_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'coordinates_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'discount' => 'required|numeric',
+            'main_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'no_coordinates_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'coordinates_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
             'status' => 'required|boolean',
         ]);
 
@@ -146,6 +146,18 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:products,slug,' . $id,
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'discount' => 'nullable|numeric|min:0',
+            'status' => 'required|in:0,1',
+            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'no_coordinates_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'coordinates_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
         $product = Product::findOrFail($id);
 
         $product->name = $request->name;
