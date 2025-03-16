@@ -549,7 +549,6 @@ document.getElementById('remove-image').addEventListener('click', async function
         if (imgElement) {
             const imageSrc = imgElement.getAttribute('src');
             const imageName = imageSrc.split('/').pop(); // Extract filename from src
-            console.log(imageName);
 
             // Confirm before deleting
             const confirmDelete = await Swal.fire({
@@ -749,8 +748,11 @@ designOptions.forEach(option => {
         this.classList.add('li-border-color');
 
         let get_active_config = JSON.parse($('#active_config').val());
+        let frameConfig = JSON.parse(get_active_config.frame_configuration);
+        frameConfig.design.design_price = design_price;
 
-        updateFramePrice(get_active_config);
+        get_active_config.frame_configuration = JSON.stringify(frameConfig);
+        $('#active_config').val(JSON.stringify(get_active_config));
 
         // Save the selected design into the session_images table for the active image
         saveFrameConfigToDatabase({
@@ -758,6 +760,10 @@ designOptions.forEach(option => {
             displayText: displayText,
             design_price: design_price
         }, 'design');
+
+        setTimeout(() => {
+            updateFramePrice(get_active_config);
+        }, 500);
     });
 });
 
@@ -808,7 +814,11 @@ document.querySelectorAll('.frame-color').forEach(item => {
 
         let get_active_config = JSON.parse($('#active_config').val());
 
-        updateFramePrice(get_active_config);
+        let frameConfig = JSON.parse(get_active_config.frame_configuration);
+        frameConfig.color.color_price = color_price;
+
+        get_active_config.frame_configuration = JSON.stringify(frameConfig);
+        $('#active_config').val(JSON.stringify(get_active_config));
 
         // Save the color selection for the active image
         saveFrameConfigToDatabase({
@@ -817,6 +827,10 @@ document.querySelectorAll('.frame-color').forEach(item => {
             shadowClass: shadowClass,
             color_price: color_price
         }, 'color');
+
+        setTimeout(() => {
+            updateFramePrice(get_active_config);
+        }, 500);
     });
 });
 
@@ -849,7 +863,11 @@ sizeOptions.forEach(option => {
 
         let get_active_config = JSON.parse($('#active_config').val());
 
-        updateFramePrice(get_active_config);
+        let frameConfig = JSON.parse(get_active_config.frame_configuration);
+        frameConfig.size.frame_price = frame_price;
+
+        get_active_config.frame_configuration = JSON.stringify(frameConfig);
+        $('#active_config').val(JSON.stringify(get_active_config));
 
         // Save the size selection for the active image
         saveFrameConfigToDatabase({
@@ -859,6 +877,10 @@ sizeOptions.forEach(option => {
             frame_price: frame_price,
             frameSizeText: frameSizeText,
         }, 'size');
+
+        setTimeout(() => {
+            updateFramePrice(get_active_config);
+        }, 500);
     });
 });
 
@@ -879,13 +901,21 @@ finishOptions.forEach(option => {
 
         let get_active_config = JSON.parse($('#active_config').val());
 
-        updateFramePrice(get_active_config);
+        let frameConfig = JSON.parse(get_active_config.frame_configuration);
+        frameConfig.finish.finish_price = finish_price;
+
+        get_active_config.frame_configuration = JSON.stringify(frameConfig);
+        $('#active_config').val(JSON.stringify(get_active_config));
 
         // Save the finish selection for the active image
         saveFrameConfigToDatabase({
             finish_price: finish_price,
             frameFinishText: frameFinishText
         }, 'finish');
+
+        setTimeout(() => {
+            updateFramePrice(get_active_config);
+        }, 500);
 
     });
 });
@@ -917,7 +947,12 @@ hangOptions.forEach(option => {
 
         let get_active_config = JSON.parse($('#active_config').val());
 
-        updateFramePrice(get_active_config);
+        let frameConfig = JSON.parse(get_active_config.frame_configuration);
+        frameConfig.led.price = price;
+
+        get_active_config.frame_configuration = JSON.stringify(frameConfig);
+        $('#active_config').val(JSON.stringify(get_active_config));
+
 
         // Save the LED selection for the active image
         saveFrameConfigToDatabase({
@@ -925,6 +960,10 @@ hangOptions.forEach(option => {
             value: value,
             framehangText: framehangText
         }, 'led');
+
+        setTimeout(() => {
+            updateFramePrice(get_active_config);
+        }, 500);
     });
 });
 

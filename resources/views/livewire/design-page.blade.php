@@ -230,7 +230,7 @@
                                         </p>
                                     </div>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-led li-border-color"
+                                    <li type="button" class="parentProperties dropdown-item frame-led"
                                         data-price="1200" data-val="yes">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -242,7 +242,7 @@
                                         </div>
                                     </li>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-led"
+                                    <li type="button" class="parentProperties dropdown-item frame-led li-border-color"
                                         data-price="0" data-val="no">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
