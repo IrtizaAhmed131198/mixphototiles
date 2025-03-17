@@ -322,17 +322,17 @@
 
 @push('scripts')
 <script>
-    // CKEDITOR.replace('descriptionEditor');
-    // CKEDITOR.replace('descriptionEditor2');
-    tinymce.init({
-        selector: '#descriptionEditor, #descriptionEditor2', // Target both textareas
-        plugins: 'code', // Include the source code plugin
-        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | code', // Add 'code' button
-    });
+    CKEDITOR.replace('descriptionEditor');
+    CKEDITOR.replace('descriptionEditor2');
+    // tinymce.init({
+    //     selector: '#descriptionEditor, #descriptionEditor2', // Target both textareas
+    //     plugins: 'code', // Include the source code plugin
+    //     toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | code', // Add 'code' button
+    // });
 
-    function setDescriptionEditor2Data(content) {
-        tinymce.get('descriptionEditor2').setContent(content);
-    }
+    // function setDescriptionEditor2Data(content) {
+    //     tinymce.get('descriptionEditor2').setContent(content);
+    // }
 </script>
 <script>
     function setupImagePreview(inputId, previewId) {
@@ -419,7 +419,10 @@
                     $('#editCordmagePreview').html('');
                 }
 
-                setDescriptionEditor2Data(data.description);
+                // setDescriptionEditor2Data(data.description);
+                if (CKEDITOR.instances['descriptionEditor2']) {
+                    CKEDITOR.instances['descriptionEditor2'].setData(data.description);
+                }
 
                 let editUrl = "{{ url('frames') }}/" + data.id;
                 $('#framesForm').attr('action', editUrl);
@@ -487,10 +490,10 @@
             $('#editNoCordmagePreview').html('');
             $('#editCordmagePreview').html('');
 
-            // if (CKEDITOR.instances['descriptionEditor2']) {
-            //     CKEDITOR.instances['descriptionEditor2'].setData('');
-            // }.
-            setDescriptionEditor2Data('');
+            if (CKEDITOR.instances['descriptionEditor2']) {
+                CKEDITOR.instances['descriptionEditor2'].setData('');
+            }
+            // setDescriptionEditor2Data('');
         });
 
         $(document).on('click', '.remove-additional-image', function () {

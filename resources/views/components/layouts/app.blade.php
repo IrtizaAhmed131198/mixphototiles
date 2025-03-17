@@ -68,7 +68,7 @@
 <!-- sweetalert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- ckedor js -->
-<script src="https://cdn.tiny.cloud/1/496nb93h7akknqd9kt5lehsj8lnmh3pks7b5e93n639plxv0/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+{{-- <script src="https://cdn.tiny.cloud/1/496nb93h7akknqd9kt5lehsj8lnmh3pks7b5e93n639plxv0/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> --}}
 <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
 {{-- <script src="{{ asset('assets/js/ckeditor.js') }}"></script> --}}
 <!-- Dropify JS -->
