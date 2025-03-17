@@ -721,8 +721,8 @@ ul.LeftSidebar_designTool button svg {
     margin-bottom: 2px;
     height: 1em;
     width: 1em;
+    color: black;
 }
-
 ul.LeftSidebar_designTool button {
     padding: 1rem 1rem;
     width: 80px;
@@ -1011,7 +1011,7 @@ figure.PropertiesleftChild {
 }
 
 ul.LeftSidebar_designTool button.show {
-    background: #f5e5f1;
+    /* background: #f5e5f1; */
     color: #ff0168;
     border-color: #ff0168;
 }
@@ -3438,7 +3438,7 @@ button.accordion-button:disabled .text-body-tertiary {
 }
 
 span.caption-crop {
-    margin-left: 31rem;
+    margin-left: auto;
     margin-top: 1rem;
     font-weight: 800;
     font-size: 15px;
