@@ -234,7 +234,7 @@
                                         data-price="1200" data-val="yes">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1702976624908.png') }}">
+                                                src="{{ asset('assets/images/led_frame_1.jpg') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Yes</p>
@@ -246,7 +246,7 @@
                                         data-price="0" data-val="no">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1702976645152.png') }}">
+                                                src="{{ asset('assets/images/led_frame_1.jpg') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">No</p>
