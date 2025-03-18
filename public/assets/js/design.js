@@ -55,8 +55,8 @@ function fetchAndRenderSessionImages() {
         .then(response => response.json())
         .then(images => {
             if (images.length > 0) {
-                document.querySelector('.file-uploadSection').style.display = 'none';
-                document.querySelector('.FrameDesignSection').style.display = 'block';
+                // document.querySelector('.file-uploadSection').style.display = 'none';
+                // document.querySelector('.FrameDesignSection').style.display = 'block';
                 renderSliderImages(images);
                 applyInitialFrameDesign(images[0]);
                 applyInitialFrameColor(images[0]);
