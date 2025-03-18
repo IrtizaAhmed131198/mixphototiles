@@ -464,46 +464,49 @@ async function processAndUploadImages(files) {
         const img = new Image();
         img.src = objectURL;
 
-        // Use a promise to wait for the image to load
         await new Promise((resolve, reject) => {
             img.onload = resolve;
             img.onerror = reject;
         });
 
-        if (img.width < 1500 || img.height < 1500) {
-            await Swal.fire('Image Too Small', 'Your Image Quality is Low', 'warning');
-            continue;
-        }
-
+        // Create a canvas and draw the image
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0, img.width, img.height);
 
-        if (!isImageBlurred(canvas)) {
-            const originalName = file.name;
-            const extension = originalName.split('.').pop();
-            const baseName = originalName.substring(0, originalName.lastIndexOf('.'));
-            const timestamp = new Date().toISOString().replace(/[:.-]/g, "");
-            const newFileName = `${baseName}_${timestamp}.${extension}`;
+        // Check resolution
+        if (img.width < 1500 || img.height < 1500 || isImageBlurred(canvas)) {
+            const result = await Swal.fire({
+                title: 'Image Issue',
+                text: 'Your image is either too small or blurry. Do you want to keep it anyway?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Keep Anyway',
+                cancelButtonText: 'Remove'
+            });
 
-            uploadPromises.push(uploadImageToServer(file, newFileName));
-        } else {
-            await Swal.fire('Blurry Image', 'Please upload a clearer image.', 'warning');
+            if (!result.isConfirmed) {
+                continue; // Skip image if user chooses "Remove"
+            }
         }
+
+        const originalName = file.name;
+        const extension = originalName.split('.').pop();
+        const baseName = originalName.substring(0, originalName.lastIndexOf('.'));
+        const timestamp = new Date().toISOString().replace(/[:.-]/g, "");
+        const newFileName = `${baseName}_${timestamp}.${extension}`;
+
+        uploadPromises.push(uploadImageToServer(file, newFileName));
     }
 
-    // Now wait for all uploads to finish
     try {
         const images = await Promise.all(uploadPromises);
-
         if (images.length > 0) {
             document.querySelector('.file-uploadSection').style.display = 'none';
             document.querySelector('.FrameDesignSection').style.display = 'block';
-
             fetchAndRenderSessionImages();
-
             await Swal.fire('Upload Successful', 'Your images have been uploaded successfully!', 'success');
         }
     } catch (err) {
@@ -1138,11 +1141,17 @@ $(document).ready(function () {
 
     $uploadCrop = $('#upload-demo').croppie({
         viewport: {
-            width: 300, // Increased width
-            height: 250, // Increased height
+            width: 300,
+            height: 250,
         },
-        enforceBoundary: false,
-        enableExif: true
+        boundary: {
+            width: 350, // Boundary ko viewport se bara rakhein
+            height: 300
+        },
+        enforceBoundary: true, // Crop frame se bahar zoom-out na ho
+        enableExif: true,
+        showZoomer: true,
+        mouseWheelZoom: false
     });
 
     $('#cropImagePop').on('shown.bs.modal', function () {
@@ -1151,8 +1160,15 @@ $(document).ready(function () {
             url: src_img
         }).then(function () {
             console.log('jQuery bind complete');
+
+            // Minimum zoom set karein taake image frame se zyada chhoti na ho
+            setTimeout(() => {
+                let minZoom = $(".cr-slider").attr("min");
+                $(".cr-slider").val(minZoom).trigger('input');
+            }, 100);
         });
     });
+
 
     $('.item-img').on('change', function () {
         readFile(this);

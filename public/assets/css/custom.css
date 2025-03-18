@@ -3468,3 +3468,113 @@ a.link {
 .cke_notification_warning {
     display: none !important;
 }
+
+/* modal css  */
+.custom-modal .heading-6 {
+    color: black;
+    font-weight: 800;
+    font-size: 22px;
+    margin-bottom: 1rem;
+}
+
+.custom-modal p {
+    color: black;
+    font-weight: 400;
+    font-size: 16px;
+    margin-top: 0rem;
+}
+
+.Login_separator {
+    color: black;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.custom-modal label {
+    color: black;
+    font-size: 14px;
+}
+
+.Login_forgotBtn button {
+    color: black;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-check:checked+.btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check)+.btn:active {
+    color: black;
+}
+
+.btn:hover {
+    color: black;
+}
+
+.custom-modal {
+    padding: 0px;
+}
+
+.custom-modal .modal-header {
+    border-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.custom-modal .modal-header .btn-close {
+    color: black;
+    padding: 10px 10px;
+    width: fit-content;
+    opacity: 1;
+}
+
+button.btn.google-btn {
+    height: 40px;
+    border: 1px solid #dadce0;
+    color: #000000;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: auto auto 1rem;
+    font-size: 14px;
+    opacity: 1;
+}
+
+span.googleimg svg {
+    width: 20px !important;
+}
+
+.btnParentlogin {
+    text-align: center;
+}
+
+
+.modal-content {
+    padding: 2rem;
+}
+
+.PasswordInput_showButton.btn-text {
+    top: 8px !important;
+}
+
+.custom-modal .modal-content {
+    border-radius: 0;
+}
+
+.custom-modal input {
+    border-radius: 0;
+}
+
+button.Login_authSwitch {
+    border: 0;
+    text-decoration: underline;
+    font-weight: 700;
+    color: #FF0168;
+}
+
+.custom-modal .modal-dialog.modal-dialog-centered {
+    width: 100%;
+}
+/* modal css  */
