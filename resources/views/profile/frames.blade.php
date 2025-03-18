@@ -47,19 +47,12 @@
                                     <th>Price</th>
                                     <th>Discount</th>
                                     <th>Image</th>
+                                    <th>Coordinates</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Products</th>
-                                    <th>Price</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -383,6 +376,7 @@
                 { data: 'price', name: 'price' },
                 { data: 'discount', name: 'discount' },
                 { data: 'image', name: 'image', orderable: false, searchable: false },
+                { data: 'coordinates', name: 'coordinates' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });

@@ -94,12 +94,11 @@ class ProductController extends Controller
 
     public function getData()
     {
-        $products = Product::select('id', 'name', 'price', 'discount', 'image')
+        $products = Product::select('id', 'name', 'price', 'discount', 'image', 'coordinates')
             ->where('type', 'collections');
 
         return DataTables::of($products)
             ->addColumn('id', function ($row) {
-                // Add row counter
                 static $counter = 0;
                 $counter++;
                 return $counter;
@@ -108,15 +107,21 @@ class ProductController extends Controller
                 $url = asset($product->image);
                 return '<img src="'.$url.'" alt="Product Image" width="50" height="50">';
             })
+            ->addColumn('coordinates', function ($product) {
+                return !empty($product->coordinates)
+                    ? '<span class="text-success">Coordinates have been added</span>'
+                    : '<span class="text-danger">You need to add coordinates</span>';
+            })
             ->addColumn('action', function ($product) {
                 return '<button class="btn btn-sm btn-primary edit-frame" data-id="'.$product->id.'">Edit</button>
                         <button class="btn btn-sm btn-danger delete-product" data-id="'.$product->id.'">Delete</button>
                         <button class="btn btn-sm btn-success set-coordinates" data-id="'.$product->id.'" data-bs-toggle="modal"
                                     data-bs-target="#coordinates">Set Coordinates</button>';
             })
-            ->rawColumns(['id', 'image', 'action'])
+            ->rawColumns(['id', 'image', 'coordinates', 'action'])
             ->make(true);
     }
+
 
     public function edit($id)
     {

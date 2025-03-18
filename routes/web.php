@@ -89,4 +89,8 @@ Route::get('/canvas', function () {
     return view('canvas');
 });
 
+Route::get('/check-user-address', function () {
+    return response()->json(['hasAddress' => session()->has('user_address') && !empty(session('user_address'))]);
+})->name('check_user_address');
+
 require __DIR__.'/auth.php';

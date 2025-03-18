@@ -36,6 +36,8 @@
         <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <!-- Dropify CSS -->
     {{-- <link rel="stylesheet" href="{{ asset('vendor/dropify/dist/css/dropify.min.css') }}"> --}}
+    <!-- ckedor js -->
+    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}">
@@ -67,10 +69,6 @@
 <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
 <!-- sweetalert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- ckedor js -->
-{{-- <script src="https://cdn.tiny.cloud/1/496nb93h7akknqd9kt5lehsj8lnmh3pks7b5e93n639plxv0/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> --}}
-<script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
-{{-- <script src="{{ asset('assets/js/ckeditor.js') }}"></script> --}}
 <!-- Dropify JS -->
 <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
 <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>

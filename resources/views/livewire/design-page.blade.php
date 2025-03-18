@@ -14,14 +14,30 @@
         margin-bottom: 5px; /* Optional spacing between items */
         font-size: 14px; /* Optional - adjust font size */
     }
-    .cke_notification_warning {
-        display: none !important;
+
+    .loader-container {
+        background-attachment: fixed;
+        background-color: #ffff;
+        height: 100vh;
+        position: fixed;
+        z-index: 999999;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        margin:auto;
+    }
+    .loaderMain img {
+        max-width: 350px;
+        margin:auto;
     }
 
 </style>
 @endpush
 
 @section('content')
+
     <style>
         /* Hide the editing section initially */
         .FrameDesignSection {
@@ -43,6 +59,13 @@
             animation: fadeIn 0.5s ease-in-out;
         }
     </style>
+    <div class="loadermain">
+        <div class="loader-container">
+            <div class="loaderMain">
+                <img src="{{ asset('assets/images/loader.gif') }}" class="img-fluid" alt="">
+            </div>
+        </div>
+    </div>
     <main>
         <section class="file-uploadSection" style="display: {{ count($images) > 0 ? 'none' : 'flex' }};">
             <div class="row">
@@ -103,7 +126,7 @@
                                     <!-- Dropdown menu links -->
                                     <div class="menuParent">
                                         <p class="propertyTitle">
-                                            Select Color
+                                            Select Frame
                                         </p>
                                     </div>
 
@@ -470,7 +493,7 @@
                                     </div>
 
                                     <li type="button" class="parentProperties dropdown-item frame-finish li-border-color"
-                                        data-price="399">
+                                        data-price="399" data-val="Normal">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1701851447650.png') }}">
@@ -482,7 +505,7 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-finish"
-                                        data-price="453">
+                                        data-price="453" data-val="Matte">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1701851447650.png') }}">
@@ -493,7 +516,7 @@
                                         </div>
                                     </li>
                                     <li type="button" class="parentProperties dropdown-item frame-finish"
-                                        data-price="492">
+                                        data-price="492" data-val="Gloss">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1701851447650.png') }}">
@@ -504,7 +527,7 @@
                                         </div>
                                     </li>
                                     <li type="button" class="parentProperties dropdown-item frame-finish"
-                                        data-price="537">
+                                        data-price="537" data-val="Canvas">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1701851447650.png') }}">
@@ -944,4 +967,11 @@
 
 @push('scripts')
     <script src="{{ asset('assets/js/design.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('.loadermain').fadeOut();
+            }, 3000);
+        })
+    </script>
 @endpush

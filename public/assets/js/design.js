@@ -167,6 +167,7 @@ function applyInitialFrameColor(imageObj) {
     }
 
     const frameConfig = JSON.parse(imageObj.frame_configuration);
+    const colorText = frameConfig.color?.color_name || 'Black';
 
     const initialColor = frameConfig.color || {
         img_src: "assets/images/black-frame.png",
@@ -174,8 +175,19 @@ function applyInitialFrameColor(imageObj) {
         shadowClass: "box-shadow-black"
     };
 
+    const colorOptions = document.querySelectorAll('.frame-color.dropdown-item');
+
+    colorOptions.forEach(item => {
+        item.classList.remove('li-border-color');
+
+        const itemColorClass = item.getAttribute('data-color');
+        if (itemColorClass === colorText) {
+            item.classList.add('li-border-color');
+        }
+    });
+
     // Update frame-show text (color name instead of design name)
-    const frameShow = document.getElementById('frame-show');
+    const frameShow = document.getElementById('color-show');
     if (frameShow) {
         frameShow.textContent = initialColor.color_name;
     }
@@ -214,6 +226,18 @@ function applyInitialFrameSize(imageObj) {
         frameSizeText: '8" X 8"'
     };
 
+    const ledOptions = document.querySelectorAll('.frame-led.dropdown-item');
+    const ledText = frameConfig.led?.value || 'no';
+
+    ledOptions.forEach(item => {
+        item.classList.remove('li-border-color');
+
+        const itemLedClass = item.getAttribute('data-val');
+        if (itemLedClass === ledText) {
+            item.classList.add('li-border-color');
+        }
+    });
+
     const frameWrap = document.getElementById('frameWrap'); // Ensure your frame container has this ID
     if (!frameWrap) return;
 
@@ -247,7 +271,17 @@ function applyInitialFrameFinish(imageObj) {
         frameFinishText: 'Normal'
     };
 
-    console.log()
+    const finishOptions = document.querySelectorAll('.frame-finish.dropdown-item');
+    const finishText = frameConfig.finish?.frameFinishText || 'no';
+
+    finishOptions.forEach(item => {
+        item.classList.remove('li-border-color');
+
+        const itemfinishClass = item.getAttribute('data-val');
+        if (itemfinishClass === finishText) {
+            item.classList.add('li-border-color');
+        }
+    });
 
     // Update finish text display
     const frameFinishShow = document.getElementById('finish-show');

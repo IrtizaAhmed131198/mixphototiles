@@ -706,7 +706,7 @@ ul.LeftSidebar_designTool {
     gap: 0rem;
     background: white;
     position: relative;
-    z-index: 99999;
+    z-index: 1;
     height: auto;
 }
 
@@ -934,7 +934,7 @@ ul.LeftSidebar_designTool button p {
     max-width: 100%;
     background: #ffffff;
     position: relative;
-    z-index: 999999;
+    z-index: 1;
 }
 
 .box {
@@ -962,6 +962,8 @@ ul.designToolPropertiesLists {
     opacity: 0;
     display: block !important;
     z-index: -1;
+    height: auto;
+    max-height: 64vh;
 }
 
 .parentProperties {
@@ -1694,7 +1696,7 @@ a {
 }
 
 .classic-card-design {
-    padding: 60px 30px;
+    padding: 37px 30px;
     margin: auto;
     width: 309px;
     height: 318px;
@@ -1712,7 +1714,7 @@ a {
 }
 
 .bold-card-design {
-    padding: 51px 14px;
+    padding: 51px 18px;
     margin: auto;
     width: 309px;
     height: 318px;
@@ -3461,4 +3463,8 @@ a.link {
     object-fit: cover;
     width: 100%;
     height: 100%;
+}
+
+.cke_notification_warning {
+    display: none !important;
 }

@@ -191,8 +191,7 @@
                                     </label>
                                 </div>
 
-                                <button type="button" class="btn custom-btn filled"
-                                        onclick="window.location.href='{{ route('place_order') }}'">
+                                <button type="button" class="btn custom-btn filled" onclick="validateAndProceed()">
                                     Pay Now
                                 </button>
 
@@ -305,6 +304,35 @@
             </ul>
         `;
         $('#addressDisplay').html(html);
+    }
+
+    function validateAndProceed() {
+        // Check if terms and conditions checkbox is checked
+        let agreeTc = document.getElementById('agreeTc').checked;
+        if (!agreeTc) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'You must agree to the Terms and Conditions.'
+            });
+            return;
+        }
+
+        // Check if user_address session is empty using AJAX request to the backend
+        fetch("{{ route('check_user_address') }}")
+            .then(response => response.json())
+            .then(data => {
+                if (!data.hasAddress) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please add your address before proceeding.'
+                    });
+                } else {
+                    window.location.href = "{{ route('place_order') }}";
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
 
 
