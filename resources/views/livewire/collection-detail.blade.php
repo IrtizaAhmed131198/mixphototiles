@@ -118,7 +118,8 @@
                                                             $image_path = $collectionImages[$key]['image'];
                                                             @endphp
 
-                                                            <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview">
+                                                            <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview"
+                                                                onclick="openImageModal('{{ $cluster->id }}')">
                                                         </div>
                                                         <!-- Image Preview -->
                                                     </div>
@@ -150,7 +151,8 @@
                                                                 </path>
                                                             </svg>
 
-                                                            <img src="" id="preview-{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview">
+                                                            <img src="" id="preview-{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview"
+                                                                onclick="openImageModal('{{ $cluster->id }}')">
                                                         </div>
                                                         <!-- Image Preview -->
                                                     </div>
@@ -473,61 +475,90 @@
     </div>
 </section>
 
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Image Options</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalPreviewImage" src="" class="img-fluid" alt="Preview">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="cropImage()">Crop</button>
+                <button class="btn btn-warning" onclick="swapImage()">Swap</button>
+                <button class="btn btn-danger" onclick="removeImage()">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- photos modal css  -->
 <div class="custom-modal photoslayoutmodalparent">
     <div class="modal fade" id="photolayoutmodal" aria-hidden="true" aria-labelledby="photolayoutmodalToggleLabel2"
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="SwapImageModal_swapTop">
+                        <h4 class="heading-3">Add Photos</h4>
+                        <p class="para">Click on the image you would like to Add</p>
                     </div>
-                    <div class="modal-body">
 
-                        <div class="SwapImageModal_swapTop">
-                            <h4 class="heading-3">Add Photos</h4>
-                            <p class="para">Click on the image you would like to Add</p>
-                        </div>
-
-                        <div class="row SwapImageModal_swapImages">
-                            <div class="col-sm-3 col-4">
-                                <div class="PlusBtn_plus" id="plus"><input class="d-none" accept="image/*"
-                                        id="upload-photo-1" multiple="" maxlength="4" type="file">
-                                    <label class="PlusBtn_plus_btn" for="upload-photo-1">
-                                        <svg width="16" height="16" class="w-em h-em d-block mw-100 mh-100"
-                                            fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
-                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
-                                            </path>
-                                        </svg>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-4 SwapImageModal_progress">
-                                <div class="child-layout-photos">
-                                    <img alt="Frame" class="img-fluid" src="assets/images/17044619177.jpeg">
-                                </div>
+                    <div class="row SwapImageModal_swapImages">
+                        <div class="col-sm-3 col-4">
+                            <div class="PlusBtn_plus">
+                                <input class="d-none" accept="image/*" id="upload-photo-modal" multiple maxlength="4" type="file"
+                                    onchange="previewImage(event)">
+                                <label class="PlusBtn_plus_btn" for="upload-photo-modal">
+                                    <svg width="16" height="16" class="w-em h-em d-block mw-100 mh-100"
+                                        fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
+                                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
+                                        </path>
+                                    </svg>
+                                </label>
                             </div>
                         </div>
-
-                        <div class="modal-btns-parent">
-                            <button type="button" class="btn custom-btn filled"
-                                onclick="window.location.href='design.html';">
-                                Done
-                            </button>
-                            <button type="button" class="btn custom-btn transparent"
-                                onclick="window.location.href='design.html';">
-                                <svg width="15.9" height="17.5" class="w-em h-em pe-1 fs-16" viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg"><g transform="translate(-2.25 -1.25)"><path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6" transform="translate(-0.4 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2" transform="translate(-1)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><line y2="5" transform="translate(8.2 9)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line><line y2="5" transform="translate(12.2 9)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line></g></svg>
-                                Remove
-                            </button>
+                        <div class="col-sm-3 col-4 SwapImageModal_progress">
+                            <div class="child-layout-photos">
+                                <img alt="Frame" id="modal-preview" class="img-fluid" src="">
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="modal-btns-parent">
+                        <button type="button" class="btn custom-btn filled" data-bs-dismiss="modal">Done</button>
+                        <button type="button" class="btn custom-btn transparent" onclick="removeImage()">
+                            <svg width="15.9" height="17.5" class="w-em h-em pe-1 fs-16" viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(-2.25 -1.25)">
+                                    <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none" stroke="currentColor"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                    <path d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6"
+                                        transform="translate(-0.4 -0.8)" fill="none" stroke="currentColor"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                    <path d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2"
+                                        transform="translate(-1)" fill="none" stroke="currentColor"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                    <line y2="5" transform="translate(8.2 9)" fill="none" stroke="currentColor"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
+                                    <line y2="5" transform="translate(12.2 9)" fill="none" stroke="currentColor"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
+                                </g>
+                            </svg>
+                            Remove
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 
 @push('scripts')
@@ -650,6 +681,79 @@ function previewImage(event, clusterId) {
         reader.readAsDataURL(input.files[0]); // Convert image to Base64 for preview
     }
 }
+
+function openImageModal(id) {
+    const previewImage = document.getElementById(`preview-${id}`);
+    if (previewImage.src) {
+        document.getElementById('modalPreviewImage').src = previewImage.src;
+        document.getElementById('imageModal').setAttribute('data-cluster-id', id);
+        var modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        modal.show();
+    }
+}
+
+function removeImage() {
+    const id = document.getElementById('imageModal').getAttribute('data-cluster-id');
+    document.getElementById(`preview-${id}`).src = "";
+    document.getElementById(`preview-${id}`).classList.add('d-none');
+    document.getElementById(`upload-photo-cluster-${id}`).value = "";
+    var modal = bootstrap.Modal.getInstance(document.getElementById('imageModal'));
+    modal.hide();
+}
+
+function swapImage() {
+    const id = document.getElementById('imageModal').getAttribute('data-cluster-id');
+    document.getElementById(`upload-photo-cluster-${id}`).click();
+}
+
+function cropImage() {
+    alert('Crop functionality to be implemented with Cropper.js');
+}
+
+// let selectedClusterId = null;
+
+// function setSelectedCluster(clusterId) {
+//     selectedClusterId = clusterId;
+// }
+
+// function previewImage(event) {
+//     if (!selectedClusterId) return;
+
+//     const input = event.target;
+//     const file = input.files[0];
+//     if (file) {
+//         const reader = new FileReader();
+//         reader.onload = function (e) {
+//             // Set preview in modal
+//             document.getElementById('modal-preview').src = e.target.result;
+//             document.getElementById('modal-preview').classList.remove('d-none');
+
+//             // Set preview in the correct cluster
+//             const previewElement = document.getElementById('preview-' + selectedClusterId);
+//             if (previewElement) {
+//                 previewElement.src = e.target.result;
+//                 previewElement.classList.remove('d-none');
+//             }
+//         };
+//         reader.readAsDataURL(file);
+//     }
+// }
+
+// function removeImage() {
+//     if (!selectedClusterId) return;
+
+//     // Remove preview from modal
+//     document.getElementById('modal-preview').src = '';
+//     document.getElementById('modal-preview').classList.add('d-none');
+
+//     // Remove preview from the correct cluster
+//     const previewElement = document.getElementById('preview-' + selectedClusterId);
+//     if (previewElement) {
+//         previewElement.src = '';
+//         previewElement.classList.add('d-none');
+//     }
+// }
+
 
 
 document.querySelectorAll('.select-frame .parentProperties.frame-change').forEach(item => {
