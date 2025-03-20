@@ -141,7 +141,6 @@
                                             </div>
                                         @endforeach --}}
                                         @foreach ($clusters as $key => $cluster)
-                                        @dump($key);
                                             <div class="clusterFrameWrp {{ $colorClass }} {{ $frameClass }}" id="cluster-block-{{ $cluster->id }}"
                                                 style="position: absolute;
                                                     top: {{ $cluster->y }}px;
@@ -155,9 +154,9 @@
                                                     <div class="frameborder">
                                                         <div class="frameinner d-flex align-items-center justify-content-center">
                                                             @php
-                                                            // $image_path = $collectionImages[$key]['image'];
+                                                            $image_path = $collectionImages[$key]['image'];
                                                             @endphp
-                                                            <img src="" id="preview-{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview">
+                                                            <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview">
                                                         </div>
                                                     </div>
                                                 </div>
