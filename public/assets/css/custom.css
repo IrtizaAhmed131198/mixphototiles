@@ -3614,6 +3614,15 @@ button.Login_authSwitch {
     margin: 20px 0;
 }
 
+.SwapImageModal_progress_2 {
+    position: relative;
+    /* padding-bottom: 25px; */
+    position: relative;
+    pointer-events: auto;
+    filter: brightness(1);
+    margin: 20px 0;
+}
+
 .PlusBtn_plus {
     width: 100px;
     cursor: pointer;
@@ -3701,3 +3710,20 @@ button.Login_authSwitch {
     font-size: 16px;
 }
 /* photoslayout css  */
+
+.crop-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#crop-image-preview {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: contain;
+}

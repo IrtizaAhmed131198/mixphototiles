@@ -34,8 +34,8 @@
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-    <!-- Dropify CSS -->
-    {{-- <link rel="stylesheet" href="{{ asset('vendor/dropify/dist/css/dropify.min.css') }}"> --}}
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <!-- ckedor js -->
     <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
     <!-- CSS Files -->
@@ -75,6 +75,8 @@
 <script src="
 https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js
 "></script>
+<!-- Cropper.js JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script src="{{ asset('assets/js/dataTables.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.bootstrap5.js') }}"></script>
 @livewireScripts

@@ -112,7 +112,7 @@
                                         $frameClass = $config->frame->class ?? '';
                                         @endphp
                                         <!-- dynamic frames -->
-                                        @foreach ($clusters as $key => $cluster)
+                                        {{-- @foreach ($clusters as $key => $cluster)
                                             <div class="clusterFrameWrp {{ $colorClass }} {{ $frameClass }}" id="cluster-block-{{ $cluster->id }}"
                                                 style="position: absolute;
                                                     top: {{ $cluster->y }}px;
@@ -132,10 +132,33 @@
                                                             $image_path = $collectionImages[$key]['image'];
                                                             @endphp
 
-                                                            <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}" data-id="{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview"
+                                                            <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview"
                                                                 onclick="openImageModal('{{ $cluster->id }}')">
                                                         </div>
-                                                        <!-- Image Preview -->
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach --}}
+                                        @foreach ($clusters as $key => $cluster)
+                                        @dump($key);
+                                            <div class="clusterFrameWrp {{ $colorClass }} {{ $frameClass }}" id="cluster-block-{{ $cluster->id }}"
+                                                style="position: absolute;
+                                                    top: {{ $cluster->y }}px;
+                                                    left: {{ $cluster->x }}px;
+                                                    width: {{ $cluster->width }}px;
+                                                    height: {{ $cluster->height }}px;"
+                                                data-bs-toggle="modal" data-bs-target="#editphotolayoutmodal" data-cluster-id="{{ $cluster->id }}"
+                                                onclick="">
+
+                                                <div class="frame-main-wrap">
+                                                    <div class="frameborder">
+                                                        <div class="frameinner d-flex align-items-center justify-content-center">
+                                                            @php
+                                                            // $image_path = $collectionImages[$key]['image'];
+                                                            @endphp
+                                                            <img src="" id="preview-{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -180,7 +203,7 @@
                                                     left: {{ $cluster->x }}px;
                                                     width: {{ $cluster->width }}px;
                                                     height: {{ $cluster->height }}px;"
-                                                data-bs-toggle="modal" data-bs-target="#photolayoutmodal"
+                                                data-bs-toggle="modal" data-bs-target="#photolayoutmodal" data-cluster-id="{{ $cluster->id }}"
                                                 onclick="">
 
                                                 <div class="frame-main-wrap">
@@ -191,7 +214,7 @@
                                                                     d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
                                                                 </path>
                                                             </svg>
-                                                            <img src="" id="preview-{{ $cluster->id }}" data-id="{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview">
+                                                            <img src="" id="preview-{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -637,12 +660,12 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="row SwapImageModal_swapImages">
+                    <div class="row SwapImageModal_swapImages_2">
 
                         @foreach ($cluster_images as $item)
-                            <div class="col-sm-3 col-4 SwapImageModal_progress">
+                            <div class="col-sm-3 col-4 SwapImageModal_progress_2">
                                 <div class="child-layout-photos">
-                                    <img alt="Frame" id="edit-modal-preview-{{ $item->id }}" data-id="{{ $item->id }}" class="img-fluid preview-image" src="{{ asset($item->image_path) }}">
+                                    <img alt="Frame" id="swap-modal-preview-{{ $item->id }}" data-id-swap="{{ $item->id }}" class="img-fluid preview-image" src="{{ asset($item->image_path) }}">
                                 </div>
                             </div>
                         @endforeach
@@ -656,6 +679,28 @@
         </div>
     </div>
 </div>
+
+<!-- Crop Image Modal -->
+<div class="modal fade" id="cropImageModal" tabindex="-1" aria-labelledby="cropImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cropImageModalLabel">Crop Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="crop-container">
+                    <img id="crop-image-preview" class="w-100">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveCroppedImage">Crop & Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 
@@ -798,12 +843,28 @@ function previewImage(event) {
 
                 imageDiv.querySelector('.preview-image').addEventListener('click', selectSingleImage);
             });
+
+            const modalPreviewContainer2 = document.querySelector('.SwapImageModal_swapImages_2');
+
+            data.images.forEach(img => {
+                const imageDiv2 = document.createElement('div');
+                imageDiv2.className = 'col-sm-3 col-4 SwapImageModal_progress_2';
+                imageDiv2.innerHTML = `
+                    <div class="child-layout-photos">
+                        <img alt="Frame" id="swap-modal-preview-${img.id}" data-id-swap="${img.id}" class="img-fluid preview-image" src="${img.image_path}">
+                    </div>
+                `;
+                modalPreviewContainer2.appendChild(imageDiv2);
+
+                imageDiv2.querySelector('.preview-image').addEventListener('click', selectSingleImage);
+            });
         })
         .catch(error => console.error('Error uploading images:', error));
     }
 }
 
-let selectedImageId = null; // Store only one selected image ID
+let selectedImageId = null;
+let selectedImageSwapId = null;
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -840,6 +901,7 @@ function selectSingleImage(event) {
     // Mark the clicked image as selected
     img.classList.add('selected');
     selectedImageId = img.getAttribute('data-id');
+    selectedImageSwapId = img.getAttribute('data-id-swap');
 }
 
 // Delete the selected image
@@ -870,6 +932,11 @@ function deleteSelectedImage() {
             const imgElement = document.querySelector(`[data-id="${selectedImageId}"]`);
             if (imgElement) {
                 imgElement.parentElement.parentElement.remove();
+            }
+
+            const imgElement2 = document.querySelector(`[data-id-swap="${selectedImageId}"]`);
+            if (imgElement2) {
+                imgElement2.parentElement.parentElement.remove();
             }
             selectedImageId = null; // Reset selection
         }
@@ -962,43 +1029,120 @@ document.getElementById("remove-image").addEventListener("click", function () {
     }
 });
 
+let clickedPreviewImage = null;
+
 document.addEventListener("DOMContentLoaded", function () {
-    let selectedImageSrc = "";
-    let selectedImageId = "";
+    const modal = document.getElementById("editphotolayoutmodal");
+    let triggerElement = null;
 
-    // Detect selected image from swap modal
-    document.querySelectorAll(".preview-image").forEach(img => {
-        img.addEventListener("click", function () {
-            selectedImageSrc = this.src;
-            selectedImageId = this.getAttribute("data-id");
+    if (modal) {
+        // Listen for when the modal is shown
+        modal.addEventListener("shown.bs.modal", function (event) {
+            console.log("Edit Photo Layout Modal is opened");
 
-            // Highlight the selected image (optional)
-            document.querySelectorAll(".preview-image").forEach(i => i.classList.remove("selected"));
-            this.classList.add("selected");
+            // Find the element that triggered the modal
+            triggerElement = event.relatedTarget;
+            if (triggerElement) {
+                const clusterId = triggerElement.getAttribute("data-cluster-id");
+
+                if (clusterId) {
+                    // Find the corresponding image
+                    clickedPreviewImage = document.getElementById("preview-" + clusterId);
+                    console.log(clickedPreviewImage);
+
+                } else {
+                    console.error("No data-cluster-id found on trigger element.");
+                }
+            } else {
+                console.error("Modal was opened but no related trigger element found.");
+            }
         });
+    } else {
+        console.error("Modal with ID 'editphotolayoutmodal' not found.");
+    }
+
+    // Swap Image Logic on Button Click
+    document.querySelector(".done-button-2").addEventListener("click", function () {
+        if (triggerElement && selectedImageSwapId) {
+            console.log("Selected image ID:", selectedImageSwapId);
+
+            // Get the new image source from modal
+            let newImageSrc = document.getElementById(`swap-modal-preview-${selectedImageSwapId}`).src;
+
+            // Get the image inside the trigger element
+            let triggerImage = triggerElement.querySelector("img.image-preview");
+
+            if (triggerImage) {
+                // Swap the image source
+                triggerImage.src = newImageSrc;
+                console.log("Image swapped successfully:", newImageSrc);
+            } else {
+                console.error("No image found inside the clicked element.");
+            }
+        } else {
+            console.error("Trigger element or selected image ID is missing.");
+        }
+    });
+});
+
+let cropper;
+
+document.getElementById("crop-image").addEventListener("click", function () {
+    // Find the selected cluster
+    const selectedCluster = document.querySelector(".clusterFrameWrp.selected");
+    if (!selectedCluster) {
+        alert("Please select an image first.");
+        return;
+    }
+
+    // Get the cluster ID
+    selectedClusterId = selectedCluster.getAttribute("data-cluster-id");
+
+    // Get the image src
+    const previewImg = document.getElementById(`preview-${selectedClusterId}`);
+    if (!previewImg || !previewImg.src) {
+        alert("No image to crop.");
+        return;
+    }
+
+    // Set the image in the modal
+    const cropImagePreview = document.getElementById("crop-image-preview");
+    cropImagePreview.src = previewImg.src;
+
+    // Initialize Cropper.js
+    if (cropper) {
+        cropper.destroy();
+    }
+    cropper = new Cropper(cropImagePreview, {
+        aspectRatio: 1, // Adjust aspect ratio as needed
+        viewMode: 2,
+        autoCropArea: 1,
     });
 
-    // On clicking "Done" button, update the preview
-    document.querySelector(".done-button-2").addEventListener("click", function () {
-        if (selectedImageSrc && selectedImageId) {
-            console.log("Selected image ID:", selectedImageId);
-            console.log("Selected image source:", selectedImageSrc);
-            // Find corresponding cluster block
-            let clusterBlock = document.getElementById(`cluster-block-${selectedImageId}`);
-            let previewImg = document.getElementById(`preview-${selectedImageId}`);
-            let frameInner = clusterBlock.querySelector(".frameinner");
+    // Open the modal
+    new bootstrap.Modal(document.getElementById("cropImageModal")).show();
+});
 
-            if (previewImg) {
-                previewImg.src = selectedImageSrc;
-                previewImg.classList.remove("d-none"); // Show image
+// Save cropped image
+document.getElementById("saveCroppedImage").addEventListener("click", function () {
+    if (!cropper) return;
 
-                // Remove SVG placeholder if exists
-                let placeholder = frameInner.querySelector(".image-placeholder");
-                if (placeholder) {
-                    placeholder.remove();
-                }
-            }
-        }
+    // Get cropped image as base64
+    const croppedCanvas = cropper.getCroppedCanvas();
+    const croppedImageUrl = croppedCanvas.toDataURL("image/jpeg");
+
+    // Replace the original image preview
+    document.getElementById(`preview-${selectedClusterId}`).src = croppedImageUrl;
+
+    // Close the modal
+    bootstrap.Modal.getInstance(document.getElementById("cropImageModal")).hide();
+});
+
+// Select a cluster when clicking
+document.querySelectorAll(".clusterFrameWrp").forEach((cluster) => {
+    cluster.addEventListener("click", function () {
+        document.querySelectorAll(".clusterFrameWrp").forEach((el) => el.classList.remove("selected"));
+        this.classList.add("selected");
     });
 });
 
