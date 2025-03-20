@@ -3578,3 +3578,126 @@ button.Login_authSwitch {
     width: 100%;
 }
 /* modal css  */
+
+
+
+/* photoslayout css  */
+.PlusBtn_plus_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: #959090;
+    /* position: absolute; */
+    inset: 0;
+    margin: auto;
+    height: 100px;
+    width: 90px;
+    display: flex;
+    bottom: 0;
+}
+
+.PlusBtn_plus_btn svg {
+    width: 60% !important;
+    height: 60% !important;
+    margin: auto;
+    inset: 0;
+    /* transform: translate(0) !important; */
+}
+
+.SwapImageModal_progress {
+    position: relative;
+    /* padding-bottom: 25px; */
+    position: relative;
+    pointer-events: auto;
+    filter: brightness(1);
+    margin: 20px 0;
+}
+
+.PlusBtn_plus {
+    width: 100px;
+    cursor: pointer;
+    transition: all .3s ease 0s;
+    background: #f6f6f6;
+    border-radius: 50%;
+    display: flex;
+    position: relative;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    /* height: 100px; */
+    width: 100px;
+}
+
+.PlusBtn_plus:hover svg {
+    color: #8e0e6d;
+    cursor: pointer;
+}
+
+.child-layout-photos img {
+    object-fit: cover;
+    height: 122px;
+    width: 100%;
+    inset: 0px;
+    color: transparent;
+    max-width: 122px;
+}
+
+.custom-modal.photoslayoutmodalparent .modal-dialog {
+    max-width: 686px;
+}
+
+.SwapImageModal_swapImages {
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.SwapImageModal_swapTop h4.heading-3 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+}
+
+.SwapImageModal_swapTop {
+    text-align: center;
+}
+
+.SwapImageModal_swapTop p.para {
+    color: #898989;
+    font-size: 16px;
+    margin: 0;
+}
+
+.modal-btns-parent {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 20px;
+    /* margin: 2rem 0 0; */
+}
+
+.modal-btns-parent button.btn.custom-btn {
+    height: 60px;
+    width: 140px;
+    font-size: 18px;
+}
+
+
+.Cart_cartNoData {
+    min-height: calc(100vh - 125px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Cart_cartNoData .heading-5 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.Cart_cartNoData p.para {
+    font-size: 16px;
+}
+/* photoslayout css  */

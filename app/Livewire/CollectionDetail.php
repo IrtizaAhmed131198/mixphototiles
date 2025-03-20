@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Product;
 use App\Models\SessionCollection;
 use App\Models\CollectionImages;
+use App\Models\ClusterImage;
 
 class CollectionDetail extends Component
 {
@@ -15,11 +16,13 @@ class CollectionDetail extends Component
     public $collectionImages;
     public $config;
     public $price;
+    public $cluster_images;
 
     public function mount($slug)
     {
         $this->slug = $slug;
         $this->product = Product::where('slug', $slug)->with('additionalImages')->first();
+        $this->cluster_images = ClusterImage::all();
 
         if (!$this->product) {
             abort(404); // Show 404 page if product not found
@@ -44,7 +47,8 @@ class CollectionDetail extends Component
             'collectionImages' => $this->collectionImages,
             'image_name' => $this->imageName,
             'config' => $this->config,
-            'total_price' => $this->price
+            'total_price' => $this->price,
+            'cluster_images' => $this->cluster_images
         ]);
     }
 }

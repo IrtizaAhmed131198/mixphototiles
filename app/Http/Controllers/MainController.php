@@ -16,6 +16,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Models\ClusterImage;
 
 class MainController extends Controller
 {
@@ -701,5 +702,55 @@ class MainController extends Controller
             'success' => true,
             'address' => $validated
         ]);
+    }
+
+    public function upload_images(Request $request)
+    {
+        $request->validate([
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp',
+        ]);
+
+        $imageData = [];
+        $uploadPath = public_path('uploads/collections_gallery/');
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageName = uniqid('img_') . '.' . $image->getClientOriginalExtension();
+                $image->move($uploadPath, $imageName);
+                $imagePath = 'uploads/collections_gallery/' . $imageName;
+
+                $clusterImage = ClusterImage::create([
+                    'cluster_id' => 1,
+                    'image_path' => $imagePath
+                ]);
+
+                $imageData[] = [
+                    'id' => $clusterImage->id,
+                    'image_path' => asset($imagePath),
+                ];
+            }
+        }
+
+        return response()->json(['success' => true, 'images' => $imageData]);
+    }
+
+    public function delete_images(Request $request)
+    {
+        $images = ClusterImage::where('id', $request->image_id)->get();
+        foreach ($images as $image) {
+            if (file_exists(public_path($image->image_path))) {
+                unlink(public_path($image->image_path));
+            }
+            $image->delete();
+        }
+
+        return response()->json(['success' => true, 'message' => 'Image deleted successfully']);
+    }
+
+    public function fetch_images(Request $request)
+    {
+        $images = ClusterImage::get();
+
+        return response()->json(['success' => true, 'data' => $images]);
     }
 }

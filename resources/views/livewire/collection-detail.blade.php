@@ -57,6 +57,20 @@
         border-image-repeat: round !important;
         /* border: 4px solid !important; */
     }
+
+    .selected {
+        border: 3px solid red;
+        cursor: pointer;
+    }
+
+    .fs-14px.fw-semibold.cursor-pointer.list-group-item {
+        padding: 28px;
+        cursor: pointer;
+    }
+
+    button.btn-close.position-absolute.top-0.end-0.m-3 {
+        z-index: 1;
+    }
 </style>
 @endpush
 
@@ -118,7 +132,7 @@
                                                             $image_path = $collectionImages[$key]['image'];
                                                             @endphp
 
-                                                            <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview"
+                                                            <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}" data-id="{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview"
                                                                 onclick="openImageModal('{{ $cluster->id }}')">
                                                         </div>
                                                         <!-- Image Preview -->
@@ -129,7 +143,7 @@
                                         <!-- dynamic frames -->
                                     @else
                                         <!-- dynamic frames -->
-                                        @foreach ($clusters as $key => $cluster)
+                                        {{-- @foreach ($clusters as $key => $cluster)
                                             <div class="clusterFrameWrp black-frame" id="cluster-block-{{ $cluster->id }}"
                                                 style="position: absolute;
                                                     top: {{ $cluster->y }}px;
@@ -155,6 +169,30 @@
                                                                 onclick="openImageModal('{{ $cluster->id }}')">
                                                         </div>
                                                         <!-- Image Preview -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach --}}
+                                        @foreach ($clusters as $key => $cluster)
+                                            <div class="clusterFrameWrp black-frame" id="cluster-block-{{ $cluster->id }}"
+                                                style="position: absolute;
+                                                    top: {{ $cluster->y }}px;
+                                                    left: {{ $cluster->x }}px;
+                                                    width: {{ $cluster->width }}px;
+                                                    height: {{ $cluster->height }}px;"
+                                                data-bs-toggle="modal" data-bs-target="#photolayoutmodal"
+                                                onclick="">
+
+                                                <div class="frame-main-wrap">
+                                                    <div class="frameborder">
+                                                        <div class="frameinner d-flex align-items-center justify-content-center">
+                                                            <svg width="32" height="32" class="image-placeholder clusterAddBtn__Rreup" fill="currentColor" viewBox="0 0 16 16">
+                                                                <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
+                                                                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
+                                                                </path>
+                                                            </svg>
+                                                            <img src="" id="preview-{{ $cluster->id }}" data-id="{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -475,24 +513,51 @@
     </div>
 </section>
 
-<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Modal -->
+<div class="modal fade" id="editphotolayoutmodal" tabindex="-1" aria-labelledby="editphotolayoutmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="imageModalLabel">Image Options</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
             <div class="modal-body text-center">
-                <img id="modalPreviewImage" src="" class="img-fluid" alt="Preview">
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="cropImage()">Crop</button>
-                <button class="btn btn-warning" onclick="swapImage()">Swap</button>
-                <button class="btn btn-danger" onclick="removeImage()">Remove</button>
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="list-group list-group-flush">
+                    <div class="fs-14px fw-semibold cursor-pointer list-group-item" id="crop-image">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" class="w-em h-em me-3">
+                          <g transform="translate(1 1)">
+                             <path d="M6,2V16a2,2,0,0,0,2,2H22" transform="translate(-2 -2)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                             <path d="M18,22V8a2,2,0,0,0-2-2H2" transform="translate(-2 -2)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                          </g>
+                       </svg>
+                       Crop
+                    </div>
+                    <div class="fs-14px fw-semibold cursor-pointer list-group-item" id="swap-image" data-bs-toggle="modal" data-bs-target="#swapphotoslayoutmodal">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="14.875" height="17.169" viewBox="0 0 14.875 17.169" class="w-em h-em me-3">
+                          <g transform="translate(-3.25 -1.939)">
+                             <path d="M16,3l3.344,3.344L16,9.688" transform="translate(-1.968)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                             <path d="M17.375,7H4" transform="translate(0 -0.656)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                             <path d="M7.344,19.688,4,16.344,7.344,13" transform="translate(0 -1.64)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                             <path d="M4,17H17.375" transform="translate(0 -2.296)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                          </g>
+                       </svg>
+                       Swap
+                    </div>
+                    <div class="fs-14px fw-semibold cursor-pointer list-group-item" id="remove-image">
+                       <svg width="15.9" height="17.5" class="w-em h-em me-3" viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
+                          <g transform="translate(-2.25 -1.25)">
+                             <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                             <path d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6" transform="translate(-0.4 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                             <path d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2" transform="translate(-1)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                             <line y2="5" transform="translate(8.2 9)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
+                             <line y2="5" transform="translate(12.2 9)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
+                          </g>
+                       </svg>
+                       Remove
+                    </div>
+                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- photos modal css  -->
 <div class="custom-modal photoslayoutmodalparent">
@@ -512,7 +577,7 @@
                     <div class="row SwapImageModal_swapImages">
                         <div class="col-sm-3 col-4">
                             <div class="PlusBtn_plus">
-                                <input class="d-none" accept="image/*" id="upload-photo-modal" multiple maxlength="4" type="file"
+                                <input class="d-none" accept="image/*" id="upload-photo-modal" multiple type="file"
                                     onchange="previewImage(event)">
                                 <label class="PlusBtn_plus_btn" for="upload-photo-modal">
                                     <svg width="16" height="16" class="w-em h-em d-block mw-100 mh-100"
@@ -524,16 +589,19 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-sm-3 col-4 SwapImageModal_progress">
-                            <div class="child-layout-photos">
-                                <img alt="Frame" id="modal-preview" class="img-fluid" src="">
+
+                        @foreach ($cluster_images as $item)
+                            <div class="col-sm-3 col-4 SwapImageModal_progress">
+                                <div class="child-layout-photos">
+                                    <img alt="Frame" id="modal-preview-{{ $item->id }}" data-id="{{ $item->id }}" class="img-fluid preview-image" src="{{ asset($item->image_path) }}">
+                                </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
 
                     <div class="modal-btns-parent">
-                        <button type="button" class="btn custom-btn filled" data-bs-dismiss="modal">Done</button>
-                        <button type="button" class="btn custom-btn transparent" onclick="removeImage()">
+                        <button type="button" class="btn custom-btn filled done-button" data-bs-dismiss="modal">Done</button>
+                        <button type="button" class="btn custom-btn transparent">
                             <svg width="15.9" height="17.5" class="w-em h-em pe-1 fs-16" viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
                                 <g transform="translate(-2.25 -1.25)">
                                     <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none" stroke="currentColor"
@@ -552,6 +620,36 @@
                             </svg>
                             Remove
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="custom-modal swapphotoslayoutmodalparent">
+    <div class="modal fade" id="swapphotoslayoutmodal" aria-hidden="true" aria-labelledby="swapphotoslayoutmodalToggleLabel2"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row SwapImageModal_swapImages">
+
+                        @foreach ($cluster_images as $item)
+                            <div class="col-sm-3 col-4 SwapImageModal_progress">
+                                <div class="child-layout-photos">
+                                    <img alt="Frame" id="edit-modal-preview-{{ $item->id }}" data-id="{{ $item->id }}" class="img-fluid preview-image" src="{{ asset($item->image_path) }}">
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="modal-btns-parent">
+                        <button type="button" class="btn custom-btn filled done-button-2" data-bs-dismiss="modal">Done</button>
                     </div>
                 </div>
             </div>
@@ -662,97 +760,247 @@ function updateSelectedConfig() {
     return selectedConfig;
 }
 
-// Example usage: Call this function when you need the selected configurations
-// console.log(updateSelectedConfig());
+let selectedClusterId = null;
 
+// Handle image preview and upload to server
+function previewImage(event) {
+    const input = event.target;
+    const files = input.files;
 
-function previewImage(event, clusterId) {
-    let input = event.target;
-    let preview = document.getElementById(`preview-${clusterId}`);
-    let placeholder = document.querySelector(`#cluster-block-${clusterId} .image-placeholder`);
+    if (files.length > 0) {
+        const formData = new FormData();
+        formData.append('cluster_id', selectedClusterId);
 
-    if (input.files && input.files[0]) {
-        let reader = new FileReader();
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-            preview.classList.remove("d-none"); // Show image preview
-            placeholder.classList.add("d-none"); // Hide the plus icon
-        };
-        reader.readAsDataURL(input.files[0]); // Convert image to Base64 for preview
+        for (let i = 0; i < files.length; i++) {
+            formData.append('images[]', files[i]);
+        }
+
+        fetch("{{ route('upload_images') }}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const modalPreviewContainer = document.querySelector('.SwapImageModal_swapImages');
+
+            data.images.forEach(img => {
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'col-sm-3 col-4 SwapImageModal_progress';
+                imageDiv.innerHTML = `
+                    <div class="child-layout-photos">
+                        <img alt="Frame" id="modal-preview-${img.id}" data-id="${img.id}" class="img-fluid preview-image" src="${img.image_path}">
+                    </div>
+                `;
+                modalPreviewContainer.appendChild(imageDiv);
+
+                imageDiv.querySelector('.preview-image').addEventListener('click', selectSingleImage);
+            });
+        })
+        .catch(error => console.error('Error uploading images:', error));
     }
 }
 
-function openImageModal(id) {
-    const previewImage = document.getElementById(`preview-${id}`);
-    if (previewImage.src) {
-        document.getElementById('modalPreviewImage').src = previewImage.src;
-        document.getElementById('imageModal').setAttribute('data-cluster-id', id);
-        var modal = new bootstrap.Modal(document.getElementById('imageModal'));
-        modal.show();
+let selectedImageId = null; // Store only one selected image ID
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Attach event listeners to existing images when the modal opens
+    document.querySelectorAll('.preview-image').forEach(img => {
+        img.addEventListener('click', selectSingleImage);
+    });
+
+    // Handle remove button click
+    document.querySelector('.modal-btns-parent .transparent').addEventListener('click', deleteSelectedImage);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Attach click event to each cluster frame
+    document.querySelectorAll('.clusterFrameWrp').forEach(cluster => {
+        cluster.addEventListener('click', function () {
+            selectedClusterId = this.id.replace("cluster-block-", ""); // Extract cluster ID
+        });
+    });
+
+    // Handle "Done" button click to update preview image in cluster
+    document.querySelector('.modal-btns-parent .done-button').addEventListener('click', updateClusterImage);
+});
+
+// Select only one image at a time
+function selectSingleImage(event) {
+    const img = event.target;
+
+    // Deselect any previously selected image
+    document.querySelectorAll('.preview-image').forEach(image => {
+        image.classList.remove('selected');
+    });
+
+    // Mark the clicked image as selected
+    img.classList.add('selected');
+    selectedImageId = img.getAttribute('data-id');
+}
+
+// Delete the selected image
+function deleteSelectedImage() {
+    if (!selectedImageId) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please select an image to delete.',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        return;
     }
+
+    fetch("{{ route('delete_images') }}", {
+        method: 'POST',
+        body: JSON.stringify({ image_id: selectedImageId }),
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Remove selected image from the DOM
+            const imgElement = document.querySelector(`[data-id="${selectedImageId}"]`);
+            if (imgElement) {
+                imgElement.parentElement.parentElement.remove();
+            }
+            selectedImageId = null; // Reset selection
+        }
+    })
+    .catch(error => console.error('Error deleting image:', error));
 }
 
-function removeImage() {
-    const id = document.getElementById('imageModal').getAttribute('data-cluster-id');
-    document.getElementById(`preview-${id}`).src = "";
-    document.getElementById(`preview-${id}`).classList.add('d-none');
-    document.getElementById(`upload-photo-cluster-${id}`).value = "";
-    var modal = bootstrap.Modal.getInstance(document.getElementById('imageModal'));
-    modal.hide();
+function updateClusterImage() {
+    if (!selectedClusterId || !selectedImageId) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please select an image and a frame.',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        return;
+    }
+
+    const selectedImageSrc = document.querySelector(`[data-id="${selectedImageId}"]`).src;
+    const clusterBlock = document.getElementById(`cluster-block-${selectedClusterId}`);
+    const previewImg = document.getElementById(`preview-${selectedClusterId}`);
+
+    if (previewImg) {
+        previewImg.src = selectedImageSrc;
+        previewImg.classList.remove('d-none'); // Show the image
+    }
+
+    // Find and remove the SVG inside the selected cluster
+    const svgElement = clusterBlock.querySelector('.image-placeholder');
+    if (svgElement) {
+        svgElement.remove();
+    }
+
+    // Change `data-bs-target` to a different modal
+    clusterBlock.setAttribute('data-bs-target', '#editphotolayoutmodal'); // Replace with your new modal ID
+
+    // Close the current modal
+    document.getElementById('photolayoutmodal').click();
 }
 
-function swapImage() {
-    const id = document.getElementById('imageModal').getAttribute('data-cluster-id');
-    document.getElementById(`upload-photo-cluster-${id}`).click();
-}
+document.getElementById("remove-image").addEventListener("click", function () {
+    if (!selectedClusterId) {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No frame selected.",
+            timer: 2000,
+            showConfirmButton: false
+        });
+        return;
+    }
 
-function cropImage() {
-    alert('Crop functionality to be implemented with Cropper.js');
-}
+    const clusterBlock = document.getElementById(`cluster-block-${selectedClusterId}`);
+    const previewImg = document.getElementById(`preview-${selectedClusterId}`);
 
-// let selectedClusterId = null;
+    if (previewImg) {
+        previewImg.src = ""; // Clear image source
+        previewImg.classList.add("d-none"); // Hide image
+    }
 
-// function setSelectedCluster(clusterId) {
-//     selectedClusterId = clusterId;
-// }
+    // Re-add the SVG placeholder if not already present
+    const frameInner = clusterBlock.querySelector(".frameinner");
+    if (!frameInner.querySelector(".image-placeholder")) {
+        const svgPlaceholder = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svgPlaceholder.setAttribute("width", "32");
+        svgPlaceholder.setAttribute("height", "32");
+        svgPlaceholder.classList.add("image-placeholder", "clusterAddBtn__Rreup");
+        svgPlaceholder.setAttribute("fill", "currentColor");
+        svgPlaceholder.setAttributeNS(null, "viewBox", "0 0 16 16");
 
-// function previewImage(event) {
-//     if (!selectedClusterId) return;
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("stroke-width", ".5");
+        path.setAttribute("fill-rule", "evenodd");
+        path.setAttribute("stroke", "currentColor");
+        path.setAttribute("d", "M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z");
 
-//     const input = event.target;
-//     const file = input.files[0];
-//     if (file) {
-//         const reader = new FileReader();
-//         reader.onload = function (e) {
-//             // Set preview in modal
-//             document.getElementById('modal-preview').src = e.target.result;
-//             document.getElementById('modal-preview').classList.remove('d-none');
+        svgPlaceholder.appendChild(path);
+        frameInner.appendChild(svgPlaceholder);
+    }
 
-//             // Set preview in the correct cluster
-//             const previewElement = document.getElementById('preview-' + selectedClusterId);
-//             if (previewElement) {
-//                 previewElement.src = e.target.result;
-//                 previewElement.classList.remove('d-none');
-//             }
-//         };
-//         reader.readAsDataURL(file);
-//     }
-// }
+    // Change back to original modal
+    clusterBlock.setAttribute("data-bs-target", "#photolayoutmodal");
 
-// function removeImage() {
-//     if (!selectedClusterId) return;
+    // Close the current modal properly using Bootstrap's Modal API
+    const editPhotoLayoutModal = document.getElementById("editphotolayoutmodal");
+    const bootstrapModal = bootstrap.Modal.getInstance(editPhotoLayoutModal);
+    if (bootstrapModal) {
+        bootstrapModal.hide();
+    }
+});
 
-//     // Remove preview from modal
-//     document.getElementById('modal-preview').src = '';
-//     document.getElementById('modal-preview').classList.add('d-none');
+document.addEventListener("DOMContentLoaded", function () {
+    let selectedImageSrc = "";
+    let selectedImageId = "";
 
-//     // Remove preview from the correct cluster
-//     const previewElement = document.getElementById('preview-' + selectedClusterId);
-//     if (previewElement) {
-//         previewElement.src = '';
-//         previewElement.classList.add('d-none');
-//     }
-// }
+    // Detect selected image from swap modal
+    document.querySelectorAll(".preview-image").forEach(img => {
+        img.addEventListener("click", function () {
+            selectedImageSrc = this.src;
+            selectedImageId = this.getAttribute("data-id");
+
+            // Highlight the selected image (optional)
+            document.querySelectorAll(".preview-image").forEach(i => i.classList.remove("selected"));
+            this.classList.add("selected");
+        });
+    });
+
+    // On clicking "Done" button, update the preview
+    document.querySelector(".done-button-2").addEventListener("click", function () {
+        if (selectedImageSrc && selectedImageId) {
+            console.log("Selected image ID:", selectedImageId);
+            console.log("Selected image source:", selectedImageSrc);
+            // Find corresponding cluster block
+            let clusterBlock = document.getElementById(`cluster-block-${selectedImageId}`);
+            let previewImg = document.getElementById(`preview-${selectedImageId}`);
+            let frameInner = clusterBlock.querySelector(".frameinner");
+
+            if (previewImg) {
+                previewImg.src = selectedImageSrc;
+                previewImg.classList.remove("d-none"); // Show image
+
+                // Remove SVG placeholder if exists
+                let placeholder = frameInner.querySelector(".image-placeholder");
+                if (placeholder) {
+                    placeholder.remove();
+                }
+            }
+        }
+    });
+});
 
 
 

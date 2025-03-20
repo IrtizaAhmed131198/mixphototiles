@@ -40,6 +40,10 @@ Route::post('/update-cart-grand-total', [MainController::class, 'update_cart_gra
 Route::get('/place-order', [MainController::class, 'place_order'])->name('place_order');
 Route::post('/add-address', [MainController::class, 'add_address'])->name('add_address');
 
+Route::post('/upload-images', [MainController::class, 'upload_images'])->name('upload_images');
+Route::post('/delete-image', [MainController::class, 'delete_images'])->name('delete_images');
+Route::get('/fetch-images', [MainController::class, 'fetch_images'])->name('fetch_images');
+
 Route::post('/update-gift-session', function (\Illuminate\Http\Request $request) {
     if ($request->gift_card_applied) {
         session(['gift_card_applied' => true]);
