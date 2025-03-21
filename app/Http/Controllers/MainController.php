@@ -439,31 +439,40 @@ class MainController extends Controller
         $sessionCollection->price = $request->input('price');
         $sessionCollection->save();
 
-        if($sessionCollection->id){
+        if ($sessionCollection->id) {
             $tempArr = json_decode($request->input('colImageArr'));
             $count = 1;
-            foreach ($tempArr as $imageSrc) {
-                if (preg_match('/^data:image\/(\w+);base64,/', $imageSrc, $type)) {
-                    // Remove the base64 metadata and get the actual image data
-                    $imageData = substr($imageSrc, strpos($imageSrc, ',') + 1);
-                    $imageData = base64_decode($imageData);
 
-                    // Generate a filename based on product name and timestamp
-                    $imageName = $request->input('name') . '_' . time() .'_'.$count. '.png';
+            foreach ($tempArr as $imageUrl) {
+                // Validate URL format
+                if (filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+                    // Get the image content from the URL
+                    $imageData = file_get_contents($imageUrl);
 
-                    // Save the image to the public images directory
-                    $imagePath = public_path('uploads/collections/' . $imageName);
+                    if ($imageData !== false) {
+                        // Get the file extension
+                        $extension = pathinfo($imageUrl, PATHINFO_EXTENSION);
+                        if (!in_array($extension, ['jpg', 'jpeg', 'png', 'webp'])) {
+                            $extension = 'png'; // Default to PNG if extension is missing or invalid
+                        }
 
-                    // Save the image file
-                    file_put_contents($imagePath, $imageData);
+                        // Generate a unique filename
+                        $imageName = $request->input('name') . '_' . time() . '_' . $count . '.' . $extension;
 
-                    // Save the image file path in CollectionImages table (relative path)
-                    $collectionImage = new CollectionImages();
-                    $collectionImage->collection_id = $sessionCollection->id;
-                    $collectionImage->image = 'uploads/collections/' . $imageName;  // Save relative path
-                    $collectionImage->save();
+                        // Define the storage path
+                        $imagePath = public_path('uploads/collections/' . $imageName);
 
-                    $count++;
+                        // Save the image file
+                        file_put_contents($imagePath, $imageData);
+
+                        // Save the image path in CollectionImages table (relative path)
+                        $collectionImage = new CollectionImages();
+                        $collectionImage->collection_id = $sessionCollection->id;
+                        $collectionImage->image = 'uploads/collections/' . $imageName;  // Save relative path
+                        $collectionImage->save();
+
+                        $count++;
+                    }
                 }
             }
         }

@@ -226,14 +226,14 @@ function applyInitialFrameSize(imageObj) {
         frameSizeText: '8" X 8"'
     };
 
-    const ledOptions = document.querySelectorAll('.frame-led.dropdown-item');
-    const ledText = frameConfig.led?.value || 'no';
+    const sizeOptions = document.querySelectorAll('.frame-size.dropdown-item');
+    const sizeText = frameConfig.size?.frameSizeText || '8" X 8"';
 
-    ledOptions.forEach(item => {
+    sizeOptions.forEach(item => {
         item.classList.remove('li-border-color');
 
-        const itemLedClass = item.getAttribute('data-val');
-        if (itemLedClass === ledText) {
+        const itemSizeClass = item.getAttribute('data-val');
+        if (itemSizeClass === sizeText) {
             item.classList.add('li-border-color');
         }
     });
@@ -247,7 +247,7 @@ function applyInitialFrameSize(imageObj) {
     frameWrap.style.maxWidth = initialSize.max_width;
 
     // Optionally display the size text somewhere
-    const frameSizeShow = document.getElementById('frame-size-show'); // Make sure you have an element for this
+    const frameSizeShow = document.getElementById('size-show'); // Make sure you have an element for this
     if (frameSizeShow) {
         frameSizeShow.textContent = initialSize.frameSizeText;
     }

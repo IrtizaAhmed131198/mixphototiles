@@ -3443,7 +3443,8 @@ span.caption-crop {
     margin-left: auto;
     margin-top: 1rem;
     font-weight: 800;
-    font-size: 15px;
+    font-size: 16px;
+    font-style: italic;
 }
 
 a.link {
@@ -3455,7 +3456,7 @@ a.link {
 }
 
 .ImgFrame {
-    height: 392px;
+    height: 314px;
     overflow: hidden;
 }
 
@@ -3726,4 +3727,10 @@ button.Login_authSwitch {
     max-height: 100%;
     display: block;
     object-fit: contain;
+}
+
+.modal-dialog.modal-dialog-centered.set-coordinates-modal {
+    max-width: 100%;
+    width: 935px;
+    height: 935px;
 }

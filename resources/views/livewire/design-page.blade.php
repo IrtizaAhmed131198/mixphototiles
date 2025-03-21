@@ -314,7 +314,8 @@
                                     </div>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size li-border-color"
-                                        data-height="318px" data-width="309px" data-max-width="500px" data-price="399">
+                                        data-height="318px" data-width="309px" data-max-width="500px" data-price="399"
+                                        data-val='8" X 8"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195283683.png') }}">
@@ -326,7 +327,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="483px" data-width="261px" data-max-width="500px" data-price="504">
+                                        data-height="483px" data-width="261px" data-max-width="500px" data-price="504"
+                                        data-val='8" X 10"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195388737.png') }}">
@@ -338,7 +340,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="389px" data-width="460px" data-max-width="500px" data-price="504">
+                                        data-height="389px" data-width="460px" data-max-width="500px" data-price="504"
+                                        data-val='10" X 8"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195457270.png') }}">
@@ -350,7 +353,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="500px" data-width="261px" data-max-width="500px" data-price="682">
+                                        data-height="500px" data-width="261px" data-max-width="500px" data-price="682"
+                                        data-val='9" X 12"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195503983.png') }}">
@@ -362,7 +366,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="261px" data-width="500px" data-max-width="500px" data-price="682">
+                                        data-height="261px" data-width="500px" data-max-width="500px" data-price="682"
+                                        data-val='12" X 9"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195521559.png') }}">
@@ -374,7 +379,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="362px" data-width="451px" data-max-width="500px" data-price="897">
+                                        data-height="362px" data-width="451px" data-max-width="500px" data-price="897"
+                                        data-val='12" X 12"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195535660.png') }}">
@@ -386,7 +392,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="509px" data-width="263px" data-max-width="500px" data-price="1318">
+                                        data-height="509px" data-width="263px" data-max-width="500px" data-price="1318"
+                                        data-val='12" X 18"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195552341.png') }}">
@@ -398,7 +405,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="263px" data-width="509px" data-max-width="500px" data-price="1318">
+                                        data-height="263px" data-width="509px" data-max-width="500px" data-price="1318"
+                                        data-val='18" X 12"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195567601.png') }}">
@@ -410,7 +418,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="362px" data-width="451px" data-max-width="500px" data-price="2022">
+                                        data-height="362px" data-width="451px" data-max-width="500px" data-price="2022"
+                                        data-val='18" X 18"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195580863.png') }}">
@@ -422,7 +431,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="509px" data-width="263px" data-max-width="500px" data-price="2638">
+                                        data-height="509px" data-width="263px" data-max-width="500px" data-price="2638"
+                                        data-val='18" X 24"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195597135.png') }}">
@@ -434,7 +444,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="263px" data-width="509px" data-max-width="500px" data-price="2638">
+                                        data-height="263px" data-width="509px" data-max-width="500px" data-price="2638"
+                                        data-val='24" X 18"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195794113.png') }}">
@@ -446,7 +457,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="509px" data-width="263px" data-max-width="500px" data-price="4558">
+                                        data-height="509px" data-width="263px" data-max-width="500px" data-price="4558"
+                                        data-val='24" X 32"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195815647.png') }}">
@@ -458,7 +470,8 @@
                                     </li>
 
                                     <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="265px" data-width="510px" data-max-width="500px" data-price="4558">
+                                        data-height="265px" data-width="510px" data-max-width="500px" data-price="4558"
+                                        data-val='32" X 24"'>
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704195831826.png') }}">

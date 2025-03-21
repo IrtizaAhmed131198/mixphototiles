@@ -17,6 +17,7 @@ class CollectionDetail extends Component
     public $config;
     public $price;
     public $cluster_images;
+    public $temp;
 
     public function mount($slug)
     {
@@ -32,6 +33,7 @@ class CollectionDetail extends Component
         $data = SessionCollection::where('image_name', 'uploads/cart_images/'.$this->imageName)
             ->where('product_id', $this->product->id)
             ->first();
+        $this->temp = $data;
         if($data){
             $this->config = json_decode($data->configuration);
             $this->price = $data->price;

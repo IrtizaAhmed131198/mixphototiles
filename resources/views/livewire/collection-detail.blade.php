@@ -1333,6 +1333,7 @@ function addToCart() {
     let colImageArr = [];
     let selectedConfigurations = {};
 
+
     clusters.forEach(cluster => {
         let imagePreview = document.getElementById(`preview-${cluster.id}`);
 
@@ -1346,6 +1347,7 @@ function addToCart() {
             // document.getElementById(`cluster-block-${cluster.id}`).style.border = ''; // Remove any previous highlight
         }
     });
+    console.log(colImageArr);
 
     if (!isValid) {
         // Show a SweetAlert2 error message
@@ -1371,6 +1373,15 @@ function addToCart() {
         canvas.toBlob(function(blob) {
 
             let price = $('.currency').attr('data-val');
+
+            if (Object.keys(selectedConfig).length === 0) {
+                selectedConfig = {
+                    "led": { "val": "no", "price": "0" },
+                    "color": { "name": "Black", "class": "black-frame", "price": "0" },
+                    "frame": { "name": "classic", "class": "classic-image-width" },
+                    "finish": { "name": "Normal", "price": "0" }
+                };
+            }
 
             let formData = new FormData();
             formData.append("image", blob, `{{ $product->name }}_${Date.now()}.png`);
@@ -1424,6 +1435,7 @@ function continueToCart() {
 
     clusters.forEach(cluster => {
         let imagePreview = document.getElementById(`preview-${cluster.id}`);
+        // console.log(imagePreview.src);
 
         if (!imagePreview.src || imagePreview.src === currentUrl) {
             // Handle the empty or uninitialized state
@@ -1435,6 +1447,8 @@ function continueToCart() {
             // document.getElementById(`cluster-block-${cluster.id}`).style.border = ''; // Remove any previous highlight
         }
     });
+    // console.log(colImageArr);
+    // return false;
 
     if (!isValid) {
         // Show a SweetAlert2 error message
