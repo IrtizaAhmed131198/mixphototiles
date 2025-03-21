@@ -256,9 +256,9 @@
                                     $finalPrice = $product->price - $discountAmount;
                                 @endphp
                                 @if($total_price != null)
-                                    <span class="currency" data-val="{{ $total_price }}">₹{{ number_format($total_price, 2) }}</span>
+                                    <span class="currency" data-base="{{ $total_price }}" data-val="{{ $total_price }}">₹{{ number_format($total_price, 2) }}</span>
                                 @else
-                                    <span class="currency" data-val="{{ $finalPrice }}">₹{{ number_format($finalPrice, 2) }}</span>
+                                    <span class="currency" data-base="{{ $finalPrice }}" data-val="{{ $finalPrice }}">₹{{ number_format($finalPrice, 2) }}</span>
                                 @endif
                             </h5>
                             <p class="discount">
@@ -301,7 +301,7 @@
                                             <!-- Dropdown menu links -->
 
 
-                                            <li type="button" class="parentProperties frame-change active" data-name="Normal" data-price="399">
+                                            <li type="button" class="parentProperties frame-change active" data-name="Normal" data-price="0">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
                                                 </figure>
@@ -744,7 +744,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if (config.led) {
-        updateActiveClass(".select-finish .parentProperties.led-change", "data-val", config.led.val);
+        updateActiveClass(".select-led .parentProperties.led-change", "data-val", config.led.val);
         // Disable button if LED value is "yes"
         let accordionButton = document.querySelector('[data-bs-target="#flush-collapse1"]');
         if (accordionButton) {
@@ -799,7 +799,7 @@ function updateSelectedConfig() {
         };
     }
 
-    console.log(selectedConfig);
+    // console.log(selectedConfig);
 
     return selectedConfig;
 }
@@ -1087,55 +1087,63 @@ document.addEventListener("DOMContentLoaded", function () {
 let cropper;
 
 document.getElementById("crop-image").addEventListener("click", function () {
-    // Find the selected cluster
     const selectedCluster = document.querySelector(".clusterFrameWrp.selected");
     if (!selectedCluster) {
         alert("Please select an image first.");
         return;
     }
 
-    // Get the cluster ID
     selectedClusterId = selectedCluster.getAttribute("data-cluster-id");
 
-    // Get the image src
     const previewImg = document.getElementById(`preview-${selectedClusterId}`);
     if (!previewImg || !previewImg.src) {
         alert("No image to crop.");
         return;
     }
 
-    // Set the image in the modal
     const cropImagePreview = document.getElementById("crop-image-preview");
     cropImagePreview.src = previewImg.src;
 
-    // Initialize Cropper.js
+    // Get width & height of the selected box
+    const clusterWidth = selectedCluster.offsetWidth;
+    const clusterHeight = selectedCluster.offsetHeight;
+
+    // Set the same width & height to the crop preview container
+    cropImagePreview.style.width = `${clusterWidth}px`;
+    cropImagePreview.style.height = `${clusterHeight}px`;
+
     if (cropper) {
         cropper.destroy();
     }
     cropper = new Cropper(cropImagePreview, {
-        aspectRatio: 1, // Adjust aspect ratio as needed
+        aspectRatio: clusterWidth / clusterHeight, // Match selected box aspect ratio
         viewMode: 2,
         autoCropArea: 1,
     });
 
-    // Open the modal
     new bootstrap.Modal(document.getElementById("cropImageModal")).show();
 });
 
-// Save cropped image
 document.getElementById("saveCroppedImage").addEventListener("click", function () {
     if (!cropper) return;
 
-    // Get cropped image as base64
-    const croppedCanvas = cropper.getCroppedCanvas();
+    const selectedCluster = document.querySelector(".clusterFrameWrp.selected");
+    const clusterWidth = selectedCluster.offsetWidth;
+    const clusterHeight = selectedCluster.offsetHeight;
+
+    // Crop at the same size as the selected box
+    const croppedCanvas = cropper.getCroppedCanvas({
+        width: clusterWidth,
+        height: clusterHeight
+    });
+
     const croppedImageUrl = croppedCanvas.toDataURL("image/jpeg");
 
-    // Replace the original image preview
     document.getElementById(`preview-${selectedClusterId}`).src = croppedImageUrl;
 
-    // Close the modal
     bootstrap.Modal.getInstance(document.getElementById("cropImageModal")).hide();
 });
+
 
 // Select a cluster when clicking
 document.querySelectorAll(".clusterFrameWrp").forEach((cluster) => {
@@ -1145,6 +1153,22 @@ document.querySelectorAll(".clusterFrameWrp").forEach((cluster) => {
     });
 });
 
+function updatePrice() {
+    let basePrice = parseFloat(document.querySelector('.currency').getAttribute('data-base')) || 0;
+    let framePrice = parseFloat(document.querySelector('.select-color .parentProperties.frame-change.active')?.getAttribute('data-price')) || 0;
+    let finishPrice = parseFloat(document.querySelector('.select-finish .parentProperties.frame-change.active')?.getAttribute('data-price')) || 0;
+    let ledPrice = parseFloat(document.querySelector('.select-led .parentProperties.led-change.active')?.getAttribute('data-price')) || 0;
+    let finalPrice = 0;
+    if(ledPrice != 0){
+        finalPrice = basePrice + framePrice + ledPrice;
+    }else{
+        finalPrice = basePrice + framePrice + finishPrice;
+    }
+
+    let currencyElement = document.querySelector('.currency');
+    currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+    currencyElement.setAttribute('data-val', finalPrice.toFixed(2));
+}
 
 
 document.querySelectorAll('.select-frame .parentProperties.frame-change').forEach(item => {
@@ -1195,11 +1219,13 @@ document.querySelectorAll('.select-color .parentProperties.frame-change').forEac
         });
 
         // Update the total price
-        let currencyElement = document.querySelector('.currency');
-        let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
-        let finalPrice = basePrice + newPrice;
-        currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
-        currencyElement.setAttribute('data-val', finalPrice.toFixed(2));
+        // let currencyElement = document.querySelector('.currency');
+        // let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
+        // let finalPrice = basePrice + newPrice;
+        // currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+        // currencyElement.setAttribute('data-val', basePrice.toFixed(2));
+
+        updatePrice();
 
         updateSelectedConfig();
     });
@@ -1214,13 +1240,15 @@ document.querySelectorAll('.select-finish .parentProperties.frame-change').forEa
         let newPrice = parseFloat(this.getAttribute('data-price')) || 0;
 
         // Always get the base price from the currency element
-        let currencyElement = document.querySelector('.currency');
-        let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
+        // let currencyElement = document.querySelector('.currency');
+        // let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
 
-        // Calculate final price correctly
-        let finalPrice = basePrice + newPrice;
-        currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
-        currencyElement.setAttribute('data-val', finalPrice.toFixed(2));
+        // // Calculate final price correctly
+        // let finalPrice = basePrice + newPrice;
+        // currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+        // currencyElement.setAttribute('data-val', basePrice.toFixed(2));
+
+        updatePrice();
 
         updateSelectedConfig();
     });
@@ -1232,16 +1260,16 @@ document.querySelectorAll('.select-led .parentProperties.led-change').forEach(it
         this.classList.add('active');
 
         let value = this.getAttribute('data-val');
-        let newPrice = parseFloat(this.getAttribute('data-price')) || 0;
+        // let newPrice = parseFloat(this.getAttribute('data-price')) || 0;
 
-        // Always get the base price from the currency element
-        let currencyElement = document.querySelector('.currency');
-        let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
+        // // Always get the base price from the currency element
+        // let currencyElement = document.querySelector('.currency');
+        // let basePrice = parseFloat(currencyElement.getAttribute('data-val')) || 0;
 
-        // Calculate final price correctly
-        let finalPrice = basePrice + newPrice;
-        currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
-        currencyElement.setAttribute('data-val', finalPrice.toFixed(2));
+        // // Calculate final price correctly
+        // let finalPrice = basePrice + newPrice;
+        // currencyElement.innerHTML = `₹${finalPrice.toFixed(2)}`;
+        // currencyElement.setAttribute('data-val', basePrice.toFixed(2));
 
         // Disable the button if value is "yes", otherwise enable it
         let accordionButton = document.querySelector('[data-bs-target="#flush-collapse1"]');
@@ -1250,6 +1278,8 @@ document.querySelectorAll('.select-led .parentProperties.led-change').forEach(it
         } else {
             accordionButton.removeAttribute("disabled");
         }
+
+        updatePrice();
 
         updateSelectedConfig();
     });

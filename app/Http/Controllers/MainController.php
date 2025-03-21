@@ -445,15 +445,27 @@ class MainController extends Controller
 
             foreach ($tempArr as $imageUrl) {
                 // Validate URL format
-                if (filter_var($imageUrl, FILTER_VALIDATE_URL)) {
-                    // Get the image content from the URL
+                if (preg_match('/^data:image\/(\w+);base64,/', $imageSrc, $type)) {
+                    // Handle base64 image
+                    $imageData = base64_decode(preg_replace('/^data:image\/\w+;base64,/', '', $imageSrc));
+                    $extension = $type[1] ?? 'png'; // Default to PNG if extension is missing
+
+                    // Generate a unique filename
+                    $imageName = $request->input('name') . '_' . time() . '_' . $count . '.' . $extension;
+
+                    // Define the storage path
+                    $imagePath = public_path('uploads/collections/' . $imageName);
+
+                    // Save the image file
+                    file_put_contents($imagePath, $imageData);
+                } elseif (filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+                    // Handle image from URL
                     $imageData = file_get_contents($imageUrl);
 
                     if ($imageData !== false) {
-                        // Get the file extension
-                        $extension = pathinfo($imageUrl, PATHINFO_EXTENSION);
-                        if (!in_array($extension, ['jpg', 'jpeg', 'png', 'webp'])) {
-                            $extension = 'png'; // Default to PNG if extension is missing or invalid
+                        $extension = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_EXTENSION);
+                        if (!in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'webp'])) {
+                            $extension = 'png'; // Default to PNG if extension is invalid
                         }
 
                         // Generate a unique filename
@@ -464,16 +476,17 @@ class MainController extends Controller
 
                         // Save the image file
                         file_put_contents($imagePath, $imageData);
-
-                        // Save the image path in CollectionImages table (relative path)
-                        $collectionImage = new CollectionImages();
-                        $collectionImage->collection_id = $sessionCollection->id;
-                        $collectionImage->image = 'uploads/collections/' . $imageName;  // Save relative path
-                        $collectionImage->save();
-
-                        $count++;
                     }
                 }
+
+                // Save the image path in CollectionImages table (relative path)
+                $collectionImage = new CollectionImages();
+                $collectionImage->collection_id = $sessionCollection->id;
+                $collectionImage->image = 'uploads/collections/' . $imageName; // Save relative path
+                $collectionImage->save();
+
+                $count++;
+
             }
         }
 
