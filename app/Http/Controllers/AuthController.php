@@ -32,19 +32,31 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:users,email',
             'phone' => 'nullable|unique:users,phone',
             'password' => 'required|min:6|confirmed',
         ]);
 
-        User::create([
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Create user
+        $user = User::create([
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('login')->with('success', 'Account created successfully!');
+        // Log in user automatically
+        Auth::login($user);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Account created successfully!',
+            'redirect' => route('profile') // Change to your intended redirect route
+        ]);
     }
 
     public function sendResetLink(Request $request)
@@ -61,6 +73,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login')->with('success', 'Logged out successfully!');
+        return redirect()->route('home')->with('success', 'Logged out successfully!');
     }
 }

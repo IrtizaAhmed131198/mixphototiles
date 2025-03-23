@@ -1,7 +1,6 @@
 <script>
     function submitLogin() {
-
-        let formData = new FormData($('#loginForm')[0]);  // Get form element using jQuery and pass to FormData
+        let formData = new FormData($('.loginForm')[0]);  // Get form element using jQuery and pass to FormData
 
         $.ajax({
             url: "{{ route('login') }}",
@@ -10,26 +9,22 @@
             processData: false, // Required for FormData
             contentType: false, // Required for FormData
             headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'  // Set CSRF token
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Set CSRF token
             },
             success: function(response) {
-                let messageDiv = $('#loginMessage');
                 if (response.success) {
-                    messageDiv.html('<div class="alert alert-success">' + response.message + '</div>');
-                    setTimeout(function() {
-                        window.location.href = response.url;  // Redirect to profile page
-                    }, 1000);
+                    window.location.href = "{{ route('profile') }}"; // Redirect to profile route
                 } else {
-                    messageDiv.html('<div class="alert alert-danger">' + response.message + '</div>');
+                    $('#loginMessage').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
             },
             error: function(xhr) {
-                // Handle validation errors (optional)
                 let errors = xhr.responseJSON?.errors || {};
                 handleValidationErrors(errors);
             }
         });
     }
+
 
     // Optional function to highlight errors
     function handleValidationErrors(errors) {
@@ -44,5 +39,46 @@
             input.after(errorMessage);
         }
     }
+
+    $(document).ready(function () {
+        $('#signupForm').submit(function (e) {
+            e.preventDefault();
+            $('.error-message').remove();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: "{{ route('register.post') }}",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    $('#signupBtn').prop('disabled', true).text('Processing...');
+                },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.message
+                        }).then(() => {
+                            window.location.href = "{{ route('login') }}";
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    $('#signupBtn').prop('disabled', false).text('Sign Up');
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
+                        $.each(errors, function (key, value) {
+                            var input = $('input[name="' + key + '"]');
+                            input.addClass('is-invalid');
+                            input.after('<div class="error-message text-danger">' + value[0] + '</div>');
+                        });
+                    }
+                }
+            });
+        });
+    });
 
 </script>

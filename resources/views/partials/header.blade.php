@@ -55,12 +55,12 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="javascript:;" data-bs-target="#exampleModalToggle"
-                                            data-bs-toggle="modal" class="btn custom-btn">Login / Sign up</a>
-                                    </li>
-
-                                    {{-- @if(Auth::check()) --}}
+                                    @if(!Auth::check())
+                                        <li>
+                                            <a href="javascript:;" data-bs-target="#exampleModalToggle"
+                                                data-bs-toggle="modal" class="btn custom-btn">Login / Sign up</a>
+                                        </li>
+                                    @else
                                         <li class="porfile-dropdown">
                                             <a href="javascript:;" class="btn custom-btn" type="button"
                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -199,7 +199,7 @@
                                                     </li>
                                                     <li>
 
-                                                        <a href="#">
+                                                        <a href="{{ route('logout') }}">
                                                             <span><svg width="22" height="22" viewBox="0 0 22 22"
                                                                     class="w-em h-em ttl-22 mb-0 me-2"
                                                                     xmlns="http://www.w3.org/2000/svg">
@@ -235,7 +235,7 @@
                                                 </ul>
                                             </div>
                                         </li>
-                                    {{-- @endif --}}
+                                    @endif
                                 </ul>
                             </div>
                         </div>

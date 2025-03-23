@@ -7,23 +7,45 @@ use App\Models\Order;
 
 class ProfileController extends Controller
 {
-    public function profile() {
+    public function profile()
+    {
+        if (!$this->checkCustomAuth()) {
+            return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
+        }
+
         return view('profile.myprofile');
     }
 
+    public function orders()
+    {
+        if (!$this->checkCustomAuth()) {
+            return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
+        }
 
-    public function orders() {
-        // $orders = Order::with('orderItems')->get();
         return view('profile.order');
     }
 
+    public function address()
+    {
+        if (!$this->checkCustomAuth()) {
+            return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
+        }
 
-    public function address() {
         return view('profile.address');
     }
 
+    public function resetpassword()
+    {
+        if (!$this->checkCustomAuth()) {
+            return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
+        }
 
-    public function resetpassword() {
         return view('profile.resetpassword');
+    }
+
+
+    private function checkCustomAuth()
+    {
+        return session()->has('user_id'); // Modify this according to your custom auth logic
     }
 }

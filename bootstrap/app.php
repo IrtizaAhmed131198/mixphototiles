@@ -12,8 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         // Example of adding global middleware (you can add more as needed)
-        // $middleware->web([\App\Http\Middleware\VerifyCsrfToken::class]);
+        // $middleware->web([\App\Http\Middleware\CustomAuthMiddleware::class]);
         // $middleware->api([\App\Http\Middleware\Authenticate::class]);
+        $middleware->web([
+            App\Http\Middleware\CustomAuthMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // You could customize exception handling here if needed

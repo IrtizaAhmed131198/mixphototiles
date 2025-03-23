@@ -103,7 +103,7 @@
         </li>
         <li>
 
-            <a href="#">
+            <a href="{{ route('logout') }}">
                 <span><svg width="22" height="22" viewBox="0 0 22 22" class="w-em h-em ttl-22 mb-0 me-2"
                         xmlns="http://www.w3.org/2000/svg">
                         <g transform="translate(20193 -761)">
