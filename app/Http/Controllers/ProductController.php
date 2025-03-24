@@ -7,11 +7,16 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     public function index()
     {
+        if(!Auth::check()){
+            return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
+        }
+
         return view('profile.frames');
     }
 
@@ -121,7 +126,6 @@ class ProductController extends Controller
             ->rawColumns(['id', 'image', 'coordinates', 'action'])
             ->make(true);
     }
-
 
     public function edit($id)
     {

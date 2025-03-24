@@ -145,40 +145,28 @@
                         </div>
                         <div class="position-relative text-center mb-4 Login_separator"><span
                                 class="bg-white px-2 position-relative">or</span></div>
-                        <form class="loginForm">
-                            <div class="mb-4 form-floating"><input placeholder="Email or Mobile number"
-                                    id="emailInput" class="form-control" type="text" value=""
-                                    name="emailOrMobile"><label for="emailInput">Email or Mobile
-                                    number</label>
-                                <small class="text-danger" id="emailOrMobileError"></small>
-                            </div>
-                            <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
-                                <input placeholder="Password" id="PasswordInput2" class="form-control"
-                                    type="password" value="" name="password">
-                                <button type="button"
-                                    class="position-absolute top-0 end-0 rounded-pill  PasswordInput_showButton btn btn-text">
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 -1 18 18"
-                                        class="w-em h-em" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z">
-                                        </path>
-                                        <path
-                                            d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z">
-                                        </path>
-                                        <path
-                                            d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z">
-                                        </path>
-                                    </svg>
-                                </button>
-                                <label for="PasswordInput">Password</label>
-                                <small class="text-danger" id="passwordError"></small>
-                            </div>
-                            <div class="d-flex Login_forgotBtn"><button type="button"
-                                    class="ms-auto btn btn-text btn-sm">Forgot password</button></div>
-                            <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn" onclick="submitLogin()">Login</button>
-                            </div>
-                        </form>
+                            <form class="loginForm">
+                                <div class="mb-4 form-floating">
+                                    <input placeholder="Email or Mobile number" id="emailInput" class="form-control" type="text" value=""
+                                        name="emailOrMobile">
+                                    <label for="emailInput">Email or Mobile number</label>
+                                    <small class="text-danger" id="emailOrMobileError"></small>
+                                </div>
+                                <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
+                                    <input placeholder="Password" id="PasswordInput2" class="form-control" type="password" value="" name="password">
+                                    <button type="button" class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <label for="PasswordInput2">Password</label>
+                                    <small class="text-danger" id="passwordError"></small>
+                                </div>
+                                <div class="d-flex Login_forgotBtn">
+                                    <button type="button" class="ms-auto btn btn-text btn-sm">Forgot password</button>
+                                </div>
+                                <div class="d-grid pt-3 pb-4">
+                                    <button type="button" class="btn custom-btn" onclick="submitLogin()">Login</button>
+                                </div>
+                            </form>
                         <div id="loginMessage"></div>
                         <p class="mb-0 text-center d-flex align-items-center justify-content-center">Don't
                             have an account?<button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
@@ -235,6 +223,10 @@
                             <form id="signupForm">
                                 @csrf
                                 <div class="mb-4 form-floating">
+                                    <input placeholder="Name" id="nameInput3" class="form-control" type="text" name="name">
+                                    <label for="nameInput3">Name </label>
+                                </div>
+                                <div class="mb-4 form-floating">
                                     <input placeholder="Email" id="emailInput3" class="form-control" type="text" name="email">
                                     <label for="emailInput3">Email </label>
                                 </div>
@@ -243,45 +235,24 @@
                                     <label for="phone">Mobile number</label>
                                 </div>
                                 <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
-                                    <input placeholder="Password" id="PasswordInput" class="form-control" type="password" name="password">
-                                    <button type="button"
-                                        class="position-absolute top-0 end-0 rounded-pill  PasswordInput_showButton btn btn-text"><svg
-                                            width="16" height="16" fill="currentColor" viewBox="0 -1 18 18"
-                                            class="w-em h-em" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z">
-                                            </path>
-                                            <path
-                                                d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z">
-                                            </path>
-                                            <path
-                                                d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z">
-                                            </path>
-                                        </svg>
-                                    </button><label for="PasswordInput">Password</label>
+                                    <input placeholder="Password" id="PasswordInput" class="form-control password-field" type="password" name="password">
+                                    <button type="button" class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <label for="PasswordInput">Password</label>
                                 </div>
+
                                 <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
-                                    <input placeholder="Confirm Password" id="ConfirmPasswordInput" class="form-control" type="password" name="password_confirmation">
-                                    <button type="button"
-                                        class="position-absolute top-0 end-0 rounded-pill  PasswordInput_showButton btn btn-text"><svg
-                                            width="16" height="16" fill="currentColor" viewBox="0 -1 18 18"
-                                            class="w-em h-em" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z">
-                                            </path>
-                                            <path
-                                                d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z">
-                                            </path>
-                                            <path
-                                                d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z">
-                                            </path>
-                                        </svg>
-                                    </button><label for="ConfirmPasswordInput">Confirm Password</label>
+                                    <input placeholder="Confirm Password" id="ConfirmPasswordInput" class="form-control password-field" type="password" name="password_confirmation">
+                                    <button type="button" class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <label for="ConfirmPasswordInput">Confirm Password</label>
                                 </div>
                                 <div class="d-flex Login_forgotBtn"><button type="button"
                                         class="ms-auto btn btn-text btn-sm">Forgot password</button></div>
                                 <div class="d-grid pt-3 pb-4">
-                                    <button type="submit" class="btn custom-btn">Login</button>
+                                    <button type="submit" class="btn custom-btn">Sign Up</button>
                                 </div>
                             </form>
                             <p class="mb-0 text-center d-flex align-items-center justify-content-center">Don't

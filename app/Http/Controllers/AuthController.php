@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -33,6 +34,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'phone' => 'nullable|unique:users,phone',
             'password' => 'required|min:6|confirmed',
@@ -44,9 +46,11 @@ class AuthController extends Controller
 
         // Create user
         $user = User::create([
+            'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
+            'role' => 'user',
         ]);
 
         // Log in user automatically

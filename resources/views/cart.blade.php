@@ -2,13 +2,45 @@
 
 @section('title', 'Cart')
 
+@push('css')
+<style>
+    .loader-container {
+        background-attachment: fixed;
+        background-color: #ffff;
+        height: 100vh;
+        position: fixed;
+        z-index: 999999;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        margin:auto;
+    }
+    .loaderMain img {
+        max-width: 350px;
+        margin:auto;
+    }
+
+</style>
+@endpush
+
 @section('content')
 @php
     $subtotal = 0;
     $shipping = 39
 @endphp
 
+<div class="loadermain">
+    <div class="loader-container">
+        <div class="loaderMain">
+            <img src="{{ asset('assets/images/loader.gif') }}" class="img-fluid" alt="">
+        </div>
+    </div>
+</div>
+
 @if(!empty($cartItems))
+
 <section class="cartSection">
     <div class="container">
         <div class="row">
@@ -773,6 +805,13 @@
         })
         .catch(error => console.error('Error updating cart:', error));
     }
+
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('.loadermain').fadeOut();
+        }, 3000);
+    })
 
 
 </script>

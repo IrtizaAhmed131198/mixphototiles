@@ -72,25 +72,22 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.po
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('forgot.password.post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Profile-related routes
+Route::get('/myprofile', [ProfileController::class, 'profile'])->name('profile');
+Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
+Route::get('/address', [ProfileController::class, 'address'])->name('address');
+Route::get('/resetpassword', [ProfileController::class, 'resetpassword'])->name('resetpassword');
 
-Route::middleware([CustomAuthMiddleware::class])->group(function () {
-    // Profile-related routes
-    Route::get('/myprofile', [ProfileController::class, 'profile'])->name('profile');
-    Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
-    Route::get('/address', [ProfileController::class, 'address'])->name('address');
-    Route::get('/resetpassword', [ProfileController::class, 'resetpassword'])->name('resetpassword');
-
-    // Product-related routes
-    Route::get('/frames', [ProductController::class, 'index'])->name('frames.index');
-    Route::get('/frames/data', [ProductController::class, 'getData'])->name('frames.data');
-    Route::post('/frames/store', [ProductController::class, 'store'])->name('frames.store');
-    Route::get('/frames/{id}/edit', [ProductController::class, 'edit'])->name('frames.edit');
-    Route::post('/frames/{id}', [ProductController::class, 'update'])->name('frames.update');
-    Route::delete('/frames/{id}', [ProductController::class, 'destroy'])->name('frames.destroy');
-    Route::delete('/frames/{id}/delete-image', [ProductController::class, 'deleteAdditionalImage'])->name('frames.deleteImage');
-    Route::get('/frames/get-image-url', [ProductController::class, 'getProductImage'])->name('frames.getProductImage');
-    Route::get('/frames/coordinates', [ProductController::class, 'post_coordinates'])->name('frames.post_coordinates');
-});
+// Product-related routes
+Route::get('/frames', [ProductController::class, 'index'])->name('frames.index');
+Route::get('/frames/data', [ProductController::class, 'getData'])->name('frames.data');
+Route::post('/frames/store', [ProductController::class, 'store'])->name('frames.store');
+Route::get('/frames/{id}/edit', [ProductController::class, 'edit'])->name('frames.edit');
+Route::post('/frames/{id}', [ProductController::class, 'update'])->name('frames.update');
+Route::delete('/frames/{id}', [ProductController::class, 'destroy'])->name('frames.destroy');
+Route::delete('/frames/{id}/delete-image', [ProductController::class, 'deleteAdditionalImage'])->name('frames.deleteImage');
+Route::get('/frames/get-image-url', [ProductController::class, 'getProductImage'])->name('frames.getProductImage');
+Route::get('/frames/coordinates', [ProductController::class, 'post_coordinates'])->name('frames.post_coordinates');
 
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 
