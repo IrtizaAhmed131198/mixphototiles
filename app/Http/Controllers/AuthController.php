@@ -7,10 +7,47 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use Laravel\Socialite\Facades\Socialite;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')
+            ->with(['prompt' => 'select_account'])
+            ->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+
+            // Find or create user in the database
+            $user = User::updateOrCreate([
+                'email' => $googleUser->getEmail(),
+            ], [
+                'name' => $googleUser->getName(),
+                'google_id' => $googleUser->getId(),
+                'role' => 'user',
+                'password' => bcrypt(str()->random(16)), // Random password as it's social login
+            ]);
+
+            // Store user in session
+            Session::put('google_user', $user);
+
+            Auth::login($user);
+
+            return redirect()->route('profile')->with('success', 'Google login successful!');
+        } catch (\Exception $e) {
+            return redirect()->route('home')->with('error', 'Failed to login with Google.');
+        }
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -63,20 +100,63 @@ class AuthController extends Controller
         ]);
     }
 
-    public function sendResetLink(Request $request)
+    public function sendOtp(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['status' => 'error', 'message' => 'Email not found.'], 404);
+        }
+
+        // Generate a unique OTP
+        do {
+            $otp = rand(100000, 999999);
+            $exists = User::where('otp', $otp)->exists();
+        } while ($exists);
+
+        // Save OTP with expiration time
+        $user->otp = $otp;
+        $user->otp_expires_at = Carbon::now()->addMinutes(10);
+        $user->save();
+
+        // Send OTP via email
+        Mail::raw("Your OTP code is: $otp", function ($message) use ($user) {
+            $message->to($user->email)->subject('Password Reset OTP');
+        });
+
+        return response()->json(['status' => 'success', 'message' => 'OTP sent to your email.']);
+    }
+
+    public function verifyOtp(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users,email'
+            'otp' => 'required|digits:6'
         ]);
 
-        Password::sendResetLink($request->only('email'));
+        $user = User::where('otp', $request->otp)->first();
 
-        return back()->with('status', 'Password reset link sent!');
+        if (!$user) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid OTP.'], 400);
+        }
+
+        if (Carbon::now()->gt($user->otp_expires_at)) {
+            return response()->json(['status' => 'error', 'message' => 'OTP expired.'], 400);
+        }
+
+        // OTP Verified, clear OTP fields
+        $user->otp = null;
+        $user->otp_expires_at = null;
+        $user->save();
+
+        return response()->json(['status' => 'success', 'message' => 'OTP verified. Proceed to reset your password.']);
     }
 
     public function logout()
     {
         Auth::logout();
+        Session::forget('google_user');
         return redirect()->route('home')->with('success', 'Logged out successfully!');
     }
 }

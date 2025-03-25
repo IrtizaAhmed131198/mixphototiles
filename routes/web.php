@@ -71,6 +71,10 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('forgot.password.post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('auth/google', [AuthController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+Route::post('/password/send-otp', [AuthController::class, 'sendOtp'])->name('password.sendOtp');
+Route::post('/password/verify-otp', [AuthController::class, 'verifyOtp'])->name('password.verifyOtp');
 
 // Profile-related routes
 Route::get('/myprofile', [ProfileController::class, 'profile'])->name('profile');

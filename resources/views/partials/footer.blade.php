@@ -118,29 +118,29 @@
                         <p class="text-center">Select method to login</p>
                         <div class="btnParentlogin">
                             <button class="btn google-btn">
-                                <span class="googleimg">
-                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-                                        class="LgbsSe-Bz112c">
-                                        <g>
-                                            <path fill="#EA4335"
-                                                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
-                                            </path>
-                                            <path fill="#4285F4"
-                                                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
-                                            </path>
-                                            <path fill="#FBBC05"
-                                                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
-                                            </path>
-                                            <path fill="#34A853"
-                                                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
-                                            </path>
-                                            <path fill="none" d="M0 0h48v48H0z"></path>
-                                        </g>
-                                    </svg>
-                                </span>
-                                <span class="btntext">
-                                    Sign in with Google
-                                </span>
+                                @if(session()->has('google_user'))
+                                    <a href="{{ route('google.login') }}" class="btn google-btn">
+                                        <span class="googleimg">
+                                            <img src="{{ session('google_user')->avatar }}" alt="Google Avatar" style="width: 24px; height: 24px; border-radius: 50%;">
+                                        </span>
+                                        <span class="btntext">Signed in as {{ session('google_user')->name }}</span>
+                                    </a>
+                                @else
+                                    <a href="{{ route('google.login') }}" class="btn google-btn">
+                                        <span class="googleimg">
+                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="LgbsSe-Bz112c">
+                                                <g>
+                                                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                                                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                                                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                                                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                                                    <path fill="none" d="M0 0h48v48H0z"></path>
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <span class="btntext">Sign in with Google</span>
+                                    </a>
+                                @endif
                             </button>
                         </div>
                         <div class="position-relative text-center mb-4 Login_separator"><span
@@ -161,7 +161,7 @@
                                     <small class="text-danger" id="passwordError"></small>
                                 </div>
                                 <div class="d-flex Login_forgotBtn">
-                                    <button type="button" class="ms-auto btn btn-text btn-sm">Forgot password</button>
+                                    <button type="button" class="ms-auto btn btn-text btn-sm" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Forgot password</button>
                                 </div>
                                 <div class="d-grid pt-3 pb-4">
                                     <button type="button" class="btn custom-btn" onclick="submitLogin()">Login</button>
@@ -193,29 +193,20 @@
                             <p class="text-center">Select method to signup</p>
                             <div class="btnParentlogin">
                                 <button class="btn google-btn">
-                                    <span class="googleimg">
-                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-                                            class="LgbsSe-Bz112c">
-                                            <g>
-                                                <path fill="#EA4335"
-                                                    d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
-                                                </path>
-                                                <path fill="#4285F4"
-                                                    d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
-                                                </path>
-                                                <path fill="#FBBC05"
-                                                    d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
-                                                </path>
-                                                <path fill="#34A853"
-                                                    d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
-                                                </path>
-                                                <path fill="none" d="M0 0h48v48H0z"></path>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                    <span class="btntext">
-                                        Sign up with Google
-                                    </span>
+                                    <a href="{{ route('google.login') }}" class="btn google-btn">
+                                        <span class="googleimg">
+                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="LgbsSe-Bz112c">
+                                                <g>
+                                                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                                                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                                                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                                                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                                                    <path fill="none" d="M0 0h48v48H0z"></path>
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <span class="btntext">Sign up with Google</span>
+                                    </a>
                                 </button>
                             </div>
                             <div class="position-relative text-center mb-4 Login_separator"><span
@@ -267,6 +258,81 @@
         </div>
     </div>
 
+    <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="Login_authWrp">
+                        <h4 class="heading-6">Forgot Password?</h4>
+                        <p>Enter your email to receive an OTP.</p>
+                        <form>
+                            <div class="mb-4 form-floating">
+                                <input placeholder="Email" id="emailInputPass" class="form-control" type="text" name="email">
+                                <label for="emailInputPass">Email</label>
+                                <small class="text-danger" id="emailError"></small>
+                            </div>
+                            <div class="d-grid pt-3 pb-4">
+                                <button type="button" class="btn custom-btn" onclick="sendOtp()">Send OTP</button>
+                            </div>
+                            <div id="forgotPasswordMessage"></div>
+                        </form>
+
+                        <div id="otpSection" style="display: none;">
+                            <p>Enter the OTP sent to your email.</p>
+                            <form>
+                                <div class="mb-4 form-floating">
+                                    <input placeholder="OTP" id="otpInput" class="form-control" type="text" name="otp">
+                                    <label for="otpInput">OTP</label>
+                                    <small class="text-danger" id="otpError"></small>
+                                </div>
+                                <div class="d-grid pt-3 pb-4">
+                                    <button type="button" class="btn custom-btn" onclick="verifyOtp()">Verify OTP</button>
+                                </div>
+                                <div id="otpMessage"></div>
+                            </form>
+                        </div>
+
+                        <p class="mb-0 text-center">Back To Login
+                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" class="Login_authSwitch">Login</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalToggleOtp" aria-hidden="true" aria-labelledby="exampleModalToggleOtpLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="Login_authWrp">
+                        <h4 class="heading-6">Verify OTP</h4>
+                        <p>Enter the OTP sent to your email.</p>
+                        <form id="otpForm">
+                            <div class="mb-4 form-floating">
+                                <input placeholder="OTP" id="otpInputEdit" class="form-control" type="text" name="otp">
+                                <label for="otpInputEdit">OTP</label>
+                                <small class="text-danger" id="otpError"></small>
+                            </div>
+                            <div class="d-grid pt-3 pb-4">
+                                <button type="button" class="btn custom-btn" onclick="verifyOtp()">Verify OTP</button>
+                            </div>
+                            <div id="otpMessage"></div>
+                        </form>
+                        <p class="mb-0 text-center">Resend OTP
+                            <button data-bs-target="#exampleModalToggle3" data-bs-toggle="modal" class="Login_authSwitch">Resend</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <!-- custom modal html  -->
