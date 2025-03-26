@@ -33,6 +33,20 @@
         margin:auto;
     }
 
+    .progress-bar-container {
+        width: 100%;
+        height: 5px;
+        background-color: #ddd;
+        position: relative;
+        margin-top: 10px;
+    }
+    .progress-bar {
+        width: 0%;
+        height: 100%;
+        background-color: #4caf50;
+        transition: width 0.5s;
+    }
+
 </style>
 @endpush
 
@@ -93,6 +107,10 @@
                 </div>
             </div>
         </section>
+
+        <div class="progress-bar-container" style="display: none;">
+            <div class="progress-bar"></div>
+        </div>
 
         <section class="FrameDesignSection" style="display: {{ count($images) > 0 ? 'block' : 'none' }};">
             <div class="wrapper">

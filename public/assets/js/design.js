@@ -453,6 +453,17 @@ function uploadImageToServer(file, newFileName) {
 
 async function processAndUploadImages(files) {
     const uploadPromises = [];
+    const uploadInput = document.querySelector('.upload-photo');
+    const progressBarContainer = document.querySelector('.progress-bar-container');
+    const progressBar = document.querySelector('.progress-bar');
+
+    // Disable upload button during processing
+    uploadInput.disabled = true;
+
+    progressBarContainer.style.display = 'block';
+    progressBar.style.width = '0%';
+
+    let uploadedCount = 0;
 
     for (const file of files) {
         if (!file.type.startsWith('image/')) {
@@ -469,14 +480,12 @@ async function processAndUploadImages(files) {
             img.onerror = reject;
         });
 
-        // Create a canvas and draw the image
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0, img.width, img.height);
 
-        // Check resolution
         if (img.width < 1500 || img.height < 1500 || isImageBlurred(canvas)) {
             const result = await Swal.fire({
                 title: 'Image Issue',
@@ -488,7 +497,7 @@ async function processAndUploadImages(files) {
             });
 
             if (!result.isConfirmed) {
-                continue; // Skip image if user chooses "Remove"
+                continue;
             }
         }
 
@@ -498,23 +507,35 @@ async function processAndUploadImages(files) {
         const timestamp = new Date().toISOString().replace(/[:.-]/g, "");
         const newFileName = `${baseName}_${timestamp}.${extension}`;
 
-        uploadPromises.push(uploadImageToServer(file, newFileName));
+        uploadPromises.push(uploadImageToServer(file, newFileName).then(() => {
+            uploadedCount++;
+            progressBar.style.width = `${(uploadedCount / files.length) * 100}%`;
+        }));
     }
 
     try {
-        const images = await Promise.all(uploadPromises);
-        if (images.length > 0) {
+        await Promise.all(uploadPromises);
+        if (uploadPromises.length > 0) {
             document.querySelector('.file-uploadSection').style.display = 'none';
             document.querySelector('.FrameDesignSection').style.display = 'block';
             fetchAndRenderSessionImages();
+
+            // Complete progress bar
+            progressBar.style.width = '100%';
+            setTimeout(() => {
+                progressBarContainer.style.display = 'none';
+                uploadInput.disabled = false; // Enable input after upload completion
+            }, 500);
+
             await Swal.fire('Upload Successful', 'Your images have been uploaded successfully!', 'success');
         }
     } catch (err) {
         console.error('Image upload failed', err);
         await Swal.fire('Upload Failed', 'There was a problem uploading images', 'error');
+        progressBarContainer.style.display = 'none';
+        uploadInput.disabled = false; // Re-enable upload input in case of failure
     }
 }
-
 
 // Function to check if an image is blurry using the Variance of Laplacian method
 function isImageBlurred(canvas) {
@@ -549,37 +570,12 @@ function isImageBlurred(canvas) {
 }
 
 
-async function deleteImageFromDatabase(imageName) {
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    try {
-        const response = await fetch(delete_session_image, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
-            },
-            body: JSON.stringify({ image_name: imageName })
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            // Successfully deleted, now refresh the session images
-            await fetchAndRenderSessionImages();
-            Swal.fire('Deleted', 'Image has been deleted successfully', 'success');
-        } else {
-            throw new Error(result.message || 'Failed to delete image');
-        }
-    } catch (error) {
-        console.error('Error deleting image:', error);
-        Swal.fire('Delete Failed', error.message || 'Failed to delete image', 'error');
-    }
-}
-
-// Example: Hooking into a button click to trigger deletion
 document.getElementById('remove-image').addEventListener('click', async function () {
     const activeSlide = document.querySelector('.swiper-slide-active');
+    const removeButton = document.getElementById('remove-image');
+    const uploadInput = document.querySelector('.upload-photo');
+    const progressBarContainer = document.querySelector('.progress-bar-container');
+    const progressBar = document.querySelector('.progress-bar');
 
     if (activeSlide) {
         const imgElement = activeSlide.querySelector('img');
@@ -598,7 +594,21 @@ document.getElementById('remove-image').addEventListener('click', async function
             });
 
             if (confirmDelete.isConfirmed) {
+                // Disable buttons & show progress bar
+                removeButton.disabled = true;
+                uploadInput.disabled = true;
+                progressBarContainer.style.display = 'block';
+                progressBar.style.width = '0%';
+
                 await deleteImageFromDatabase(imageName);
+
+                // Reset progress bar
+                progressBar.style.width = '100%';
+                setTimeout(() => {
+                    progressBarContainer.style.display = 'none';
+                    removeButton.disabled = false;
+                    uploadInput.disabled = false;
+                }, 500);
             }
         }
     } else {
@@ -606,6 +616,32 @@ document.getElementById('remove-image').addEventListener('click', async function
     }
 });
 
+async function deleteImageFromDatabase(imageName) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    try {
+        const response = await fetch(delete_session_image, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({ image_name: imageName })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            await fetchAndRenderSessionImages(); // Refresh images after deletion
+            Swal.fire('Deleted', 'Image has been deleted successfully', 'success');
+        } else {
+            throw new Error(result.message || 'Failed to delete image');
+        }
+    } catch (error) {
+        console.error('Error deleting image:', error);
+        Swal.fire('Delete Failed', error.message || 'Failed to delete image', 'error');
+    }
+}
 
 
 
