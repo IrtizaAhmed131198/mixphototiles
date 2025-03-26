@@ -516,12 +516,12 @@ async function processAndUploadImages(files) {
     try {
         await Promise.all(uploadPromises);
         if (uploadPromises.length > 0) {
+            progressBar.style.width = '100%';
             document.querySelector('.file-uploadSection').style.display = 'none';
             document.querySelector('.FrameDesignSection').style.display = 'block';
             fetchAndRenderSessionImages();
 
             // Complete progress bar
-            progressBar.style.width = '100%';
             setTimeout(() => {
                 progressBarContainer.style.display = 'none';
                 uploadInput.disabled = false; // Enable input after upload completion
