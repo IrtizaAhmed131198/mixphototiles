@@ -75,6 +75,7 @@ Route::get('auth/google', [AuthController::class, 'redirectToGoogle'])->name('go
 Route::get('auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
 Route::post('/password/send-otp', [AuthController::class, 'sendOtp'])->name('password.sendOtp');
 Route::post('/password/verify-otp', [AuthController::class, 'verifyOtp'])->name('password.verifyOtp');
+Route::post('/password/reset', [AuthController::class, 'reset'])->name('password.resetPassword');
 
 // Profile-related routes
 Route::get('/myprofile', [ProfileController::class, 'profile'])->name('profile');

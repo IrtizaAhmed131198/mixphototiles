@@ -96,13 +96,71 @@
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === "success") {
-                otpMessage.innerHTML = `<span class="text-success">${data.message}</span>`;
+            if (data.status === 'success') {
+                otpMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+
+                document.getElementById("get_email").value = email;
+
+                // Close OTP modal
+                let otpModal = new bootstrap.Modal(document.getElementById('exampleModalToggleOtp'));
+                otpModal.hide();
+
+                // Open Reset Password modal
+                let resetPasswordModal = new bootstrap.Modal(document.getElementById('exampleModalToggleReset'));
+                resetPasswordModal.show();
             } else {
-                otpMessage.innerHTML = `<span class="text-danger">${data.message}</span>`;
+                otpError.textContent = data.message;
             }
         })
         .catch(error => console.error("Error:", error));
+    }
+
+    function resetPassword() {
+        let email = document.getElementById('get_email').value;
+        let newPassword = document.getElementById('newPassword').value;
+        let confirmPassword = document.getElementById('confirmPassword').value;
+        let resetPasswordMessage = document.getElementById('resetPasswordMessage');
+
+        resetPasswordMessage.innerHTML = '';
+
+        if (newPassword.length < 6) {
+            resetPasswordMessage.innerHTML = `<div class="alert alert-danger">Password must be at least 6 characters.</div>`;
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            resetPasswordMessage.innerHTML = `<div class="alert alert-danger">Passwords do not match.</div>`;
+            return;
+        }
+
+        fetch("{{ route('password.resetPassword') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({ email: email, password: newPassword, password_confirmation: confirmPassword })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                resetPasswordMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+
+                // Close Reset Password modal after success
+                setTimeout(() => {
+                    let resetPasswordModal = new bootstrap.Modal(document.getElementById('exampleModalToggleReset'));
+                    resetPasswordModal.hide();
+
+                    // Redirect to login or profile page after password reset
+                    window.location.href = "{{ route('home') }}";  // Change URL based on your app flow
+                }, 2000);
+            } else {
+                resetPasswordMessage.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+            }
+        })
+        .catch(error => {
+            resetPasswordMessage.innerHTML = `<div class="alert alert-danger">Something went wrong. Please try again.</div>`;
+        });
     }
 
     // Optional function to highlight errors

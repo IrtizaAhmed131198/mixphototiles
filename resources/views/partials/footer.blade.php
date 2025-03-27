@@ -334,5 +334,41 @@
         </div>
     </div>
 
+    <div class="modal fade" id="exampleModalToggleReset" aria-hidden="true" aria-labelledby="exampleModalToggleResetLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="Login_authWrp">
+                        <h4 class="heading-6">Reset Password</h4>
+                        <form id="resetPasswordForm">
+                            <input type="hidden" name="email" id="get_email">
+                            <div class="mb-4 form-floating">
+                                <input placeholder="New Password" id="newPassword" class="form-control" type="password" name="password">
+                                <button type="button" class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <label for="newPassword">New Password</label>
+                            </div>
+                            <div class="mb-4 form-floating">
+                                <input placeholder="Confirm Password" id="confirmPassword" class="form-control" type="password" name="password_confirmation">
+                                <button type="button" class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <label for="confirmPassword">Confirm Password</label>
+                            </div>
+                            <div class="d-grid pt-3 pb-4">
+                                <button type="button" class="btn custom-btn" onclick="resetPassword()">Reset Password</button>
+                            </div>
+                            <div id="resetPasswordMessage"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <!-- custom modal html  -->

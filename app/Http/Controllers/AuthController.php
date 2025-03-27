@@ -122,9 +122,10 @@ class AuthController extends Controller
         $user->save();
 
         // Send OTP via email
-        Mail::raw("Your OTP code is: $otp", function ($message) use ($user) {
-            $message->to($user->email)->subject('Password Reset OTP');
-        });
+        // Mail::raw("Your OTP code is: $otp", function ($message) use ($user) {
+        //     $message->to($user->email)->subject('Password Reset OTP');
+        // });
+        Mail::to($user->email)->send(new OtpMail($otp, $user->name));
 
         return response()->json(['status' => 'success', 'message' => 'OTP sent to your email.']);
     }
@@ -150,7 +151,27 @@ class AuthController extends Controller
         $user->otp_expires_at = null;
         $user->save();
 
-        return response()->json(['status' => 'success', 'message' => 'OTP verified. Proceed to reset your password.']);
+        return response()->json(['status' => 'success', 'message' => 'OTP verified. Proceed to reset your password.', 'email' => $user->email]);
+    }
+
+    public function reset(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['status' => 'error', 'message' => 'User not found.'], 400);
+        }
+
+        // Update password
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return response()->json(['status' => 'success', 'message' => 'Password reset successfully. Please login with your new password.']);
     }
 
     public function logout()
