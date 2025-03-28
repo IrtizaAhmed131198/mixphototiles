@@ -493,7 +493,11 @@ async function processAndUploadImages(files) {
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Keep Anyway',
-                cancelButtonText: 'Remove'
+                cancelButtonText: 'Remove',
+                customClass: {
+                    confirmButton: 'swal-image-confirm-button',
+                    cancelButton: 'swal-image-cancel-button'
+                }
             });
 
             if (!result.isConfirmed) {
@@ -590,7 +594,11 @@ document.getElementById('remove-image').addEventListener('click', async function
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'Cancel'
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    confirmButton: 'swal-image-confirm-button',
+                    cancelButton: 'swal-image-cancel-button'
+                }
             });
 
             if (confirmDelete.isConfirmed) {

@@ -35,6 +35,8 @@
         let email = document.getElementById("emailInputPass").value.trim();
         let emailError = document.getElementById("emailError");
         let forgotPasswordMessage = document.getElementById("forgotPasswordMessage");
+        let sendOtpButton = document.querySelector(".btn-otp"); // Target Send OTP button
+        let loginButton = document.querySelector(".btn-otp-login"); // Target Login button
 
         emailError.innerText = "";
         forgotPasswordMessage.innerHTML = "";
@@ -44,11 +46,16 @@
             return;
         }
 
+        // Disable buttons during request
+        sendOtpButton.disabled = true;
+        loginButton.disabled = true;
+        sendOtpButton.innerHTML = "Sending..."; // Show loading state
+
         fetch("{{ route('password.sendOtp') }}", {
             method: "POST",
             headers: {
-                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
             },
             body: JSON.stringify({ email: email })
         })
@@ -57,18 +64,29 @@
             if (data.status === "success") {
                 forgotPasswordMessage.innerHTML = `<span class="text-success">${data.message}</span>`;
 
-                // Close the Forgot Password modal
-                let forgotPasswordModal = new bootstrap.Modal(document.getElementById("exampleModalToggle3"));
-                forgotPasswordModal.hide();
+                // Close the Forgot Password modal using Bootstrap's built-in method
+                let forgotPasswordModal = document.getElementById("exampleModalToggle3");
+                let modalInstance = bootstrap.Modal.getInstance(forgotPasswordModal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
 
-                // Open the Verify OTP modal
-                let verifyOtpModal = new bootstrap.Modal(document.getElementById("exampleModalToggleOtp"));
-                verifyOtpModal.show();
+                // Wait for the modal to close before opening the next one
+                setTimeout(() => {
+                    let verifyOtpModal = new bootstrap.Modal(document.getElementById("exampleModalToggleOtp"));
+                    verifyOtpModal.show();
+                }, 500); // Adjust timing if needed
             } else {
                 forgotPasswordMessage.innerHTML = `<span class="text-danger">${data.message}</span>`;
             }
         })
-        .catch(error => console.error("Error:", error));
+        .catch(error => console.error("Error:", error))
+        .finally(() => {
+            // Re-enable buttons after request completes
+            sendOtpButton.disabled = false;
+            loginButton.disabled = false;
+            sendOtpButton.innerHTML = "Send OTP"; // Reset button text
+        });
     }
 
     function verifyOtp() {
@@ -76,15 +94,21 @@
         let otp = document.getElementById("otpInputEdit").value.trim();
         let otpError = document.getElementById("otpError");
         let otpMessage = document.getElementById("otpMessage");
+        let verifyOtpButton = document.querySelector(".btn-verify"); // Target Verify OTP button
+        let resendOtpButton = document.querySelector(".btn-verify-resend"); // Target Resend OTP button
 
         otpError.innerText = "";
         otpMessage.innerHTML = "";
 
-        console.log(otp);
         if (otp === "") {
             otpError.innerText = "OTP is required.";
             return;
         }
+
+        // Disable buttons during request
+        verifyOtpButton.disabled = true;
+        resendOtpButton.disabled = true;
+        verifyOtpButton.innerHTML = "Verifying..."; // Show loading state
 
         fetch("{{ route('password.verifyOtp') }}", {
             method: "POST",
@@ -101,18 +125,49 @@
 
                 document.getElementById("get_email").value = email;
 
-                // Close OTP modal
-                let otpModal = new bootstrap.Modal(document.getElementById('exampleModalToggleOtp'));
-                otpModal.hide();
+                // ✅ Get the existing OTP modal instance and hide it
+                let otpModalEl = document.getElementById('exampleModalToggleOtp');
+                let otpModalInstance = bootstrap.Modal.getInstance(otpModalEl);
+                if (otpModalInstance) {
+                    otpModalInstance.hide();
+                }
 
-                // Open Reset Password modal
-                let resetPasswordModal = new bootstrap.Modal(document.getElementById('exampleModalToggleReset'));
-                resetPasswordModal.show();
+                // Wait for the modal to close before opening the next one
+                setTimeout(() => {
+                    let resetPasswordModal = new bootstrap.Modal(document.getElementById('exampleModalToggleReset'));
+                    resetPasswordModal.show();
+                }, 500); // Adjust timing if needed
             } else {
                 otpError.textContent = data.message;
             }
         })
-        .catch(error => console.error("Error:", error));
+        .catch(error => console.error("Error:", error))
+        .finally(() => {
+            // Re-enable buttons after request completes
+            verifyOtpButton.disabled = false;
+            resendOtpButton.disabled = false;
+            verifyOtpButton.innerHTML = "Verify OTP"; // Reset button text
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let resetPasswordButton = document.querySelector(".custom-btn");
+        resetPasswordButton.disabled = true;
+
+        document.getElementById("newPassword").addEventListener("input", validatePasswords);
+        document.getElementById("confirmPassword").addEventListener("input", validatePasswords);
+    });
+
+    function validatePasswords() {
+        let newPassword = document.getElementById("newPassword").value;
+        let confirmPassword = document.getElementById("confirmPassword").value;
+        let resetPasswordButton = document.querySelector(".custom-btn");
+
+        if (newPassword.length >= 6 && confirmPassword.length >= 6 && newPassword === confirmPassword) {
+            resetPasswordButton.disabled = false;
+        } else {
+            resetPasswordButton.disabled = true;
+        }
     }
 
     function resetPassword() {
@@ -120,6 +175,7 @@
         let newPassword = document.getElementById('newPassword').value;
         let confirmPassword = document.getElementById('confirmPassword').value;
         let resetPasswordMessage = document.getElementById('resetPasswordMessage');
+        let resetPasswordButton = document.querySelector(".custom-btn");
 
         resetPasswordMessage.innerHTML = '';
 
@@ -132,6 +188,9 @@
             resetPasswordMessage.innerHTML = `<div class="alert alert-danger">Passwords do not match.</div>`;
             return;
         }
+
+        resetPasswordButton.disabled = true;
+        resetPasswordButton.innerHTML = "Resetting...";
 
         fetch("{{ route('password.resetPassword') }}", {
             method: 'POST',
@@ -146,21 +205,41 @@
             if (data.status === 'success') {
                 resetPasswordMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
 
-                // Close Reset Password modal after success
                 setTimeout(() => {
-                    let resetPasswordModal = new bootstrap.Modal(document.getElementById('exampleModalToggleReset'));
-                    resetPasswordModal.hide();
+                    let resetPasswordModal = bootstrap.Modal.getInstance(document.getElementById('exampleModalToggleReset'));
+                    if (resetPasswordModal) {
+                        resetPasswordModal.hide();
+                    }
 
-                    // Redirect to login or profile page after password reset
-                    window.location.href = "{{ route('home') }}";  // Change URL based on your app flow
+                    window.location.href = "{{ route('home') }}";
                 }, 2000);
             } else {
                 resetPasswordMessage.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                resetPasswordButton.disabled = false;
+                resetPasswordButton.innerHTML = "Reset Password";
             }
         })
         .catch(error => {
             resetPasswordMessage.innerHTML = `<div class="alert alert-danger">Something went wrong. Please try again.</div>`;
+            resetPasswordButton.disabled = false;
+            resetPasswordButton.innerHTML = "Reset Password";
         });
+    }
+
+
+    function resendOtp() {
+        let otpModalEl = document.getElementById('exampleModalToggleOtp');
+        let otpModalInstance = bootstrap.Modal.getInstance(otpModalEl);
+
+        if (otpModalInstance) {
+            otpModalInstance.hide();
+        }
+
+        // Listen for the modal close event before opening the next one
+        otpModalEl.addEventListener("hidden.bs.modal", function () {
+            let resendModal = new bootstrap.Modal(document.getElementById('exampleModalToggle3'));
+            resendModal.show();
+        }, { once: true }); // Ensures event runs only once
     }
 
     // Optional function to highlight errors

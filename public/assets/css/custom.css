@@ -1605,7 +1605,7 @@ div#accordionFlushExample {
 /* footer css  */
 
 .Footer_footer {
-    background-color: #000000e6;
+    background-color: #521f34;
     padding: 5rem 0 0rem;
 }
 
@@ -3441,7 +3441,7 @@ button.accordion-button:disabled .text-body-tertiary {
 }
 
 span.caption-crop {
-    margin-left: auto;
+    margin-left: 30rem;
     margin-top: 1rem;
     font-weight: 800;
     font-size: 16px;
@@ -3735,4 +3735,18 @@ button.Login_authSwitch {
     max-width: 100%;
     width: 935px;
     height: 935px;
+}
+
+.swal-image-confirm-button {
+    background-color: #99013e !important;
+    color: white !important;
+}
+
+.swal-image-cancel-button {
+    background-color: #99013e !important;
+    color: white !important;
+}
+
+.swal2-confirm {
+    background-color: #99013e !important;
 }

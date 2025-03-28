@@ -275,28 +275,13 @@
                                 <small class="text-danger" id="emailError"></small>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn" onclick="sendOtp()">Send OTP</button>
+                                <button type="button" class="btn custom-btn btn-otp" onclick="sendOtp()">Send OTP</button>
                             </div>
                             <div id="forgotPasswordMessage"></div>
                         </form>
 
-                        <div id="otpSection" style="display: none;">
-                            <p>Enter the OTP sent to your email.</p>
-                            <form>
-                                <div class="mb-4 form-floating">
-                                    <input placeholder="OTP" id="otpInput" class="form-control" type="text" name="otp">
-                                    <label for="otpInput">OTP</label>
-                                    <small class="text-danger" id="otpError"></small>
-                                </div>
-                                <div class="d-grid pt-3 pb-4">
-                                    <button type="button" class="btn custom-btn" onclick="verifyOtp()">Verify OTP</button>
-                                </div>
-                                <div id="otpMessage"></div>
-                            </form>
-                        </div>
-
                         <p class="mb-0 text-center">Back To Login
-                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" class="Login_authSwitch">Login</button>
+                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Login</button>
                         </p>
                     </div>
                 </div>
@@ -321,12 +306,12 @@
                                 <small class="text-danger" id="otpError"></small>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn" onclick="verifyOtp()">Verify OTP</button>
+                                <button type="button" class="btn custom-btn btn-verify" onclick="verifyOtp()">Verify OTP</button>
                             </div>
                             <div id="otpMessage"></div>
                         </form>
                         <p class="mb-0 text-center">Resend OTP
-                            <button data-bs-target="#exampleModalToggle3" data-bs-toggle="modal" class="Login_authSwitch">Resend</button>
+                            <button type="button" class="Login_authSwitch btn-verify-resend" onclick="resendOtp()">Resend</button>
                         </p>
                     </div>
                 </div>

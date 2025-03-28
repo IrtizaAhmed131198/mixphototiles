@@ -79,9 +79,12 @@ Route::post('/password/reset', [AuthController::class, 'reset'])->name('password
 
 // Profile-related routes
 Route::get('/myprofile', [ProfileController::class, 'profile'])->name('profile');
+Route::post('/update-myprofile', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
 Route::get('/address', [ProfileController::class, 'address'])->name('address');
+Route::post('/address/store', [ProfileController::class, 'storeAddress'])->name('address.store');
 Route::get('/resetpassword', [ProfileController::class, 'resetpassword'])->name('resetpassword');
+Route::post('/profile/reset-password', [ProfileController::class, 'resetPasswordPost'])->name('profile.reset-password');
 
 // Product-related routes
 Route::get('/frames', [ProductController::class, 'index'])->name('frames.index');

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Carbon\Carbon;
+use App\Mail\OtpMail;
 
 class AuthController extends Controller
 {
@@ -122,10 +123,10 @@ class AuthController extends Controller
         $user->save();
 
         // Send OTP via email
-        Mail::raw("Your OTP code is: $otp", function ($message) use ($user) {
-            $message->to($user->email)->subject('Password Reset OTP');
-        });
-        // Mail::to($user->email)->send(new OtpMail($otp, $user->name));
+        // Mail::raw("Your OTP code is: $otp", function ($message) use ($user) {
+        //     $message->to($user->email)->subject('Password Reset OTP');
+        // });
+        Mail::to($user->email)->send(new OtpMail($otp, $user->name));
 
         return response()->json(['status' => 'success', 'message' => 'OTP sent to your email.']);
     }
