@@ -724,6 +724,7 @@ ul.LeftSidebar_designTool button svg {
     width: 1em;
     color: black;
 }
+
 ul.LeftSidebar_designTool button {
     padding: 1rem 1rem;
     width: 80px;
@@ -3423,7 +3424,12 @@ button.btn.custom-btn.transparent.copied svg {
     font-size: 16px;
 }
 
-#mainImagePreview, #noCordmagePreview, #cordmagePreview, #editMainImagePreview, #editNoCordmagePreview, #editCordmagePreview {
+#mainImagePreview,
+#noCordmagePreview,
+#cordmagePreview,
+#editMainImagePreview,
+#editNoCordmagePreview,
+#editCordmagePreview {
     margin-bottom: 20px;
 }
 
@@ -3437,7 +3443,8 @@ div#cke_descriptionEditor {
 
 button.accordion-button:disabled .customTilename,
 button.accordion-button:disabled .text-body-tertiary {
-    color: rgba(108, 117, 125, 0.5) !important; /* Dim the text color */
+    color: rgba(108, 117, 125, 0.5) !important;
+    /* Dim the text color */
 }
 
 span.caption-crop {
@@ -3453,7 +3460,8 @@ a.link {
     color: white;
 }
 
-.Footer_footer a, .Footer_footer p {
+.Footer_footer a,
+.Footer_footer p {
     color: white;
 }
 
@@ -3580,6 +3588,7 @@ button.Login_authSwitch {
 .custom-modal .modal-dialog.modal-dialog-centered {
     width: 100%;
 }
+
 /* modal css  */
 
 
@@ -3712,6 +3721,7 @@ button.Login_authSwitch {
 .Cart_cartNoData p.para {
     font-size: 16px;
 }
+
 /* photoslayout css  */
 
 .crop-container {
@@ -3749,4 +3759,56 @@ button.Login_authSwitch {
 
 .swal2-confirm {
     background-color: #99013e !important;
+}
+
+.main-radio-select {
+    border: 1px solid #ff0168;
+    padding: 20px;
+    margin: 40px 0;
+}
+
+.new-address-added {
+    display: flex;
+    align-items: start;
+    gap: 15px;
+}
+
+.address-info {
+    color: black !important;
+}
+
+.address-info p {
+    margin: 0;
+    font-size: 15px;
+    color: black !important;
+
+}
+
+.address-info h5 {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.address-info {
+    margin-bottom: 70px;
+}
+
+.address-show button {
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    color: black;
+}
+
+.address-show {
+    margin-left: 10px;
+}
+
+.radio-address input {
+    border-color: #ff0168;
+}
+
+input[type="radio"]:checked {
+
+    background-color: #ff0168;
 }
