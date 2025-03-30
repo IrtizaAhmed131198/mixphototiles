@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('shipping_addresses', function (Blueprint $table) {
-            $table->string('email')->nullable()->after('user_id');
-            $table->boolean('default_address')->default(false)-after('alt_phone');
+            $table->string('email')->nullable()->after('user_id'); // Corrected this line
+            $table->boolean('default_address')->default(false)->after('alt_phone'); // Corrected this line
             $table->dropColumn('country');
-            $table->string('country')->nullable()->after('pin_code');
+            $table->string('country')->nullable()->after('pin_code'); // Corrected the order of the columns
         });
     }
 
@@ -28,8 +28,7 @@ return new class extends Migration
             $table->dropColumn('default_address');
             $table->dropColumn('email');
             $table->dropColumn('country');
-            $table->string('country');
-
+            $table->string('country')->nullable()->after('pin_code'); // Re-added the country column
         });
     }
 };
