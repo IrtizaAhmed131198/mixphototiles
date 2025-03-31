@@ -45,6 +45,8 @@
                     </svg></span>
                 Orders</a>
         </li>
+
+        @if(Auth::user()->role == 'admin')
         <li>
             <a href="{{ route('frames.index') }}"><span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" fill="currentColor"
@@ -55,6 +57,8 @@
                     </svg></span>
                 Frames</a>
         </li>
+        @endif
+
         <li>
 
             <a href="{{ route('address') }}">

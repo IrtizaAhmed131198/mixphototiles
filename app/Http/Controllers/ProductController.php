@@ -17,7 +17,12 @@ class ProductController extends Controller
             return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
         }
 
-        return view('profile.frames');
+        if(Auth::user()->role == 'admin'){
+            return view('profile.frames');
+        }else{
+            abort(403);
+        }
+
     }
 
     public function store(Request $request)
