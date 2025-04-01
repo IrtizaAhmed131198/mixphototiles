@@ -36,6 +36,7 @@ class AuthController extends Controller
                 'google_id' => $googleUser->getId(),
                 'role' => 'user',
                 'password' => bcrypt(str()->random(16)), // Random password as it's social login
+                'status' => 1
             ]);
 
             // Store user in session
@@ -62,7 +63,17 @@ class AuthController extends Controller
             'password' => $request->password,
         ];
 
+        // Attempt to authenticate the user
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            // Check if the user's status is 1 (active)
+            if ($user->status !== 1) {
+                Auth::logout(); // Log out if status is not 1
+                return response()->json(['success' => false, 'message' => 'Account is not active'], 403);
+            }
+
+            // If status is 1, return success
             return response()->json(['success' => true, 'message' => 'Login successful', 'url' => route('profile')]);
         }
 
@@ -89,6 +100,7 @@ class AuthController extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'role' => 'user',
+            'status' => 1
         ]);
 
         // Log in user automatically

@@ -11,6 +11,8 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SettingController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
 Route::get('/', HomePage::class)->name('home');
@@ -83,6 +85,9 @@ Route::post('/update-myprofile', [ProfileController::class, 'updateProfile'])->n
 Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
 Route::get('/address', [ProfileController::class, 'address'])->name('address');
 Route::post('/address/store', [ProfileController::class, 'storeAddress'])->name('address.store');
+Route::post('/address/update/{id}', [ProfileController::class, 'updateAddress'])->name('address.update');
+Route::delete('/address/delete/{id}', [ProfileController::class, 'deleteAddress'])->name('address.delete');
+Route::post('/address/set-default', [ProfileController::class, 'setDefault'])->name('address.set-default');
 Route::get('/resetpassword', [ProfileController::class, 'resetpassword'])->name('resetpassword');
 Route::post('/profile/reset-password', [ProfileController::class, 'resetPasswordPost'])->name('profile.reset-password');
 
@@ -96,6 +101,16 @@ Route::delete('/frames/{id}', [ProductController::class, 'destroy'])->name('fram
 Route::delete('/frames/{id}/delete-image', [ProductController::class, 'deleteAdditionalImage'])->name('frames.deleteImage');
 Route::get('/frames/get-image-url', [ProductController::class, 'getProductImage'])->name('frames.getProductImage');
 Route::get('/frames/coordinates', [ProductController::class, 'post_coordinates'])->name('frames.post_coordinates');
+
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin/get', [AdminController::class, 'getData'])->name('admin.get');
+Route::post('/admin/store', [AdminController::class, 'store'])->name('admin.store');
+Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
+Route::post('/admin/update/{id}', [AdminController::class, 'update'])->name('admin.update');
+Route::delete('/admin/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+
+Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+Route::post('/settings/update', [SettingController::class, 'update'])->name('settings.update');
 
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 

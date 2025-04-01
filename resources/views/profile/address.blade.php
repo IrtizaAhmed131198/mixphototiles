@@ -11,44 +11,88 @@
                     @include('partials/profilesidebar')
                 </div>
                 <div class="col-lg-9">
-                    <div class="account-information" hidden>
-                        <div class="add-address">
-
-                            {{-- <div class="position-relative mb-0 AddressListItem_addressCheckWrp__1U43Z form-check">
-                                <input id="address-9464" class="position-absolute ms-0 z-1 AddressListItem_addressCheckInput__11sYK form-check-input" type="radio" checked="" name="checkout-address">
-                                <label for="address-9464" class="d-block AddressListItem_addressCheckLabel__3yHo3 form-check-label">
-                                    <div class="AddressListItem_addressCard__1NEr4 card">
-                                    <div class="card-body">
-                                        <p class="fs-16 fw-medium mb-2">Xena Garrison</p>
-                                        <p class="fs-14 mb-1">519 Oak Court</p>
-                                        <p class="fs-14 mb-1">Mobile: 1564897981</p>
-                                        <div class="d-flex gap-4 pt-xl-5 pt-4">
-                                            <button type="button" id="edit12" class="d-flex align-items-center AddressListItem_actionButton__9aAV9 btn btn-text">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="15.615" height="14.926" viewBox="0 0 15.615 14.926" class="w-em h-em me-1">
-                                                <g transform="translate(-2.25 -2.129)">
-                                                    <path d="M12,20h7.058" transform="translate(-1.942 -3.695)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                                    <path d="M13.586,3.366a1.663,1.663,0,1,1,2.353,2.353l-9.8,9.8L3,16.3l.784-3.137Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                                </g>
-                                                </svg>
-                                                Edit
-                                            </button>
-                                            <button type="button" class="d-flex align-items-center AddressListItem_actionButton__9aAV9 btn btn-text">
-                                                <svg width="15.9" height="17.5" class="w-em h-em me-1" viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
-                                                <g transform="translate(-2.25 -1.25)">
-                                                    <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                                    <path d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6" transform="translate(-0.4 -0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                                    <path d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2" transform="translate(-1)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                                    <line y2="5" transform="translate(8.2 9)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
-                                                    <line y2="5" transform="translate(12.2 9)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
-                                                </g>
-                                                </svg>
-                                                Delete
-                                            </button>
+                    @if(!$data)
+                        <div class="account-information">
+                            <div class="add-address">
+                                <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    <svg width="16" height="16" class="w-em h-em me-1 fs-20" fill="currentColor"
+                                        viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
+                                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
+                                        </path>
+                                    </svg> Add New Address</button>
+                            </div>
+                        </div>
+                    @else
+                        <div class="account-information_new">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="add-new-address">
+                                        <h1>Add Address</h1>
+                                        <div class="row parent-address">
+                                            @foreach ($data as $val)
+                                                <div class="main-radio-select col-md-5">
+                                                    <div class="new-address-added">
+                                                        <div class="radio-address">
+                                                            <input type="radio" id="default_address_check" name="default_address_check" value=""
+                                                                {{ $val->default_address == 1 ? 'checked' : '' }} />
+                                                        </div>
+                                                        <div class="address-info">
+                                                            <h5>{{ $val->recipient_name }}</h5>
+                                                            <p>{{ $val->address_line1 }}</p>
+                                                            <p>Mobile: {{ $val->phone }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="address-show">
+                                                        <button type="button" class="edit-btn edit-address" data-id="{{ $val->id }}"
+                                                            data-name="{{ $val->recipient_name }}"
+                                                            data-phone="{{ $val->phone }}"
+                                                            data-email="{{ $val->email }}"
+                                                            data-pin_code="{{ $val->pin_code }}"
+                                                            data-address1="{{ $val->address_line1 }}"
+                                                            data-address2="{{ $val->address_line2 }}"
+                                                            data-state="{{ $val->state }}"
+                                                            data-city="{{ $val->city }}"
+                                                            data-alt_phone="{{ $val->alt_phone }}"
+                                                            data-default_address="{{ $val->default_address }}"
+                                                            data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                            Edit
+                                                        </button>
+                                                        <button type="button" class="delete-btn" data-id="{{ $val->id }}">
+                                                            <svg width="15.9" height="17.5" class="w-em h-em me-1"
+                                                                viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
+                                                                <g transform="translate(-2.25 -1.25)">
+                                                                    <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none"
+                                                                        stroke="currentColor" stroke-linecap="round"
+                                                                        stroke-linejoin="round" stroke-width="1.5"></path>
+                                                                    <path
+                                                                        d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6"
+                                                                        transform="translate(-0.4 -0.8)" fill="none"
+                                                                        stroke="currentColor" stroke-linecap="round"
+                                                                        stroke-linejoin="round" stroke-width="1.5"></path>
+                                                                    <path
+                                                                        d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2"
+                                                                        transform="translate(-1)" fill="none" stroke="currentColor"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="1.5"></path>
+                                                                    <line y2="5" transform="translate(8.2 9)" fill="none"
+                                                                        stroke="currentColor" stroke-linecap="round"
+                                                                        stroke-linejoin="round" stroke-width="1.5"></line>
+                                                                    <line y2="5" transform="translate(12.2 9)" fill="none"
+                                                                        stroke="currentColor" stroke-linecap="round"
+                                                                        stroke-linejoin="round" stroke-width="1.5"></line>
+                                                                </g>
+                                                            </svg>
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </div>
-                                    </div>
-                                </label>
-                            </div> --}}
+                                </div>
+                            </div>
                             <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 <svg width="16" height="16" class="w-em h-em me-1 fs-20" fill="currentColor"
@@ -58,81 +102,7 @@
                                     </path>
                                 </svg> Add New Address</button>
                         </div>
-                    </div>
-                    <div class="account-information_new">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="add-new-address">
-                                    <h1>Add Address</h1>
-                                    <div class="main-radio-select">
-                                        <div class="new-address-added">
-                                            <div class="radio-address">
-                                                <input type="radio" id="huey" name="drone" value="huey"
-                                                    checked />
-                                            </div>
-                                            <div class="address-info">
-                                                <h5>Merrill Merritt Giacomo Petty</h5>
-                                                <p>Suscipit eos fuga N</p>
-                                                <p>Mobile: 7031698397</p>
-                                            </div>
-                                        </div>
-                                        <div class="address-show">
-                                            <button type="button" class="edit-btn">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="15.615" height="14.926"
-                                                    viewBox="0 0 15.615 14.926" class="w-em h-em me-1">
-                                                    <g transform="translate(-2.25 -2.129)">
-                                                        <path d="M12,20h7.058" transform="translate(-1.942 -3.695)"
-                                                            fill="none" stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="1.5"></path>
-                                                        <path
-                                                            d="M13.586,3.366a1.663,1.663,0,1,1,2.353,2.353l-9.8,9.8L3,16.3l.784-3.137Z"
-                                                            fill="none" stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="1.5"></path>
-                                                    </g>
-                                                </svg>
-                                                Edit
-                                            </button>
-                                            <button type="button" class="edit-btn">
-                                                <svg width="15.9" height="17.5" class="w-em h-em me-1"
-                                                    viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
-                                                    <g transform="translate(-2.25 -1.25)">
-                                                        <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none"
-                                                            stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="1.5"></path>
-                                                        <path
-                                                            d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6"
-                                                            transform="translate(-0.4 -0.8)" fill="none"
-                                                            stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="1.5"></path>
-                                                        <path
-                                                            d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2"
-                                                            transform="translate(-1)" fill="none" stroke="currentColor"
-                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="1.5"></path>
-                                                        <line y2="5" transform="translate(8.2 9)" fill="none"
-                                                            stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="1.5"></line>
-                                                        <line y2="5" transform="translate(12.2 9)" fill="none"
-                                                            stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="1.5"></line>
-                                                    </g>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                            <svg width="16" height="16" class="w-em h-em me-1 fs-20" fill="currentColor"
-                                viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
-                                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
-                                </path>
-                            </svg> Add New Address</button>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -194,11 +164,7 @@
                                 <div class="col-6">
                                     <div class="form-group birth-label">
                                         <select name="state" id="state" class="form-control">
-                                            <option value="">Select State</option>
-                                            <option value="Assam">Assam</option>
-                                            <option value="Bihar">Bihar</option>
-                                            <option value="Chandigarh">Chandigarh</option>
-                                            <option value="Delhi">Delhi</option>
+                                            <option value="" disabled selected>---Select State---</option>
                                         </select>
                                         <small class="text-danger" id="stateError"></small>
                                     </div>
@@ -306,5 +272,116 @@
                 event.preventDefault();
             }
         });
+
+        $(document).ready(function () {
+            $(".edit-address").click(function () {
+                let id = $(this).data("id");
+                $("#addressForm").attr("action", "{{ url('address/update') }}/" + id); // Set action for update
+
+                $("#name").val($(this).data("name"));
+                $("#phone").val($(this).data("phone"));
+                $("#email").val($(this).data("email"));
+                $("#pin_code").val($(this).data("pin_code"));
+                $("#address1").val($(this).data("address1"));
+                $("#address2").val($(this).data("address2"));
+                $("#state").val($(this).data("state"));
+                $("#city").val($(this).data("city"));
+                $("#alt_phone").val($(this).data("alt_phone"));
+                $("input[name='default_address']").prop("checked", $(this).data("default_address") == 1);
+
+                $(".modal-title").text("Edit Address"); // Change modal title
+                $(".filled").text("Update"); // Change button text
+            });
+
+            // Reset modal when closed
+            $("#exampleModal").on("hidden.bs.modal", function () {
+                $("#addressForm").trigger("reset");
+                $(".modal-title").text("Add Address");
+                $(".filled").text("Save");
+                $("#addressForm").attr("action", "{{ route('address.store') }}");
+            });
+        });
+
+        $(document).on("click", ".delete-btn", function () {
+            let id = $(this).data("id");
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ url('address/delete') }}/" + id,
+                        type: "DELETE",
+                        data: { _token: "{{ csrf_token() }}" },
+                        success: function (response) {
+                            Swal.fire("Deleted!", response.message, "success").then(() => {
+                                location.reload();
+                            });
+                        },
+                        error: function () {
+                            Swal.fire("Error!", "Error deleting address.", "error");
+                        },
+                    });
+                }
+            });
+        });
+
+        $(document).on("click", ".main-radio-select", function (e) {
+            // Prevent triggering when clicking on buttons inside the div
+            if ($(e.target).hasClass("edit-btn") || $(e.target).hasClass("delete-btn")) {
+                return;
+            }
+
+            let radio = $(this).find("input[name='default_address_check']");
+            let id = $(this).find(".delete-btn").data("id"); // Get the address ID
+
+            if (!radio.is(":checked")) {
+                radio.prop("checked", true);
+
+                // Send AJAX request to update the default address
+                $.ajax({
+                    url: "{{ route('address.set-default') }}", // Change to your actual route
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id,
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $(".main-radio-select input[name='default_address_check']").prop("checked", false);
+                            radio.prop("checked", true);
+                            Swal.fire("Success", response.message, "success");
+                        } else {
+                            Swal.fire("Error", "Failed to update default address.", "error");
+                        }
+                    },
+                    error: function () {
+                        Swal.fire("Error", "An error occurred while updating default address.", "error");
+                    },
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch("{{ url('states') }}")
+                .then(response => response.json())
+                .then(states => {
+                    const dropdown = document.getElementById('state');
+                    states.forEach(state => {
+                        const option = document.createElement('option');
+                        option.value = state;
+                        option.textContent = state;
+                        dropdown.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching states:', error));
+        });
+
     </script>
 @endpush

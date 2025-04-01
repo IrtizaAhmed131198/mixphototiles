@@ -22,6 +22,59 @@
                     </svg></span>
                 My Profile</a>
         </li>
+
+        @if(in_array(Auth::user()->role, ['super_admin']))
+            <li>
+                <a href="{{ route('admin.index') }}">
+                    <span><svg width="22" height="22" viewBox="0 0 22 22" class="w-em h-em fs-18 me-2"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g transform="translate(-17 -131)">
+                                <g transform="translate(-3539.758 221.032)">
+                                    <g fill="none" stroke-width="1.3" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" transform="translate(3563.094 -87.644)">
+                                        <circle cx="4.605" cy="4.605" r="4.605" stroke="none">
+                                        </circle>
+                                        <circle cx="4.605" cy="4.605" r="3.955" fill="none">
+                                        </circle>
+                                    </g>
+                                    <path fill="none" stroke-width="1.3" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" transform="translate(3559 -70.964) rotate(-90)"
+                                        d="M0,0C4.125,0,7.469,3.921,7.469,8.758S4.125,17.516,0,17.516">
+                                    </path>
+                                </g>
+                            </g>
+                        </svg></span>
+                    Admin/User</a>
+            </li>
+            <li>
+                <a href="{{ route('settings.index') }}" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+                    <span style="display: flex; align-items: center; justify-content: center;">
+                        <svg width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.82 2.82l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.12a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.82-2.82l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.12a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.82-2.82l.06.06A1.65 1.65 0 0 0 9 4.6V4a2 2 0 0 1 4 0v.12a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.82 2.82l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.12a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                    </span>
+                    <span>Settings</span>
+                </a>
+
+            </li>
+        @endif
+
+        @if(in_array(Auth::user()->role, ['admin', 'super_admin']))
+            <li>
+                <a href="{{ route('frames.index') }}"><span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" fill="currentColor"
+                            class="w-em h-em fs-18 me-2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5z">
+                            </path>
+                        </svg></span>
+                    Frames</a>
+            </li>
+        @endif
+
         <li>
             <a href="{{ route('orders') }}"><span><svg width="22" height="22" viewBox="0 0 22 22"
                         class="w-em h-em fs-18 me-2" xmlns="http://www.w3.org/2000/svg">
@@ -45,19 +98,6 @@
                     </svg></span>
                 Orders</a>
         </li>
-
-        @if(Auth::user()->role == 'admin')
-        <li>
-            <a href="{{ route('frames.index') }}"><span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" fill="currentColor"
-                        class="w-em h-em fs-18 me-2" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5z">
-                        </path>
-                    </svg></span>
-                Frames</a>
-        </li>
-        @endif
 
         <li>
 

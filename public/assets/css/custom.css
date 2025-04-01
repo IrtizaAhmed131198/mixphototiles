@@ -3355,6 +3355,32 @@ button.btn.custom-btn.transparent.copied svg {
     color: black;
 }
 
+
+/* .admin-modal .modal-dialog.modal-dialog-centered {
+    max-width: 1000px;
+}
+
+
+.admin-modal .modal-dialog .modal-content {
+    height: 1060px;
+    border-radius: 0;
+    overflow: auto;
+}
+
+.admin-modal .modal-dialog .modal-content .modal-header h5 {
+    font-size: 25px;
+    color: black;
+    font-weight: 800;
+}
+
+.admin-modal .modal-dialog .modal-content .modal-header {
+    border: none;
+}
+
+.admin-modal .modal-dialog .modal-content .modal-header button i {
+    color: black;
+} */
+
 .modal-form .form-group .form-control {
     border-radius: 0;
     margin-bottom: 20px;
@@ -3811,4 +3837,15 @@ button.Login_authSwitch {
 input[type="radio"]:checked {
 
     background-color: #ff0168;
+}
+
+.parent-address {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    gap: 23px;
+}
+
+.profile-menu.show {
+    display: block;
 }

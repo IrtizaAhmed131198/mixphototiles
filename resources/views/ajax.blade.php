@@ -314,4 +314,13 @@
         });
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdownButton = document.getElementById('dropdownMenuButton1');
+        const dropdownMenu = document.querySelector('.profile-menu');
+
+        dropdownButton.addEventListener('click', function() {
+            dropdownMenu.classList.toggle('show');
+        });
+    });
+
 </script>

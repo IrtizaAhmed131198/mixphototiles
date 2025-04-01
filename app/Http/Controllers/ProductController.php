@@ -17,7 +17,7 @@ class ProductController extends Controller
             return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
         }
 
-        if(Auth::user()->role == 'admin'){
+        if(in_array(Auth::user()->role, ['admin', 'super_admin'])) {
             return view('profile.frames');
         }else{
             abort(403);
