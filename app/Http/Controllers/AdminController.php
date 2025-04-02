@@ -18,8 +18,12 @@ class AdminController extends Controller
             return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
         }
 
-        if(in_array(Auth::user()->role, ['super_admin'])) {
-            return view('profile.admin');
+        if(Auth::user()->role == 'super_admin') {
+            $title = 'Admin/User';
+            return view('profile.admin', compact('title'));
+        } elseif(Auth::user()->role == 'admin') {
+            $title = 'User';
+            return view('profile.admin', compact('title'));
         }else{
             abort(403);
         }
@@ -28,9 +32,17 @@ class AdminController extends Controller
 
     public function getData()
     {
-        $users = User::where('role', '!=', 'super_admin');
+        $query = User::query();
 
-        return DataTables::of($users)
+        // Exclude super_admin role for all users
+        $query->where('role', '!=', 'super_admin');
+
+        // If the authenticated user is an admin, exclude other admin users
+        if (Auth::user()->role == 'admin') {
+            $query->where('role', '!=', 'admin');
+        }
+
+        return DataTables::of($query)
             ->addColumn('id', function ($row) {
                 static $counter = 0;
                 $counter++;
@@ -43,6 +55,7 @@ class AdminController extends Controller
             ->rawColumns(['id', 'action'])
             ->make(true);
     }
+
 
     public function store(Request $request)
     {

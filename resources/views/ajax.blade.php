@@ -25,7 +25,12 @@
                 }
             },
             error: function(xhr) {
-                let errors = xhr.responseJSON?.errors || {};
+                let response = xhr.responseJSON;
+                let message = response?.message || "An error occurred";
+
+                $('#loginMessage').html('<div class="alert alert-danger">' + message + '</div>');
+
+                let errors = response?.errors || {};
                 handleValidationErrors(errors);
             }
         });

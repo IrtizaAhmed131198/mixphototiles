@@ -1,6 +1,6 @@
 @extends('components.layouts.app')
 
-@section('title', 'Admin/User')
+@section('title', $title)
 
 @section('css')
 @endsection
@@ -16,7 +16,7 @@
                 <div class="col-lg-9">
                     <div class="account-information">
                         <div class="frames-main">
-                            <h1>Admin/User List</h1>
+                            <h1>{{ $title }} List</h1>
 
                             <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#addAdminModal"> Add New</button>
@@ -44,7 +44,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addAdminLabel">Add Admin/User</h5>
+                    <h5 class="modal-title" id="addAdminLabel">Add {{ $title }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
@@ -91,7 +91,9 @@
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <select name="role" class="form-control" required>
-                                            <option value="admin">Admin</option>
+                                            @if(Auth::user()->role == 'super_admin')
+                                                <option value="admin">Admin</option>
+                                            @endif
                                             <option value="user">User</option>
                                         </select>
                                         @error('role')
@@ -128,7 +130,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editAdminLabel">Edit Admin/User</h5>
+                    <h5 class="modal-title" id="editAdminLabel">Edit {{ $title }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
@@ -176,7 +178,9 @@
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <select name="role" class="form-control" id="role" required>
-                                            <option value="admin">Admin</option>
+                                            @if(Auth::user()->role == 'super_admin')
+                                                <option value="admin">Admin</option>
+                                            @endif
                                             <option value="user">User</option>
                                         </select>
                                         @error('role')

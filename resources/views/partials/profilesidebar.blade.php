@@ -23,7 +23,7 @@
                 My Profile</a>
         </li>
 
-        @if(in_array(Auth::user()->role, ['super_admin']))
+        @if(in_array(Auth::user()->role, ['super_admin', 'admin']))
             <li>
                 <a href="{{ route('admin.index') }}">
                     <span><svg width="22" height="22" viewBox="0 0 22 22" class="w-em h-em fs-18 me-2"
@@ -44,7 +44,7 @@
                                 </g>
                             </g>
                         </svg></span>
-                    Admin/User</a>
+                    {{ Auth::user()->role == 'super_admin' ? 'Admin/User' : 'User' }}</a>
             </li>
             <li>
                 <a href="{{ route('settings.index') }}" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
