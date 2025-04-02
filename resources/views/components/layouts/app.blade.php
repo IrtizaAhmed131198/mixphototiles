@@ -50,6 +50,17 @@
     <div>
         @include('partials.header')
 
+        @if(Auth::check())
+            <figure class="text-center">
+                <blockquote class="blockquote">
+                    <p>{{Auth::user()->name}}</p>
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                    Role <cite title="Source Title">({{ Auth::user()->role }})</cite>
+                </figcaption>
+            </figure>
+        @endif
+
         @yield('content')
 
 
