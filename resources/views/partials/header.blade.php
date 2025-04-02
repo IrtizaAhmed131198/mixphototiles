@@ -5,7 +5,14 @@
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
                         <a class="" href="{{ route('home') }}">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="" style=" height: 131px; ">
+                            @php
+                            $img = get_setting('site_logo');
+                            @endphp
+                            @if($img)
+                                <img src="{{ asset('storage/'.$img) }}" alt="Logo" style="height: 131px;">
+                            @else
+                                <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style="height: 131px;">
+                            @endif
                             <!-- MixPhotoTiles -->
                         </a>
 

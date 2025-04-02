@@ -30,29 +30,38 @@ class SettingController extends Controller
             abort(403);
         }
 
-        $rules = Settings::pluck('name')->mapWithKeys(function ($name) {
-            return [$name => 'nullable|string'];
-        })->toArray();
+        // Fetch all settings from the database
+        $settings = Settings::all();
 
-        $request->validate($rules);
+        // Define validation rules based on setting type
+        $rules = [];
+        foreach ($settings as $setting) {
+            if ($setting->type === 'file') {
+                $rules[$setting->name] = 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'; // Adjust file types and size as needed
+            } elseif ($setting->type === 'number') {
+                $rules[$setting->name] = 'nullable|numeric';
+            } else {
+                $rules[$setting->name] = 'nullable|string';
+            }
+        }
 
-        foreach ($request->except('_token', '_method') as $name => $value) {
-            $setting = Settings::where('name', $name)->first();
+        // Validate the request
+        $validatedData = $request->validate($rules);
 
-            if ($setting) {
-                if ($setting->type == 'file' && $request->hasFile($name)) {
-                    // Store file in the storage folder
-                    $filePath = $request->file($name)->store('uploads/settings', 'public');
+        // Process and update settings
+        foreach ($settings as $setting) {
+            if ($setting->type == 'file' && $request->hasFile($setting->name)) {
+                // Store file
+                $filePath = $request->file($setting->name)->store('uploads/settings', 'public');
 
-                    // Delete the old file if it exists
-                    if ($setting->value) {
-                        \Storage::disk('public')->delete($setting->value);
-                    }
-
-                    $setting->update(['value' => $filePath]);
-                } else {
-                    $setting->update(['value' => $value]);
+                // Delete the old file if it exists
+                if ($setting->value) {
+                    \Storage::disk('public')->delete($setting->value);
                 }
+
+                $setting->update(['value' => $filePath]);
+            } else {
+                $setting->update(['value' => $validatedData[$setting->name] ?? null]);
             }
         }
 

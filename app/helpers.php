@@ -1,7 +1,6 @@
 <?php
-function get_setting($name)
+function get_setting($name, $default = null)
 {
-    $setting = \App\Models\Setting::where('name', $name)->first();
-    return $setting ? $setting->value : null;
+    return \App\Models\Settings::where('name', $name)->value('value') ?? $default;
 }
 ?>

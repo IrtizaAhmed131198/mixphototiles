@@ -8,7 +8,7 @@
                     <div class="Footer_socialNav nav">
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
-                                href="javascript:;">
+                                href="{{ get_setting('facebook') ?? 'javascript:;' }}">
                                 <svg width="11.01" height="22.019" class="w-em h-em d-block" viewBox="0 0 11.01 22.019"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill="currentColor"
@@ -19,7 +19,7 @@
                         </div>
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
-                                href="javascript:;">
+                                href="{{ get_setting('instagram') ?? 'javascript:;' }}">
                                 <svg width="22.019" height="22.019" class="w-em h-em d-block"
                                     viewBox="0 0 22.019 22.019" xmlns="http://www.w3.org/2000/svg">
                                     <g transform="translate(3827 6277.01)">
@@ -35,7 +35,7 @@
                         </div>
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
-                                href="javascript:;">
+                                href="{{ get_setting('twitter') ?? 'javascript:;' }}">
                                 <svg width="22.019" height="22.019" class="w-em h-em d-block"
                                     viewBox="0 0 22.019 22.019" xmlns="http://www.w3.org/2000/svg">
                                     <g transform="scale(1.2)">
@@ -75,8 +75,8 @@
                         Outer Ring Road, Agara, 1st Sector,
                         HSR Layout, Bangalore - 560102, KA</address>
                     <p class="mb-2 Footer_footerContact">Call:<a class="text-decoration-none ps-1" href="javascript:;">+917975339182</a></p> --}}
-                    <p class="mb-2 Footer_footerContact">Email:<a class="text-decoration-none ps-1"
-                            href="javascript:;">help@Mixphototiles.com</a></p>
+                    <p class="mb-2 Footer_footerContact">Email: <a class="text-decoration-none ps-1" href="mailto:{{ get_setting('contact_email', 'info@mixphototiles.com') }}">
+                        {{ get_setting('contact_email', 'info@mixphototiles.com') }}</a></p>
                 </div>
             </div>
         </div>
