@@ -1733,7 +1733,7 @@ a {
     z-index: 0;
 }
 
-.box-shadow-black:before {
+/* .box-shadow-black:before {
     position: absolute;
     z-index: -1;
     content: "";
@@ -1831,7 +1831,7 @@ a {
     bottom: -8px;
     transform: skewX(45deg);
     left: 5px;
-}
+} */
 
 /* design css */
 

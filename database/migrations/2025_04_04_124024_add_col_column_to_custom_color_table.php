@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('custom_color', function (Blueprint $table) {
-            $table->string('color_code')->after('name');
+            $table->string('before_color_code')->after('name');
+            $table->string('after_color_code')->after('before_color_code');
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('custom_color', function (Blueprint $table) {
-            $table->dropColumn('color_code');
+            $table->dropColumn('before_color_code');
+            $table->dropColumn('after_color_code');
         });
     }
 };

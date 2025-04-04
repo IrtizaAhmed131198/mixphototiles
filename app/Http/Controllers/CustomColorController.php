@@ -62,7 +62,8 @@ class CustomColorController extends Controller
             'status'     => 'required|boolean',
             'option_img' => 'required|mimes:jpeg,png,jpg,gif,webp|max:2048', // Max 2MB
             'frame_img'  => 'required|mimes:jpeg,png,jpg,gif,webp|max:2048', // Max 2MB
-            'color_code' => 'required|string',
+            'before_color_code' => 'required|string',
+            'after_color_code' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -91,7 +92,8 @@ class CustomColorController extends Controller
         $color->option_img = $optionImgFullPath ?? null;
         $color->frame_img = $frameImgFullPath ?? null;
         $color->status = $request->status;
-        $color->color_code = $request->color_code;
+        $color->before_color_code = $request->before_color_code;
+        $color->after_color_code = $request->after_color_code;
         $color->save();
 
         // Return success response
@@ -116,7 +118,8 @@ class CustomColorController extends Controller
             'status'     => 'required|boolean',
             'option_img' => 'nullable|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'frame_img'  => 'nullable|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'color_code' => 'required|string',
+            'before_color_code' => 'required|string',
+            'after_color_code' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -157,7 +160,8 @@ class CustomColorController extends Controller
         $color->name = $request->name;
         $color->price = $request->price;
         $color->status = $request->status;
-        $color->color_code = $request->color_code;
+        $color->before_color_code = $request->before_color_code;
+        $color->after_color_code = $request->after_color_code;
 
         $color->save();
 

@@ -90,9 +90,18 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <label for="color_code">Pick a Color</label>
-                                        <input type="color" class="form-control form-control-color" name="color_code" id="color_code" value="#000000" title="Choose your color">
-                                        @error('color_code')
+                                        <label for="before_color_code">Pick a Before Color</label>
+                                        <input type="color" class="form-control form-control-color" name="before_color_code" id="before_color_code" value="#000000" title="Choose your color">
+                                        @error('before_color_code')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <label for="after_color_code">Pick a After Color</label>
+                                        <input type="color" class="form-control form-control-color" name="after_color_code" id="after_color_code" value="#000000" title="Choose your color">
+                                        @error('after_color_code')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -172,9 +181,18 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <label for="color_code">Pick a Color</label>
-                                        <input type="color" class="form-control form-control-color" name="color_code" id="color_code" value="#000000" title="Choose your color">
-                                        @error('color_code')
+                                        <label for="edit_before_color_code">Pick a Before Color</label>
+                                        <input type="color" class="form-control form-control-color" name="before_color_code" id="edit_before_color_code" value="" title="Choose your color">
+                                        @error('edit_before_color_code')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <label for="edit_after_color_code">Pick a After Color</label>
+                                        <input type="color" class="form-control form-control-color" name="after_color_code" id="edit_after_color_code" value="" title="Choose your color">
+                                        @error('edit_after_color_code')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -288,10 +306,16 @@
                         $('#status').val(response.color.status);
 
                         // Set color code (new addition)
-                        if (response.color.color_code) {
-                            $('#color_code').val(response.color.color_code);
+                        if (response.color.before_color_code) {
+                            $('#edit_before_color_code').val(response.color.before_color_code);
                         } else {
-                            $('#color_code').val('#000000'); // default if not set
+                            $('#edit_before_color_code').val('#000000'); // default if not set
+                        }
+
+                        if (response.color.after_color_code) {
+                            $('#edit_after_color_code').val(response.color.after_color_code);
+                        } else {
+                            $('#edit_after_color_code').val('#000000'); // default if not set
                         }
 
                         // Set image values (for preview)

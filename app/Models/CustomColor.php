@@ -8,5 +8,5 @@ class CustomColor extends Model
 {
     protected $table = "custom_color";
 
-    protected $fillable = ['name', 'col', 'price', 'option_img', 'frame_img', 'status'];
+    protected $fillable = ['name', 'before_color_code', 'after_color_code', 'price', 'option_img', 'frame_img', 'status'];
 }
