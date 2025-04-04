@@ -209,7 +209,27 @@
                                         </p>
                                     </div>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-color li-border-color" data-price="0"
+                                    @foreach ($custom_color as $val)
+
+                                        <style>
+
+                                        </style>
+
+                                        <li type="button" class="parentProperties dropdown-item frame-color li-border-color" data-price="{{ $val->price }}"
+                                            data-color="{{ $val->name }}" data-src="{{ $val->frame_img }}" data-shadow="box-shadow-{{ lcfirst($val->name) }}">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset($val->option_img) }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <p class="propertyName">{{ $val->name }}</p>
+                                                <p class="propertyPrize">${{ $val->price }}</p>
+                                            </div>
+                                        </li>
+
+                                    @endforeach
+
+                                    {{-- <li type="button" class="parentProperties dropdown-item frame-color li-border-color" data-price="0"
                                         data-color="Black" data-src="assets/images/black-frame.png" data-shadow="box-shadow-black">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -255,7 +275,7 @@
                                             <p class="propertyName">Light</p>
                                             <p class="propertyPrize">₹0</p>
                                         </div>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li>
                             <!-- 2 dropdown -->

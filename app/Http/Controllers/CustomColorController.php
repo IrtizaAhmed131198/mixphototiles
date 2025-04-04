@@ -62,6 +62,7 @@ class CustomColorController extends Controller
             'status'     => 'required|boolean',
             'option_img' => 'required|mimes:jpeg,png,jpg,gif,webp|max:2048', // Max 2MB
             'frame_img'  => 'required|mimes:jpeg,png,jpg,gif,webp|max:2048', // Max 2MB
+            'color_code' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -72,15 +73,15 @@ class CustomColorController extends Controller
         if ($request->hasFile('option_img')) {
             $option_img = $request->file('option_img');
             $optionImgPath = time() . '_option.' . $option_img->getClientOriginalExtension();
-            $option_img->move(public_path('assets/option_imgs'), $optionImgPath);
-            $optionImgFullPath = 'assets/option_imgs/' . $optionImgPath;
+            $option_img->move(public_path('uploads/option_imgs'), $optionImgPath);
+            $optionImgFullPath = 'uploads/option_imgs/' . $optionImgPath;
         }
 
         if ($request->hasFile('frame_img')) {
             $frame_img = $request->file('frame_img');
             $frameImgPath = time() . '_frame.' . $frame_img->getClientOriginalExtension();
-            $frame_img->move(public_path('assets/frame_imgs'), $frameImgPath);
-            $frameImgFullPath = 'assets/frame_imgs/' . $frameImgPath;
+            $frame_img->move(public_path('uploads/frame_imgs'), $frameImgPath);
+            $frameImgFullPath = 'uploads/frame_imgs/' . $frameImgPath;
         }
 
         // Create a new color entry (assuming you have a Color model)
@@ -90,6 +91,7 @@ class CustomColorController extends Controller
         $color->option_img = $optionImgFullPath ?? null;
         $color->frame_img = $frameImgFullPath ?? null;
         $color->status = $request->status;
+        $color->color_code = $request->color_code;
         $color->save();
 
         // Return success response
@@ -114,6 +116,7 @@ class CustomColorController extends Controller
             'status'     => 'required|boolean',
             'option_img' => 'nullable|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'frame_img'  => 'nullable|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'color_code' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -130,8 +133,11 @@ class CustomColorController extends Controller
             }
             $option_img = $request->file('option_img');
             $optionImgPath = time() . '_option.' . $option_img->getClientOriginalExtension();
-            $option_img->move(public_path('assets/option_imgs'), $optionImgPath);
-            $color->option_img = 'assets/option_imgs/' . $optionImgPath;
+            $option_img->move(public_path('uploads/option_imgs'), $optionImgPath);
+            $color->option_img = 'uploads/option_imgs/' . $optionImgPath;
+        }else {
+            // Keep existing
+            $color->option_img = $request->existing_option_img;
         }
 
         // Delete previous frame image if new image is uploaded
@@ -141,14 +147,17 @@ class CustomColorController extends Controller
             }
             $frame_img = $request->file('frame_img');
             $frameImgPath = time() . '_frame.' . $frame_img->getClientOriginalExtension();
-            $frame_img->move(public_path('assets/frame_imgs'), $frameImgPath);
-            $color->frame_img = 'assets/frame_imgs/' . $frameImgPath;
+            $frame_img->move(public_path('uploads/frame_imgs'), $frameImgPath);
+            $color->frame_img = 'uploads/frame_imgs/' . $frameImgPath;
+        }else {
+            $color->frame_img = $request->existing_frame_img;
         }
 
         // Update other fields
         $color->name = $request->name;
         $color->price = $request->price;
         $color->status = $request->status;
+        $color->color_code = $request->color_code;
 
         $color->save();
 

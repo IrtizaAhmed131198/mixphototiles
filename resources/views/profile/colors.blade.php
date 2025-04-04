@@ -90,6 +90,15 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
+                                        <label for="color_code">Pick a Color</label>
+                                        <input type="color" class="form-control form-control-color" name="color_code" id="color_code" value="#000000" title="Choose your color">
+                                        @error('color_code')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
                                         <select name="status" class="form-control" required>
                                             <option value="1">Active</option>
                                             <option value="0">Inactive</option>
@@ -136,7 +145,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" step="any" class="form-control" name="price" placeholder="Price" autocomplete="price" required>
+                                        <input type="number" step="any" class="form-control" name="price" id="price" placeholder="Price" required>
                                         @error('price')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -146,8 +155,8 @@
                                 <div class="col-12">
                                     <div class="form-group label-hover">
                                         <label for="option_img">Upload Option Image</label>
-                                        <input type="file" class="form-control" name="option_img" id="option_img" accept="image/*" onchange="previewImage(event, 'option_img_preview')">
-                                        <img id="option_img_preview" src="#" alt="Option Image Preview" class="img-thumbnail mt-2 d-none" style="max-width: 150px;">
+                                        <input type="file" class="form-control" name="option_img" id="option_img" accept="image/*" onchange="previewImage(event, 'edit_option_img_preview')">
+                                        <img id="edit_option_img_preview" src="#" alt="Option Image Preview" class="img-thumbnail mt-2 d-none" style="max-width: 150px;">
                                         <input type="hidden" name="existing_option_img" id="existing_option_img">
                                     </div>
                                 </div>
@@ -156,9 +165,18 @@
                                 <div class="col-12">
                                     <div class="form-group label-hover">
                                         <label for="frame_img">Upload Frame Image</label>
-                                        <input type="file" class="form-control" name="frame_img" id="frame_img" accept="image/*" onchange="previewImage(event, 'frame_img_preview')">
-                                        <img id="frame_img_preview" src="#" alt="Frame Image Preview" class="img-thumbnail mt-2 d-none" style="max-width: 150px;">
+                                        <input type="file" class="form-control" name="frame_img" id="frame_img" accept="image/*" onchange="previewImage(event, 'edit_frame_img_preview')">
+                                        <img id="edit_frame_img_preview" src="#" alt="Frame Image Preview" class="img-thumbnail mt-2 d-none" style="max-width: 150px;">
                                         <input type="hidden" name="existing_frame_img" id="existing_frame_img">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <label for="color_code">Pick a Color</label>
+                                        <input type="color" class="form-control form-control-color" name="color_code" id="color_code" value="#000000" title="Choose your color">
+                                        @error('color_code')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -255,8 +273,8 @@
             });
         });
 
-         // Open Edit Modal and load data
-         $(document).on('click', '.edit-color', function () {
+        // Open Edit Modal and load data
+        $(document).on('click', '.edit-color', function () {
             let colorId = $(this).data('id'); // Get the color ID from the button's data-id attribute
             $.ajax({
                 url: "{{ url('color/edit') }}/" + colorId, // Fetch existing data
@@ -269,19 +287,26 @@
                         $('#price').val(response.color.price);
                         $('#status').val(response.color.status);
 
+                        // Set color code (new addition)
+                        if (response.color.color_code) {
+                            $('#color_code').val(response.color.color_code);
+                        } else {
+                            $('#color_code').val('#000000'); // default if not set
+                        }
+
                         // Set image values (for preview)
                         if (response.color.option_img) {
                             $('#existing_option_img').val(response.color.option_img);
-                            $('#option_img_preview').attr('src', "{{ url('/') }}/" + response.color.option_img).removeClass('d-none');
+                            $('#edit_option_img_preview').attr('src', "{{ url('/') }}/" + response.color.option_img).removeClass('d-none');
                         } else {
-                            $('#option_img_preview').addClass('d-none');
+                            $('#edit_option_img_preview').addClass('d-none');
                         }
 
                         if (response.color.frame_img) {
                             $('#existing_frame_img').val(response.color.frame_img);
-                            $('#frame_img_preview').attr('src', "{{ url('/') }}/" + response.color.frame_img).removeClass('d-none');
+                            $('#edit_frame_img_preview').attr('src', "{{ url('/') }}/" + response.color.frame_img).removeClass('d-none');
                         } else {
-                            $('#frame_img_preview').addClass('d-none');
+                            $('#edit_frame_img_preview').addClass('d-none');
                         }
 
                         // Update the form action URL
@@ -305,13 +330,16 @@
         $('#edit-color').on('submit', function(e) {
             e.preventDefault();
 
-            var form = $(this);
+            var form = $(this)[0];
+            var formData = new FormData(form);
+
             $.ajax({
                 type: 'POST',
-                url: form.attr('action'),
-                data: form.serialize(),
+                url: $(this).attr('action'),
+                data: formData,
+                contentType: false, // Important!
+                processData: false, // Important!
                 success: function(response) {
-                    console.log(response.success);
                     if (response.success) {
                         Swal.fire({
                             icon: 'success',
@@ -320,21 +348,15 @@
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $('#editColorModal').modal('hide');
-                                // Optionally, refresh the page or the user list
+                                location.reload();
                             }
                         });
                     } else {
-                        // Check for validation errors
                         if (response.errors) {
                             for (const field in response.errors) {
                                 $(`[name="${field}"]`).next('.text-danger').remove();
                                 $(`[name="${field}"]`).after('<span class="text-danger">' + response.errors[field][0] + '</span>');
                             }
-                            // Swal.fire({
-                            //     icon: 'error',
-                            //     title: 'Oops...',
-                            //     text: 'Please fix the errors in the form.',
-                            // });
                         } else {
                             Swal.fire({
                                 icon: 'error',
@@ -348,11 +370,12 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Something went wrong',
-                        text: 'There was an issue with the server 500. Please try again.',
+                        text: 'There was an issue with the server (500). Please try again.',
                     });
                 }
             });
         });
+
 
         $.ajaxSetup({
             headers: {
@@ -373,7 +396,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ url('admin/delete') }}/" + colorId,
+                        url: "{{ url('color/delete') }}/" + colorId,
                         type: 'DELETE',
                         success: function(response) {
                             if (response.success) {
