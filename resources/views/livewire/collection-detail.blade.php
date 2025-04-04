@@ -4,7 +4,7 @@
 
 @push('css')
 <style>
-    .black-frame {
+    /* .black-frame {
         border-image : url("{{ asset('assets/images/black-frame.png') }}");
         border-image-slice: 30;
         border-image-width: 3px;
@@ -31,7 +31,7 @@
         border-image-width: 3px;
         border-image-outset: 0;
         border-image-repeat: stretch;
-    }
+    } */
 
     .frameinner {
         padding: 14px;
@@ -281,7 +281,7 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapse1">
 
                                         <span class="customTilename">Finish</span>
-                                        <span class="text-body-tertiary">(4)</span>
+                                        <span class="text-body-tertiary">({{ count($finish ?? 0) }})</span>
                                         {{-- <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="17.5" height="17.5" viewBox="0 0 17.5 17.5" class="w-em h-em ClusterDetails_infoBtn__5lLNm">
                                                 <g transform="translate(-1.021 -1.021)">
@@ -300,8 +300,21 @@
                                         <ul class="designToolPropertiesLists CustomizeOption select-finish">
                                             <!-- Dropdown menu links -->
 
+                                            @foreach ($finish as $key => $val)
 
-                                            <li type="button" class="parentProperties frame-change active" data-name="Normal" data-price="0">
+                                                <li type="button" class="parentProperties frame-change {{ $key == 0 ? 'active' : '' }}" data-name="{{ $val->label }}" data-price="{{ $val->price }}">
+                                                    <figure class="PropertiesleftChild">
+                                                        <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
+                                                    </figure>
+                                                    <div class="PropertiesRightChild">
+                                                        <p class="propertyName">{{ $val->label }}</p>
+                                                    </div>
+                                                </li>
+
+                                            @endforeach
+
+
+                                            {{-- <li type="button" class="parentProperties frame-change active" data-name="Normal" data-price="0">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
                                                 </figure>
@@ -335,7 +348,7 @@
                                                 <div class="PropertiesRightChild">
                                                     <p class="propertyName">Canvas</p>
                                                 </div>
-                                            </li>
+                                            </li> --}}
                                         </ul>
 
                                     </div>
@@ -347,7 +360,7 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse2" aria-expanded="false" aria-controls="flush-collapse2">
 
                                         <span class="customTilename">Color</span>
-                                        <span class="text-body-tertiary">(4)</span>
+                                        <span class="text-body-tertiary">({{ count($custom_color ?? 0) }})</span>
 
 
                                     </button>
@@ -358,8 +371,35 @@
                                         <ul class="designToolPropertiesLists CustomizeOption select-color">
                                             <!-- Dropdown menu links -->
 
+                                            @foreach ($custom_color as $key => $val)
+                                                <?php
+                                                    $style = '<style>';
+                                                    $style .= '
+                                                        .' . lcfirst($val->name) . '-frame {
+                                                            border-image : url(' . asset($val->frame_img) . ');
+                                                            border-image-slice: 30;
+                                                            border-image-width: 3px;
+                                                            border-image-outset: 0;
+                                                            border-image-repeat: stretch;
+                                                        }
+                                                    ';
+                                                    $style .= '</style>';
 
-                                            <li type="button" class="parentProperties frame-change active" data-price="0"
+                                                    echo $style;
+                                                ?>
+                                                <li type="button" class="parentProperties frame-change {{ $key == 0 ? 'active' : '' }}" data-price="{{ $val->price }}"
+                                                    data-color="{{ $val->name }}" data-class="{{ lcfirst($val->name) }}-frame">
+                                                    <figure class="PropertiesleftChild">
+                                                        <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset($val->option_img) }}">
+                                                    </figure>
+                                                    <div class="PropertiesRightChild">
+                                                        <p class="propertyName">{{ $val->name }}</p>
+                                                    </div>
+                                                </li>
+                                            @endforeach
+
+
+                                            {{-- <li type="button" class="parentProperties frame-change active" data-price="0"
                                                 data-color="Black" data-class="black-frame">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1703756434121.jpeg') }}">
@@ -397,7 +437,7 @@
                                                 <div class="PropertiesRightChild">
                                                     <p class="propertyName">Light</p>
                                                 </div>
-                                            </li>
+                                            </li> --}}
                                         </ul>
 
                                     </div>

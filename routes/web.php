@@ -14,6 +14,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CustomColorController;
+use App\Http\Controllers\SizesController;
+use App\Http\Controllers\FinishController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
 Route::get('/', HomePage::class)->name('home');
@@ -119,6 +121,20 @@ Route::post('/color/store', [CustomColorController::class, 'store'])->name('colo
 Route::get('/color/edit/{id}', [CustomColorController::class, 'edit'])->name('color.edit');
 Route::post('/color/update/{id}', [CustomColorController::class, 'update'])->name('color.update');
 Route::delete('/color/delete/{id}', [CustomColorController::class, 'destroy'])->name('color.destroy');
+
+Route::get('/size', [SizesController::class, 'index'])->name('size.index');
+Route::get('/size/get', [SizesController::class, 'getData'])->name('size.get');
+Route::post('/size/store', [SizesController::class, 'store'])->name('size.store');
+Route::get('/size/edit/{id}', [SizesController::class, 'edit'])->name('size.edit');
+Route::post('/size/update/{id}', [SizesController::class, 'update'])->name('size.update');
+Route::delete('/size/delete/{id}', [SizesController::class, 'destroy'])->name('size.destroy');
+
+Route::get('/finish', [FinishController::class, 'index'])->name('finish.index');
+Route::get('/finish/get', [FinishController::class, 'getData'])->name('finish.get');
+Route::post('/finish/store', [FinishController::class, 'store'])->name('finish.store');
+Route::get('/finish/edit/{id}', [FinishController::class, 'edit'])->name('finish.edit');
+Route::post('/finish/update/{id}', [FinishController::class, 'update'])->name('finish.update');
+Route::delete('/finish/delete/{id}', [FinishController::class, 'destroy'])->name('finish.destroy');
 
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 

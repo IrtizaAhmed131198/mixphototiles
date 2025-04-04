@@ -169,6 +169,25 @@
                     </svg></span>
                     Custom Color</a>
             </li>
+            <li>
+                <a href="{{ route('size.index') }}"><span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" class="w-em h-em fs-18 me-2">
+                        <g transform="translate(1 1.414)">
+                            <path d="M21,3,9,15" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            <path d="M12,3H3V21H21V12" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            <path d="M16,3h5V8" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            <path d="M14,15H9V10" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                        </g>
+                    </svg></span>
+                    Sizes</a>
+            </li>
+            <li>
+                <a href="{{ route('finish.index') }}"><span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" class="w-em h-em fs-18 me-2">
+                        <path d="M12,3,10.1,8.8a2,2,0,0,1-1.287,1.288L3,12l5.8,1.9a2,2,0,0,1,1.288,1.287L12,21l1.9-5.8a2,2,0,0,1,1.287-1.288L21,12l-5.8-1.9a2,2,0,0,1-1.288-1.287Z" transform="translate(-2 -2)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg></span>
+                    Finish</a>
+            </li>
         @endif
         <li>
 

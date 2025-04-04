@@ -374,7 +374,7 @@ function updateGrandTotal() {
                 });
 
                 // Update the grand total in UI
-                document.getElementById('grand-total').textContent = '₹' + grandTotal;
+                document.getElementById('grand-total').textContent = '$' + grandTotal;
             } else {
                 console.error('Failed to fetch frame configurations');
             }
@@ -405,7 +405,7 @@ function updateFramePrice(frameConfig) {
     }
 
     // Update the price on the UI
-    document.getElementById('price-show').textContent = '₹' + total;
+    document.getElementById('price-show').textContent = '$' + total;
 
     // Optionally update the grand total if you are tracking all frames (for multiple frames setup)
     updateGrandTotal();

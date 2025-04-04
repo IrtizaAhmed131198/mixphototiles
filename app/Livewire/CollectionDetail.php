@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\SessionCollection;
 use App\Models\CollectionImages;
 use App\Models\ClusterImage;
+use App\Models\CustomColor;
+use App\Models\Finish;
 
 class CollectionDetail extends Component
 {
@@ -17,6 +19,8 @@ class CollectionDetail extends Component
     public $config;
     public $price;
     public $cluster_images;
+    public $custom_color;
+    public $finish;
 
     public function mount($slug)
     {
@@ -38,6 +42,10 @@ class CollectionDetail extends Component
             $this->collectionImages = CollectionImages::where('collection_id', $data->id)->get();
         }
 
+        $this->custom_color = CustomColor::where('status', 1)->get();
+
+        $this->finish = Finish::where('status', 1)->get();
+
     }
 
     public function render()
@@ -48,7 +56,9 @@ class CollectionDetail extends Component
             'image_name' => $this->imageName,
             'config' => $this->config,
             'total_price' => $this->price,
-            'cluster_images' => $this->cluster_images
+            'cluster_images' => $this->cluster_images,
+            'custom_color' => $this->custom_color,
+            'finish' => $this->finish,
         ]);
     }
 }

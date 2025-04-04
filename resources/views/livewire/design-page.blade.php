@@ -156,7 +156,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Classic</p>
-                                            <p class="propertyPrize">₹0</p>
+                                            <p class="propertyPrize">$0</p>
                                         </div>
                                     </li>
 
@@ -168,7 +168,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Bold</p>
-                                            <p class="propertyPrize">₹0</p>
+                                            <p class="propertyPrize">$0</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -209,36 +209,42 @@
                                         </p>
                                     </div>
 
-                                    @foreach ($custom_color as $val)
-                                        <style>
-                                            .box-shadow-{{ lcfirst($val->name) }}::before {
-                                                position: absolute;
-                                                z-index: -1;
-                                                content: "";
-                                                right: -8px;
-                                                top: 4px;
-                                                bottom: 0;
-                                                height: 100%;
-                                                width: 8px;
-                                                background: "{{ $val->before_color_code }}";
-                                                transform: skewY(45deg);
-                                            }
+                                    @foreach ($custom_color as $key => $val)
+                                        <?php
+                                            $style = '<style>';
+                                            $style .= '
+                                                .box-shadow-' . lcfirst($val->name) . '::before {
+                                                    position: absolute;
+                                                    z-index: -1;
+                                                    content: "";
+                                                    right: -8px;
+                                                    top: 4px;
+                                                    bottom: 0;
+                                                    height: 100%;
+                                                    width: 8px;
+                                                    background: ' . $val->before_color_code . ';
+                                                    transform: skewY(45deg);
+                                                }
 
-                                            .box-shadow-{{ lcfirst($val->name) }}::after {
-                                                position: absolute;
-                                                z-index: -1;
-                                                content: "";
-                                                background: "{{ $val->after_color_code }}";
-                                                width: 100%;
-                                                height: 8px;
-                                                bottom: -8px;
-                                                transform: skewX(45deg);
-                                                left: 5px;
-                                            }
-                                        </style>
+                                                .box-shadow-' . lcfirst($val->name) . '::after {
+                                                    position: absolute;
+                                                    z-index: -1;
+                                                    content: "";
+                                                    background: ' . $val->after_color_code . ';
+                                                    width: 100%;
+                                                    height: 8px;
+                                                    bottom: -8px;
+                                                    transform: skewX(45deg);
+                                                    left: 5px;
+                                                }
+                                            ';
+                                            $style .= '</style>';
+
+                                            echo $style;
+                                        ?>
 
                                         <li type="button"
-                                            class="parentProperties dropdown-item frame-color li-border-color box-shadow-{{ lcfirst($val->name) }}"
+                                            class="parentProperties dropdown-item frame-color {{ $key == 0 ? 'li-border-color' : '' }}"
                                             data-price="{{ $val->price }}"
                                             data-color="{{ $val->name }}"
                                             data-src="{{ $val->frame_img }}"
@@ -263,7 +269,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Black</p>
-                                            <p class="propertyPrize">₹0</p>
+                                            <p class="propertyPrize">$0</p>
                                         </div>
                                     </li>
 
@@ -275,7 +281,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Dark</p>
-                                            <p class="propertyPrize">₹0</p>
+                                            <p class="propertyPrize">$0</p>
                                         </div>
                                     </li>
 
@@ -287,7 +293,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">White</p>
-                                            <p class="propertyPrize">₹0</p>
+                                            <p class="propertyPrize">$0</p>
                                         </div>
                                     </li>
 
@@ -299,7 +305,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Light</p>
-                                            <p class="propertyPrize">₹0</p>
+                                            <p class="propertyPrize">$0</p>
                                         </div>
                                     </li> --}}
                                 </ul>
@@ -328,7 +334,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Yes</p>
-                                            <p class="propertyPrize">₹1200</p>
+                                            <p class="propertyPrize">$1200</p>
                                         </div>
                                     </li>
 
@@ -340,7 +346,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">No</p>
-                                            <p class="propertyPrize">₹0</p>
+                                            <p class="propertyPrize">$0</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -377,7 +383,24 @@
                                         </p>
                                     </div>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-size li-border-color"
+                                    @foreach ($sizes as $key => $val)
+
+                                        <li type="button" class="parentProperties dropdown-item frame-size {{ $key == 0 ? 'li-border-color' : '' }}"
+                                            data-height="{{ $val->height }}px" data-width="{{ $val->width }}px" data-max-width="500px" data-price="{{ $val->price }}"
+                                            data-val='{{ $val->label }}'>
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset($val->image) }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <p class="propertyName">{{ $val->label }}</p>
+                                                <p class="propertyPrize">${{ $val->price }}</p>
+                                            </div>
+                                        </li>
+
+                                    @endforeach
+
+                                    {{-- <li type="button" class="parentProperties dropdown-item frame-size li-border-color"
                                         data-height="318px" data-width="309px" data-max-width="500px" data-price="399"
                                         data-val='8" X 8"'>
                                         <figure class="PropertiesleftChild">
@@ -386,7 +409,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">8" X 8"</p>
-                                            <p class="propertyPrize">₹399</p>
+                                            <p class="propertyPrize">$399</p>
                                         </div>
                                     </li>
 
@@ -399,7 +422,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">8" X 10"</p>
-                                            <p class="propertyPrize">₹504</p>
+                                            <p class="propertyPrize">$504</p>
                                         </div>
                                     </li>
 
@@ -412,7 +435,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">10" X 8"</p>
-                                            <p class="propertyPrize">₹504</p>
+                                            <p class="propertyPrize">$504</p>
                                         </div>
                                     </li>
 
@@ -425,7 +448,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">9" X 12"</p>
-                                            <p class="propertyPrize">₹682</p>
+                                            <p class="propertyPrize">$682</p>
                                         </div>
                                     </li>
 
@@ -438,7 +461,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">12" X 9"</p>
-                                            <p class="propertyPrize">₹682</p>
+                                            <p class="propertyPrize">$682</p>
                                         </div>
                                     </li>
 
@@ -451,7 +474,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">12" X 12"</p>
-                                            <p class="propertyPrize">₹897</p>
+                                            <p class="propertyPrize">$897</p>
                                         </div>
                                     </li>
 
@@ -464,7 +487,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">12" X 18"</p>
-                                            <p class="propertyPrize">₹1318</p>
+                                            <p class="propertyPrize">$1318</p>
                                         </div>
                                     </li>
 
@@ -477,7 +500,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">18" X 12"</p>
-                                            <p class="propertyPrize">₹1318</p>
+                                            <p class="propertyPrize">$1318</p>
                                         </div>
                                     </li>
 
@@ -490,7 +513,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">18" X 18"</p>
-                                            <p class="propertyPrize">₹2022</p>
+                                            <p class="propertyPrize">$2022</p>
                                         </div>
                                     </li>
 
@@ -503,7 +526,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">18" X 24"</p>
-                                            <p class="propertyPrize">₹2638</p>
+                                            <p class="propertyPrize">$2638</p>
                                         </div>
                                     </li>
 
@@ -516,7 +539,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">24" X 18"</p>
-                                            <p class="propertyPrize">₹2638</p>
+                                            <p class="propertyPrize">$2638</p>
                                         </div>
                                     </li>
 
@@ -529,7 +552,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">24" X 32"</p>
-                                            <p class="propertyPrize">₹4558</p>
+                                            <p class="propertyPrize">$4558</p>
                                         </div>
                                     </li>
 
@@ -542,9 +565,9 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">32" X 24"</p>
-                                            <p class="propertyPrize">₹4558</p>
+                                            <p class="propertyPrize">$4558</p>
                                         </div>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li>
                             <!-- 3 dropdown -->
@@ -569,7 +592,23 @@
                                         </p>
                                     </div>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-finish li-border-color"
+                                    @foreach ($finish as $key => $val)
+
+                                        <li type="button" class="parentProperties dropdown-item frame-finish {{ $key == 0 ? 'li-border-color' : '' }}"
+                                            data-price="{{ $val->price }}" data-val="{{ $val->label }}">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset('assets/images/1701851447650.png') }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <p class="propertyName">{{ $val->label }}</p>
+                                                <p class="propertyPrize">${{ $val->price }}</p>
+                                            </div>
+                                        </li>
+
+                                    @endforeach
+
+                                    {{-- <li type="button" class="parentProperties dropdown-item frame-finish li-border-color"
                                         data-price="399" data-val="Normal">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -577,7 +616,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Normal</p>
-                                            <p class="propertyPrize">₹399</p>
+                                            <p class="propertyPrize">$399</p>
                                         </div>
                                     </li>
 
@@ -589,7 +628,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Matte</p>
-                                            <p class="propertyPrize">₹453</p>
+                                            <p class="propertyPrize">$453</p>
                                         </div>
                                     </li>
                                     <li type="button" class="parentProperties dropdown-item frame-finish"
@@ -600,7 +639,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Gloss</p>
-                                            <p class="propertyPrize">₹492</p>
+                                            <p class="propertyPrize">$492</p>
                                         </div>
                                     </li>
                                     <li type="button" class="parentProperties dropdown-item frame-finish"
@@ -611,9 +650,9 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Canvas</p>
-                                            <p class="propertyPrize">₹537</p>
+                                            <p class="propertyPrize">$537</p>
                                         </div>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li>
                             <!-- 4 dropdown -->
@@ -986,13 +1025,13 @@
                                 </div>
                                 <div class="summary-card-footer">
                                     <p class="para">Item Price</p>
-                                    <h6 class="prizing" id="price-show" data-val="399">₹399</h6>
+                                    <h6 class="prizing" id="price-show" data-val="399">$399</h6>
                                 </div>
                             </div>
                             <div class="Right-Sidebar-footer">
                                 <div class="GrandTotal">
                                     <p class="">Grand Total</p>
-                                    <h6 class="" id="grand-total" data-val="399">₹399</h6>
+                                    <h6 class="" id="grand-total" data-val="399">$399</h6>
                                 </div>
                                 <button type="button" class="btn custom-btn filled"  id="add-to-cart"> Add to Cart
                                     <svg width="21" height="21" viewBox="0 0 21 21"

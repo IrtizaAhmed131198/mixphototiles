@@ -4,16 +4,24 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\SessionImage;
 use App\Models\CustomColor;
+use App\Models\Sizes;
+use App\Models\Finish;
 
 class DesignPage extends Component
 {
     public $imageName;
     public $images;
     public $custom_color;
+    public $sizes;
+    public $finish;
 
     public function mount()
     {
         $this->custom_color = CustomColor::where('status', 1)->get();
+
+        $this->sizes = Sizes::where('status', 1)->get();
+
+        $this->finish = Finish::where('status', 1)->get();
 
         $this->imageName = request()->query('image_name');
 
@@ -30,6 +38,8 @@ class DesignPage extends Component
             'imageName' => $this->imageName,
             'images' => $this->images,
             'custom_color' => $this->custom_color,
+            'sizes' => $this->sizes,
+            'finish' => $this->finish,
         ]);
     }
 }
