@@ -13,6 +13,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\CustomColorController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
 Route::get('/', HomePage::class)->name('home');
@@ -111,6 +112,13 @@ Route::delete('/admin/delete/{id}', [AdminController::class, 'destroy'])->name('
 
 Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 Route::post('/settings/update', [SettingController::class, 'update'])->name('settings.update');
+
+Route::get('/color', [CustomColorController::class, 'index'])->name('color.index');
+Route::get('/color/get', [CustomColorController::class, 'getData'])->name('color.get');
+Route::post('/color/store', [CustomColorController::class, 'store'])->name('color.store');
+Route::get('/color/edit/{id}', [CustomColorController::class, 'edit'])->name('color.edit');
+Route::post('/color/update/{id}', [CustomColorController::class, 'update'])->name('color.update');
+Route::delete('/color/delete/{id}', [CustomColorController::class, 'destroy'])->name('color.destroy');
 
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 

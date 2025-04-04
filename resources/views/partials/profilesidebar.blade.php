@@ -1,3 +1,13 @@
+@if(Auth::check())
+<figure class="text-center">
+    <blockquote class="blockquote">
+        <p>{{Auth::user()->name}}</p>
+    </blockquote>
+    <figcaption class="blockquote-footer">
+        Role <cite title="Source Title">({{ Auth::user()->role }})</cite>
+    </figcaption>
+</figure>
+@endif
 <div class="profilesidebar">
     <ul>
         <li>
@@ -145,6 +155,21 @@
                     </svg></span>
                 Reset Password</a>
         </li>
+        @if(in_array(Auth::user()->role, ['super_admin']))
+            <li>
+                <a href="{{ route('color.index') }}"><span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" class="w-em h-em fs-18 me-2">
+                        <g transform="translate(1 1)">
+                            <circle cx="0.5" cy="0.5" r="0.5" transform="translate(11 4)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                            <circle cx="0.5" cy="0.5" r="0.5" transform="translate(15 8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                            <circle cx="0.5" cy="0.5" r="0.5" transform="translate(6 5)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                            <circle cx="0.5" cy="0.5" r="0.5" transform="translate(4 10)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                            <path d="M12,2a10,10,0,0,0,0,20,1.652,1.652,0,0,0,1.648-1.688,1.712,1.712,0,0,0-.437-1.125,1.5,1.5,0,0,1-.438-1.125,1.64,1.64,0,0,1,1.668-1.668h2a5.576,5.576,0,0,0,5.555-5.554C21.965,6.012,17.461,2,12,2Z" transform="translate(-2 -2)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                        </g>
+                    </svg></span>
+                    Custom Color</a>
+            </li>
+        @endif
         <li>
 
             <a href="{{ route('logout') }}">
