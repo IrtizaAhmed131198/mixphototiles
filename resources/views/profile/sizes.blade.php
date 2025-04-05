@@ -3,6 +3,15 @@
 @section('title', 'Custom Sizes')
 
 @section('css')
+<style>
+    button.btn.btn-sm.btn-primary.edit-sizes {
+        background-color: #ff0168;
+        border: 1px solid;
+    }
+    button.btn.btn-sm.btn-danger.delete-sizes {
+        background-color: #ab0749;
+    }
+</style>
 @endsection
 
 @section('content')

@@ -3,6 +3,15 @@
 @section('title', 'Custom Finish')
 
 @section('css')
+<style>
+    button.btn.btn-sm.btn-primary.edit-finish {
+        background-color: #ff0168;
+        border: 1px solid;
+    }
+    button.btn.btn-sm.btn-danger.delete-finish {
+        background-color: #ab0749;
+    }
+</style>
 @endsection
 
 @section('content')
