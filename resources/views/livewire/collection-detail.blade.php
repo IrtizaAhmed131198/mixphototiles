@@ -50,6 +50,9 @@
     .frameinner-pad {
         padding: 3px !important;
     }
+    .frameinner-less {
+        padding: 0 !important;
+    }
 
     .bold-image-width {
         border-image-width: 4px !important;
@@ -480,6 +483,16 @@
                                                 </div>
                                             </li>
 
+                                            <li type="button" class="parentProperties frame-change" data-name="frameless"
+                                                data-class="frameless-image-width">
+                                                <figure class="PropertiesleftChild">
+                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
+                                                </figure>
+                                                <div class="PropertiesRightChild">
+                                                    <p class="propertyName">Frameless</p>
+                                                </div>
+                                            </li>
+
                                         </ul>
 
                                     </div>
@@ -775,6 +788,18 @@ document.addEventListener("DOMContentLoaded", function() {
             let framinners = document.querySelectorAll('.frameinner'); // Note: It's now framinners (plural)
             framinners.forEach(framinner => { // Loop over the NodeList
                 framinner.classList.add('frameinner-pad');
+                framinner.classList.remove('frameinner-less');
+            });
+        } else if(config.frame.name == "classic") {
+            let framinners = document.querySelectorAll('.frameinner'); // Note: It's now framinners (plural)
+            framinners.forEach(framinner => { // Loop over the NodeList
+                framinner.classList.remove('frameinner-pad');
+                framinner.classList.add('frameinner-less');
+            });
+        } else if(config.frame.name == "frameless") {
+            let framinners = document.querySelectorAll('.frameinner'); // Note: It's now framinners (plural)
+            framinners.forEach(framinner => { // Loop over the NodeList
+                framinner.classList.add('frameinner-less');
             });
         }
     }
@@ -1223,11 +1248,18 @@ document.querySelectorAll('.select-frame .parentProperties.frame-change').forEac
 
         if(name == "bold") {
             framinners.forEach(framinner => { // Loop over the NodeList
+                framinner.classList.remove('frameinner-less');
                 framinner.classList.add('frameinner-pad');
+            });
+        } else if(name == "frameless") {
+            framinners.forEach(framinner => { // Loop over the NodeList
+                framinner.classList.remove('frameinner-pad');
+                framinner.classList.add('frameinner-less');
             });
         } else {
             framinners.forEach(framinner => { // Loop over the NodeList
                 framinner.classList.remove('frameinner-pad');
+                framinner.classList.remove('frameinner-less');
             });
         }
 

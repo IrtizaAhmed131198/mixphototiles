@@ -171,6 +171,18 @@
                                             <p class="propertyPrize">$0</p>
                                         </div>
                                     </li>
+
+                                    <li type="button" class="parentProperties frame-change dropdown-item"
+                                        data-design="frameless-card-design" data-price="0" data-text="Frameless">
+                                        <figure class="PropertiesleftChild">
+                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                src="{{ asset('assets/images/1704186603683.png') }}">
+                                        </figure>
+                                        <div class="PropertiesRightChild">
+                                            <p class="propertyName">Frameless</p>
+                                            <p class="propertyPrize">$0</p>
+                                        </div>
+                                    </li>
                                 </ul>
                             </li>
                             <!-- 1 dropdown -->
