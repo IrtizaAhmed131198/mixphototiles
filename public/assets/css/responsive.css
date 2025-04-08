@@ -31,6 +31,10 @@
     .HomeEnquire_homeEnquireContent .heading-4 {
         width: 50%;
     }
+
+    .navbar-nav li a {
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 1199px) {

@@ -9,6 +9,7 @@ use App\Models\CollectionImages;
 use App\Models\ClusterImage;
 use App\Models\CustomColor;
 use App\Models\Finish;
+use Carbon\Carbon;
 
 class CollectionDetail extends Component
 {
@@ -26,7 +27,7 @@ class CollectionDetail extends Component
     {
         $this->slug = $slug;
         $this->product = Product::where('slug', $slug)->with('additionalImages')->first();
-        $this->cluster_images = ClusterImage::all();
+        $this->cluster_images = ClusterImage::where('created_at', '>=', Carbon::now()->subDay())->get();
 
         if (!$this->product) {
             abort(404); // Show 404 page if product not found

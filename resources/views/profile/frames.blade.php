@@ -34,7 +34,7 @@
                 <div class="col-lg-9">
                     <div class="account-information">
                         <div class="frames-main">
-                            <h1>Frames</h1>
+                            <h1>Collections</h1>
 
                             <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#frames"> Add New</button>
@@ -66,7 +66,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="framesLabel">Add Frames</h5>
+                    <h5 class="modal-title" id="framesLabel">Add Collection</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
@@ -194,7 +194,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="framesModalLabel">Add Frame</h5>
+                    <h5 class="modal-title" id="framesModalLabel">Add Collection</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
@@ -386,7 +386,7 @@
             let url = '{{ url("frames") }}/' + productId + '/edit';
 
             $.get(url, function (data) {
-                $('#framesModalLabel').text('Edit Frame');
+                $('#framesModalLabel').text('Edit Collection');
                 $('#product_id').val(data.id);
                 $('[name="name"]').val(data.name);
                 $('[name="slug"]').val(data.slug);

@@ -4,14 +4,14 @@
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
-                        <a class="" href="{{ route('home') }}">
+                        <a class="" href="{{ route('home') }}" style="width: 15%;">
                             @php
                             $img = get_setting('site_logo');
                             @endphp
                             @if($img)
-                                <img src="{{ asset('storage/'.$img) }}" alt="Logo" style="height: 131px;">
+                                <img src="{{ asset('storage/'.$img) }}" alt="Logo" style=" width: 100%; ">
                             @else
-                                <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style="height: 131px;">
+                                <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style=" width: 100%; ">
                             @endif
                             <!-- MixPhotoTiles -->
                         </a>
