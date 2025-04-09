@@ -337,6 +337,7 @@ class MainController extends Controller
                 'discount' => 0,
                 'stock' => 1,
                 'image' => $sessionImage->file_url,
+                'frame_config' => $sessionImage->frame_configuration ?? '',
                 'status' => 1,
                 'type' => 'manual',
             ]);

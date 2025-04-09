@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\ShippingAddress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProfileController extends Controller
 {
@@ -41,6 +42,56 @@ class ProfileController extends Controller
         }
 
         return view('profile.order');
+    }
+
+    public function getOrders()
+    {
+        $orders = Order::with('orderItems')
+            ->where('user_id', Auth::id())
+            ->latest();
+
+        return DataTables::of($orders)
+            ->addColumn('id', function ($row) {
+                static $counter = 0;
+                $counter++;
+                return $counter;
+            })
+            ->addColumn('title', function ($order) {
+                return $order->orderItems->pluck('product.name')->implode(', ');
+            })
+            ->addColumn('price', function ($order) {
+                return number_format($order->total_amount, 2);
+            })
+            ->addColumn('status', function ($order) {
+                return ucfirst($order->status);
+            })
+            ->addColumn('payment_method', function ($order) {
+                return strtoupper($order->payment_method);
+            })
+            ->addColumn('coupon', function ($order) {
+                return $order->coupon ?? '-';
+            })
+            ->addColumn('discount', function ($order) {
+                return $order->discount ?? '-';
+            })
+            ->addColumn('shipping', function ($order) {
+                return $order->shipping ?? '-';
+            })
+            ->addColumn('datetime', function ($order) {
+                return $order->created_at->format('Y-m-d H:i:s');
+            })
+            ->addColumn('action', function ($order) {
+                return '<a href="'.route('orders.view', $order->id).'" class="btn btn-sm btn-info">View</a>';
+            })
+            ->rawColumns(['id', 'action'])
+            ->make(true);
+    }
+
+    public function viewOrder($id)
+    {
+        $order = Order::with(['orderItems.product'])->where('user_id', Auth::id())->findOrFail($id);
+
+        return view('profile.receipt', compact('order'));
     }
 
     public function address()

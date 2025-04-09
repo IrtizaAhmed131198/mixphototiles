@@ -86,6 +86,8 @@ Route::post('/password/reset', [AuthController::class, 'reset'])->name('password
 Route::get('/myprofile', [ProfileController::class, 'profile'])->name('profile');
 Route::post('/update-myprofile', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
+Route::get('/orders/{id}', [ProfileController::class, 'viewOrder'])->name('orders.view');
+Route::get('/get-orders', [ProfileController::class, 'getOrders'])->name('get.orders');
 Route::get('/address', [ProfileController::class, 'address'])->name('address');
 Route::post('/address/store', [ProfileController::class, 'storeAddress'])->name('address.store');
 Route::post('/address/update/{id}', [ProfileController::class, 'updateAddress'])->name('address.update');

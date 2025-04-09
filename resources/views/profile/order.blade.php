@@ -17,61 +17,19 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Products</th>
+                                    <th>Title</th>
                                     <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Payment Method</th>
+                                    <th>Coupon</th>
+                                    <th>Discount</th>
+                                    <th>Shipping</th>
+                                    <th>Date/Time</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>System Architect</td>
-                                    <td>$20.00</td>
-                                    <td>
-                                        <div class="action-btn">
-                                            <a href="#" class="btn custom-btn filled">View</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Accountant</td>
-                                    <td>$20.00</td>
-                                    <td>
-                                        <div class="action-btn">
-                                            <a href="#" class="btn custom-btn filled">View</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>System Architect</td>
-                                    <td>$20.00</td>
-                                    <td>
-                                        <div class="action-btn">
-                                            <a href="#" class="btn custom-btn filled">View</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Accountant</td>
-                                    <td>$20.00</td>
-                                    <td>
-                                        <div class="action-btn">
-                                            <a href="#" class="btn custom-btn filled">View</a>
-                                        </div>
-                                    </td>
-                                </tr>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Products</th>
-                                    <th>Price</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -83,4 +41,25 @@
 @endsection
 
 @push('scripts')
+<script>
+$(document).ready(function () {
+    $('#example').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route("get.orders") }}',
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'title', name: 'title' },
+            { data: 'price', name: 'price' },
+            { data: 'status', name: 'status' },
+            { data: 'payment_method', name: 'payment_method' },
+            { data: 'coupon', name: 'coupon' },
+            { data: 'discount', name: 'discount' },
+            { data: 'shipping', name: 'shipping' },
+            { data: 'datetime', name: 'datetime' },
+            { data: 'action', name: 'action', orderable: false, searchable: false }
+        ]
+    });
+});
+</script>
 @endpush
