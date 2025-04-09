@@ -176,7 +176,7 @@
                                         data-design="frameless-card-design" data-price="0" data-text="Frameless">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704186603683.png') }}">
+                                                src="{{ asset('assets/images/1704186603681.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Frameless</p>

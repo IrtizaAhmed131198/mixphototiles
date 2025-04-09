@@ -487,7 +487,7 @@
                                             <li type="button" class="parentProperties frame-change" data-name="frameless"
                                                 data-class="frameless-image-width">
                                                 <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
+                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603681.png') }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
                                                     <p class="propertyName">Frameless</p>
