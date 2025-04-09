@@ -223,9 +223,10 @@
 
                                     @foreach ($custom_color as $key => $val)
                                         <?php
+                                            $cssClassName = strtolower(str_replace(' ', '-', $val->name));
                                             $style = '<style>';
                                             $style .= '
-                                                .box-shadow-' . lcfirst($val->name) . '::before {
+                                                .box-shadow-' . $cssClassName . '::before {
                                                     position: absolute;
                                                     z-index: -1;
                                                     content: "";
@@ -238,7 +239,7 @@
                                                     transform: skewY(45deg);
                                                 }
 
-                                                .box-shadow-' . lcfirst($val->name) . '::after {
+                                                .box-shadow-' . $cssClassName . '::after {
                                                     position: absolute;
                                                     z-index: -1;
                                                     content: "";
@@ -260,7 +261,7 @@
                                             data-price="{{ $val->price }}"
                                             data-color="{{ $val->name }}"
                                             data-src="{{ $val->frame_img }}"
-                                            data-shadow="box-shadow-{{ lcfirst($val->name) }}">
+                                            data-shadow="box-shadow-{{ $cssClassName }}">
                                             <figure class="PropertiesleftChild">
                                                 <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                     src="{{ asset($val->option_img) }}">

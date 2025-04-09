@@ -114,6 +114,7 @@
                 Orders</a>
         </li>
 
+        @if(in_array(Auth::user()->role, ['user']))
         <li>
 
             <a href="{{ route('address') }}">
@@ -138,6 +139,8 @@
                     </svg></span>
                 Addresses</a>
         </li>
+        @endif
+
         <li>
 
             <a href="{{ route('resetpassword') }}">

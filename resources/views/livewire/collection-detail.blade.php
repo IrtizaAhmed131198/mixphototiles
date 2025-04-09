@@ -376,9 +376,10 @@
 
                                             @foreach ($custom_color as $key => $val)
                                                 <?php
+                                                    $cssClassName = strtolower(str_replace(' ', '-', $val->name));
                                                     $style = '<style>';
                                                     $style .= '
-                                                        .' . lcfirst($val->name) . '-frame {
+                                                        .' . $cssClassName . '-frame {
                                                             border-image : url(' . asset($val->frame_img) . ');
                                                             border-image-slice: 30;
                                                             border-image-width: 3px;
@@ -391,7 +392,7 @@
                                                     echo $style;
                                                 ?>
                                                 <li type="button" class="parentProperties frame-change {{ $key == 0 ? 'active' : '' }}" data-price="{{ $val->price }}"
-                                                    data-color="{{ $val->name }}" data-class="{{ lcfirst($val->name) }}-frame">
+                                                    data-color="{{ $val->name }}" data-class="{{ $cssClassName }}-frame">
                                                     <figure class="PropertiesleftChild">
                                                         <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset($val->option_img) }}">
                                                     </figure>
@@ -648,6 +649,12 @@
                         <h4 class="heading-3">Add Photos</h4>
                         <p class="para">Click on the image you would like to Add</p>
                     </div>
+                    <div id="upload-loader" class="text-center my-3 d-none">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Uploading...</span>
+                        </div>
+                        <p class="mt-2">Uploading images...</p>
+                    </div>
 
                     <div class="row SwapImageModal_swapImages">
                         <div class="col-sm-3 col-4">
@@ -884,6 +891,9 @@ function previewImage(event) {
             formData.append('images[]', files[i]);
         }
 
+        // Show loader
+        document.getElementById('upload-loader').classList.remove('d-none');
+
         fetch("{{ route('upload_images') }}", {
             method: 'POST',
             body: formData,
@@ -894,6 +904,7 @@ function previewImage(event) {
         .then(response => response.json())
         .then(data => {
             const modalPreviewContainer = document.querySelector('.SwapImageModal_swapImages');
+            const modalPreviewContainer2 = document.querySelector('.SwapImageModal_swapImages_2');
 
             data.images.forEach(img => {
                 const imageDiv = document.createElement('div');
@@ -904,13 +915,8 @@ function previewImage(event) {
                     </div>
                 `;
                 modalPreviewContainer.appendChild(imageDiv);
-
                 imageDiv.querySelector('.preview-image').addEventListener('click', selectSingleImage);
-            });
 
-            const modalPreviewContainer2 = document.querySelector('.SwapImageModal_swapImages_2');
-
-            data.images.forEach(img => {
                 const imageDiv2 = document.createElement('div');
                 imageDiv2.className = 'col-sm-3 col-4 SwapImageModal_progress_2';
                 imageDiv2.innerHTML = `
@@ -919,11 +925,14 @@ function previewImage(event) {
                     </div>
                 `;
                 modalPreviewContainer2.appendChild(imageDiv2);
-
                 imageDiv2.querySelector('.preview-image').addEventListener('click', selectSingleImage);
             });
         })
-        .catch(error => console.error('Error uploading images:', error));
+        .catch(error => console.error('Error uploading images:', error))
+        .finally(() => {
+            // Hide loader after upload is done
+            document.getElementById('upload-loader').classList.add('d-none');
+        });
     }
 }
 
@@ -981,6 +990,9 @@ function deleteSelectedImage() {
         return;
     }
 
+    // Show loader
+    document.getElementById('upload-loader').classList.remove('d-none');
+
     fetch("{{ route('delete_images') }}", {
         method: 'POST',
         body: JSON.stringify({ image_id: selectedImageId }),
@@ -992,7 +1004,7 @@ function deleteSelectedImage() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Remove selected image from the DOM
+            // Remove selected image from both containers
             const imgElement = document.querySelector(`[data-id="${selectedImageId}"]`);
             if (imgElement) {
                 imgElement.parentElement.parentElement.remove();
@@ -1002,10 +1014,15 @@ function deleteSelectedImage() {
             if (imgElement2) {
                 imgElement2.parentElement.parentElement.remove();
             }
-            selectedImageId = null; // Reset selection
+
+            selectedImageId = null;
         }
     })
-    .catch(error => console.error('Error deleting image:', error));
+    .catch(error => console.error('Error deleting image:', error))
+    .finally(() => {
+        // Hide loader
+        document.getElementById('upload-loader').classList.add('d-none');
+    });
 }
 
 function updateClusterImage() {

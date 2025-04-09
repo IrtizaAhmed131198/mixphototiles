@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <label for="before_color_code">Pick a Before Color</label>
+                                        <label for="before_color_code">Pick a Frame Color</label>
                                         <input type="color" class="form-control form-control-color" name="before_color_code" id="before_color_code" value="#000000" title="Choose your color">
                                         @error('before_color_code')
                                             <span class="text-danger">{{ $message }}</span>
@@ -108,7 +108,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <label for="after_color_code">Pick a After Color</label>
+                                        <label for="after_color_code">Pick a Shadow Color</label>
                                         <input type="color" class="form-control form-control-color" name="after_color_code" id="after_color_code" value="#000000" title="Choose your color">
                                         @error('after_color_code')
                                             <span class="text-danger">{{ $message }}</span>
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <label for="edit_before_color_code">Pick a Before Color</label>
+                                        <label for="edit_before_color_code">Pick a Frame Color</label>
                                         <input type="color" class="form-control form-control-color" name="before_color_code" id="edit_before_color_code" value="" title="Choose your color">
                                         @error('edit_before_color_code')
                                             <span class="text-danger">{{ $message }}</span>
@@ -199,7 +199,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <label for="edit_after_color_code">Pick a After Color</label>
+                                        <label for="edit_after_color_code">Pick a Shadow Color</label>
                                         <input type="color" class="form-control form-control-color" name="after_color_code" id="edit_after_color_code" value="" title="Choose your color">
                                         @error('edit_after_color_code')
                                             <span class="text-danger">{{ $message }}</span>

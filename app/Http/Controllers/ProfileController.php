@@ -100,6 +100,10 @@ class ProfileController extends Controller
             return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
         }
 
+        if(Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'){
+            return redirect()->route('home')->with('error', 'You are not allowed to access this page.');
+        }
+
         $data = ShippingAddress::all();
 
         return view('profile.address', compact('data'));
