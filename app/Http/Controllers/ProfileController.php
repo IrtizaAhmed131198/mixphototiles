@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\CustomColor;
 use App\Models\ShippingAddress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -91,7 +92,9 @@ class ProfileController extends Controller
     {
         $order = Order::with(['orderItems.product'])->where('user_id', Auth::id())->findOrFail($id);
 
-        return view('profile.receipt', compact('order'));
+        $custom_color = CustomColor::where('status', 1)->get();
+
+        return view('profile.receipt', compact('order', 'custom_color'));
     }
 
     public function address()
