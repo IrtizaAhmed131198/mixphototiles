@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\CustomColor;
 use App\Models\ShippingAddress;
+use App\Models\SessionCollection;
+use App\Models\CollectionImages;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
@@ -47,9 +49,16 @@ class ProfileController extends Controller
 
     public function getOrders()
     {
-        $orders = Order::with('orderItems')
-            ->where('user_id', Auth::id())
-            ->latest();
+        $user = Auth::user();
+
+        $ordersQuery = Order::with('orderItems');
+
+        // If not admin or super admin, filter by user ID
+        if (!in_array($user->role, ['admin', 'super_admin'])) {
+            $ordersQuery->where('user_id', $user->id);
+        }
+
+        $orders = $ordersQuery->latest();
 
         return DataTables::of($orders)
             ->addColumn('id', function ($row) {
@@ -60,14 +69,46 @@ class ProfileController extends Controller
             ->addColumn('title', function ($order) {
                 return $order->orderItems->pluck('product.name')->implode(', ');
             })
+            ->filterColumn('title', function($query, $keyword) {
+                $query->whereHas('orderItems.product', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
+            })
             ->addColumn('price', function ($order) {
                 return number_format($order->total_amount, 2);
             })
+            ->filterColumn('price', function ($query, $keyword) {
+                // Remove formatting (like commas) to match raw DB value
+                $value = str_replace(',', '', $keyword);
+                $query->where('total_amount', 'like', "%{$value}%");
+            })
             ->addColumn('status', function ($order) {
-                return ucfirst($order->status);
+                $user = Auth::user();
+                $statuses = ['pending' => 'warning', 'shipping' => 'primary', 'delivered' => 'info', 'completed' => 'success'];
+
+                // If user is admin or super admin, show editable dropdown
+                if (in_array($user->role, ['admin', 'super_admin'])) {
+                    $html = '<select class="form-control form-control-sm order-status-dropdown" data-id="'.$order->id.'">';
+                    foreach ($statuses as $status => $color) {
+                        $selected = $order->status == $status ? 'selected' : '';
+                        $html .= '<option value="'.$status.'" class="bg-'.$color.'" '.$selected.'>'.ucfirst($status).'</option>';
+                    }
+                    $html .= '</select>';
+                    return $html;
+                }
+
+                // Otherwise, show a colored badge or plain status text
+                $color = $statuses[$order->status] ?? 'secondary';
+                return '<span class="badge bg-'.$color.'">'.ucfirst($order->status).'</span>';
+            })
+            ->filterColumn('status', function ($query, $keyword) {
+                $query->where('status', 'like', "%{$keyword}%");
             })
             ->addColumn('payment_method', function ($order) {
                 return strtoupper($order->payment_method);
+            })
+            ->filterColumn('payment_method', function ($query, $keyword) {
+                $query->whereRaw('UPPER(payment_method) like ?', ["%".strtoupper($keyword)."%"]);
             })
             ->addColumn('coupon', function ($order) {
                 return $order->coupon ?? '-';
@@ -84,17 +125,33 @@ class ProfileController extends Controller
             ->addColumn('action', function ($order) {
                 return '<a href="'.route('orders.view', $order->id).'" class="btn btn-sm btn-info">View</a>';
             })
-            ->rawColumns(['id', 'action'])
+            ->rawColumns(['id', 'status', 'action'])
             ->make(true);
     }
 
     public function viewOrder($id)
     {
-        $order = Order::with(['orderItems.product'])->where('user_id', Auth::id())->findOrFail($id);
+        if(Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'){
+            $order = Order::with(['orderItems.product'])->findOrFail($id);
+        }else{
+            $order = Order::with(['orderItems.product'])->where('user_id', Auth::id())->findOrFail($id);
+        }
 
         $custom_color = CustomColor::where('status', 1)->get();
 
         return view('profile.receipt', compact('order', 'custom_color'));
+    }
+
+    public function updateStatus(Request $request, Order $order)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,shipping,delivered,completed',
+        ]);
+
+        $order->status = $request->status;
+        $order->save();
+
+        return response()->json(['message' => 'Status updated']);
     }
 
     public function address()

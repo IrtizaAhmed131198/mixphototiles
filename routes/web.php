@@ -88,6 +88,7 @@ Route::post('/update-myprofile', [ProfileController::class, 'updateProfile'])->n
 Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
 Route::get('/orders/{id}', [ProfileController::class, 'viewOrder'])->name('orders.view');
 Route::get('/get-orders', [ProfileController::class, 'getOrders'])->name('get.orders');
+Route::post('/orders/update-status/{order}', [ProfileController::class, 'updateStatus'])->name('orders.update-status');
 Route::get('/address', [ProfileController::class, 'address'])->name('address');
 Route::post('/address/store', [ProfileController::class, 'storeAddress'])->name('address.store');
 Route::post('/address/update/{id}', [ProfileController::class, 'updateAddress'])->name('address.update');

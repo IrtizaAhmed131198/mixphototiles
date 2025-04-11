@@ -326,6 +326,7 @@
                             <!-- 2 dropdown -->
 
                             <!-- 5 dropdown -->
+                            @if(get_setting('led') == 1)
                             <li class="designToolPropertiesChild btn-group dropend">
                                 <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img width="20.414" height="20.414" class="LeftSidebar img-fluid" src="{{ asset('assets/images/led.svg') }}" alt="" >
@@ -364,6 +365,7 @@
                                     </li>
                                 </ul>
                             </li>
+                            @endif
                             <!-- 5 dropdown -->
 
                             <!-- 3 dropdown -->
@@ -586,6 +588,7 @@
                             <!-- 3 dropdown -->
 
                             <!-- 4 dropdown -->
+                            @if(get_setting('finish') == 1)
                             <li class="designToolPropertiesChild btn-group dropend" id="frame-finish-li">
                                 <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -668,6 +671,7 @@
                                     </li> --}}
                                 </ul>
                             </li>
+                            @endif
                             <!-- 4 dropdown -->
 
                             <!-- 6 dropdown -->

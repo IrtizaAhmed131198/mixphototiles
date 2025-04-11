@@ -3,8 +3,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md">
-                    <img alt="Fremeley" src="{{ asset('assets/images/logo-white.png') }}"
-                        style=" width: 44%; height: 131px; ">
+                    @php
+                    $img = get_setting('site_logo');
+                    @endphp
+                    @if($img)
+                        <img src="{{ asset('storage/'.$img) }}" alt="Logo" style=" width: 44%; height: 72; ">
+                    @else
+                        <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style=" width: 44%; height: 72; ">
+                    @endif
+                    {{-- <img src="{{ asset('assets/images/logo-white.png') }}"
+                        style=" width: 44%; height: 131px; "> --}}
                     <div class="Footer_socialNav nav">
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"

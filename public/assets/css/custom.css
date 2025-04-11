@@ -1606,19 +1606,19 @@ div#accordionFlushExample {
 /* footer css  */
 
 .Footer_footer {
-    background-color: #521f34;
+    background-color: #ededed;
     padding: 5rem 0 0rem;
 }
 
 .Footer_footer .active {
-    color: white;
+    color: #000000;
 }
 
 .Footer_footer .Footer_socialNav {
     margin: 0 -1rem;
     padding-bottom: 1rem;
     font-size: 22px;
-    color: #fff;
+    color: #000000;
 }
 
 .Footer_footer .Footer_footerLinksWrp address {
@@ -1641,7 +1641,7 @@ div#accordionFlushExample {
     /* padding: 2rem 0 3.2rem; */
     color: #896b82 !important;
     --bs-link-hover-color: #ff0168;
-    border-top: 1px solid #ffffff;
+    border-top: 1px solid #000000;
     padding: 2rem 0;
     margin-top: 5rem;
 }
@@ -1660,7 +1660,7 @@ div#accordionFlushExample {
 }
 
 .Footer_socialNav.nav a.nav-link {
-    color: white;
+    color: #000000;
     border: none !important;
     text-decoration: none;
 }
@@ -1670,7 +1670,7 @@ div#accordionFlushExample {
 }
 
 .Footer_footer .Footer_footerBottomWrp a {
-    color: white !important;
+    color: #000000 !important;
     border-bottom: 0 !important;
 }
 
@@ -3499,8 +3499,9 @@ a.link {
 }
 
 .Footer_footer a,
-.Footer_footer p {
-    color: white;
+.Footer_footer p,
+.Footer_footer span {
+    color: #000000;
 }
 
 .ImgFrame {

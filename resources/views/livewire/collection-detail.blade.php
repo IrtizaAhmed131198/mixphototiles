@@ -114,35 +114,6 @@
                                         $colorClass = $config->color->class ?? 'black-frame';
                                         $frameClass = $config->frame->class ?? '';
                                         @endphp
-                                        <!-- dynamic frames -->
-                                        {{-- @foreach ($clusters as $key => $cluster)
-                                            <div class="clusterFrameWrp {{ $colorClass }} {{ $frameClass }}" id="cluster-block-{{ $cluster->id }}"
-                                                style="position: absolute;
-                                                    top: {{ $cluster->y }}px;
-                                                    left: {{ $cluster->x }}px;
-                                                    width: {{ $cluster->width }}px;
-                                                    height: {{ $cluster->height }}px;"
-                                                onclick="document.getElementById('upload-photo-cluster-{{ $cluster->id }}').click();">
-
-                                                <input type="file" id="upload-photo-cluster-{{ $cluster->id }}" class="image-input d-none" accept="image/*"
-                                                    onchange="previewImage(event, '{{ $cluster->id }}')">
-
-                                                <div class="frame-main-wrap">
-                                                    <div class="frameborder">
-                                                        <div class="frameinner d-flex align-items-center justify-content-center">
-
-                                                            @php
-                                                            $image_path = $collectionImages[$key]['image'];
-                                                            @endphp
-
-                                                            <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview"
-                                                                onclick="openImageModal('{{ $cluster->id }}')">
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach --}}
                                         @foreach ($clusters as $key => $cluster)
                                             <div class="clusterFrameWrp {{ $colorClass }} {{ $frameClass }}" id="cluster-block-{{ $cluster->id }}"
                                                 style="position: absolute;
@@ -168,36 +139,6 @@
                                         <!-- dynamic frames -->
                                     @else
                                         <!-- dynamic frames -->
-                                        {{-- @foreach ($clusters as $key => $cluster)
-                                            <div class="clusterFrameWrp black-frame" id="cluster-block-{{ $cluster->id }}"
-                                                style="position: absolute;
-                                                    top: {{ $cluster->y }}px;
-                                                    left: {{ $cluster->x }}px;
-                                                    width: {{ $cluster->width }}px;
-                                                    height: {{ $cluster->height }}px;"
-                                                onclick="document.getElementById('upload-photo-cluster-{{ $cluster->id }}').click();">
-
-                                                <input type="file" id="upload-photo-cluster-{{ $cluster->id }}" class="image-input d-none" accept="image/*"
-                                                    onchange="previewImage(event, '{{ $cluster->id }}')">
-
-                                                <div class="frame-main-wrap">
-                                                    <div class="frameborder">
-                                                        <div class="frameinner d-flex align-items-center justify-content-center">
-                                                            <!-- Default Plus Icon -->
-                                                            <svg width="32" height="32" class="image-placeholder clusterAddBtn__Rreup" fill="currentColor" viewBox="0 0 16 16">
-                                                                <path stroke-width=".5" fill-rule="evenodd" stroke="currentColor"
-                                                                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
-                                                                </path>
-                                                            </svg>
-
-                                                            <img src="" id="preview-{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview"
-                                                                onclick="openImageModal('{{ $cluster->id }}')">
-                                                        </div>
-                                                        <!-- Image Preview -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach --}}
                                         @foreach ($clusters as $key => $cluster)
                                             <div class="clusterFrameWrp black-frame" id="cluster-block-{{ $cluster->id }}"
                                                 style="position: absolute;

@@ -21,9 +21,9 @@
                                     <th>Price</th>
                                     <th>Status</th>
                                     <th>Payment Method</th>
-                                    <th>Coupon</th>
+                                    {{-- <th>Coupon</th>
                                     <th>Discount</th>
-                                    <th>Shipping</th>
+                                    <th>Shipping</th> --}}
                                     <th>Date/Time</th>
                                     <th>Action</th>
                                 </tr>
@@ -53,12 +53,32 @@ $(document).ready(function () {
             { data: 'price', name: 'price' },
             { data: 'status', name: 'status' },
             { data: 'payment_method', name: 'payment_method' },
-            { data: 'coupon', name: 'coupon' },
-            { data: 'discount', name: 'discount' },
-            { data: 'shipping', name: 'shipping' },
+            // { data: 'coupon', name: 'coupon' },
+            // { data: 'discount', name: 'discount' },
+            // { data: 'shipping', name: 'shipping' },
             { data: 'datetime', name: 'datetime' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
+    });
+});
+
+$(document).on('change', '.order-status-dropdown', function () {
+    var orderId = $(this).data('id');
+    var newStatus = $(this).val();
+
+    $.ajax({
+        url: "{{ url('/orders/update-status/') }}/" + orderId,
+        method: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            status: newStatus
+        },
+        success: function(response) {
+            toastr.success('Order status updated!');
+        },
+        error: function() {
+            toastr.error('Failed to update order status.');
+        }
     });
 });
 </script>

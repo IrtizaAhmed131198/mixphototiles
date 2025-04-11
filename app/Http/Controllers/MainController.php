@@ -418,9 +418,30 @@ class MainController extends Controller
             $imageUrl = asset('uploads/cart_images/' . $mainImageName);
         }
 
+        // Slug (make unique slug from name)
+        $slug = Str::slug($request->input('name') . '-' . time(). '-'.$request->input('product_id'));
+
+        $exist_prod = Product::find($request->input('product_id'));
+
+        $product = Product::create([
+            'name' => $request->input('name') . ' ' . time(). ' '.$request->input('product_id'),
+            'slug' => $slug,
+            'description' => 'Custom frame product', // You can adjust
+            'price' => $request->input('price'), // Assuming price is in frame_configuration
+            'discount' => 0,
+            'stock' => 1,
+            'image' => $exist_prod->image,
+            'no_coordinates_image' => $exist_prod->no_coordinates_image,
+            'coordinates_image' => $exist_prod->coordinates_image,
+            'coordinates' => $exist_prod->coordinates,
+            'frame_config' => $request->input('configuration') ?? '',
+            'status' => 1,
+            'type' => 'manual_collection',
+        ]);
+
         // Add product to session cart
         $sessionCart[] = [
-            'product_id' => $request->input('product_id'),
+            'product_id' => $product->id,
             'name' => $request->input('name'),
             'image' => $imageUrl, // Image stored in public folder
             'quantity' => 1,
@@ -433,7 +454,7 @@ class MainController extends Controller
         session()->put('cart', $sessionCart);
 
         $sessionCollection = new SessionCollection();
-        $sessionCollection->product_id = $request->input('product_id');
+        $sessionCollection->product_id = $product->id;
         $sessionCollection->session_id = session()->getId();
         $sessionCollection->image_name = 'uploads/cart_images/' . $mainImageName;
         $sessionCollection->configuration = $request->input('configuration');
