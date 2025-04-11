@@ -316,7 +316,7 @@
                                             <!-- Dropdown menu links -->
 
                                             @foreach ($custom_color as $key => $val)
-                                                <?php
+                                                @php
                                                     $cssClassName = strtolower(str_replace(' ', '-', $val->name));
                                                     $style = '<style>';
                                                     $style .= '
@@ -329,9 +329,8 @@
                                                         }
                                                     ';
                                                     $style .= '</style>';
-
-                                                    echo $style;
-                                                ?>
+                                                @endphp
+                                                {!! $style !!}
                                                 <li type="button" class="parentProperties frame-change {{ $key == 0 ? 'active' : '' }}" data-price="{{ $val->price }}"
                                                     data-color="{{ $val->name }}" data-class="{{ $cssClassName }}-frame">
                                                     <figure class="PropertiesleftChild">
