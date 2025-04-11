@@ -221,6 +221,7 @@
                                         </p>
                                     </div>
 
+                                    @dump($custom_color)
                                     <?php foreach ($custom_color as $key => $val): ?>
                                     <?php
                                         $cssClassName = strtolower(str_replace(' ', '-', $val->name));
