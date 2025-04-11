@@ -221,7 +221,6 @@
                                         </p>
                                     </div>
 
-                                    @dump($custom_color)
                                     <?php foreach ($custom_color as $key => $val): ?>
                                     <?php
                                         $cssClassName = strtolower(str_replace(' ', '-', $val->name));
@@ -256,7 +255,7 @@
                                     <li type="button"
                                         class="parentProperties dropdown-item frame-color <?php echo ($key == 0 ? 'li-border-color' : ''); ?>"
                                         data-price="<?php echo $val->price; ?>"
-                                        data-color="<?php echo htmlspecialchars($val->name); ?>"
+                                        data-color="<?php echo $val->name; ?>"
                                         data-src="<?php echo $val->frame_img; ?>"
                                         data-shadow="box-shadow-<?php echo $cssClassName; ?>">
                                         <figure class="PropertiesleftChild">
