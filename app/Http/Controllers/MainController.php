@@ -673,6 +673,8 @@ class MainController extends Controller
             $user->email = $get_address['email'];
             $user->phone = $get_address['phone_number'];
             $user->password = bcrypt('123456789');  // Set default password (optional)
+            $user->status = 1; // Assuming 1 is for active
+            $user->role = 'user'; // Assuming you have a role column
             $user->save();
         }
 

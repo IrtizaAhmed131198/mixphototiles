@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
-                        <a class="" href="{{ route('home') }}" style="width: 15%;">
+                        <a class="" href="{{ route('home') }}" style="width: 19%;height: 27px;">
                             @php
                             $img = get_setting('site_logo');
                             @endphp
