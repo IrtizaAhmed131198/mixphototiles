@@ -3,14 +3,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md">
-                    @php
+                    {{-- @php
                     $img = get_setting('site_logo');
                     @endphp
                     @if($img)
                         <img src="{{ asset('storage/'.$img) }}" alt="Logo" style=" width: 44%; height: 72; ">
-                    @else
-                        <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style=" width: 44%; height: 72; ">
-                    @endif
+                    @else --}}
+                        <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo" style="width: 44%;height: 33px;">
+                    {{-- @endif --}}
                     {{-- <img src="{{ asset('assets/images/logo-white.png') }}"
                         style=" width: 44%; height: 131px; "> --}}
                     <div class="Footer_socialNav nav">
