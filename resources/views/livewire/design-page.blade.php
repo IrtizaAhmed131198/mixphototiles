@@ -221,7 +221,6 @@
                                         </p>
                                     </div>
 
-                                    <?php $cssClassName = ''; ?>
                                     @foreach ($custom_color as $key => $val)
                                         <?php
                                             $cssClassName = strtolower(str_replace(' ', '-', $val->name));
@@ -262,7 +261,7 @@
                                             data-price="{{ $val->price }}"
                                             data-color="{{ $val->name }}"
                                             data-src="{{ $val->frame_img }}"
-                                            data-shadow="box-shadow-{{ $cssClassName }}">
+                                            data-shadow="box-shadow-<?php echo $cssClassName ?>">
                                             <figure class="PropertiesleftChild">
                                                 <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                     src="{{ asset($val->option_img) }}">
