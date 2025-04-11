@@ -680,26 +680,17 @@
 </div>
 
 <!-- Crop Image Modal -->
-<div class="modal fade" id="cropImageModal" tabindex="-1" aria-labelledby="cropImageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="cropImageModalLabel">Crop Image</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <div class="crop-container">
-                    <img id="crop-image-preview" class="w-100">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="saveCroppedImage">Crop & Save</button>
-            </div>
+<div id="cropImagePop" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <div id="upload-demo" class="upload-demo"></div>
+        <div class="mt-3 text-end">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button id="cropImageBtn" class="btn btn-primary">Crop</button>
         </div>
+      </div>
     </div>
-</div>
-
+  </div>
 
 @endsection
 
@@ -1106,7 +1097,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-let cropper;
+//crop image
+let $uploadCrop, rawImg;
 
 document.getElementById("crop-image").addEventListener("click", function () {
     const selectedCluster = document.querySelector(".clusterFrameWrp.selected");
@@ -1123,48 +1115,65 @@ document.getElementById("crop-image").addEventListener("click", function () {
         return;
     }
 
-    const cropImagePreview = document.getElementById("crop-image-preview");
-    cropImagePreview.src = previewImg.src;
+    rawImg = previewImg.src;
 
-    // Get width & height of the selected box
     const clusterWidth = selectedCluster.offsetWidth;
     const clusterHeight = selectedCluster.offsetHeight;
 
-    // Set the same width & height to the crop preview container
-    cropImagePreview.style.width = `${clusterWidth}px`;
-    cropImagePreview.style.height = `${clusterHeight}px`;
-
-    if (cropper) {
-        cropper.destroy();
+    // Destroy existing Croppie instance if any
+    if ($uploadCrop) {
+        $('#upload-demo').croppie('destroy');
     }
-    cropper = new Cropper(cropImagePreview, {
-        aspectRatio: clusterWidth / clusterHeight, // Match selected box aspect ratio
-        viewMode: 2,
-        autoCropArea: 1,
+
+    // Initialize new Croppie instance with better zoom control
+    $uploadCrop = $('#upload-demo').croppie({
+        viewport: {
+            width: clusterWidth,
+            height: clusterHeight
+        },
+        boundary: {
+            width: clusterWidth + 100,
+            height: clusterHeight + 100
+        },
+        enforceBoundary: true,
+        enableExif: true,
+        enableZoom: true,
+        mouseWheelZoom: 'ctrl' // Prevent accidental zooming
     });
 
-    new bootstrap.Modal(document.getElementById("cropImageModal")).show();
+    // Bind the image when modal opens
+    $('#cropImagePop').on('shown.bs.modal', function () {
+        $uploadCrop.croppie('bind', {
+            url: rawImg
+        }).then(function () {
+            console.log("Croppie bind complete.");
+        });
+    });
+
+    // Show the crop modal
+    $('#cropImagePop').modal('show');
 });
 
-document.getElementById("saveCroppedImage").addEventListener("click", function () {
-    if (!cropper) return;
+// Handle the crop and set preview image
+document.getElementById("cropImageBtn").addEventListener("click", function () {
+    if (!$uploadCrop) return;
 
     const selectedCluster = document.querySelector(".clusterFrameWrp.selected");
     const clusterWidth = selectedCluster.offsetWidth;
     const clusterHeight = selectedCluster.offsetHeight;
 
-    // Crop at the same size as the selected box
-    const croppedCanvas = cropper.getCroppedCanvas({
-        width: clusterWidth,
-        height: clusterHeight
+    $uploadCrop.croppie('result', {
+        type: 'base64',
+        format: 'jpeg',
+        size: { width: clusterWidth, height: clusterHeight }
+    }).then(function (resp) {
+        document.getElementById(`preview-${selectedClusterId}`).src = resp;
+        $('#cropImagePop').modal('hide');
+        $('#editphotolayoutmodal').modal('hide');
     });
-
-    const croppedImageUrl = croppedCanvas.toDataURL("image/jpeg");
-
-    document.getElementById(`preview-${selectedClusterId}`).src = croppedImageUrl;
-
-    bootstrap.Modal.getInstance(document.getElementById("cropImageModal")).hide();
 });
+
+
 
 
 // Select a cluster when clicking

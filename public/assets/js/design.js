@@ -1173,8 +1173,12 @@ $(document).ready(function () {
             let reader = new FileReader();
             reader.onload = function (e) {
                 rawImg = e.target.result;
-                $('#uploaded-image').attr('src', rawImg); // Set the image preview
-                $('#slider-image').attr('src', rawImg); // Set the image preview
+                $('#uploaded-image').attr('src', rawImg);
+                $('#slider-image').attr('src', rawImg);
+
+                // Initialize croppie with dynamic dimensions
+                initCroppie(rawImg);
+
                 $('#cropImagePop').modal('show');
             }
             reader.readAsDataURL(input.files[0]);
@@ -1183,66 +1187,100 @@ $(document).ready(function () {
         }
     }
 
-    $uploadCrop = $('#upload-demo').croppie({
-        viewport: {
-            width: 300,
-            height: 250,
-        },
-        boundary: {
-            width: 350, // Boundary ko viewport se bara rakhein
-            height: 300
-        },
-        enforceBoundary: true, // Crop frame se bahar zoom-out na ho
-        enableExif: true,
-        showZoomer: true,
-        mouseWheelZoom: false
-    });
+    function initCroppie(imageSrc) {
+        // Get dimensions from frameWrap
+        const frameWrap = $('#frameWrap');
+        const frameWidth = frameWrap.width();
+        const frameHeight = frameWrap.height();
 
-    $('#cropImagePop').on('shown.bs.modal', function () {
-        let src_img = $("#uploaded-image").attr("src");
+        // Calculate viewport dimensions (slightly smaller than frame)
+        const viewportWidth = frameWidth * 0.9; // 90% of frame width
+        const viewportHeight = frameHeight * 0.9; // 90% of frame height
+
+        // Destroy previous croppie instance if exists
+        if ($uploadCrop && $uploadCrop.croppie) {
+            $uploadCrop.croppie('destroy');
+        }
+
+        // Initialize croppie with dynamic dimensions
+        $uploadCrop = $('#upload-demo').croppie({
+            viewport: {
+                width: viewportWidth,
+                height: viewportHeight,
+                type: 'square' // or 'circle' if you want circular crop
+            },
+            boundary: {
+                width: frameWidth, // Boundary matches frame dimensions
+                height: frameHeight
+            },
+            enforceBoundary: true,
+            enableExif: true,
+            showZoomer: true,
+            mouseWheelZoom: false,
+            enableZoom: true,
+            enableOrientation: false,
+            // Custom zoom constraints
+            minZoom: 0.5,  // Minimum zoom level (50% of original)
+            maxZoom: 1.5,  // Maximum zoom level (150% of original)
+            zoomSlider: true
+        });
+
+        // Bind the image
         $uploadCrop.croppie('bind', {
-            url: src_img
+            url: imageSrc
         }).then(function () {
             console.log('jQuery bind complete');
 
-            // Minimum zoom set karein taake image frame se zyada chhoti na ho
+            // Set initial zoom to fit the image nicely
             setTimeout(() => {
-                let minZoom = $(".cr-slider").attr("min");
-                $(".cr-slider").val(minZoom).trigger('input');
+                // Set initial zoom to 100% (1.0)
+                $(".cr-slider").val(1.0).trigger('input');
+
+                // Adjust the slider range to match our min/max zoom
+                $(".cr-slider").attr({
+                    'min': 0.5,
+                    'max': 1.5,
+                    'step': 0.1
+                });
             }, 100);
         });
-    });
-
+    }
 
     $('.item-img').on('change', function () {
         readFile(this);
     });
 
     $('#cropImageBtn').on('click', function () {
+        // Get frame dimensions for output size
+        const frameWrap = $('#frameWrap');
+        const outputWidth = frameWrap.width();
+        const outputHeight = frameWrap.height();
+
         $uploadCrop.croppie('result', {
             type: 'base64',
             format: 'jpeg',
-            size: { width: 500, height: 435 }
+            size: {
+                width: outputWidth,
+                height: outputHeight
+            }
         }).then(function (resp) {
-            // Update the preview images with the cropped result
             let imgElement = document.querySelector('.swiper-slide-active img');
             let filename = imgElement.getAttribute('data-frame-config');
             $('#uploaded-image').attr('src', resp);
             $('#slider-image').attr('src', resp);
             saveCroppedImageToServer(resp, filename);
             $('#cropImagePop').modal('hide');
-
         });
     });
 
     function saveCroppedImageToServer(base64Image, filename) {
         $.ajax({
-            url: save_cropped_image, // Update with your backend URL
+            url: save_cropped_image,
             type: 'POST',
             data: {
                 cropped_image: base64Image,
                 filename: filename,
-                _token: $('meta[name="csrf-token"]').attr('content') // CSRF token for Laravel
+                _token: $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
                 if (response.success) {
@@ -1251,7 +1289,7 @@ $(document).ready(function () {
                         title: 'Crop Image',
                         text: 'Image saved successfully!'
                     });
-                    $('#frameWrap #uploaded-image').attr('src', response.file_url); // Update preview with saved image URL
+                    $('#frameWrap #uploaded-image').attr('src', response.file_url);
 
                     $('#frameWrap .inherit-design').css({
                         'position': 'absolute',
@@ -1261,9 +1299,8 @@ $(document).ready(function () {
 
                     let imgElement = document.querySelector('.swiper-slide-active img');
                     if (imgElement) {
-                        imgElement.src = response.file_url; // Replace with your new image path
+                        imgElement.src = response.file_url;
                     }
-
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -1281,23 +1318,19 @@ $(document).ready(function () {
     $('#openCropModal').on('click', function () {
         let imgSrc = $('#frameWrap #uploaded-image').attr('src');
 
-        $uploadCrop.croppie('bind', {
-            url: imgSrc
-        }).then(function () {
-            console.log('Image loaded into croppie');
-        });
+        // Initialize croppie with current image and dynamic dimensions
+        initCroppie(imgSrc);
 
         $('#cropImagePop').modal('show');
     });
 
     $('#cropImagePop').on('shown.bs.modal', function () {
-        $('.LeftSidebar_designTool').addClass('blurred'); // You can add CSS class to blur or hide
+        $('.LeftSidebar_designTool').addClass('blurred');
     });
 
     $('#cropImagePop').on('hidden.bs.modal', function () {
-        $('.LeftSidebar_designTool').removeClass('blurred'); // Remove when modal is closed
+        $('.LeftSidebar_designTool').removeClass('blurred');
     });
-
 });
 
 
