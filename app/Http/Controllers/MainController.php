@@ -16,6 +16,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ClusterImage;
 
 class MainController extends Controller
@@ -107,7 +108,7 @@ class MainController extends Controller
     public function cart()
     {
         $cartItems = session()->get('cart', []);
-        $discount = 0;
+        $discount = get_setting('discount') ?? 0;
         $gift = 30;
         return view('cart', compact('cartItems', 'discount', 'gift'));
     }
@@ -660,6 +661,10 @@ class MainController extends Controller
         $grandTotal = ($subTotal + $giftCardDiscount + $shipping) - $couponDiscount;
 
         $user = User::where('email', $get_address['email'])->first();
+
+        if(Auth::check()){
+            $user = auth()->user();
+        }
 
         if ($user) {
             // Update existing user

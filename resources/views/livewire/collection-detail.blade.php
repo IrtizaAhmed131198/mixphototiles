@@ -412,7 +412,7 @@
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
-                                                    <p class="propertyName">Classic</p>
+                                                    <p class="propertyName">Border</p>
                                                 </div>
                                             </li>
 
@@ -422,7 +422,7 @@
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
-                                                    <p class="propertyName">Bold</p>
+                                                    <p class="propertyName">No Border</p>
                                                 </div>
                                             </li>
 

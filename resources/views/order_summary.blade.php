@@ -45,17 +45,17 @@
                                             <div class="row GuestAddress_addressFormRow__Tupge">
                                                 <div class="col-lg-6">
                                                     <div label="Full Name">
-                                                        <input placeholder="Full Name" id="nameInput" class="form-control" type="text" name="full_name">
+                                                        <input placeholder="Full Name" id="nameInput" class="form-control" type="text" name="full_name" value="{{ Auth::user()->name }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div label="Mobile Number">
-                                                        <input placeholder="Mobile number" maxlength="10" id="phoneInput" class="form-control" type="tel" name="phone_number">
+                                                        <input placeholder="Mobile number" maxlength="10" id="phoneInput" class="form-control" type="tel" name="phone_number" value="{{ Auth::user()->phone }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div label="Email">
-                                                        <input placeholder="Email" id="emailInput" class="form-control" type="email" name="email">
+                                                        <input placeholder="Email" id="emailInput" class="form-control" type="email" name="email" value="{{ Auth::user()->email }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">

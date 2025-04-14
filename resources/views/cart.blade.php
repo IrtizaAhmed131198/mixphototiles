@@ -28,7 +28,7 @@
 @section('content')
 @php
     $subtotal = 0;
-    $shipping = 39
+    $shipping = get_setting('shipping_price') ?? 0;
 @endphp
 
 <div class="loadermain">

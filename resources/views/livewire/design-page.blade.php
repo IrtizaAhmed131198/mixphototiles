@@ -155,7 +155,7 @@
                                                 src="{{ asset('assets/images/1704186592728.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
-                                            <p class="propertyName">Classic</p>
+                                            <p class="propertyName">Border</p>
                                             <p class="propertyPrize">$0</p>
                                         </div>
                                     </li>
@@ -167,7 +167,7 @@
                                                 src="{{ asset('assets/images/1704186603683.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
-                                            <p class="propertyName">Bold</p>
+                                            <p class="propertyName">No Border</p>
                                             <p class="propertyPrize">$0</p>
                                         </div>
                                     </li>
@@ -768,9 +768,10 @@
                                     </div>
                                 </div>
                             </div>
+
                     <div class="grid-2">
                         <span class="caption-crop">If needed, use the Crop button to adjust your pictures</span>
-                        <div class="box">
+                        <div class="box frame-box">
                             <div class="frame-main-wrap classic-card-design box-shadow-black frame-main-wrap-main" id="frameWrap">
                                 <div class="frameborder inherit-design">
                                     <div class="frameinner child-inherit-design">

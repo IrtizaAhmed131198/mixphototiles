@@ -183,7 +183,7 @@
                             <div class="modal-body text-center">
                                 <div class="frame-main-wrap frame-main-wrap-main">
                                     <div class="frameborder inherit-design">
-                                        <div class="frameinner child-inherit-design">
+                                        <div class="frameinner-manual child-inherit-design">
                                             <img id="modalImage" src="" class="img-fluid" alt="Preview">
                                         </div>
                                     </div>
@@ -336,6 +336,15 @@
                 const config = JSON.parse(frameConfigRaw);
                 const designClass = config?.design?.designClass || 'classic-card-design';
                 const shadowClass = config?.color?.shadowClass || 'box-shadow-black';
+                // let frameClass;
+                // if(frameClass == 'frameless-card-design') {
+                //     frameClass = 'frameinner-less';
+                // } else if (frameClass == 'bold-card-design') {
+                //     frameClass = config.design.frameClass;
+                // } else {
+                //     frameClass = 'classic-card-design';
+                // }
+                console.log(config);
 
                 // Update wrapper classes
                 frameWrapper.className = `frame-main-wrap ${designClass} ${shadowClass} frame-main-wrap-main`;
@@ -431,7 +440,7 @@
                         height: 100%;
                     }
 
-                    .frameinner img {
+                    .frameinner-manual img {
                         object-fit: cover;
                         width: 100%;
                         height: 100%;

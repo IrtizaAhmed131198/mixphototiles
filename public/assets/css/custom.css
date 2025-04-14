@@ -749,6 +749,12 @@ ul.LeftSidebar_designTool button p {
     height: 100%;
 }
 
+.frameinner-manual img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
 .multi-upload-Main {
     display: flex;
     align-items: center;

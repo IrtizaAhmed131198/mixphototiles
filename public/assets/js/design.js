@@ -1164,10 +1164,234 @@ function saveFrameConfigInDB(imageUrl) {
 // crop js
 // Start upload preview image
 
-$(document).ready(function () {
-    $(".gambar").attr("src", "https://user.gadjian.com/static/images/personnel_boy.png");
-    let $uploadCrop, rawImg;
+// $(document).ready(function () {
+//     $(".gambar").attr("src", "https://user.gadjian.com/static/images/personnel_boy.png");
+//     let $uploadCrop, rawImg;
 
+//     function readFile(input) {
+//         if (input.files && input.files[0]) {
+//             let reader = new FileReader();
+//             reader.onload = function (e) {
+//                 rawImg = e.target.result;
+//                 $('#uploaded-image').attr('src', rawImg);
+//                 $('#slider-image').attr('src', rawImg);
+
+//                 // Initialize croppie with dynamic dimensions
+//                 initCroppie(rawImg);
+
+//                 $('#cropImagePop').modal('show');
+//             }
+//             reader.readAsDataURL(input.files[0]);
+//         } else {
+//             alert("Sorry - your browser doesn't support the FileReader API");
+//         }
+//     }
+
+//     function initCroppie(imageSrc) {
+//         // Get frame dimensions
+//         const frameWrap = $('#frameWrap');
+//         const frameWidth = frameWrap.width();
+//         const frameHeight = frameWrap.height();
+
+//         // Viewport should be 90% of frame size
+//         const viewportWidth = frameWidth * 0.9;
+//         const viewportHeight = frameHeight * 0.9;
+
+//         // Calculate slightly larger dimensions for the crop view (10% larger than frame)
+//         const cropViewWidth = frameWidth * 1.1;
+//         const cropViewHeight = frameHeight * 1.1;
+
+//         // Destroy previous croppie instance if exists
+//         if ($uploadCrop && $uploadCrop.croppie) {
+//             $uploadCrop.croppie('destroy');
+//         }
+
+//         // Initialize croppie
+//         $uploadCrop = $('#upload-demo').croppie({
+//             viewport: {
+//                 width: viewportWidth,
+//                 height: viewportHeight,
+//                 type: 'square'
+//             },
+//             boundary: {
+//                 width: cropViewWidth,  // Use the slightly larger dimensions
+//                 height: cropViewHeight
+//             },
+//             enforceBoundary: true,
+//             enableExif: true,
+//             showZoomer: true,
+//             mouseWheelZoom: false,
+//             enableZoom: true,
+//             enableOrientation: false,
+//             minZoom: 0.5,   // Allow zooming out
+//             maxZoom: 3,     // Allow zooming in
+//             zoomSlider: true
+//         });
+
+//         // Load image to check its size
+//         const img = new Image();
+//         img.onload = function() {
+//             const imgWidth = this.width;
+//             const imgHeight = this.height;
+
+//             // Calculate the required zoom to fit image inside viewport
+//             const scaleToFit = Math.min(
+//                 viewportWidth / imgWidth,
+//                 viewportHeight / imgHeight
+//             );
+
+//             // Set initial zoom to fit image (with slight padding)
+//             const initialZoom = scaleToFit * 0.9; // 90% of fit size
+
+//             const minZoomSafe = scaleToFit * 0.8;
+
+//             // Bind image with initial zoom
+//             $uploadCrop.croppie('bind', {
+//                 url: imageSrc,
+//                 zoom: initialZoom
+//             }).then(function() {
+//                 console.log('Image loaded and scaled properly');
+
+//                 // Center the image
+//                 $uploadCrop.croppie('center');
+
+//                 // Update slider position
+//                 $(".cr-slider").attr({
+//                     'min': minZoomSafe.toFixed(2),
+//                     'max': 3,
+//                     'step': 0.1
+//                 });
+//                 $(".cr-slider").val(initialZoom).trigger('input');
+
+//                 // Adjust the crop view image dimensions slightly larger
+//                 $('.cr-image').css({
+//                     'max-width': cropViewWidth + 'px',
+//                     'max-height': cropViewHeight + 'px'
+//                 });
+//             });
+//         };
+//         img.src = imageSrc;
+//     }
+
+//     $('.item-img').on('change', function () {
+//         readFile(this);
+//     });
+
+//     $('#cropImageBtn').on('click', function () {
+//         // Get frame dimensions for output size
+//         const frameWrap = $('#frameWrap');
+//         const outputWidth = frameWrap.width();
+//         const outputHeight = frameWrap.height();
+
+//         $uploadCrop.croppie('result', {
+//             type: 'base64',
+//             format: 'jpeg',
+//             size: {
+//                 width: outputWidth,
+//                 height: outputHeight
+//             },
+//             quality: 0.8 // Better quality output
+//         }).then(function (resp) {
+//             let imgElement = document.querySelector('.swiper-slide-active img');
+//             let filename = imgElement.getAttribute('data-frame-config');
+//             $('#uploaded-image').attr('src', resp);
+//             $('#slider-image').attr('src', resp);
+//             saveCroppedImageToServer(resp, filename);
+//             $('#cropImagePop').modal('hide');
+//         });
+//     });
+
+//     function saveCroppedImageToServer(base64Image, filename) {
+//         $.ajax({
+//             url: save_cropped_image,
+//             type: 'POST',
+//             data: {
+//                 cropped_image: base64Image,
+//                 filename: filename,
+//                 _token: $('meta[name="csrf-token"]').attr('content')
+//             },
+//             success: function (response) {
+//                 if (response.success) {
+//                     Swal.fire({
+//                         icon: 'success',
+//                         title: 'Crop Image',
+//                         text: 'Image saved successfully!'
+//                     });
+//                     $('#frameWrap #uploaded-image').attr('src', response.file_url);
+
+//                     $('#frameWrap .inherit-design').css({
+//                         'position': 'absolute',
+//                         'z-index': '-1',
+//                         'padding': '15px'
+//                     });
+
+//                     let imgElement = document.querySelector('.swiper-slide-active img');
+//                     if (imgElement) {
+//                         imgElement.src = response.file_url;
+//                     }
+//                 } else {
+//                     Swal.fire({
+//                         icon: 'error',
+//                         title: 'Crop Image',
+//                         text: 'Failed to save image.'
+//                     });
+//                 }
+//             },
+//             error: function (xhr, status, error) {
+//                 console.error('Error:', error);
+//             }
+//         });
+//     }
+
+//     $('#openCropModal').on('click', function () {
+//         let imgSrc = $('#frameWrap #uploaded-image').attr('src');
+//         if (!imgSrc || imgSrc === '') {
+//             alert('Please upload an image first');
+//             return;
+//         }
+
+//         // Initialize croppie with current image and dynamic dimensions
+//         initCroppie(imgSrc);
+
+//         $('#cropImagePop').modal('show');
+//     });
+
+//     $('#cropImagePop').on('shown.bs.modal', function () {
+//         $('.LeftSidebar_designTool').addClass('blurred');
+//     });
+
+//     $('#cropImagePop').on('hidden.bs.modal', function () {
+//         $('.LeftSidebar_designTool').removeClass('blurred');
+//     });
+// });
+
+$(document).ready(function () {
+    let $uploadCrop;
+    let rawImg;
+
+    // Function to initialize or reinitialize Croppie
+    function initializeCroppie(width, height) {
+        if ($uploadCrop) {
+            $uploadCrop.croppie('destroy');
+        }
+
+        $uploadCrop = $('#upload-demo').croppie({
+            viewport: {
+                width: width * 0.8,
+                height: height * 0.8
+            },
+            boundary: {
+                width: width * 0.9,
+                height: height * 0.9
+            },
+            enforceBoundary: true,
+            enableExif: true,
+            showZoomer: true,
+            mouseWheelZoom: false
+        });
+    }
+
+    // Function to read uploaded file
     function readFile(input) {
         if (input.files && input.files[0]) {
             let reader = new FileReader();
@@ -1175,97 +1399,73 @@ $(document).ready(function () {
                 rawImg = e.target.result;
                 $('#uploaded-image').attr('src', rawImg);
                 $('#slider-image').attr('src', rawImg);
-
-                // Initialize croppie with dynamic dimensions
-                initCroppie(rawImg);
-
                 $('#cropImagePop').modal('show');
-            }
+            };
             reader.readAsDataURL(input.files[0]);
         } else {
             alert("Sorry - your browser doesn't support the FileReader API");
         }
     }
 
-    function initCroppie(imageSrc) {
-        // Get dimensions from frameWrap
-        const frameWrap = $('#frameWrap');
-        const frameWidth = frameWrap.width();
-        const frameHeight = frameWrap.height();
-
-        // Calculate viewport dimensions (slightly smaller than frame)
-        const viewportWidth = frameWidth * 0.9; // 90% of frame width
-        const viewportHeight = frameHeight * 0.9; // 90% of frame height
-
-        // Destroy previous croppie instance if exists
-        if ($uploadCrop && $uploadCrop.croppie) {
-            $uploadCrop.croppie('destroy');
-        }
-
-        // Initialize croppie with dynamic dimensions
-        $uploadCrop = $('#upload-demo').croppie({
-            viewport: {
-                width: viewportWidth,
-                height: viewportHeight,
-                type: 'square' // or 'circle' if you want circular crop
-            },
-            boundary: {
-                width: frameWidth, // Boundary matches frame dimensions
-                height: frameHeight
-            },
-            enforceBoundary: true,
-            enableExif: true,
-            showZoomer: true,
-            mouseWheelZoom: false,
-            enableZoom: true,
-            enableOrientation: false,
-            // Custom zoom constraints
-            minZoom: 0.5,  // Minimum zoom level (50% of original)
-            maxZoom: 1.5,  // Maximum zoom level (150% of original)
-            zoomSlider: true
-        });
-
-        // Bind the image
-        $uploadCrop.croppie('bind', {
-            url: imageSrc
-        }).then(function () {
-            console.log('jQuery bind complete');
-
-            // Set initial zoom to fit the image nicely
-            setTimeout(() => {
-                // Set initial zoom to 100% (1.0)
-                $(".cr-slider").val(1.0).trigger('input');
-
-                // Adjust the slider range to match our min/max zoom
-                $(".cr-slider").attr({
-                    'min': 0.5,
-                    'max': 1.5,
-                    'step': 0.1
-                });
-            }, 100);
-        });
-    }
-
+    // Handle file input change
     $('.item-img').on('change', function () {
         readFile(this);
     });
 
+    // Handle size selection from dropdown
+    $('.frame-size').on('click', function () {
+        const newWidth = parseInt($(this).data('width'));
+        const newHeight = parseInt($(this).data('height'));
+
+        // Update frame size
+        // $('#frameWrap').css({
+        //     width: newWidth,
+        //     height: newHeight
+        // });
+
+        $('.frame-box').css({
+            width: newWidth,
+            height: newHeight
+        });
+
+        // Reinitialize Croppie with new size
+        initializeCroppie(newWidth, newHeight);
+    });
+
+    // Bind image to Croppie when modal is shown
+    $('#cropImagePop').on('shown.bs.modal', function () {
+        const imgSrc = $("#uploaded-image").attr("src");
+        if (!imgSrc || imgSrc === '') return;
+
+        const frameWidth = $('.box').width();
+        const frameHeight = $('.box').height();
+
+        initializeCroppie(frameWidth, frameHeight);
+
+        $uploadCrop.croppie('bind', {
+            url: imgSrc
+        }).then(function () {
+            console.log('Croppie bind complete');
+            setTimeout(() => {
+                let minZoom = $(".cr-slider").attr("min");
+                $(".cr-slider").val(minZoom).trigger('input');
+            }, 100);
+        });
+    });
+
+    // Crop and save image
     $('#cropImageBtn').on('click', function () {
-        // Get frame dimensions for output size
-        const frameWrap = $('#frameWrap');
-        const outputWidth = frameWrap.width();
-        const outputHeight = frameWrap.height();
+        const frameWidth = $('.box').width();
+        const frameHeight = $('.box').height();
 
         $uploadCrop.croppie('result', {
             type: 'base64',
             format: 'jpeg',
-            size: {
-                width: outputWidth,
-                height: outputHeight
-            }
+            size: { width: frameWidth, height: frameHeight }
         }).then(function (resp) {
-            let imgElement = document.querySelector('.swiper-slide-active img');
-            let filename = imgElement.getAttribute('data-frame-config');
+            const imgElement = document.querySelector('.swiper-slide-active img');
+            const filename = imgElement ? imgElement.getAttribute('data-frame-config') : 'default.jpg';
+
             $('#uploaded-image').attr('src', resp);
             $('#slider-image').attr('src', resp);
             saveCroppedImageToServer(resp, filename);
@@ -1273,9 +1473,10 @@ $(document).ready(function () {
         });
     });
 
+    // Save cropped image to server
     function saveCroppedImageToServer(base64Image, filename) {
         $.ajax({
-            url: save_cropped_image,
+            url: save_cropped_image, // replace with actual URL
             type: 'POST',
             data: {
                 cropped_image: base64Image,
@@ -1290,7 +1491,6 @@ $(document).ready(function () {
                         text: 'Image saved successfully!'
                     });
                     $('#frameWrap #uploaded-image').attr('src', response.file_url);
-
                     $('#frameWrap .inherit-design').css({
                         'position': 'absolute',
                         'z-index': '-1',
@@ -1315,15 +1515,26 @@ $(document).ready(function () {
         });
     }
 
+    // Open crop modal manually
     $('#openCropModal').on('click', function () {
-        let imgSrc = $('#frameWrap #uploaded-image').attr('src');
+        const imgSrc = $('#frameWrap #uploaded-image').attr('src');
+        if (!imgSrc) return;
 
-        // Initialize croppie with current image and dynamic dimensions
-        initCroppie(imgSrc);
+        const frameWidth = $('.box').width();
+        const frameHeight = $('.box').height();
+
+        initializeCroppie(frameWidth, frameHeight);
+
+        $uploadCrop.croppie('bind', {
+            url: imgSrc
+        }).then(function () {
+            console.log('Image loaded into Croppie');
+        });
 
         $('#cropImagePop').modal('show');
     });
 
+    // UI blur effects
     $('#cropImagePop').on('shown.bs.modal', function () {
         $('.LeftSidebar_designTool').addClass('blurred');
     });
@@ -1332,7 +1543,6 @@ $(document).ready(function () {
         $('.LeftSidebar_designTool').removeClass('blurred');
     });
 });
-
 
 
 // crop js
