@@ -13,5 +13,6 @@ class Coupon extends Model
         'date_range',
         'title',
         'description',
+        'status'
     ];
 }
