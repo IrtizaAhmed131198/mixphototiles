@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <!-- ckedor js -->
     <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    <!-- daterangepicker css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}">
@@ -79,6 +81,8 @@ https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script src="{{ asset('assets/js/dataTables.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.bootstrap5.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 @livewireScripts
 <script src="{{ asset('assets/js/app.js') }}"></script>
 

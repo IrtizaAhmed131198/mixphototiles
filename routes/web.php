@@ -16,6 +16,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CustomColorController;
 use App\Http\Controllers\SizesController;
 use App\Http\Controllers\FinishController;
+use App\Http\Controllers\CouponController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
 Route::get('/', HomePage::class)->name('home');
@@ -138,6 +139,13 @@ Route::post('/finish/store', [FinishController::class, 'store'])->name('finish.s
 Route::get('/finish/edit/{id}', [FinishController::class, 'edit'])->name('finish.edit');
 Route::post('/finish/update/{id}', [FinishController::class, 'update'])->name('finish.update');
 Route::delete('/finish/delete/{id}', [FinishController::class, 'destroy'])->name('finish.destroy');
+
+Route::get('/coupon', [CouponController::class, 'index'])->name('coupon.index');
+Route::get('/coupon/get', [CouponController::class, 'getData'])->name('coupon.get');
+Route::post('/coupon/store', [CouponController::class, 'store'])->name('coupon.store');
+Route::get('/coupon/edit/{id}', [CouponController::class, 'edit'])->name('coupon.edit');
+Route::post('/coupon/update/{id}', [CouponController::class, 'update'])->name('coupon.update');
+Route::delete('/coupon/delete/{id}', [CouponController::class, 'destroy'])->name('coupon.destroy');
 
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 
