@@ -220,84 +220,86 @@
                         </h3>
                         <div class="accordion accordion-flush" id="customizedoptions">
 
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapse1">
+                            @if(get_setting('finish') == 1)
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapse1">
 
-                                        <span class="customTilename">Finish</span>
-                                        <span class="text-body-tertiary">({{ count($finish ?? 0) }})</span>
-                                        {{-- <span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="17.5" height="17.5" viewBox="0 0 17.5 17.5" class="w-em h-em ClusterDetails_infoBtn__5lLNm">
-                                                <g transform="translate(-1.021 -1.021)">
-                                                    <circle cx="8" cy="8" r="8" transform="translate(1.771 1.771)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
-                                                    <path d="M12,15.109V12" transform="translate(-2.229 -2.229)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                                    <path d="M12,8h.008" transform="translate(-2.229 -1.337)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                                </g>
-                                            </svg>
-                                        </span> --}}
+                                            <span class="customTilename">Finish</span>
+                                            <span class="text-body-tertiary">({{ count($finish ?? 0) }})</span>
+                                            {{-- <span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="17.5" height="17.5" viewBox="0 0 17.5 17.5" class="w-em h-em ClusterDetails_infoBtn__5lLNm">
+                                                    <g transform="translate(-1.021 -1.021)">
+                                                        <circle cx="8" cy="8" r="8" transform="translate(1.771 1.771)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
+                                                        <path d="M12,15.109V12" transform="translate(-2.229 -2.229)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                                        <path d="M12,8h.008" transform="translate(-2.229 -1.337)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                                    </g>
+                                                </svg>
+                                            </span> --}}
 
-                                    </button>
-                                </h2>
-                                <div id="flush-collapse1" class="accordion-collapse collapse" data-bs-parent="#customizedoptions">
-                                    <div class="accordion-body">
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapse1" class="accordion-collapse collapse" data-bs-parent="#customizedoptions">
+                                        <div class="accordion-body">
 
-                                        <ul class="designToolPropertiesLists CustomizeOption select-finish">
-                                            <!-- Dropdown menu links -->
+                                            <ul class="designToolPropertiesLists CustomizeOption select-finish">
+                                                <!-- Dropdown menu links -->
 
-                                            @foreach ($finish as $key => $val)
+                                                @foreach ($finish as $key => $val)
 
-                                                <li type="button" class="parentProperties frame-change {{ $key == 0 ? 'active' : '' }}" data-name="{{ $val->label }}" data-price="{{ $val->price }}">
+                                                    <li type="button" class="parentProperties frame-change {{ $key == 0 ? 'active' : '' }}" data-name="{{ $val->label }}" data-price="{{ $val->price }}">
+                                                        <figure class="PropertiesleftChild">
+                                                            <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
+                                                        </figure>
+                                                        <div class="PropertiesRightChild">
+                                                            <p class="propertyName">{{ $val->label }}</p>
+                                                        </div>
+                                                    </li>
+
+                                                @endforeach
+
+
+                                                {{-- <li type="button" class="parentProperties frame-change active" data-name="Normal" data-price="0">
                                                     <figure class="PropertiesleftChild">
                                                         <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
                                                     </figure>
                                                     <div class="PropertiesRightChild">
-                                                        <p class="propertyName">{{ $val->label }}</p>
+                                                        <p class="propertyName">Normal</p>
                                                     </div>
                                                 </li>
 
-                                            @endforeach
+                                                <li type="button" class="parentProperties frame-change" data-name="Matte" data-price="453">
+                                                    <figure class="PropertiesleftChild">
+                                                        <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
+                                                    </figure>
+                                                    <div class="PropertiesRightChild">
+                                                        <p class="propertyName">Matte</p>
+                                                    </div>
+                                                </li>
 
+                                                <li type="button" class="parentProperties frame-change" data-name="Gloss" data-price="492">
+                                                    <figure class="PropertiesleftChild">
+                                                        <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
+                                                    </figure>
+                                                    <div class="PropertiesRightChild">
+                                                        <p class="propertyName">Gloss</p>
+                                                    </div>
+                                                </li>
 
-                                            {{-- <li type="button" class="parentProperties frame-change active" data-name="Normal" data-price="0">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">Normal</p>
-                                                </div>
-                                            </li>
+                                                <li type="button" class="parentProperties frame-change" data-name="Canvas" data-price="537">
+                                                    <figure class="PropertiesleftChild">
+                                                        <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
+                                                    </figure>
+                                                    <div class="PropertiesRightChild">
+                                                        <p class="propertyName">Canvas</p>
+                                                    </div>
+                                                </li> --}}
+                                            </ul>
 
-                                            <li type="button" class="parentProperties frame-change" data-name="Matte" data-price="453">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">Matte</p>
-                                                </div>
-                                            </li>
-
-                                            <li type="button" class="parentProperties frame-change" data-name="Gloss" data-price="492">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">Gloss</p>
-                                                </div>
-                                            </li>
-
-                                            <li type="button" class="parentProperties frame-change" data-name="Canvas" data-price="537">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">Canvas</p>
-                                                </div>
-                                            </li> --}}
-                                        </ul>
-
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
 
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
@@ -440,47 +442,47 @@
                                 </div>
                             </div>
 
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse4" aria-expanded="false" aria-controls="flush-collapse4">
+                            @if(get_setting('led') == 1)
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse4" aria-expanded="false" aria-controls="flush-collapse4">
 
-                                        <span class="customTilename">Led</span>
-                                        <span class="text-body-tertiary">(2)</span>
+                                            <span class="customTilename">Led</span>
+                                            <span class="text-body-tertiary">(2)</span>
 
 
-                                    </button>
-                                </h2>
-                                <div id="flush-collapse4" class="accordion-collapse collapse" data-bs-parent="#customizedoptions">
-                                    <div class="accordion-body">
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapse4" class="accordion-collapse collapse" data-bs-parent="#customizedoptions">
+                                        <div class="accordion-body">
 
-                                        <ul class="designToolPropertiesLists CustomizeOption select-led">
-                                            <!-- Dropdown menu links -->
+                                            <ul class="designToolPropertiesLists CustomizeOption select-led">
+                                                <!-- Dropdown menu links -->
 
-                                            <li type="button" class="parentProperties led-change active" data-price="0" data-val="no">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/No-LED.jpeg') }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">No</p>
-                                                </div>
-                                            </li>
+                                                <li type="button" class="parentProperties led-change active" data-price="0" data-val="no">
+                                                    <figure class="PropertiesleftChild">
+                                                        <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/No-LED.jpeg') }}">
+                                                    </figure>
+                                                    <div class="PropertiesRightChild">
+                                                        <p class="propertyName">No</p>
+                                                    </div>
+                                                </li>
 
-                                            <li type="button" class="parentProperties led-change" data-price="1200" data-val="yes">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/led-3.png') }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">Yes</p>
-                                                </div>
-                                            </li>
+                                                <li type="button" class="parentProperties led-change" data-price="1200" data-val="yes">
+                                                    <figure class="PropertiesleftChild">
+                                                        <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/led-3.png') }}">
+                                                    </figure>
+                                                    <div class="PropertiesRightChild">
+                                                        <p class="propertyName">Yes</p>
+                                                    </div>
+                                                </li>
 
-                                        </ul>
+                                            </ul>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-
+                            @endif
 
                         </div>
                     </div>
