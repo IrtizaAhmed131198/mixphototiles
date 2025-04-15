@@ -279,75 +279,31 @@
                          </div>
                          <div class="pb-3">
                             <h4 class="ttl-20 fw-semibold mb-sm-3 mb-2">Available Offers</h4>
-                            <div class="available_offers card">
-                               <div class="card-body">
-                                  <div>
-                                     <h6 class="fs-16 fw-semibold">10 % off on all products</h6>
-                                     <p class="text-black text-opacity-50 fs-14">Launch Offer! 10% OFF On All Products (Not Applicable To Clusters).</p>
-                                     <div class="d-flex justify-content-between align-items-center pt-3 coupon-container">
-                                        <button type="button" class="rounded-pill d-flex align-items-center AvailableOffers_btnCopyCoupon__zYN7a btn btn-light btn-sm copy-coupon-btn" data-coupon="10FLY">
-                                           <div>
-                                              10FLY
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="12.58" height="12.58" viewBox="0 0 12.58 12.58" class="w-em h-em ms-4">
-                                                 <g transform="translate(0.5 0.5)">
-                                                    <path d="M14.8,13.5h5.867a1.3,1.3,0,0,1,1.3,1.3v5.867a1.3,1.3,0,0,1-1.3,1.3H14.8a1.3,1.3,0,0,1-1.3-1.3V14.8A1.3,1.3,0,0,1,14.8,13.5Z" transform="translate(-10.395 -10.395)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
-                                                    <path d="M4.956,11.475H4.3a1.3,1.3,0,0,1-1.3-1.3V4.3A1.3,1.3,0,0,1,4.3,3h5.867a1.3,1.3,0,0,1,1.3,1.3v.652" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
-                                                 </g>
-                                              </svg>
-                                           </div>
-                                        </button>
-                                        <span class="coupon-copied-message" style="display:none; color:green; margin-left:-55px;">Copied</span>
-                                        <button type="button" class="btn-input-apply" data-coupon="10FLY">Apply</button>
-                                     </div>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="available_offers card">
-                               <div class="card-body">
-                                  <div>
-                                     <h6 class="fs-16 fw-semibold">Buy 10 8x8" Frames And Get 2 For Free!</h6>
-                                     <p class="text-black text-opacity-50 fs-14">upload twelve images, pay for ten, get two absolutely FREE!</p>
-                                     <div class="d-flex justify-content-between align-items-center pt-3 coupon-container">
-                                        <button type="button" class="rounded-pill d-flex align-items-center AvailableOffers_btnCopyCoupon__zYN7a btn btn-light btn-sm copy-coupon-btn" data-coupon="B10G2">
-                                           <div>
-                                              B10G2
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="12.58" height="12.58" viewBox="0 0 12.58 12.58" class="w-em h-em ms-4">
-                                                 <g transform="translate(0.5 0.5)">
-                                                    <path d="M14.8,13.5h5.867a1.3,1.3,0,0,1,1.3,1.3v5.867a1.3,1.3,0,0,1-1.3,1.3H14.8a1.3,1.3,0,0,1-1.3-1.3V14.8A1.3,1.3,0,0,1,14.8,13.5Z" transform="translate(-10.395 -10.395)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
-                                                    <path d="M4.956,11.475H4.3a1.3,1.3,0,0,1-1.3-1.3V4.3A1.3,1.3,0,0,1,4.3,3h5.867a1.3,1.3,0,0,1,1.3,1.3v.652" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
-                                                 </g>
-                                              </svg>
-                                           </div>
-                                        </button>
-                                        <span class="coupon-copied-message" style="display:none; color:green; margin-left:-55px;">Copied</span>
-                                        <button type="button" class="btn-input-apply" data-coupon="B10G2">Apply</button>
-                                     </div>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="available_offers card">
-                               <div class="card-body">
-                                  <div>
-                                     <h6 class="fs-16 fw-semibold">Get 20% off on our Poster Size Frames</h6>
-                                     <p class="text-black text-opacity-50 fs-14">Get 20% Off On Our Poster Size Frames!</p>
-                                     <div class="d-flex justify-content-between align-items-center pt-3 coupon-container">
-                                        <button type="button" class="rounded-pill d-flex align-items-center AvailableOffers_btnCopyCoupon__zYN7a btn btn-light btn-sm copy-coupon-btn" data-coupon="20BIG">
-                                           <div>
-                                              20BIG
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="12.58" height="12.58" viewBox="0 0 12.58 12.58" class="w-em h-em ms-4">
-                                                 <g transform="translate(0.5 0.5)">
-                                                    <path d="M14.8,13.5h5.867a1.3,1.3,0,0,1,1.3,1.3v5.867a1.3,1.3,0,0,1-1.3,1.3H14.8a1.3,1.3,0,0,1-1.3-1.3V14.8A1.3,1.3,0,0,1,14.8,13.5Z" transform="translate(-10.395 -10.395)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
-                                                    <path d="M4.956,11.475H4.3a1.3,1.3,0,0,1-1.3-1.3V4.3A1.3,1.3,0,0,1,4.3,3h5.867a1.3,1.3,0,0,1,1.3,1.3v.652" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
-                                                 </g>
-                                              </svg>
-                                           </div>
-                                        </button>
-                                        <span class="coupon-copied-message" style="display:none; color:green; margin-left:-55px;">Copied</span>
-                                        <button type="button" class="btn-input-apply" data-coupon="20BIG">Apply</button>
-                                     </div>
-                                  </div>
-                               </div>
-                            </div>
+                            @foreach ($coupons as $coupon)
+                                <div class="available_offers card mb-3">
+                                    <div class="card-body">
+                                        <div>
+                                            <h6 class="fs-16 fw-semibold">{{ $coupon->title }}</h6>
+                                            <p class="text-black text-opacity-50 fs-14">{{ $coupon->description }}</p>
+                                            <div class="d-flex justify-content-between align-items-center pt-3 coupon-container">
+                                                <button type="button" class="rounded-pill d-flex align-items-center AvailableOffers_btnCopyCoupon__zYN7a btn btn-light btn-sm copy-coupon-btn" data-coupon="{{ $coupon->code }}">
+                                                    <div>
+                                                        {{ $coupon->code }}
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12.58" height="12.58" viewBox="0 0 12.58 12.58" class="w-em h-em ms-4">
+                                                            <g transform="translate(0.5 0.5)">
+                                                                <path d="M14.8,13.5h5.867a1.3,1.3,0,0,1,1.3,1.3v5.867a1.3,1.3,0,0,1-1.3,1.3H14.8a1.3,1.3,0,0,1-1.3-1.3V14.8A1.3,1.3,0,0,1,14.8,13.5Z" transform="translate(-10.395 -10.395)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+                                                                <path d="M4.956,11.475H4.3a1.3,1.3,0,0,1-1.3-1.3V4.3A1.3,1.3,0,0,1,4.3,3h5.867a1.3,1.3,0,0,1,1.3,1.3v.652" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+                                                </button>
+                                                <span class="coupon-copied-message" style="display:none; color:green; margin-left:-55px;">Copied</span>
+                                                <button type="button" class="btn-input-apply" data-coupon="{{ $coupon->code }}">Apply</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                          </div>
                     </div>
                 </div>
@@ -383,6 +339,7 @@
 @push('scripts')
 <script>
 
+    const staticCoupons = @json($couponsSelect);
 
     document.addEventListener('DOMContentLoaded', function() {
         const couponButtons = document.querySelectorAll('.copy-coupon-btn');
@@ -465,11 +422,11 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-        const staticCoupons = {
-            '10FLY': 10, // 10% discount
-            'B10G2': 15, // Flat 15% discount
-            '20BIG': 20  // 20% discount
-        };
+        // const staticCoupons = {
+        //     '10FLY': 10, // 10% discount
+        //     'B10G2': 15, // Flat 15% discount
+        //     '20BIG': 20  // 20% discount
+        // };
 
         const subTotal = $('#grand_total').attr('data-val'); // Example subtotal (can be dynamically fetched)
         console.log(subTotal);

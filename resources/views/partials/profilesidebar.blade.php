@@ -197,11 +197,15 @@
                     Finish</a>
             </li>
             <li>
-                <a href="{{ route('coupon.index') }}"><span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" class="w-em h-em fs-18 me-2">
-                        <path d="M12,3,10.1,8.8a2,2,0,0,1-1.287,1.288L3,12l5.8,1.9a2,2,0,0,1,1.288,1.287L12,21l1.9-5.8a2,2,0,0,1,1.287-1.288L21,12l-5.8-1.9a2,2,0,0,1-1.288-1.287Z" transform="translate(-2 -2)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                    </svg></span>
-                    Coupon</a>
+                <a href="{{ route('coupon.index') }}">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" class="w-em h-em fs-18 me-2">
+                            <path fill="none" stroke="currentColor" stroke-width="2" d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 1 0 0 4v2a2 2 0 1 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 1 0 0-4v-2a2 2 0 1 0 0-4V5Z"/>
+                            <circle cx="12" cy="12" r="1" fill="currentColor"/>
+                        </svg>
+                    </span>
+                    Coupon
+                </a>
             </li>
         @endif
         <li>

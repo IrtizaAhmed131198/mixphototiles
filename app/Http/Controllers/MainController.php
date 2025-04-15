@@ -13,11 +13,13 @@ use App\Models\Address;
 use App\Models\CollectionImages;
 use App\Models\SessionCollection;
 use App\Models\User;
+use App\Models\ClusterImage;
+use App\Models\Coupon;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
-use App\Models\ClusterImage;
 
 class MainController extends Controller
 {
@@ -110,7 +112,20 @@ class MainController extends Controller
         $cartItems = session()->get('cart', []);
         $discount = get_setting('discount') ?? 0;
         $gift = 30;
-        return view('cart', compact('cartItems', 'discount', 'gift'));
+        $today = Carbon::today()->format('Y-m-d');
+        $coupons = DB::table('coupon')
+            ->where('status', 1)
+            ->whereDate(DB::raw("STR_TO_DATE(SUBSTRING_INDEX(date_range, ' - ', -1), '%Y-%m-%d')"), '>=', $today)
+            ->get();
+
+        $couponsSelect = DB::table('coupon')
+            ->where('status', 1)
+            ->whereDate(DB::raw("STR_TO_DATE(SUBSTRING_INDEX(date_range, ' - ', -1), '%Y-%m-%d')"), '>=', $today)
+            ->pluck('discount_amount', 'code')
+            ->map(function ($amount) {
+                return (float) $amount;
+            });
+        return view('cart', compact('cartItems', 'discount', 'gift', 'coupons', 'couponsSelect'));
     }
 
     public function upload_image(Request $request)
