@@ -47,6 +47,10 @@
         transition: width 0.5s;
     }
 
+    .frameinner img {
+        object-fit: contain !important;
+    }
+
 </style>
 @endpush
 
