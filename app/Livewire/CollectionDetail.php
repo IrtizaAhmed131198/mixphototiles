@@ -10,6 +10,7 @@ use App\Models\ClusterImage;
 use App\Models\CustomColor;
 use App\Models\Finish;
 use Carbon\Carbon;
+use App\Models\Led;
 
 class CollectionDetail extends Component
 {
@@ -22,6 +23,7 @@ class CollectionDetail extends Component
     public $cluster_images;
     public $custom_color;
     public $finish;
+    public $led;
 
     public function mount($slug)
     {
@@ -47,6 +49,8 @@ class CollectionDetail extends Component
 
         $this->finish = Finish::where('status', 1)->get();
 
+        $this->led = Led::where('status', 1)->get();
+
     }
 
     public function render()
@@ -60,6 +64,7 @@ class CollectionDetail extends Component
             'cluster_images' => $this->cluster_images,
             'custom_color' => $this->custom_color,
             'finish' => $this->finish,
+            'led' => $this->led,
         ]);
     }
 }

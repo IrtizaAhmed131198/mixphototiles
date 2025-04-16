@@ -22,7 +22,7 @@
                                             @if($val->type == 'file')
                                                 <input type="file" class="form-control" id="{{ $val->name }}" name="{{ $val->name }}" title="{{ $val->description }}">
                                                 @if($val->value)
-                                                    <img src="{{ asset('storage/' . $val->value) }}" width="100px" height="100px">
+                                                    <img src="{{ asset('storage/' . $val->value) }}" width="200px" height="50px">
                                                 @endif
                                             @else
                                                 <input type="{{ $val->type }}" class="form-control"

@@ -210,7 +210,7 @@
                         <div class="RightSliderChild whyChooseUs">
                             <h2 class="heading-3">LED Photo Frames</h2>
                             <p style=" font-size: 29px; line-height: 52px; ">
-                                Illuminate your memories with MixPhotoTiles
+                                Illuminate your memories with {{ get_setting('site_name') }}
                                 elegant LED photo frames, where sophistication meets sentiment.
                             </p>
                         </div>
@@ -336,7 +336,7 @@
                 <div class="col-lg-7">
                     <div class="parentRightAbout">
                         <div class="RightSliderChild">
-                            <h2 class="heading-3"><span class="sec-2-span">MixPhotoTiles</span> have Got You Covered</h2>
+                            <h2 class="heading-3"><span class="sec-2-span">{{ get_setting('site_name') }}</span> have Got You Covered</h2>
                         </div>
                         <div class="RightSliderChild">
                             <div class="swiper AboutSlider">
@@ -579,13 +579,13 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseOne" aria-expanded="false"
                                     aria-controls="flush-collapseOne">
-                                    What does Mixphototiles have to offer?
+                                    What does Magnetic Photo Frames have to offer?
                                 </button>
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    MixPhotoTiles offers you to create your own masterpiece with our customizable photo frames.
+                                    Magnetic Photo Frames offers you to create your own masterpiece with our customizable photo frames.
                                     Simply upload your images. We’ll print, frame, and deliver them right to your doorstep.
                                 </div>
                             </div>
@@ -601,7 +601,7 @@
                             <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">It’s incredibly easy! Each frame comes with strong, re-stickable adhesive stickers attached to the sides,
-                                    allowing you to reposition them effortlessly. Plus, MixPhotoTiles includes a free roll of re-stickable tape, so you can move your
+                                    allowing you to reposition them effortlessly. Plus, Magnetic Photo Frames includes a free roll of re-stickable tape, so you can move your
                                     tiles around as often as you like—without leaving any marks or damage to your walls.
                                 </div>
                             </div>
@@ -617,10 +617,10 @@
                             <div id="flush-collapseThree" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    MixPhotoTiles frames are crafted with a solid foundation, our frames exude durability and elegance,
+                                    Magnetic Photo Frames frames are crafted with a solid foundation, our frames exude durability and elegance,
                                     a difference you can feel from the rest. We understand your desire for flexibility,
                                     which is why we go beyond the limited number of repositioning stickers.
-                                    Instead, MixPhotoTiles provide a generous roll of re-stickable tape,
+                                    Instead, Magnetic Photo Frames provide a generous roll of re-stickable tape,
                                     allowing you to rearrange your frames effortlessly, as many times you like.
                                     Our premium adhesive ensures no residue or marks, preserving the pristine beauty of your walls.
 

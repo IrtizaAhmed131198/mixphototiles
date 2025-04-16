@@ -17,12 +17,19 @@ use App\Http\Controllers\CustomColorController;
 use App\Http\Controllers\SizesController;
 use App\Http\Controllers\FinishController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\LedController;
+use App\Http\Controllers\PagesController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
 Route::get('/', HomePage::class)->name('home');
 Route::get('/design', DesignPage::class)->name('design');
 Route::get('/your-collection', Collections::class)->name('collections');
 Route::get('/collection/{slug}', CollectionDetail::class)->name('collections_detail');
+
+Route::get('/privacy-policy', [PagesController::class, 'privacy'])->name('privacy');
+Route::get('/refund-policy', [PagesController::class, 'refund'])->name('refund');
+Route::get('/shipping-policy', [PagesController::class, 'shipping'])->name('shipping');
 
 Route::post('/update-frame-config', [MainController::class, 'update_config'])->name('update.frame.config');
 Route::get('/get-uploaded-images', [MainController::class, 'get_images'])->name('get.uploaded.images');
@@ -62,14 +69,12 @@ Route::post('/update-gift-session', function (\Illuminate\Http\Request $request)
 
 Route::get('/states', function () {
     return response()->json([
-        "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
-        "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
-        "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
-        "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
-        "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
-        "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
-        "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
-        "Wisconsin", "Wyoming"
+        "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+        "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
+        "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+        "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
+        "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand",
+        "West Bengal"
     ]);
 });
 
@@ -146,6 +151,20 @@ Route::post('/coupon/store', [CouponController::class, 'store'])->name('coupon.s
 Route::get('/coupon/edit/{id}', [CouponController::class, 'edit'])->name('coupon.edit');
 Route::post('/coupon/update/{id}', [CouponController::class, 'update'])->name('coupon.update');
 Route::delete('/coupon/delete/{id}', [CouponController::class, 'destroy'])->name('coupon.destroy');
+
+Route::get('/led', [LedController::class, 'index'])->name('led.index');
+Route::get('/led/get', [LedController::class, 'getData'])->name('led.get');
+Route::post('/led/store', [LedController::class, 'store'])->name('led.store');
+Route::get('/led/edit/{id}', [LedController::class, 'edit'])->name('led.edit');
+Route::post('/led/update/{id}', [LedController::class, 'update'])->name('led.update');
+Route::delete('/led/delete/{id}', [LedController::class, 'destroy'])->name('led.destroy');
+
+Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');
+Route::get('/addresses/get', [AddressController::class, 'getData'])->name('addresses.get');
+Route::post('/addresses/store', [AddressController::class, 'store'])->name('addresses.store');
+Route::get('/addresses/edit/{id}', [AddressController::class, 'edit'])->name('addresses.edit');
+Route::post('/addresses/update/{id}', [AddressController::class, 'update'])->name('addresses.update');
+Route::delete('/addresses/delete/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
 
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 

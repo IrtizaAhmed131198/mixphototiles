@@ -3,17 +3,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md">
-                    {{-- @php
+                    @php
                     $img = get_setting('site_logo');
                     @endphp
                     @if($img)
-                        <img src="{{ asset('storage/'.$img) }}" alt="Logo" style=" width: 44%; height: 72; ">
-                    @else --}}
-                        <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo" style="width: 44%;height: 33px;">
-                    {{-- @endif --}}
-                    {{-- <img src="{{ asset('assets/images/logo-white.png') }}"
-                        style=" width: 44%; height: 131px; "> --}}
-                    <div class="Footer_socialNav nav">
+                        <img src="{{ asset('storage/'.$img) }}" alt="Logo" style=" width: 50%;">
+                    @else
+                        <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo" style="width: 50%;height: 33px;">
+                    @endif
+                    <div class="Footer_socialNav nav mt-5">
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
                                 href="{{ get_setting('facebook') ?? 'javascript:;' }}">
@@ -83,8 +81,8 @@
                         Outer Ring Road, Agara, 1st Sector,
                         HSR Layout, Bangalore - 560102, KA</address>
                     <p class="mb-2 Footer_footerContact">Call:<a class="text-decoration-none ps-1" href="javascript:;">+917975339182</a></p> --}}
-                    <p class="mb-2 Footer_footerContact">Email: <a class="text-decoration-none ps-1" href="mailto:{{ get_setting('contact_email', 'info@mixphototiles.com') }}">
-                        {{ get_setting('contact_email', 'info@mixphototiles.com') }}</a></p>
+                    <p class="mb-2 Footer_footerContact">Email: <a class="text-decoration-none ps-1" href="mailto:{{ get_setting('contact_email', 'help@magneticphotoframes.com') }}">
+                        {{ get_setting('contact_email', 'help@magneticphotoframes.com') }}</a></p>
                 </div>
             </div>
         </div>
@@ -93,14 +91,14 @@
         <div class="container">
             <div class="d-flex flex-wrap justify-content-center align-items-center flex-column flex-xl-row gap-3">
                 <div class="Footer_footerBottomNav nav">
-                    <div class="nav-item"><a class="nav-link " href="javascript:;">Privacy Policy</a></div>
-                    <div class="nav-item"><a class="nav-link " href="javascript:;">Refund Policy</a></div>
+                    <div class="nav-item"><a class="nav-link " href="{{ route('privacy') }}">Privacy Policy</a></div>
+                    <div class="nav-item"><a class="nav-link " href="{{ route('refund') }}">Refund Policy</a></div>
                     <div class="nav-item"><a class="nav-link " href="javascript:;">Terms &amp; Conditions</a></div>
-                    <div class="nav-item"><a class="nav-link " href="javascript:;">Shipping Policy</a></div>
+                    <div class="nav-item"><a class="nav-link " href="{{ route('shipping') }}">Shipping Policy</a></div>
                 </div>
                 <div
                     class="d-flex mx-auto me-xl-0 align-items-center flex-wrap text-center justify-content-center flex-column flex-sm-row gap-2">
-                    <p class="mb-0">© <!-- -->2025<!-- --> Mixphototiles, Inc. All rights reserved</p><span
+                    <p class="mb-0">© <!-- -->{{ date('Y') }}<!-- --> {{ get_setting('site_name') }}, Inc. All rights reserved</p><span
                         class="d-none d-sm-block"></span>
                     <!-- <p class="mb-0">Designed by<a target="_blank" class="text-decoration-none ps-1" href="javascript:;">Webandcrafts</a></p> -->
                 </div>

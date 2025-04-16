@@ -26,7 +26,7 @@
         </tr>
         <tr>
             <td align="center" style="font-size: 0.9em; text-align: center; margin-top: 20px;">
-                Best regards,<br>Mixphototiles Team
+                Best regards,<br>{{ get_setting('site_name') }} Team
             </td>
         </tr>
     </table>

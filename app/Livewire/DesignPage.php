@@ -6,6 +6,7 @@ use App\Models\SessionImage;
 use App\Models\CustomColor;
 use App\Models\Sizes;
 use App\Models\Finish;
+use App\Models\Led;
 
 class DesignPage extends Component
 {
@@ -14,6 +15,7 @@ class DesignPage extends Component
     public $custom_color;
     public $sizes;
     public $finish;
+    public $led;
 
     public function mount()
     {
@@ -22,6 +24,8 @@ class DesignPage extends Component
         $this->sizes = Sizes::where('status', 1)->get();
 
         $this->finish = Finish::where('status', 1)->get();
+
+        $this->led = Led::where('status', 1)->get();
 
         $this->imageName = request()->query('image_name');
 
@@ -40,6 +44,7 @@ class DesignPage extends Component
             'custom_color' => $this->custom_color,
             'sizes' => $this->sizes,
             'finish' => $this->finish,
+            'led' => $this->led
         ]);
     }
 }

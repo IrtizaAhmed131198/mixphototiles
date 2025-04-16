@@ -35,10 +35,18 @@
     .navbar-nav li a {
         font-size: 15px;
     }
+
+    .main_logo {
+        width: 14%;
+        height: 27px;
+    }
 }
 
 @media (max-width: 1199px) {
-
+    .main_logo {
+        width: 17%;
+        height: 27px;
+    }
 }
 
 @media (max-width: 991px) {

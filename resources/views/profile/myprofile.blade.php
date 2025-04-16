@@ -1,6 +1,6 @@
 @extends('components.layouts.app')
 
-@section('title', 'Order Summary')
+@section('title', 'My Profile')
 
 @section('content')
 

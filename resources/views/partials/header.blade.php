@@ -4,16 +4,15 @@
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
-                        <a class="" href="{{ route('home') }}" style="width: 19%;height: 27px;">
-                            {{-- @php
+                        <a class="main_logo" href="{{ route('home') }}">
+                            @php
                             $img = get_setting('site_logo');
                             @endphp
-                            @if($img) --}}
-                                {{-- <img src="{{ asset('storage/'.$img) }}" alt="Logo" style=" width: 100%; "> --}}
-                            {{-- @else --}}
-                                <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo" style=" width: 100%; ">
-                            {{-- @endif --}}
-                            <!-- MixPhotoTiles -->
+                            @if($img)
+                                <img src="{{ asset('storage/'.$img) }}" alt="Logo">
+                            @else
+                                <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo">
+                            @endif
                         </a>
 
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

@@ -223,55 +223,6 @@
 
                                     @include('partials.custom-css')
 
-
-
-                                    {{-- <li type="button" class="parentProperties dropdown-item frame-color li-border-color" data-price="0"
-                                        data-color="Black" data-src="assets/images/black-frame.png" data-shadow="box-shadow-black">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1703756434121.jpeg') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Black</p>
-                                            <p class="propertyPrize">$0</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-color" data-price="0"
-                                        data-color="Dark" data-src="assets/images/brown-frame.png" data-shadow="box-shadow-dark">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1708685596474.jpeg') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Dark</p>
-                                            <p class="propertyPrize">$0</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-color" data-price="0"
-                                        data-color="White" data-src="assets/images/white-frame.png" data-shadow="box-shadow-white">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/170868561394.jpeg') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">White</p>
-                                            <p class="propertyPrize">$0</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-color" data-price="0"
-                                        data-color="Light" data-src="assets/images/light-frame.png" data-shadow="box-shadow-light">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1708685632234.jpeg') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Light</p>
-                                            <p class="propertyPrize">$0</p>
-                                        </div>
-                                    </li> --}}
                                 </ul>
                             </li>
                             <!-- 2 dropdown -->
@@ -291,29 +242,22 @@
                                         </p>
                                     </div>
 
-                                    <li type="button" class="parentProperties dropdown-item frame-led"
-                                        data-price="1200" data-val="yes">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/led-3.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Yes</p>
-                                            <p class="propertyPrize">$1200</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-led li-border-color"
-                                        data-price="0" data-val="no">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/No-LED.jpeg') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">No</p>
-                                            <p class="propertyPrize">$0</p>
-                                        </div>
-                                    </li>
+                                    @foreach ($led as $key => $val)
+                                        @php
+                                            $name = strtolower(str_replace(' ', '-', $val->name));
+                                        @endphp
+                                        <li type="button" class="parentProperties dropdown-item frame-led {{ $key == 0 ? 'li-border-color' : '' }}"
+                                            data-price="{{ $val->price }}" data-val="{{ $name }}">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset($val->image) }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <p class="propertyName">{{ $val->name }}</p>
+                                                <p class="propertyPrize">${{ $val->price }}</p>
+                                            </div>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </li>
                             @endif

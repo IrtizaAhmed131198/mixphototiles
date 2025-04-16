@@ -459,23 +459,19 @@
                                             <ul class="designToolPropertiesLists CustomizeOption select-led">
                                                 <!-- Dropdown menu links -->
 
-                                                <li type="button" class="parentProperties led-change active" data-price="0" data-val="no">
-                                                    <figure class="PropertiesleftChild">
-                                                        <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/No-LED.jpeg') }}">
-                                                    </figure>
-                                                    <div class="PropertiesRightChild">
-                                                        <p class="propertyName">No</p>
-                                                    </div>
-                                                </li>
-
-                                                <li type="button" class="parentProperties led-change" data-price="1200" data-val="yes">
-                                                    <figure class="PropertiesleftChild">
-                                                        <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/led-3.png') }}">
-                                                    </figure>
-                                                    <div class="PropertiesRightChild">
-                                                        <p class="propertyName">Yes</p>
-                                                    </div>
-                                                </li>
+                                                @foreach ($led as $key => $val)
+                                                    @php
+                                                        $name = strtolower(str_replace(' ', '-', $val->name));
+                                                    @endphp
+                                                    <li type="button" class="parentProperties led-change {{ $key == 0 ? 'active' : '' }}" data-price="{{ $val->price }}" data-val="{{ $name }}">
+                                                        <figure class="PropertiesleftChild">
+                                                            <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset($val->image) }}">
+                                                        </figure>
+                                                        <div class="PropertiesRightChild">
+                                                            <p class="propertyName">{{ $val->name }}</p>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
 
                                             </ul>
 

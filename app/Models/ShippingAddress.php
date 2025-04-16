@@ -26,4 +26,9 @@ class ShippingAddress extends Model
     protected $casts = [
         'default_address' => 'boolean',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
