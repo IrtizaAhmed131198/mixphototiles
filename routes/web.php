@@ -20,6 +20,8 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\LedController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\StatesController;
+use App\Http\Controllers\CityController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
 Route::get('/', HomePage::class)->name('home');
@@ -67,16 +69,8 @@ Route::post('/update-gift-session', function (\Illuminate\Http\Request $request)
     return response()->json(['status' => 'success']);
 });
 
-Route::get('/states', function () {
-    return response()->json([
-        "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
-        "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
-        "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
-        "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
-        "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand",
-        "West Bengal"
-    ]);
-});
+Route::get('/state', [MainController::class, 'states'])->name('states');
+Route::get('/cities/{state_id}', [MainController::class, 'getCities'])->name('get.cities');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
@@ -159,12 +153,27 @@ Route::get('/led/edit/{id}', [LedController::class, 'edit'])->name('led.edit');
 Route::post('/led/update/{id}', [LedController::class, 'update'])->name('led.update');
 Route::delete('/led/delete/{id}', [LedController::class, 'destroy'])->name('led.destroy');
 
+
 Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');
 Route::get('/addresses/get', [AddressController::class, 'getData'])->name('addresses.get');
 Route::post('/addresses/store', [AddressController::class, 'store'])->name('addresses.store');
 Route::get('/addresses/edit/{id}', [AddressController::class, 'edit'])->name('addresses.edit');
 Route::post('/addresses/update/{id}', [AddressController::class, 'update'])->name('addresses.update');
 Route::delete('/addresses/delete/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+
+Route::get('/states', [StatesController::class, 'index'])->name('states.index');
+Route::get('/states/get', [StatesController::class, 'getData'])->name('states.get');
+Route::post('/states/store', [StatesController::class, 'store'])->name('states.store');
+Route::get('/states/edit/{id}', [StatesController::class, 'edit'])->name('states.edit');
+Route::post('/states/update/{id}', [StatesController::class, 'update'])->name('states.update');
+Route::delete('/states/delete/{id}', [StatesController::class, 'destroy'])->name('states.destroy');
+
+Route::get('/city', [CityController::class, 'index'])->name('city.index');
+Route::get('/city/get', [CityController::class, 'getData'])->name('city.get');
+Route::post('/city/store', [CityController::class, 'store'])->name('city.store');
+Route::get('/city/edit/{id}', [CityController::class, 'edit'])->name('city.edit');
+Route::post('/city/update/{id}', [CityController::class, 'update'])->name('city.update');
+Route::delete('/city/delete/{id}', [CityController::class, 'destroy'])->name('city.destroy');
 
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 

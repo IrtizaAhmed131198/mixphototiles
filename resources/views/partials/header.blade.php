@@ -9,9 +9,9 @@
                             $img = get_setting('site_logo');
                             @endphp
                             @if($img)
-                                <img src="{{ asset('storage/'.$img) }}" alt="Logo">
+                                <img src="{{ asset('storage/'.$img) }}" class="img-fluid" alt="Logo">
                             @else
-                                <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo">
+                                <img src="{{ asset('assets/images/logo.jpg') }}" class="img-fluid" alt="Logo">
                             @endif
                         </a>
 

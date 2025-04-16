@@ -256,6 +256,26 @@
                     Led
                 </a>
             </li>
+            <li>
+                <a href="{{ route('states.index') }}">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" class="w-em h-em fs-18 me-2">
+                            <path fill="currentColor" d="M20.5 3l-5.1 2.1L9 3 3.5 5v16l6-2.1 6.5 2.1L21 19V3h-.5zm-1.5 14.7l-4.5 1.6V6.3l4.5-1.8v14.2zM4.5 6.2L8 5l4 1.6v13.6L8 18.6l-3.5 1.3V6.2z"/>
+                        </svg>
+                    </span>
+                    States
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('city.index') }}">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" class="w-em h-em fs-18 me-2">
+                            <path fill="currentColor" d="M3 21V10h4v11H3Zm14 0v-6h4v6h-4ZM8 21V3h4v18H8Zm6 0v-8h4v8h-4Z"/>
+                        </svg>
+                    </span>
+                    Cities
+                </a>
+            </li>
         @endif
         <li>
 

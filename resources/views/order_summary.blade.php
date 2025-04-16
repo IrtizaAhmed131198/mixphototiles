@@ -60,7 +60,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div label="Pin Code">
-                                                        <input placeholder="Pin Code" maxlength="6" id="pinCodeInput" class="form-control" type="tel" name="pincode">
+                                                        <input placeholder="Pin Code" maxlength="6" id="pinCodeInput" class="form-control" type="number" name="pincode">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -79,10 +79,11 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <div label="City">
-                                                        <input placeholder="City" id="cityInput" class="form-control" name="city">
-                                                    </div>
+                                                    <select class="form-select form-control" id="cityDropdown" name="city">
+                                                        <option value="">---Select City---</option>
+                                                    </select>
                                                 </div>
+                                                <input type="hidden" name="shipping" id="shippingInput" value="0">
                                                 <div class="col-lg-6">
                                                     <div label="Alternative Phone Number">
                                                         <input placeholder="Alternative Phone Number" maxlength="10" id="altPhoneInput" class="form-control" type="text" name="alternate_phone_number">
@@ -159,11 +160,11 @@
 
                                     <li>
                                         <p class="customTilename">Shipping</p>
-                                        <span class="">₹{{ number_format($shipping, 2) }}</span>
+                                        <span class="shipping_total">₹0.00</span>
                                     </li>
 
                                     @php
-                                        $finalTotal = ($cartGrandTotal + $giftCard + $shipping) - $appliedCoupon['discount'];
+                                        $finalTotal = ($cartGrandTotal + $giftCard) - $appliedCoupon['discount'];
                                     @endphp
                                     <li class="grandTotal">
                                         <p class="customTilename">Grand Total</p>
@@ -220,19 +221,62 @@
 
 @push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch("{{ url('states') }}")
+    let shippingPrice = 0;
+    let cartGrandTotal = {{ $cartGrandTotal }};
+    let giftCard = {{ $giftCard }};
+    let discount = {{ $appliedCoupon['discount'] ?? 0 }};
+    document.addEventListener('DOMContentLoaded', function () {
+        // Load states
+        fetch("{{ route('states') }}")
             .then(response => response.json())
-            .then(states => {
+            .then(result => {
+                const states = result.data;
                 const dropdown = document.getElementById('stateDropdown');
                 states.forEach(state => {
                     const option = document.createElement('option');
-                    option.value = state;
-                    option.textContent = state;
+                    option.value = state.id;
+                    option.textContent = state.name;
                     dropdown.appendChild(option);
                 });
             })
             .catch(error => console.error('Error fetching states:', error));
+
+        // When state changes, load cities
+        document.getElementById('stateDropdown').addEventListener('change', function () {
+            const stateId = this.value;
+            const cityDropdown = document.getElementById('cityDropdown');
+            cityDropdown.innerHTML = '<option value="">---Select City---</option>'; // reset
+
+            if (stateId) {
+                fetch("{{ url('cities') }}/"+ stateId)
+                    .then(response => response.json())
+                    .then(result => {
+                        const cities = result.data;
+                        cities.forEach(city => {
+                            const option = document.createElement('option');
+                            option.value = city.id;
+                            option.textContent = city.name;
+                            option.setAttribute('data-shipping', city.shipping);
+                            cityDropdown.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching cities:', error));
+            }
+        });
+
+        // When a city is selected, update shipping and grand total
+        document.getElementById('cityDropdown').addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            shippingPrice = parseFloat(selectedOption.getAttribute('data-shipping')) || 0;
+
+            // Update shipping price in the UI
+            document.querySelector('.shipping_total').textContent = `₹${shippingPrice.toFixed(2)}`;
+            document.querySelector('#shippingInput').value = `${shippingPrice.toFixed(2)}`;
+
+            // Calculate new grand total
+            const newGrandTotal = (cartGrandTotal + giftCard + shippingPrice) - discount;
+            document.querySelector('.grandTotal span').textContent = `₹${newGrandTotal.toFixed(2)}`;
+        });
     });
 
     $('#saveAddressBtn').on('click', function () {

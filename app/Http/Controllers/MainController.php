@@ -15,6 +15,8 @@ use App\Models\SessionCollection;
 use App\Models\User;
 use App\Models\ClusterImage;
 use App\Models\Coupon;
+use App\Models\State;
+use App\Models\City;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -605,11 +607,11 @@ class MainController extends Controller
     {
         session()->forget('cart_grand_total');
         session()->forget('gift_card_applied');
-        session()->forget('shipping');
+        // session()->forget('shipping');
 
         $grandTotal = $request->input('grand_total');
         $giftCard = $request->input('gift_card');
-        $shipping = $request->input('shipping');
+        // $shipping = $request->input('shipping');
 
         // Get existing cart session
         $sessionCart = session()->get('cart', []);
@@ -617,7 +619,7 @@ class MainController extends Controller
         // Add grand total to session cart
         session()->put('cart_grand_total', $grandTotal);
         session()->put('gift_card_applied', $giftCard);
-        session()->put('shipping', $shipping);
+        // session()->put('shipping', $shipping);
 
         return response()->json([
             'success' => true,
@@ -630,7 +632,7 @@ class MainController extends Controller
         $cart = session()->get('cart', []); // Product details
         $cartGrandTotal = session()->get('cart_grand_total', 0); // Total price
         $giftCard = session()->get('gift_card_applied', 0); // Gift card (optional)
-        $shipping = session()->get('shipping', 0); // Gift card (optional)
+        // $shipping = session()->get('shipping', 0); // Gift card (optional)
 
         // Example: Assume you set coupon data in session somewhere earlier
         $appliedCoupon = session()->get('applied_coupon', [
@@ -638,12 +640,14 @@ class MainController extends Controller
             'discount' => 0
         ]);
 
-        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon', 'shipping'));
+        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon'));
     }
 
     public function place_order(Request $request)
     {
         $get_address = session('user_address');
+        $get_city = City::find($get_address['city']);
+
         // Fetch cart items (assuming cart stored in session)
         $cart = session()->get('cart', []);
         if (empty($cart)) {
@@ -670,7 +674,10 @@ class MainController extends Controller
         // Gift Card (optional, if you are using it)
         $giftCardDiscount = session()->get('gift_card', 0);
 
-        $shipping = session()->get('shipping', 0);
+        $shipping = $request->input('shipping') ?? 0;
+        if ($shipping == null) {
+            $shipping = $get_city->shipping;
+        }
 
         // Grand Total Calculation
         $grandTotal = ($subTotal + $giftCardDiscount + $shipping) - $couponDiscount;
@@ -720,7 +727,7 @@ class MainController extends Controller
         $address->pincode = $get_address['pincode'];
         $address->address_line1 = $get_address['address_line1'];
         $address->address_line2 = $get_address['address_line2'];
-        $address->city = $get_address['city'];
+        $address->city = $get_city->name;
         $address->alternate_phone_number = $get_address['alternate_phone_number'];
         $address->save();
 
@@ -736,7 +743,7 @@ class MainController extends Controller
         }
 
         // Clear cart and session items after order placed
-        session()->forget(['cart', 'applied_coupon', 'gift_card_applied', 'shipping', 'user_address']);
+        session()->forget(['cart', 'applied_coupon', 'gift_card_applied', 'user_address']);
 
         $deleted = SessionImage::where('session_id', session()->getId())
             ->delete();
@@ -754,8 +761,8 @@ class MainController extends Controller
             'pincode' => 'required|digits:6',
             'address_line1' => 'required|string|max:500',
             'address_line2' => 'nullable|string|max:500',
-            'state' => 'required|string',
-            'city' => 'required|string|max:255',
+            'state' => 'required',
+            'city' => 'required',
             'alternate_phone_number' => 'nullable',
         ]);
 
@@ -818,5 +825,19 @@ class MainController extends Controller
         $images = ClusterImage::get();
 
         return response()->json(['success' => true, 'data' => $images]);
+    }
+
+    public function states()
+    {
+        $states = State::select('id', 'name')->get();
+
+        return response()->json(['success' => true, 'data' => $states]);
+    }
+
+    public function getCities($state_id)
+    {
+        $cities = City::where('state_id', $state_id)->select('id', 'name', 'shipping')->get();
+
+        return response()->json(['success' => true, 'data' => $cities]);
     }
 }

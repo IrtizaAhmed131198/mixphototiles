@@ -31,13 +31,13 @@ p.para {
 
 .main_logo {
     width: 14%;
-    height: 27px;
+    height: 100%;
 }
 
-.main_logo img {
+/* .main_logo img {
     width: 100%;
     object-fit: contain;
-}
+} */
 
 .custom-btn {
     background: transparent;
@@ -1635,6 +1635,7 @@ div#accordionFlushExample {
     padding-bottom: 1rem;
     font-size: 22px;
     color: #000000;
+    margin-top: 6.8rem
 }
 
 .Footer_footer .Footer_footerLinksWrp address {
@@ -1642,7 +1643,7 @@ div#accordionFlushExample {
 }
 
 .Footer_footer .Footer_footerLinksWrp img {
-    width: 116px;
+    width: 87%;
 }
 
 .Footer_footer .Footer_footerLinks__ZPOt7 .active {

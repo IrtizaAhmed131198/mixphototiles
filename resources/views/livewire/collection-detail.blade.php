@@ -695,6 +695,18 @@
 @push('scripts')
 <script>
 
+document.addEventListener('DOMContentLoaded', function () {
+    // Listen for any modal close event (globally)
+    document.querySelectorAll('.modal').forEach(function (modalEl) {
+        modalEl.addEventListener('hidden.bs.modal', function () {
+            // Remove 'selected' class from all clusterFrameWrp
+            document.querySelectorAll('.clusterFrameWrp.selected').forEach(function (cluster) {
+                cluster.classList.remove('selected');
+            });
+        });
+    });
+});
+
 document.addEventListener("DOMContentLoaded", function() {
     let config = @json($config);
 

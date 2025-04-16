@@ -204,15 +204,15 @@
                                         </p>
                                         <span id="gift" data-val="{{ $gift }}"> ₹{{ number_format($gift, 2) }} </span>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <p class="customTilename">Shipping
                                         </p>
                                         <span id="shipping" data-val="{{ $shipping }}"> ₹{{ number_format($shipping, 2) }} </span>
-                                    </li>
+                                    </li> --}}
                                     <li class="grandTotal">
                                         <p class="customTilename">Grand Total
                                         </p>
-                                        <span id="grand_total" data-val="{{ $subtotal + $discount + $shipping }}"> ₹{{ number_format($subtotal + $discount + $shipping, 2) }} </span>
+                                        <span id="grand_total" data-val="{{ $subtotal + $discount }}"> ₹{{ number_format($subtotal + $discount, 2) }} </span>
                                     </li>
                                 </ul>
                             </div>
@@ -226,11 +226,11 @@
 
                     <div class="noticeproductdetail">
                         <p>
-                            Frameley frames are made to order. Once you place an order, we take about 1-2 working days to manufacture your beautiful frames. It is then shipped & timings can vary due to holidays, closures, weather etc. Please anticipate delays when placing your order. For estimated times, please check out our shipping policy.
+                            Magnetic Photo frames are made to order. Once you place an order, we take about 1-2 working days to manufacture your beautiful frames. It is then shipped & timings can vary due to holidays, closures, weather etc. Please anticipate delays when placing your order. For estimated times, please check out our shipping policy.
                         </p>
                     </div>
                     <div class="productpolicylinks">
-                        <a class="" href="javascript:;">Shipping Policy</a>
+                        <a class="{{ route('shipping') }}" href="javascript:;">Shipping Policy</a>
                         <a class="" href="javascript:;">FAQ's</a>
                     </div>
 
@@ -407,9 +407,9 @@
         function updateGrandTotal(giftAmount, isGiftChecked) {
             const subtotal = parseFloat({{ $subtotal }});
             const discount = parseFloat({{ $discount }});
-            const shipping = parseFloat({{ $shipping }});
+            // const shipping = parseFloat({{ $shipping }});
 
-            let grandTotal = subtotal + discount + shipping;
+            let grandTotal = subtotal + discount;
 
             if (isGiftChecked) {
                 grandTotal += giftAmount;
@@ -741,7 +741,7 @@
     function updateCartAndRedirect() {
         const grandTotalElement = document.getElementById('subtotal');
         const gift_card = $('#gift').attr('data-val');
-        const shipping = $('#shipping').attr('data-val');
+        // const shipping = $('#shipping').attr('data-val');
         const grandTotal = grandTotalElement ? grandTotalElement.getAttribute('data-val') : 0;
 
         fetch('{{ route('update_cart_grand_total') }}', {
@@ -750,7 +750,7 @@
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ grand_total: grandTotal, gift_card: gift_card, shipping: shipping })
+            body: JSON.stringify({ grand_total: grandTotal, gift_card: gift_card })
         })
         .then(response => response.json())
         .then(data => {

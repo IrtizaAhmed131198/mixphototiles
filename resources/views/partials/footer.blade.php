@@ -7,11 +7,11 @@
                     $img = get_setting('site_logo');
                     @endphp
                     @if($img)
-                        <img src="{{ asset('storage/'.$img) }}" alt="Logo" style=" width: 50%;">
+                        <img src="{{ asset('storage/'.$img) }}" class="img-fluid footer-logo" alt="Logo">
                     @else
-                        <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo" style="width: 50%;height: 33px;">
+                        <img src="{{ asset('assets/images/logo.jpg') }}" class="img-fluid footer-logo" alt="Logo">
                     @endif
-                    <div class="Footer_socialNav nav mt-5">
+                    <div class="Footer_socialNav nav">
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
                                 href="{{ get_setting('facebook') ?? 'javascript:;' }}">
