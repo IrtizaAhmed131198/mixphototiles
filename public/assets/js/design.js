@@ -610,6 +610,9 @@ document.getElementById('remove-image').addEventListener('click', async function
             });
 
             if (confirmDelete.isConfirmed) {
+                // Count current total images
+                const totalSlides = document.querySelectorAll('.swiper-slide img').length;
+
                 // Disable buttons & show progress bar
                 removeButton.disabled = true;
                 uploadInput.disabled = true;
@@ -624,6 +627,11 @@ document.getElementById('remove-image').addEventListener('click', async function
                     progressBarContainer.style.display = 'none';
                     removeButton.disabled = false;
                     uploadInput.disabled = false;
+
+                    // If the deleted image was the last one, reload the page
+                    if (totalSlides === 1) {
+                        location.reload();
+                    }
                 }, 500);
             }
         }
