@@ -417,8 +417,15 @@ const uploadPhotoElements = document.querySelectorAll('.upload-photo');
 
 // Loop through each element and attach the event listener
 uploadPhotoElements.forEach(element => {
-    element.addEventListener('change', function (event) {
-        processAndUploadImages(event.target.files);
+    element.addEventListener('change', async function (event) {
+        // Show the custom loader before processing
+        const mainLoader = document.querySelector('.loadermain');
+        if (mainLoader) mainLoader.style.display = 'flex'; // or 'block' depending on your CSS
+
+        await processAndUploadImages(event.target.files, mainLoader);
+
+        // Hide the loader after processing
+
     });
 });
 
@@ -451,7 +458,7 @@ function uploadImageToServer(file, newFileName) {
     });
 }
 
-async function processAndUploadImages(files) {
+async function processAndUploadImages(files, mainLoader) {
     const uploadPromises = [];
     const uploadInput = document.querySelector('.upload-photo');
     const progressBarContainer = document.querySelector('.progress-bar-container');
@@ -530,6 +537,7 @@ async function processAndUploadImages(files) {
                 progressBarContainer.style.display = 'none';
                 uploadInput.disabled = false; // Enable input after upload completion
             }, 500);
+            if (mainLoader) mainLoader.style.display = 'none';
 
             await Swal.fire('Upload Successful', 'Your images have been uploaded successfully!', 'success');
         }
