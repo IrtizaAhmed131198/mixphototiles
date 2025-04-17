@@ -93,7 +93,7 @@
                 <div class="Footer_footerBottomNav nav">
                     <div class="nav-item"><a class="nav-link " href="{{ route('privacy') }}">Privacy Policy</a></div>
                     <div class="nav-item"><a class="nav-link " href="{{ route('refund') }}">Refund Policy</a></div>
-                    <div class="nav-item"><a class="nav-link " href="javascript:;">Terms &amp; Conditions</a></div>
+                    <div class="nav-item"><a class="nav-link " href="{{ route('terms') }}">Terms &amp; Conditions</a></div>
                     <div class="nav-item"><a class="nav-link " href="{{ route('shipping') }}">Shipping Policy</a></div>
                 </div>
                 <div

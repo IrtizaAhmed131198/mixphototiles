@@ -20,4 +20,9 @@ class PagesController extends Controller
     {
         return view('shipping');
     }
+
+    public function terms()
+    {
+        return view('terms');
+    }
 }
