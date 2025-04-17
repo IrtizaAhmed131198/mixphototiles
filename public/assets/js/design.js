@@ -14,6 +14,7 @@ let get_grand_total = $('#get_grand_total').val();
 let get_all_images = $('#get_all_images').val();
 let add_to_cart = $('#add_to_cart').val();
 let cart_page = $('#cart_page').val();
+let reset_cropped_image = $('#reset_cropped_image').val();
 
 let allFrameConfigurations = {}; // This should be populated on each frame load
 
@@ -593,7 +594,8 @@ document.getElementById('remove-image').addEventListener('click', async function
         const imgElement = activeSlide.querySelector('img');
         if (imgElement) {
             const imageSrc = imgElement.getAttribute('src');
-            const imageName = imageSrc.split('/').pop(); // Extract filename from src
+            const imageNameWithExt = imageSrc.split('/').pop(); // e.g., "1744920286_original.jpg"
+            const imageName = imageNameWithExt.split('.').slice(0, -1).join('.'); // Removes extension // Extract filename from src
 
             // Confirm before deleting
             const confirmDelete = await Swal.fire({
@@ -666,6 +668,88 @@ async function deleteImageFromDatabase(imageName) {
         Swal.fire('Delete Failed', error.message || 'Failed to delete image', 'error');
     }
 }
+
+
+document.getElementById('reset-image').addEventListener('click', async function () {
+    const activeSlide = document.querySelector('.swiper-slide-active');
+    const resetButton = document.getElementById('reset-image');
+    const uploadInput = document.querySelector('.upload-photo');
+    const progressBarContainer = document.querySelector('.progress-bar-container');
+    const progressBar = document.querySelector('.progress-bar');
+
+    if (activeSlide) {
+        const imgElement = activeSlide.querySelector('img');
+        if (imgElement) {
+            const filename = imgElement.getAttribute('data-frame-config');
+
+            const confirmReset = await Swal.fire({
+                title: 'Reset Image?',
+                text: 'This will remove cropping and restore the original image.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, reset it!',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    confirmButton: 'swal-image-confirm-button',
+                    cancelButton: 'swal-image-cancel-button'
+                }
+            });
+
+            if (confirmReset.isConfirmed) {
+                const totalSlides = document.querySelectorAll('.swiper-slide img').length;
+
+                // Disable buttons & show progress bar
+                resetButton.disabled = true;
+                uploadInput.disabled = true;
+                progressBarContainer.style.display = 'block';
+                progressBar.style.width = '0%';
+
+                await resetImageToOriginal(filename);
+                // Reset progress bar
+                progressBar.style.width = '100%';
+                setTimeout(() => {
+                    progressBarContainer.style.display = 'none';
+                    resetButton.disabled = false;
+                    uploadInput.disabled = false;
+
+                    if (totalSlides === 1) {
+                        location.reload();
+                    }
+                }, 500);
+            }
+        }
+    } else {
+        Swal.fire('No Image Selected', 'Please select an image to reset.', 'warning');
+    }
+});
+
+async function resetImageToOriginal(filename) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    try {
+        const response = await fetch(reset_cropped_image, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({ filename: filename })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            await fetchAndRenderSessionImages(); // Reload updated image list
+            Swal.fire('Reset Successful', 'Image has been restored to original.', 'success');
+        } else {
+            throw new Error(result.message || 'Reset failed');
+        }
+    } catch (error) {
+        console.error('Reset error:', error);
+        Swal.fire('Reset Failed', error.message || 'Something went wrong.', 'error');
+    }
+}
+
 
 
 
@@ -1433,12 +1517,6 @@ $(document).ready(function () {
         const newWidth = parseInt($(this).data('width'));
         const newHeight = parseInt($(this).data('height'));
 
-        // Update frame size
-        // $('#frameWrap').css({
-        //     width: newWidth,
-        //     height: newHeight
-        // });
-
         $('.frame-box').css({
             width: newWidth,
             height: newHeight
@@ -1453,10 +1531,16 @@ $(document).ready(function () {
         const imgSrc = $("#uploaded-image").attr("src");
         if (!imgSrc || imgSrc === '') return;
 
-        const frameWidth = $('.box').width();
+        const frameWidth = $('.box').width() ;
         const frameHeight = $('.box').height();
 
-        initializeCroppie(frameWidth, frameHeight);
+        const maxWidth = $(window).width() * 0.9;
+        const maxHeight = $(window).height() * 0.9;
+
+        const enhancedWidth = Math.min(frameWidth * 1.2, maxWidth);
+        const enhancedHeight = Math.min(frameHeight * 1.2, maxHeight);
+
+        initializeCroppie(enhancedWidth, enhancedHeight);
 
         $uploadCrop.croppie('bind', {
             url: imgSrc
@@ -1516,6 +1600,7 @@ $(document).ready(function () {
                     let imgElement = document.querySelector('.swiper-slide-active img');
                     if (imgElement) {
                         imgElement.src = response.file_url;
+                        imgElement.setAttribute('data-frame-config', response.filename);
                     }
                 } else {
                     Swal.fire({

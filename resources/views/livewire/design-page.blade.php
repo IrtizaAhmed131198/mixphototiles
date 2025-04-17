@@ -594,6 +594,19 @@
                                 </button>
                             </li>
 
+                            <li class="designToolPropertiesChild">
+                                <button type="button" id="reset-image">
+                                    <label class="cabinet">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                            class="w-em h-em LeftSidebar_designIcon__3UjGH">
+                                            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" d="M1 4v6h6M3.51 9a9 9 0 1 0 .49-2"/>
+                                        </svg>
+                                        <p class="para" title="Reset to original">Reset</p>
+                                    </label>
+                                </button>
+                            </li>
+
                             <!-- partial:index.partial.html -->
                             <!-- <div class="container mt-4">
                                 <div class="row">
@@ -996,6 +1009,7 @@
                             <input type="hidden" name="get_all_images" id="get_all_images" value="{{ route('get_all_images') }}">
                             <input type="hidden" name="add_to_cart" id="add_to_cart" value="{{ route('add_to_cart') }}">
                             <input type="hidden" name="cart_page" id="cart_page" value="{{ route('cart') }}">
+                            <input type="hidden" name="reset_cropped_image" id="reset_cropped_image" value="{{ route('reset_cropped_image') }}">
 
                         </div>
                     </div>

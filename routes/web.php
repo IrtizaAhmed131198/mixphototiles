@@ -44,6 +44,7 @@ Route::get('/get-session-images', [MainController::class, 'get_session_images'])
 Route::post('/delete-session-image', [MainController::class, 'delete_session_image'])->name('delete_session_image');
 Route::post('/get-frame-config', [MainController::class, 'get_frame_config'])->name('get_frame_config');
 Route::post('/save-cropped-image', [MainController::class, 'save_cropped_image'])->name('save_cropped_image');
+Route::post('/reset-cropped-image', [MainController::class, 'reset_cropped_image'])->name('reset_cropped_image');
 Route::get('/get-grand-total', [MainController::class, 'get_grand_total'])->name('get_grand_total');
 Route::get('/get-all-images', [MainController::class, 'get_all_images'])->name('get_all_images');
 Route::post('/add-to-cart', [MainController::class, 'add_to_cart'])->name('add_to_cart');

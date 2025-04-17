@@ -17,6 +17,7 @@ use App\Models\ClusterImage;
 use App\Models\Coupon;
 use App\Models\State;
 use App\Models\City;
+use App\Models\ProductImage;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -132,44 +133,52 @@ class MainController extends Controller
 
     public function upload_image(Request $request)
     {
-        $sessionId = session()->getId();  // Get current session ID
+        $sessionId = session()->getId();
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $timestamp = time();
 
-            // Original filename
-            // $originalFileName = $file->getClientOriginalName();
+            // Define file names
+            $processedFileName = $timestamp . '.' . $extension;
+            $originalFileName = $timestamp . '_original.' . $extension;
 
-            // // Replace spaces with hyphens in the filename
-            // $sanitizedFileName = str_replace(' ', '-', $originalFileName);
+            // Ensure upload directory exists
+            $uploadPath = public_path('uploads');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
 
-            // Generate a timestamped filename
-            $newFileName = time();
+            // Move original file
+            $file->move($uploadPath, $originalFileName);
 
-            // Save to public/uploads (make sure /public/uploads directory exists and is writable)
-            $file->move(public_path('uploads'), $newFileName);
-
-            // Save only the relative path to the database (without the full URL)
-            $filePath = 'uploads/' . $newFileName;
+            // Optionally process and save processed file
+            // For now, just copy the original file as "processed"
+            copy($uploadPath . '/' . $originalFileName, $uploadPath . '/' . $processedFileName);
 
             $frameConfiguration = $request->input('frame_configuration');
 
             // Save to database
             $session_images = new SessionImage();
             $session_images->session_id = $sessionId;
-            $session_images->filename = $newFileName;
-            $session_images->file_url = $filePath;
+            $session_images->filename = $timestamp;
+            $session_images->original_file_url = 'uploads/' . $originalFileName;
+            $session_images->file_url = 'uploads/' . $processedFileName;
             $session_images->frame_configuration = $frameConfiguration;
             $session_images->save();
 
             return response()->json([
                 'success' => true,
-                'file_url' => $filePath,
-                'filename' => $newFileName,
+                'file_url' => 'uploads/' . $processedFileName,
+                'filename' => $processedFileName,
             ]);
         }
 
-        return response()->json(['success' => false], 400);
+        return response()->json([
+            'success' => false,
+            'message' => 'No file found in request or file failed to upload.'
+        ], 400);
     }
 
     public function get_session_images()
@@ -258,8 +267,10 @@ class MainController extends Controller
             unlink($oldFilePath);
         }
 
+        $withoutExtension = pathinfo($newFileName, PATHINFO_FILENAME);
+
         // Update database record
-        $sessionImage->filename = $newFileName;
+        $sessionImage->filename = $withoutExtension;
         $sessionImage->file_url = $filePath;
         $sessionImage->crop = 1;
         $sessionImage->save();
@@ -268,6 +279,67 @@ class MainController extends Controller
             'success' => true,
             'message' => 'Image updated successfully.',
             'file_url' => asset($filePath),
+            'filename' => $withoutExtension,
+        ]);
+    }
+
+    public function reset_cropped_image(Request $request)
+    {
+        $request->validate([
+            'filename' => 'required|string',
+        ]);
+
+        $filename = $request->input('filename');
+        $sessionImage = SessionImage::where('filename', $filename)->first();
+
+        if($sessionImage->crop == 0){
+            return response()->json([
+                'success' => false,
+                'message' => 'Image is not cropped.'
+            ], 400);
+        }
+
+        if (!$sessionImage) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Image not found.'
+            ], 404);
+        }
+
+        $originalFileName = str_replace(['uploads/', '_cropped'], '', $sessionImage->file_url);
+
+        // Paths
+        $originalPath = public_path($sessionImage->original_file_url); // where the original image is stored
+        $destinationPath = public_path('uploads/'. $originalFileName);       // where the restored image should go
+
+        // Delete cropped image if it exists
+        $currentPath = public_path($sessionImage->file_url);
+        if (file_exists($currentPath)) {
+            unlink($currentPath);
+        }
+
+        // Copy original to destination
+        if (file_exists($originalPath)) {
+            copy($originalPath, $destinationPath);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Original image not found in backup folder.'
+            ], 404);
+        }
+
+        $withoutExtension = pathinfo($originalFileName, PATHINFO_FILENAME);
+
+        // Update DB
+        $sessionImage->filename = $withoutExtension;
+        $sessionImage->file_url = 'uploads/' . $originalFileName;
+        $sessionImage->crop = 0;
+        $sessionImage->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Image reset successfully.',
+            'file_url' => asset('uploads/' . $originalFileName)
         ]);
     }
 
@@ -359,6 +431,11 @@ class MainController extends Controller
                 'status' => 1,
                 'type' => 'manual',
             ]);
+
+            $product_images = new ProductImage();
+            $product_images->product_id = $product->id;
+            $product_images->image_path = $sessionImage->original_file_url;
+            $product_images->save();
 
             // Add product to `carts` table
             $sessionCart[] = [
@@ -524,6 +601,11 @@ class MainController extends Controller
                 $collectionImage->collection_id = $sessionCollection->id;
                 $collectionImage->image = 'uploads/collections/' . $imageName; // Save relative path
                 $collectionImage->save();
+
+                $product_images = new ProductImage();
+                $product_images->product_id = $product->id;
+                $product_images->image_path = 'uploads/collections/' . $imageName;
+                $product_images->save();
 
                 $count++;
 

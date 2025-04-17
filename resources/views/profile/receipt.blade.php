@@ -135,6 +135,7 @@
                         <th>#</th>
                         <th>Collection</th>
                         <th>Image</th>
+                        <th>Orignal Image</th>
                         {{-- <th>Quantity</th> --}}
                         <th>Price (Each)</th>
                         <th>Total</th>
@@ -156,6 +157,66 @@
                                         class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#imageModal2"
                                         data-image="{{ asset($item->product->no_coordinates_image) }}">View Image</a>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($item->product->type == 'manual')
+                                @php
+                                    $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->first();
+                                    $image_path = asset($product_images?->image_path ?? '');
+                                @endphp
+                                <a href="javascript:void(0)" download class="btn btn-sm btn-primary"
+                                        data-bs-toggle="modal" data-bs-target="#orignalImageModal">View Image</a>
+
+                                <div class="modal fade" id="orignalImageModal" tabindex="-1" aria-labelledby="orignalImageModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="orignalImageModalLabel">Collection Image</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <div class="frame-main-wrap frame-main-wrap-main">
+                                                    <div class="frameborder inherit-design">
+                                                        <div class="frameinner-manual child-inherit-design">
+                                                            <img id="modalOrignalImage" src="{{ $image_path }}" class="img-fluid" alt="Preview">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @else
+                                @php
+                                    $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->get();
+                                @endphp
+                                <a href="javascript:void(0)" download class="btn btn-sm btn-primary"
+                                        data-bs-toggle="modal" data-bs-target="#orignalImageModal">View Image</a>
+
+                                <div class="modal fade" id="orignalImageModal" tabindex="-1" aria-labelledby="orignalImageModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="orignalImageModalLabel">Collection Image</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <div class="frame-main-wrap frame-main-wrap-main">
+                                                    <div class="frameborder inherit-design">
+                                                        <div class="frameinner-manual child-inherit-design">
+                                                            @foreach ($product_images as $item)
+                                                                <img id="modalOrignalImage" src="{{ asset($item->image_path) }}" class="img-fluid" alt="Preview">
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 @endif
                             </td>
                             {{-- <td>{{ $item->quantity }}</td> --}}
