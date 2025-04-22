@@ -495,6 +495,8 @@ async function processAndUploadImages(files, mainLoader) {
         ctx.drawImage(img, 0, 0, img.width, img.height);
 
         if (img.width < 1500 || img.height < 1500 || isImageBlurred(canvas)) {
+            if (mainLoader) mainLoader.style.display = 'none';
+
             const result = await Swal.fire({
                 title: 'Image Issue',
                 text: 'Your image is either too small or blurry. Do you want to keep it anyway?',
