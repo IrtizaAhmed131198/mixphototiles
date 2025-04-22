@@ -111,7 +111,10 @@
     @endforeach
     <section class="receipt-section py-5">
         <div class="container">
-            <h2>Order Receipt</h2>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Order Receipt</h2>
+                <a href="{{ route('orders') }}" class="btn btn-secondary mb-4">Back to Orders</a>
+            </div>
             <div class="card p-4 mb-4">
                 <h5><strong>Order ID:</strong> #{{ $order->id }}</h5>
                 <p><strong>Status:</strong> {{ ucfirst($order->status) }}</p>

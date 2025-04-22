@@ -31,6 +31,18 @@
     .loaderMain img {
         max-width: 350px;
         margin:auto;
+        animation: circle 10s infinite linear
+    }
+
+    @keyframes circle {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+
+        }
     }
 
     .progress-bar-container {
@@ -66,10 +78,12 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
+                transform: rotate(0deg);
             }
 
             to {
                 opacity: 1;
+                transform: rotate(360deg);
             }
         }
 
@@ -80,7 +94,7 @@
     <div class="loadermain">
         <div class="loader-container">
             <div class="loaderMain">
-                <img src="{{ asset('assets/images/loader.gif') }}" class="img-fluid" alt="">
+                <img src="{{ asset('assets/images/loader.png') }}" class="img-fluid" alt="">
             </div>
         </div>
     </div>

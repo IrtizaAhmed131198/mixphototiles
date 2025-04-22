@@ -122,7 +122,6 @@
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <select name="state" id="state" class="form-control" required>
-                                            <option value="" disabled selected>---Select State---</option>
                                         </select>
                                         @error('state')
                                             <span class="text-danger">{{ $message }}</span>
@@ -131,8 +130,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="text" class="form-control" name="city" id="city"
-                                            placeholder="City" required>
+                                        <select name="city" id="city" class="form-control" required>
+                                        </select>
                                         @error('city')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -325,19 +324,44 @@
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch("{{ url('states') }}")
+    document.addEventListener('DOMContentLoaded', function () {
+        // Load states
+        fetch("{{ route('states') }}")
             .then(response => response.json())
-            .then(states => {
+            .then(result => {
+                const states = result.data;
                 const dropdown = document.getElementById('state');
                 states.forEach(state => {
                     const option = document.createElement('option');
-                    option.value = state;
-                    option.textContent = state;
+                    option.value = state.id;
+                    option.textContent = state.name;
                     dropdown.appendChild(option);
                 });
             })
             .catch(error => console.error('Error fetching states:', error));
+
+        // When state changes, load cities
+        document.getElementById('state').addEventListener('change', function () {
+            const stateId = this.value;
+            const cityDropdown = document.getElementById('city');
+            cityDropdown.innerHTML = '<option value="">---Select City---</option>'; // reset
+
+            if (stateId) {
+                fetch("{{ url('cities') }}/"+ stateId)
+                    .then(response => response.json())
+                    .then(result => {
+                        const cities = result.data;
+                        cities.forEach(city => {
+                            const option = document.createElement('option');
+                            option.value = city.id;
+                            option.textContent = city.name;
+                            option.setAttribute('data-shipping', city.shipping);
+                            cityDropdown.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching cities:', error));
+            }
+        });
     });
 </script>
 @endpush

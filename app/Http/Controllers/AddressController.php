@@ -17,7 +17,7 @@ class AddressController extends Controller
             return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
         }
 
-        if(Auth::user()->role == 'super_admin') {
+        if(Auth::user()->role == 'super_admin' || Auth::user()->role == 'admin'){
             return view('profile.shipping_address');
         }else{
             abort(403);

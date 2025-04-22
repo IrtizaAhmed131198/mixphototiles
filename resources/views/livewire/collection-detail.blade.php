@@ -135,6 +135,20 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <style>
+                                                /* .cluster-block-{{ $cluster->id }}::before {
+                                                    border-image : url("{{ asset($collectionImages[$key]['frame_img']) }}");
+                                                    border-image-slice: 30;
+                                                    border-image-width: 3px;
+                                                    border-image-outset: 0;
+                                                    border-image-repeat: stretch;
+                                                }
+                                                .cluster-block-{{ $cluster->id }}::after {
+                                                    border-image-width: 4px !important;
+                                                    border-image-slice: 30 fill !important;
+                                                    border-image-repeat: round !important;
+                                                } */
+                                            </style>
                                         @endforeach
                                         <!-- dynamic frames -->
                                     @else
@@ -395,7 +409,7 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse3" aria-expanded="false" aria-controls="flush-collapse3">
 
                                         <span class="customTilename">Frame</span>
-                                        <span class="text-body-tertiary">(2)</span>
+                                        <span class="text-body-tertiary">(3)</span>
 
 
                                     </button>

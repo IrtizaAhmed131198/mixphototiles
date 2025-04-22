@@ -34,9 +34,9 @@
                                     <a class="nav-link {{ request()->routeIs('collections') ? 'active' : '' }}"
                                         href="{{ route('collections') }}">Your Collections</a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link" href="javascript:;">Installation & Care</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a class="nav-link" href="javascript:;">FAQs</a>
                                 </li>

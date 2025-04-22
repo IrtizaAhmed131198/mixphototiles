@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="text-center">
-                    <h2 class="heading-2">Clusters for all your walls</h2>
+                    <h2 class="heading-2">Collection for your memorable walls</h2>
                     <p class="para">
                         Looking for inspiration or a simple arrangement?
                         <span class="d-block">

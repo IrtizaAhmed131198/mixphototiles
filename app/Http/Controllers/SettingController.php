@@ -16,7 +16,7 @@ class SettingController extends Controller
             return redirect()->route('home')->with('error', 'You must be logged in to access this page.');
         }
 
-        if(in_array(Auth::user()->role, ['super_admin'])) {
+        if(Auth::user()->role == 'super_admin' || Auth::user()->role == 'admin'){
             $settings = Settings::all();
             return view('profile.settings', compact('settings'));
         }else{
@@ -26,9 +26,6 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-        if (!Auth::check() || Auth::user()->role !== 'super_admin') {
-            abort(403);
-        }
 
         // Fetch all settings from the database
         $settings = Settings::all();

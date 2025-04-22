@@ -64,8 +64,8 @@
                         </div>
                         <div><a href="{{ route('collections') }}" class="link" style=" text-decoration: none; ">Your
                                 Collections</a></div>
-                        <div><a href="#" class="link" style=" text-decoration: none; ">Installation &amp;
-                                Care</a></div>
+                        {{-- <div><a href="#" class="link" style=" text-decoration: none; ">Installation &amp;
+                                Care</a></div> --}}
                     </div>
                 </div>
                 <div class="col-md">
