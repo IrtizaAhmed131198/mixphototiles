@@ -457,7 +457,7 @@ class MainController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => count($productsAdded) . ' product(s) added to cart.',
+            'message' => count($productsAdded) . ' frame(s) added to cart.',
             'products' => $productsAdded,
         ]);
     }
@@ -687,6 +687,12 @@ class MainController extends Controller
 
     public function update_cart_grand_total(Request $request)
     {
+        if(!Auth::check()){
+            return response()->json([
+                'error' => true,
+                'message' => 'User not authenticated. Please login to continue.'
+            ]);
+        }
         session()->forget('cart_grand_total');
         session()->forget('gift_card_applied');
         // session()->forget('shipping');

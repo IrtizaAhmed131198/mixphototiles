@@ -46,6 +46,26 @@
         button.btn-close.position-absolute.top-0.end-0.m-3 {
             z-index: 1;
         }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+        }
     </style>
 @endpush
 
@@ -104,6 +124,30 @@
                 border-image-repeat: stretch;
             }
         ';
+        $style2 .= '
+            .'. $cssClassName2 .'-frame::before {
+                position: absolute;
+                z-index: 1;
+                content: "";
+                right: -5px;
+                top: 2px;
+                bottom: 0;
+                height: 100%;
+                width: 5px;
+                background: '. $val->before_color_code .';
+                transform: skewY(45deg);
+            }
+            .'. $cssClassName2 .'-frame::after {
+                position: absolute;
+                z-index: 1;
+                content: "";
+                background: '. $val->after_color_code .';
+                width: 99%;
+                height: 6px;
+                bottom: -6px;
+                transform: skewX(45deg);
+                left: 4px;
+            }';
         $style2 .= '</style>';
 
         echo $style2;
@@ -210,9 +254,11 @@
                                                 <div class="frame-main-wrap frame-main-wrap-main">
                                                     <div class="frameborder inherit-design">
                                                         <div class="frameinner-manual child-inherit-design">
-                                                            @foreach ($product_images as $item)
-                                                                <img id="modalOrignalImage" src="{{ asset($item->image_path) }}" class="img-fluid" alt="Preview">
-                                                            @endforeach
+                                                            <div class="gallery-grid">
+                                                                @foreach ($product_images as $item)
+                                                                    <img id="modalOrignalImage" src="{{ asset($item->image_path) }}" class="img-fluid" alt="Preview">
+                                                                @endforeach
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -372,6 +418,31 @@
                 border-image-repeat: stretch;
             }
         ';
+
+        echo '
+            .'. $cssClassName2 .'-frame::before {
+                position: absolute;
+                z-index: 1;
+                content: "";
+                right: -5px;
+                top: 2px;
+                bottom: 0;
+                height: 100%;
+                width: 5px;
+                background: '. $val->before_color_code .';
+                transform: skewY(45deg);
+            }
+            .'. $cssClassName2 .'-frame::after {
+                position: absolute;
+                z-index: 1;
+                content: "";
+                background: '. $val->after_color_code .';
+                width: 99%;
+                height: 6px;
+                bottom: -6px;
+                transform: skewX(45deg);
+                left: 4px;
+            }';
     }
 
     echo '</style>';

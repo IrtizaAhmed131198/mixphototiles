@@ -252,10 +252,9 @@
                                     <button type="submit" class="btn custom-btn">Sign Up</button>
                                 </div>
                             </form>
-                            <p class="mb-0 text-center d-flex align-items-center justify-content-center">Don't
-                                have an account?
+                            <p class="mb-0 text-center d-flex align-items-center justify-content-center">Already have an account?
                                 <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
-                                    id="signupBtn" class="Login_authSwitch">Sign Up</button>
+                                    id="signupBtn" class="Login_authSwitch">Login</button>
                             </p>
                         </div>
                     </div>
@@ -318,6 +317,36 @@
                         </form>
                         <p class="mb-0 text-center">Resend OTP
                             <button type="button" class="Login_authSwitch btn-verify-resend" onclick="resendOtp()">Resend</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalToggleOtpSign" aria-hidden="true" aria-labelledby="exampleModalToggleOtpSignLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="Login_authWrp">
+                        <h4 class="heading-6">Verify OTP</h4>
+                        <p>Enter the OTP sent to your email.</p>
+                        <form id="otpFormSign">
+                            <div class="mb-4 form-floating">
+                                <input placeholder="OTP" id="otpInputEditSign" class="form-control" type="text" name="otp">
+                                <label for="otpInputEditSign">OTP</label>
+                                <small class="text-danger" id="otpErrorSign"></small>
+                            </div>
+                            <div class="d-grid pt-3 pb-4">
+                                <button type="button" class="btn custom-btn btn-verify-sign" onclick="verifyOtpSign()">Verify OTP</button>
+                            </div>
+                            <div id="otpMessageSign"></div>
+                        </form>
+                        <p class="mb-0 text-center">Resend OTP
+                            <button type="button" class="Login_authSwitch btn-verify-resend-sign" onclick="resendOtp()">Resend</button>
                         </p>
                     </div>
                 </div>

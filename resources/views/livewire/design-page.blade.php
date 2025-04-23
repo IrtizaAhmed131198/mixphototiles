@@ -15,25 +15,6 @@
         font-size: 14px; /* Optional - adjust font size */
     }
 
-    .loader-container {
-        background-attachment: fixed;
-        background-color: #ffff;
-        height: 100vh;
-        position: fixed;
-        z-index: 999999;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        top: 0;
-        margin:auto;
-    }
-    .loaderMain img {
-        max-width: 350px;
-        margin:auto;
-        animation: circle 10s infinite linear
-    }
-
     @keyframes circle {
         0% {
             transform: rotate(0deg);
@@ -61,6 +42,10 @@
 
     .frameinner img {
         object-fit: contain !important;
+    }
+
+    .grid-2 {
+        height: unset;
     }
 
 </style>
@@ -167,26 +152,26 @@
                                     </div>
 
                                     <li type="button" class="parentProperties frame-change dropdown-item li-border-color "
-                                        data-design="classic-card-design" data-price="0" data-text="Classic">
+                                        data-design="classic-card-design" data-price="0" data-text="Border">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704186592728.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Border</p>
-                                            <p class="propertyPrize">$0</p>
+                                            <p class="propertyPrize" style="display: none">$0</p>
                                         </div>
                                     </li>
 
                                     <li type="button" class="parentProperties frame-change dropdown-item"
-                                        data-design="bold-card-design" data-price="0" data-text="Bold">
+                                        data-design="bold-card-design" data-price="0" data-text="NoBorder">
                                         <figure class="PropertiesleftChild">
                                             <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                 src="{{ asset('assets/images/1704186603683.png') }}">
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">No Border</p>
-                                            <p class="propertyPrize">$0</p>
+                                            <p class="propertyPrize" style="display: none">$0</p>
                                         </div>
                                     </li>
 
@@ -198,7 +183,7 @@
                                         </figure>
                                         <div class="PropertiesRightChild">
                                             <p class="propertyName">Frameless</p>
-                                            <p class="propertyPrize">$0</p>
+                                            <p class="propertyPrize" style="display: none">$0</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -272,7 +257,7 @@
                                             </figure>
                                             <div class="PropertiesRightChild">
                                                 <p class="propertyName">{{ $val->name }}</p>
-                                                <p class="propertyPrize">${{ $val->price }}</p>
+                                                <p class="propertyPrize">Rs.{{ $val->price }}</p>
                                             </div>
                                         </li>
                                     @endforeach
@@ -322,180 +307,11 @@
                                             </figure>
                                             <div class="PropertiesRightChild">
                                                 <p class="propertyName">{{ $val->label }}</p>
-                                                <p class="propertyPrize">${{ $val->price }}</p>
+                                                <p class="propertyPrize">Rs.{{ $val->price }}</p>
                                             </div>
                                         </li>
 
                                     @endforeach
-
-                                    {{-- <li type="button" class="parentProperties dropdown-item frame-size li-border-color"
-                                        data-height="318px" data-width="309px" data-max-width="500px" data-price="399"
-                                        data-val='8" X 8"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195283683.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">8" X 8"</p>
-                                            <p class="propertyPrize">$399</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="483px" data-width="261px" data-max-width="500px" data-price="504"
-                                        data-val='8" X 10"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195388737.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">8" X 10"</p>
-                                            <p class="propertyPrize">$504</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="389px" data-width="460px" data-max-width="500px" data-price="504"
-                                        data-val='10" X 8"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195457270.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">10" X 8"</p>
-                                            <p class="propertyPrize">$504</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="500px" data-width="261px" data-max-width="500px" data-price="682"
-                                        data-val='9" X 12"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195503983.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">9" X 12"</p>
-                                            <p class="propertyPrize">$682</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="261px" data-width="500px" data-max-width="500px" data-price="682"
-                                        data-val='12" X 9"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195521559.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">12" X 9"</p>
-                                            <p class="propertyPrize">$682</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="362px" data-width="451px" data-max-width="500px" data-price="897"
-                                        data-val='12" X 12"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195535660.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">12" X 12"</p>
-                                            <p class="propertyPrize">$897</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="509px" data-width="263px" data-max-width="500px" data-price="1318"
-                                        data-val='12" X 18"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195552341.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">12" X 18"</p>
-                                            <p class="propertyPrize">$1318</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="263px" data-width="509px" data-max-width="500px" data-price="1318"
-                                        data-val='18" X 12"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195567601.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">18" X 12"</p>
-                                            <p class="propertyPrize">$1318</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="362px" data-width="451px" data-max-width="500px" data-price="2022"
-                                        data-val='18" X 18"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195580863.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">18" X 18"</p>
-                                            <p class="propertyPrize">$2022</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="509px" data-width="263px" data-max-width="500px" data-price="2638"
-                                        data-val='18" X 24"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195597135.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">18" X 24"</p>
-                                            <p class="propertyPrize">$2638</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="263px" data-width="509px" data-max-width="500px" data-price="2638"
-                                        data-val='24" X 18"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195794113.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">24" X 18"</p>
-                                            <p class="propertyPrize">$2638</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="509px" data-width="263px" data-max-width="500px" data-price="4558"
-                                        data-val='24" X 32"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195815647.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">24" X 32"</p>
-                                            <p class="propertyPrize">$4558</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-size"
-                                        data-height="265px" data-width="510px" data-max-width="500px" data-price="4558"
-                                        data-val='32" X 24"'>
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704195831826.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">32" X 24"</p>
-                                            <p class="propertyPrize">$4558</p>
-                                        </div>
-                                    </li> --}}
                                 </ul>
                             </li>
                             <!-- 3 dropdown -->
@@ -531,7 +347,7 @@
                                             </figure>
                                             <div class="PropertiesRightChild">
                                                 <p class="propertyName">{{ $val->label }}</p>
-                                                <p class="propertyPrize">${{ $val->price }}</p>
+                                                <p class="propertyPrize">Rs.{{ $val->price }}</p>
                                             </div>
                                         </li>
 
@@ -734,7 +550,7 @@
                                         <div class="modal-body">
                                             <div id="upload-demo" class="mx-auto"></div>
                                         </div>
-                                        <div class="modal-footer">
+                                        <div class="modal-footer mt-4">
                                             <button type="button" class="btn custom-btn filled"
                                                 data-bs-dismiss="modal">Close</button>
                                             <button type="button" id="cropImageBtn"
@@ -840,7 +656,7 @@
                                                 </svg>
                                                 <div class="frame-detail">
                                                     <p class="para">Frame </p>
-                                                    <h6 class="heading-4" id="frame-show">Classic</h6>
+                                                    <h6 class="heading-4" id="frame-show">Border</h6>
                                                 </div>
                                             </div>
                                         </li>
@@ -976,13 +792,13 @@
                                 </div>
                                 <div class="summary-card-footer">
                                     <p class="para">Item Price</p>
-                                    <h6 class="prizing" id="price-show" data-val="399">$399</h6>
+                                    <h6 class="prizing" id="price-show" data-val="399">₹399</h6>
                                 </div>
                             </div>
                             <div class="Right-Sidebar-footer">
                                 <div class="GrandTotal">
                                     <p class="">Grand Total</p>
-                                    <h6 class="" id="grand-total" data-val="399">$399</h6>
+                                    <h6 class="" id="grand-total" data-val="399">₹399</h6>
                                 </div>
                                 <button type="button" class="btn custom-btn filled"  id="add-to-cart"> Add to Cart
                                     <svg width="21" height="21" viewBox="0 0 21 21"

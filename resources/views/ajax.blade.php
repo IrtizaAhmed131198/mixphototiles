@@ -155,6 +155,62 @@
         });
     }
 
+    function verifyOtpSign() {
+        let email = document.getElementById("emailInputPass").value.trim();
+        let otp = document.getElementById("otpInputEditSign").value.trim();
+        let otpError = document.getElementById("otpErrorSign");
+        let otpMessage = document.getElementById("otpMessageSign");
+        let verifyOtpButton = document.querySelector(".btn-verify-sign"); // Target Verify OTP button
+        let resendOtpButton = document.querySelector(".btn-verify-resend-sign"); // Target Resend OTP button
+
+        otpError.innerText = "";
+        otpMessage.innerHTML = "";
+
+        if (otp === "") {
+            otpError.innerText = "OTP is required.";
+            return;
+        }
+
+        // Disable buttons during request
+        verifyOtpButton.disabled = true;
+        resendOtpButton.disabled = true;
+        verifyOtpButton.innerHTML = "Verifying..."; // Show loading state
+
+        fetch("{{ route('password.verifyOtp') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email: email, otp: otp })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                otpMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+
+                document.getElementById("get_email").value = email;
+
+                // ✅ Get the existing OTP modal instance and hide it
+                let otpModalEl = document.getElementById('exampleModalToggleOtpSign');
+                let otpModalInstance = bootstrap.Modal.getInstance(otpModalEl);
+                if (otpModalInstance) {
+                    otpModalInstance.hide();
+                }
+
+            } else {
+                otpError.textContent = data.message;
+            }
+        })
+        .catch(error => console.error("Error:", error))
+        .finally(() => {
+            // Re-enable buttons after request completes
+            verifyOtpButton.disabled = false;
+            resendOtpButton.disabled = false;
+            verifyOtpButton.innerHTML = "Verify OTP"; // Reset button text
+        });
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
         let resetPasswordButton = document.querySelector(".custom-btn");
         resetPasswordButton.disabled = true;
@@ -278,12 +334,19 @@
                 },
                 success: function (response) {
                     if (response.success) {
+                        // Store user ID or email temporarily for OTP verification
+                        $('#signupForm').data('user-email', response.email); // or response.user_id if preferred
+
+                        $('#exampleModalToggle2').modal('hide');
+                        // Show OTP modal
+                        setTimeout(() => {
+                            $('#exampleModalToggleOtpSign').modal('show');
+                        }, 500);
+
                         Swal.fire({
                             icon: 'success',
-                            title: 'Success!',
-                            text: response.message
-                        }).then(() => {
-                            window.location.href = "{{ route('login') }}";
+                            title: 'Almost there!',
+                            text: 'An OTP has been sent to your email for verification.'
                         });
                     }
                 },

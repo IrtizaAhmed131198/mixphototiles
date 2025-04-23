@@ -42,7 +42,7 @@
         </figure>
         <div class="PropertiesRightChild">
             <p class="propertyName">{{ $val->name }}</p>
-            <p class="propertyPrize">${{ $val->price }}</p>
+            <p class="propertyPrize" style="display: none">${{ $val->price }}</p>
         </div>
     </li>
 @endforeach

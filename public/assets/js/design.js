@@ -132,7 +132,7 @@ function applyInitialFrameDesign(imageObj) {
     const frameConfig = JSON.parse(imageObj.frame_configuration);
 
     const initialDesignClass = frameConfig.design?.designClass || 'classic-card-design';
-    const initialDisplayText = frameConfig.design?.displayText || 'Classic';
+    const initialDisplayText = frameConfig.design?.displayText || 'Border';
 
     // Update frame-show text
     document.getElementById('frame-show').textContent = initialDisplayText;
@@ -339,7 +339,7 @@ function applyInitialFrameLED(imageObj) {
 
 function getDefaultFrameConfig() {
     return {
-        design: { designClass: "classic-card-design", displayText: "Classic", design_price: 0 },
+        design: { designClass: "classic-card-design", displayText: "Border", design_price: 0 },
         color: { img_src: "assets/images/black-frame.png", color_name: "Black", shadowClass: "box-shadow-black", color_price: 0 },
         size: { width: "309px", height: "318px", max_width: "500px", frame_price: 0, frameSizeText: '8" X 8"' },
         finish: { finish_price: 0, frameFinishText: "Normal" },
@@ -375,7 +375,7 @@ function updateGrandTotal() {
                 });
 
                 // Update the grand total in UI
-                document.getElementById('grand-total').textContent = '$' + grandTotal;
+                document.getElementById('grand-total').textContent = '₹' + grandTotal;
             } else {
                 console.error('Failed to fetch frame configurations');
             }
@@ -406,7 +406,7 @@ function updateFramePrice(frameConfig) {
     }
 
     // Update the price on the UI
-    document.getElementById('price-show').textContent = '$' + total;
+    document.getElementById('price-show').textContent = '₹' + total;
 
     // Optionally update the grand total if you are tracking all frames (for multiple frames setup)
     updateGrandTotal();

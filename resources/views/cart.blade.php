@@ -4,24 +4,16 @@
 
 @push('css')
 <style>
-    .loader-container {
-        background-attachment: fixed;
-        background-color: #ffff;
-        height: 100vh;
-        position: fixed;
-        z-index: 999999;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        top: 0;
-        margin:auto;
-    }
-    .loaderMain img {
-        max-width: 350px;
-        margin:auto;
-    }
+    @keyframes circle {
+        0% {
+            transform: rotate(0deg);
+        }
 
+        100% {
+            transform: rotate(360deg);
+
+        }
+    }
 </style>
 @endpush
 
@@ -34,7 +26,7 @@
 <div class="loadermain">
     <div class="loader-container">
         <div class="loaderMain">
-            <img src="{{ asset('assets/images/loader.gif') }}" class="img-fluid" alt="">
+            <img src="{{ asset('assets/images/loader.png') }}" class="img-fluid" alt="">
         </div>
     </div>
 </div>
@@ -756,8 +748,18 @@
         .then(data => {
             if (data.success) {
                 window.location.href = '{{ route('order_summary') }}'; // Redirect after update
+            } else if(data.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message
+                });
             } else {
-                alert('Failed to update cart. Try again.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to update cart. Try again.'
+                });
             }
         })
         .catch(error => console.error('Error updating cart:', error));

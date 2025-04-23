@@ -770,7 +770,7 @@ ul.LeftSidebar_designTool button p {
     align-items: center;
     gap: 50px;
     margin-top: 0rem;
-    padding: 0rem 2rem 2rem;
+    padding: 7rem 2rem 2rem;
     justify-content: start;
     width: 100%;
     position: relative;
@@ -1762,6 +1762,10 @@ a {
     z-index: 0;
 }
 
+.frameless-card-design .frameinner img {
+    object-fit: cover !important;
+}
+
 /* .box-shadow-black:before {
     position: absolute;
     z-index: -1;
@@ -2239,18 +2243,6 @@ figure.frameBackground img {
     max-width: 744px;
     height: 744px;
     width: 744px;
-}
-
-.clusterFrameWrp {
-    /* border: 2px solid black; */
-    box-shadow: inset 0 4px 8px 0 rgba(0, 0, 0, .11);
-    background-color: #fff;
-    box-shadow: 2px 2px 3px rgba(0, 0, 0, .11);
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
 }
 
 
@@ -2817,7 +2809,7 @@ span.itemsCount {
     align-items: center;
     justify-content: center;
     position: absolute;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 #cluster-block-1 {
@@ -3878,4 +3870,23 @@ input[type="radio"]:checked {
 
 .profile-menu.show {
     display: block;
+}
+
+.loader-container {
+    background-attachment: fixed;
+    background-color: #ffff;
+    height: 100vh;
+    position: fixed;
+    z-index: 999999;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    margin:auto;
+}
+.loaderMain img {
+    max-width: 350px;
+    margin:auto;
+    animation: circle 10s infinite linear
 }

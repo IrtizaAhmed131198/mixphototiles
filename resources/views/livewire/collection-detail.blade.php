@@ -75,7 +75,42 @@
         z-index: 1;
     }
 </style>
+
+@foreach ($custom_color as $val)
+    @php
+        $cssClassName = strtolower(str_replace(' ', '-', $val->name));
+        $frame_style = '<style>';
+        $frame_style .= '
+            .'. $cssClassName .'-frame::before {
+                position: absolute;
+                z-index: 1;
+                content: "";
+                right: -5px;
+                top: 2px;
+                bottom: 0;
+                height: 100%;
+                width: 5px;
+                background: '. $val->before_color_code .';
+                transform: skewY(45deg);
+            }
+            .'. $cssClassName .'-frame::after {
+                position: absolute;
+                z-index: 1;
+                content: "";
+                background: '. $val->after_color_code .';
+                width: 99%;
+                height: 6px;
+                bottom: -6px;
+                transform: skewX(45deg);
+                left: 4px;
+            }';
+        $frame_style .= '</style>';
+    @endphp
+    {!! $frame_style !!}
+@endforeach
+
 @endpush
+
 
 @php
     $clusters = json_decode($product->coordinates);
@@ -135,20 +170,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <style>
-                                                /* .cluster-block-{{ $cluster->id }}::before {
-                                                    border-image : url("{{ asset($collectionImages[$key]['frame_img']) }}");
-                                                    border-image-slice: 30;
-                                                    border-image-width: 3px;
-                                                    border-image-outset: 0;
-                                                    border-image-repeat: stretch;
-                                                }
-                                                .cluster-block-{{ $cluster->id }}::after {
-                                                    border-image-width: 4px !important;
-                                                    border-image-slice: 30 fill !important;
-                                                    border-image-repeat: round !important;
-                                                } */
-                                            </style>
                                         @endforeach
                                         <!-- dynamic frames -->
                                     @else
@@ -420,7 +441,7 @@
                                         <ul class="designToolPropertiesLists CustomizeOption select-frame">
                                             <!-- Dropdown menu links -->
 
-                                            <li type="button" class="parentProperties frame-change active" data-name="classic"
+                                            <li type="button" class="parentProperties frame-change active" data-name="border"
                                                 data-class="classic-image-width">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}">
@@ -430,7 +451,7 @@
                                                 </div>
                                             </li>
 
-                                            <li type="button" class="parentProperties frame-change" data-name="bold"
+                                            <li type="button" class="parentProperties frame-change" data-name="noborder"
                                                 data-class="bold-image-width">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603683.png') }}">
@@ -1470,7 +1491,7 @@ function addToCart() {
                 selectedConfig = {
                     "led": { "val": "no", "price": "0" },
                     "color": { "name": "Black", "class": "black-frame", "price": "0" },
-                    "frame": { "name": "classic", "class": "classic-image-width" },
+                    "frame": { "name": "border", "class": "classic-image-width" },
                     "finish": { "name": "Normal", "price": "0" }
                 };
             }

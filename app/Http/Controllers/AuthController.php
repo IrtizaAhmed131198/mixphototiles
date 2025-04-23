@@ -100,16 +100,26 @@ class AuthController extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'role' => 'user',
-            'status' => 1
+            'status' => 0
         ]);
 
-        // Log in user automatically
-        Auth::login($user);
+        // Generate a unique OTP
+        do {
+            $otp = rand(100000, 999999);
+            $exists = User::where('otp', $otp)->exists();
+        } while ($exists);
+
+        // Save OTP with expiration time
+        $user->otp = $otp;
+        $user->otp_expires_at = Carbon::now()->addMinutes(10);
+        $user->save();
+
+        Mail::to($user->email)->send(new OtpMail($otp, $user->name));
 
         return response()->json([
             'success' => true,
-            'message' => 'Account created successfully!',
-            'redirect' => route('profile') // Change to your intended redirect route
+            'message' => 'Account created successfully! Please verify your email.',
+            'email' => $user->email
         ]);
     }
 
@@ -162,6 +172,7 @@ class AuthController extends Controller
         // OTP Verified, clear OTP fields
         $user->otp = null;
         $user->otp_expires_at = null;
+        $user->status = 1; // Activate user
         $user->save();
 
         return response()->json(['status' => 'success', 'message' => 'OTP verified. Proceed to reset your password.', 'email' => $user->email]);
