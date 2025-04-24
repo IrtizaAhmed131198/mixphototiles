@@ -33,6 +33,7 @@ Route::get('/privacy-policy', [PagesController::class, 'privacy'])->name('privac
 Route::get('/refund-policy', [PagesController::class, 'refund'])->name('refund');
 Route::get('/shipping-policy', [PagesController::class, 'shipping'])->name('shipping');
 Route::get('/terms-and-conditions', [PagesController::class, 'terms'])->name('terms');
+Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
 
 Route::post('/update-frame-config', [MainController::class, 'update_config'])->name('update.frame.config');
 Route::get('/get-uploaded-images', [MainController::class, 'get_images'])->name('get.uploaded.images');

@@ -961,7 +961,13 @@ function deleteSelectedImage() {
             title: 'Error',
             text: 'Please select an image to delete.',
             timer: 2000,
-            showConfirmButton: false
+            showConfirmButton: false,
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
         });
         return;
     }
@@ -1008,7 +1014,13 @@ function updateClusterImage() {
             title: 'Error',
             text: 'Please select an image and a frame.',
             timer: 2000,
-            showConfirmButton: false
+            showConfirmButton: false,
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
         });
         return;
     }
@@ -1042,7 +1054,13 @@ document.getElementById("remove-image").addEventListener("click", function () {
             title: "Error",
             text: "No frame selected.",
             timer: 2000,
-            showConfirmButton: false
+            showConfirmButton: false,
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
         });
         return;
     }
@@ -1468,7 +1486,13 @@ function addToCart() {
             icon: 'error',
             title: 'Oops...',
             text: 'Please upload an image for all frames before adding to cart.',
-            confirmButtonText: 'OK'
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            },
+            confirmButtonText: 'OK',
         });
         return false;  // Prevent form submission or action
     }
@@ -1519,7 +1543,13 @@ function addToCart() {
                     Swal.fire({
                         icon: 'success',
                         title: 'Added to Cart',
-                        text: 'Your frame has been added to the cart.'
+                        text: 'Your frame has been added to the cart.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     }).then(() => {
                         // Redirect to cart page after success message
                         window.location.href = "{{ route('cart') }}"; // Update URL as needed
@@ -1530,6 +1560,12 @@ function addToCart() {
                         icon: 'error',
                         title: 'Error!',
                         text: 'Something went wrong. Please try again.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        },
                         confirmButtonText: 'OK'
                     });
                 }
@@ -1569,6 +1605,12 @@ function continueToCart() {
             icon: 'error',
             title: 'Oops...',
             text: 'Please upload an image for all frames before adding to cart.',
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            },
             confirmButtonText: 'OK'
         });
         return false;  // Prevent form submission or action
@@ -1612,7 +1654,13 @@ function continueToCart() {
                     Swal.fire({
                         icon: 'success',
                         title: 'Added to Cart',
-                        text: 'Your frame has been added to the cart.'
+                        text: 'Your frame has been added to the cart.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     }).then(() => {
                         // Redirect to cart page after success message
                         window.location.href = "{{ route('cart') }}"; // Update URL as needed
@@ -1623,6 +1671,12 @@ function continueToCart() {
                         icon: 'error',
                         title: 'Error!',
                         text: 'Something went wrong. Please try again.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        },
                         confirmButtonText: 'OK'
                     });
                 }

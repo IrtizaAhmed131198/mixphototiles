@@ -190,6 +190,10 @@
                 </thead>
                 <tbody>
                     @foreach ($order->orderItems as $index => $item)
+                        @php
+                            $price = $item->price;
+                            $quantity = $item->quantity;
+                        @endphp
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $item->product->name ?? 'N/A' }}</td>
@@ -269,15 +273,15 @@
                                 @endif
                             </td>
                             {{-- <td>{{ $item->quantity }}</td> --}}
-                            <td>${{ number_format($item->price, 2) }}</td>
-                            <td>${{ number_format($item->price * $item->quantity, 2) }}</td>
+                            <td>Rs.{{ number_format($price, 2) }}</td>
+                            <td>Rs.{{ number_format($price * $quantity, 2) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
 
             <div class="text-end mt-3">
-                <h4>Total Amount: ${{ number_format($order->total_amount, 2) }}</h4>
+                <h4>Total Amount: R.{{ number_format($order->total_amount, 2) }}</h4>
             </div>
 
             @if ($item->product->type == 'manual')

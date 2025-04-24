@@ -192,6 +192,12 @@
                             icon: 'success',
                             title: 'Finish Added!',
                             text: 'The finish has been added successfully.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $('#addFinishModal').modal('hide');
@@ -208,6 +214,12 @@
                             icon: 'error',
                             title: 'Oops...',
                             text: 'Please fix the errors in the form.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         });
                     }
                 },
@@ -217,6 +229,12 @@
                         icon: 'error',
                         title: 'Something went wrong',
                         text: 'There was an issue with the server. Please try again.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
@@ -248,6 +266,12 @@
                         icon: 'error',
                         title: 'Error',
                         text: 'Could not load finish data.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
@@ -272,6 +296,12 @@
                             icon: 'success',
                             title: 'Finish Updated!',
                             text: 'The finish details have been updated successfully.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $('#editFinishModal').modal('hide');
@@ -289,6 +319,12 @@
                                 icon: 'error',
                                 title: 'Something went wrong',
                                 text: 'There was an issue with the server. Please try again.',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
                             });
                         }
                     }
@@ -298,6 +334,12 @@
                         icon: 'error',
                         title: 'Something went wrong',
                         text: 'There was an issue with the server (500). Please try again.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
@@ -320,6 +362,12 @@
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'No, cancel!',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -328,28 +376,46 @@
                         success: function(response) {
                             if (response.success) {
                                 Swal.fire(
-                                    'Deleted!',
-                                    'The finish has been deleted.',
-                                    'success'
+                                    title: 'Deleted!',
+                                    text: 'The finish has been deleted.',
+                                    icon: 'success',
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
                                 ).then((result) => {
                                     if (result.isConfirmed) {
                                         $('#example').DataTable().ajax.reload();
                                     }
                                 });
                             } else {
-                                Swal.fire(
-                                    'Error!',
-                                    'There was an issue deleting the finish.',
-                                    'error'
-                                );
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'There was an issue deleting the finish.',
+                                    icon: 'error',
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
+                                });
                             }
                         },
                         error: function(xhr, status, error) {
-                            Swal.fire(
-                                'Error!',
-                                'There was an issue deleting the finish.',
-                                'error'
-                            );
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'There was an issue deleting the finish.',
+                                icon: 'error',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
                         }
                     });
                 }

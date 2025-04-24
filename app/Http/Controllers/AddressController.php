@@ -27,7 +27,7 @@ class AddressController extends Controller
 
     public function getData()
     {
-        $query = ShippingAddress::with('user')->get();
+        $query = ShippingAddress::with('user', 'state', 'city')->get();
 
         return DataTables::of($query)
             ->addColumn('id', function ($row) {

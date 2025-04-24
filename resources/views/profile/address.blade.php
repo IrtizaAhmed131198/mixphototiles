@@ -314,6 +314,12 @@
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#3085d6",
                 confirmButtonText: "Yes, delete it!",
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -321,17 +327,38 @@
                         type: "DELETE",
                         data: { _token: "{{ csrf_token() }}" },
                         success: function (response) {
-                            Swal.fire("Deleted!", response.message, "success").then(() => {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: response.message,
+                                icon: "success",
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            }).then(() => {
                                 location.reload();
                             });
                         },
                         error: function () {
-                            Swal.fire("Error!", "Error deleting address.", "error");
+                            Swal.fire({
+                                title: "Error!",
+                                text: "Error deleting address.",
+                                icon: "error",
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
                         },
                     });
                 }
             });
         });
+
 
         $(document).on("click", ".main-radio-select", function (e) {
             // Prevent triggering when clicking on buttons inside the div
@@ -357,13 +384,44 @@
                         if (response.success) {
                             $(".main-radio-select input[name='default_address_check']").prop("checked", false);
                             radio.prop("checked", true);
-                            Swal.fire("Success", response.message, "success");
+
+                            Swal.fire({
+                                icon: "success",
+                                title: "Success",
+                                text: response.message,
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
                         } else {
-                            Swal.fire("Error", "Failed to update default address.", "error");
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: "Failed to update default address.",
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
                         }
                     },
                     error: function () {
-                        Swal.fire("Error", "An error occurred while updating default address.", "error");
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "An error occurred while updating default address.",
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
+                        });
                     },
                 });
             }

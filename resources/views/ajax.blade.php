@@ -346,7 +346,13 @@
                         Swal.fire({
                             icon: 'success',
                             title: 'Almost there!',
-                            text: 'An OTP has been sent to your email for verification.'
+                            text: 'An OTP has been sent to your email for verification.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         });
                     }
                 },

@@ -176,8 +176,8 @@
                 { data: 'phone', name: 'phone' },
                 { data: 'pin_code', name: 'pin_code' },
                 // { data: 'address', name: 'address' },
-                { data: 'state', name: 'state' },
-                { data: 'city', name: 'city' },
+                { data: 'state.name', name: 'state' },
+                { data: 'city.name', name: 'city' },
                 { data: 'user.name', name: 'user_name' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
@@ -199,9 +199,38 @@
                         $('#pin_code').val(response.address.pin_code);
                         $('#address1').val(response.address.address_line1);
                         $('#address2').val(response.address.address_line2);
-                        $('#state').val(response.address.state);
-                        $('#city').val(response.address.city);
                         $('#alt_phone').val(response.address.alt_phone);
+
+                        const stateId = response.address.state;
+                        const cityId = response.address.city;
+
+                        $('#state').val(stateId);
+                        loadCities(stateId, cityId);
+
+                        function loadCities(stateId, selectedCityId = null) {
+                            const cityDropdown = document.getElementById('city');
+                            cityDropdown.innerHTML = '<option value="">---Select City---</option>';
+
+                            if (stateId) {
+                                fetch("{{ url('cities') }}/"+ stateId)
+                                    .then(response => response.json())
+                                    .then(result => {
+                                        const cities = result.data;
+                                        cities.forEach(city => {
+                                            const option = document.createElement('option');
+                                            option.value = city.id;
+                                            option.textContent = city.name;
+                                            option.setAttribute('data-shipping', city.shipping);
+                                            cityDropdown.appendChild(option);
+                                        });
+
+                                        if (selectedCityId) {
+                                            cityDropdown.value = selectedCityId;
+                                        }
+                                    })
+                                    .catch(error => console.error('Error fetching cities:', error));
+                            }
+                        }
 
                         // Update the form action URL
                         $('#edit-address').attr('action', "{{ url('addresses/update') }}/" + response.address.id);
@@ -213,8 +242,14 @@
                 error: function() {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
+                        title: 'Something went wrong',
                         text: 'Could not load address data.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
@@ -231,14 +266,20 @@
                 type: 'POST',
                 url: $(this).attr('action'),
                 data: formData,
-                contentType: false, // Important!
-                processData: false, // Important!
+                contentType: false,
+                processData: false,
                 success: function(response) {
                     if (response.success) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Address Updated!',
                             text: 'The address details have been updated successfully.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $('#editAddressModal').modal('hide');
@@ -256,6 +297,12 @@
                                 icon: 'error',
                                 title: 'Something went wrong',
                                 text: 'There was an issue with the server. Please try again.',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
                             });
                         }
                     }
@@ -265,11 +312,16 @@
                         icon: 'error',
                         title: 'Something went wrong',
                         text: 'There was an issue with the server (500). Please try again.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
         });
-
 
         $.ajaxSetup({
             headers: {
@@ -287,6 +339,12 @@
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'No, cancel!',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -294,34 +352,53 @@
                         type: 'DELETE',
                         success: function(response) {
                             if (response.success) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    'The address has been deleted.',
-                                    'success'
-                                ).then((result) => {
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'The address has been deleted.',
+                                    icon: 'success',
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
+                                }).then((result) => {
                                     if (result.isConfirmed) {
                                         $('#example').DataTable().ajax.reload();
                                     }
                                 });
                             } else {
-                                Swal.fire(
-                                    'Error!',
-                                    'There was an issue deleting the address.',
-                                    'error'
-                                );
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'There was an issue deleting the address.',
+                                    icon: 'error',
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
+                                });
                             }
                         },
                         error: function(xhr, status, error) {
-                            Swal.fire(
-                                'Error!',
-                                'There was an issue deleting the address.',
-                                'error'
-                            );
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'There was an issue deleting the address.',
+                                icon: 'error',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
                         }
                     });
                 }
             });
         });
+
     });
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -362,6 +439,7 @@
                     .catch(error => console.error('Error fetching cities:', error));
             }
         });
+
     });
 </script>
 @endpush

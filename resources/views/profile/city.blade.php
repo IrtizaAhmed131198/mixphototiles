@@ -53,7 +53,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addCityLabel">Add Custom Color</h5>
+                    <h5 class="modal-title" id="addCityLabel">Add City</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
@@ -198,6 +198,12 @@
                             icon: 'success',
                             title: 'City Added!',
                             text: 'The city has been added successfully.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $('#addCityModal').modal('hide');
@@ -214,6 +220,12 @@
                             icon: 'error',
                             title: 'Oops...',
                             text: 'Please fix the errors in the form.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         });
                     }
                 },
@@ -223,6 +235,12 @@
                         icon: 'error',
                         title: 'Something went wrong',
                         text: 'There was an issue with the server. Please try again.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
@@ -254,6 +272,12 @@
                         icon: 'error',
                         title: 'Error',
                         text: 'Could not load city data.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
@@ -278,6 +302,12 @@
                             icon: 'success',
                             title: 'City Updated!',
                             text: 'The city details have been updated successfully.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $('#editCityModal').modal('hide');
@@ -295,6 +325,12 @@
                                 icon: 'error',
                                 title: 'Something went wrong',
                                 text: 'There was an issue with the server. Please try again.',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
                             });
                         }
                     }
@@ -304,6 +340,12 @@
                         icon: 'error',
                         title: 'Something went wrong',
                         text: 'There was an issue with the server (500). Please try again.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
@@ -326,6 +368,12 @@
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'No, cancel!',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -334,28 +382,46 @@
                         success: function(response) {
                             if (response.success) {
                                 Swal.fire(
-                                    'Deleted!',
-                                    'The city has been deleted.',
-                                    'success'
+                                    title: 'Deleted!',
+                                    text: 'The city has been deleted.',
+                                    icon: 'success',
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
                                 ).then((result) => {
                                     if (result.isConfirmed) {
                                         $('#example').DataTable().ajax.reload();
                                     }
                                 });
                             } else {
-                                Swal.fire(
-                                    'Error!',
-                                    'There was an issue deleting the city.',
-                                    'error'
-                                );
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'There was an issue deleting the city.',
+                                    icon: 'error',
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
+                                });
                             }
                         },
                         error: function(xhr, status, error) {
-                            Swal.fire(
-                                'Error!',
-                                'There was an issue deleting the city.',
-                                'error'
-                            );
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'There was an issue deleting the city.',
+                                icon: 'error',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
                         }
                     });
                 }

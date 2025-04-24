@@ -40,6 +40,8 @@
     <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
     <!-- daterangepicker css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}">

@@ -222,8 +222,8 @@
                         </p>
                     </div>
                     <div class="productpolicylinks">
-                        <a class="{{ route('shipping') }}" href="javascript:;">Shipping Policy</a>
-                        <a class="" href="javascript:;">FAQ's</a>
+                        <a class="" href="{{ route('shipping') }}">Shipping Policy</a>
+                        <a class="" href="{{ route('faq') }}">FAQ's</a>
                     </div>
 
                 </div>
@@ -440,7 +440,13 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Invalid Coupon Code'
+                    text: 'Invalid Coupon Code',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__faster'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut animate__faster'
+                    }
                 });
             }
         });
@@ -669,7 +675,13 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes, remove it!',
-                cancelButtonText: 'Cancel'
+                cancelButtonText: 'Cancel',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch('{{ route('remove_from_cart') }}', {
@@ -689,16 +701,42 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Deleted!',
-                                text: data.message
+                                text: data.message,
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
                             }).then(() => {
                                 location.reload(); // Reload the page after success
                             });
                         } else {
-                            Swal.fire('Error', data.message, 'error');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Something went wrong',
+                                text: data.message,
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
                         }
                     })
                     .catch(() => {
-                        Swal.fire('Error', 'Something went wrong.', 'error');
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Something went wrong. Please try again.',
+                            icon: 'error',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
+                        });
                     });
                 }
             });
@@ -752,13 +790,25 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: data.message
+                    text: data.message,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__faster'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut animate__faster'
+                    }
                 });
             } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Failed to update cart. Try again.'
+                    text: 'Failed to update cart. Try again.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__faster'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut animate__faster'
+                    }
                 });
             }
         })

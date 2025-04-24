@@ -188,7 +188,7 @@
                                 <div class="form-check">
                                     <input id="agreeTc" class="form-check-input" type="checkbox">
                                     <label for="agreeTc" class="fs-14 fw-medium form-check-label">
-                                        I hereby agree to the <a href="#" class="text-decoration-underline fw-semibold px-1">Terms and Conditions</a>.
+                                        I hereby agree to the <a href="{{ route('terms') }}" class="text-decoration-underline fw-semibold px-1">Terms and Conditions</a>.
                                     </label>
                                 </div>
 

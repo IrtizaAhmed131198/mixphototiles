@@ -465,9 +465,7 @@ async function processAndUploadImages(files, mainLoader) {
     const progressBarContainer = document.querySelector('.progress-bar-container');
     const progressBar = document.querySelector('.progress-bar');
 
-    // Disable upload button during processing
     uploadInput.disabled = true;
-
     progressBarContainer.style.display = 'block';
     progressBar.style.width = '0%';
 
@@ -475,7 +473,17 @@ async function processAndUploadImages(files, mainLoader) {
 
     for (const file of files) {
         if (!file.type.startsWith('image/')) {
-            await Swal.fire('Invalid File', 'Only image files are allowed!', 'error');
+            await Swal.fire({
+                title: 'Invalid File',
+                text: 'Only image files are allowed!',
+                icon: 'error',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
+            });
             continue;
         }
 
@@ -507,6 +515,12 @@ async function processAndUploadImages(files, mainLoader) {
                 customClass: {
                     confirmButton: 'swal-image-confirm-button',
                     cancelButton: 'swal-image-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
                 }
             });
 
@@ -535,20 +549,40 @@ async function processAndUploadImages(files, mainLoader) {
             document.querySelector('.FrameDesignSection').style.display = 'block';
             fetchAndRenderSessionImages();
 
-            // Complete progress bar
             setTimeout(() => {
                 progressBarContainer.style.display = 'none';
-                uploadInput.disabled = false; // Enable input after upload completion
+                uploadInput.disabled = false;
             }, 500);
+
             if (mainLoader) mainLoader.style.display = 'none';
 
-            await Swal.fire('Upload Successful', 'Your images have been uploaded successfully!', 'success');
+            await Swal.fire({
+                title: 'Upload Successful',
+                text: 'Your images have been uploaded successfully!',
+                icon: 'success',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
+            });
         }
     } catch (err) {
         console.error('Image upload failed', err);
-        await Swal.fire('Upload Failed', 'There was a problem uploading images', 'error');
+        await Swal.fire({
+            title: 'Upload Failed',
+            text: 'There was a problem uploading images',
+            icon: 'error',
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
+        });
         progressBarContainer.style.display = 'none';
-        uploadInput.disabled = false; // Re-enable upload input in case of failure
+        uploadInput.disabled = false;
     }
 }
 
@@ -596,10 +630,9 @@ document.getElementById('remove-image').addEventListener('click', async function
         const imgElement = activeSlide.querySelector('img');
         if (imgElement) {
             const imageSrc = imgElement.getAttribute('src');
-            const imageNameWithExt = imageSrc.split('/').pop(); // e.g., "1744920286_original.jpg"
-            const imageName = imageNameWithExt.split('.').slice(0, -1).join('.'); // Removes extension // Extract filename from src
+            const imageNameWithExt = imageSrc.split('/').pop();
+            const imageName = imageNameWithExt.split('.').slice(0, -1).join('.');
 
-            // Confirm before deleting
             const confirmDelete = await Swal.fire({
                 title: 'Are you sure?',
                 text: 'Do you want to delete this image?',
@@ -610,14 +643,18 @@ document.getElementById('remove-image').addEventListener('click', async function
                 customClass: {
                     confirmButton: 'swal-image-confirm-button',
                     cancelButton: 'swal-image-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
                 }
             });
 
             if (confirmDelete.isConfirmed) {
-                // Count current total images
                 const totalSlides = document.querySelectorAll('.swiper-slide img').length;
 
-                // Disable buttons & show progress bar
                 removeButton.disabled = true;
                 uploadInput.disabled = true;
                 progressBarContainer.style.display = 'block';
@@ -625,14 +662,12 @@ document.getElementById('remove-image').addEventListener('click', async function
 
                 await deleteImageFromDatabase(imageName);
 
-                // Reset progress bar
                 progressBar.style.width = '100%';
                 setTimeout(() => {
                     progressBarContainer.style.display = 'none';
                     removeButton.disabled = false;
                     uploadInput.disabled = false;
 
-                    // If the deleted image was the last one, reload the page
                     if (totalSlides === 1) {
                         location.reload();
                     }
@@ -640,7 +675,17 @@ document.getElementById('remove-image').addEventListener('click', async function
             }
         }
     } else {
-        Swal.fire('No Image Selected', 'Please select an image to delete.', 'warning');
+        await Swal.fire({
+            title: 'No Image Selected',
+            text: 'Please select an image to delete.',
+            icon: 'warning',
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
+        });
     }
 });
 
@@ -661,13 +706,33 @@ async function deleteImageFromDatabase(imageName) {
 
         if (result.success) {
             await fetchAndRenderSessionImages(); // Refresh images after deletion
-            Swal.fire('Deleted', 'Image has been deleted successfully', 'success');
+            await Swal.fire({
+                title: 'Deleted',
+                text: 'Image has been deleted successfully',
+                icon: 'success',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
+            });
         } else {
             throw new Error(result.message || 'Failed to delete image');
         }
     } catch (error) {
         console.error('Error deleting image:', error);
-        Swal.fire('Delete Failed', error.message || 'Failed to delete image', 'error');
+        await Swal.fire({
+            title: 'Delete Failed',
+            text: error.message || 'Failed to delete image',
+            icon: 'error',
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
+        });
     }
 }
 
@@ -694,6 +759,12 @@ document.getElementById('reset-image').addEventListener('click', async function 
                 customClass: {
                     confirmButton: 'swal-image-confirm-button',
                     cancelButton: 'swal-image-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
                 }
             });
 
@@ -707,6 +778,7 @@ document.getElementById('reset-image').addEventListener('click', async function 
                 progressBar.style.width = '0%';
 
                 await resetImageToOriginal(filename);
+
                 // Reset progress bar
                 progressBar.style.width = '100%';
                 setTimeout(() => {
@@ -721,7 +793,17 @@ document.getElementById('reset-image').addEventListener('click', async function 
             }
         }
     } else {
-        Swal.fire('No Image Selected', 'Please select an image to reset.', 'warning');
+        await Swal.fire({
+            title: 'No Image Selected',
+            text: 'Please select an image to reset.',
+            icon: 'warning',
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
+        });
     }
 });
 
@@ -742,17 +824,35 @@ async function resetImageToOriginal(filename) {
 
         if (result.success) {
             await fetchAndRenderSessionImages(); // Reload updated image list
-            Swal.fire('Reset Successful', 'Image has been restored to original.', 'success');
+            await Swal.fire({
+                title: 'Reset Successful',
+                text: 'Image has been restored to original.',
+                icon: 'success',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
+            });
         } else {
             throw new Error(result.message || 'Reset failed');
         }
     } catch (error) {
         console.error('Reset error:', error);
-        Swal.fire('Reset Failed', error.message || 'Something went wrong.', 'error');
+        await Swal.fire({
+            title: 'Reset Failed',
+            text: error.message || 'Something went wrong.',
+            icon: 'error',
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
+        });
     }
 }
-
-
 
 
 var swiper = new Swiper('.Images-frame-slider', {
@@ -1590,8 +1690,15 @@ $(document).ready(function () {
                     Swal.fire({
                         icon: 'success',
                         title: 'Crop Image',
-                        text: 'Image saved successfully!'
+                        text: 'Image saved successfully!',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
+
                     $('#frameWrap #uploaded-image').attr('src', response.file_url);
                     $('#frameWrap .inherit-design').css({
                         'position': 'absolute',
@@ -1608,7 +1715,13 @@ $(document).ready(function () {
                     Swal.fire({
                         icon: 'error',
                         title: 'Crop Image',
-                        text: 'Failed to save image.'
+                        text: 'Failed to save image.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             },
@@ -1658,7 +1771,13 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: response.message || 'No images found.'
+                    text: response.message || 'No images found.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__faster'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut animate__faster'
+                    }
                 });
                 return;
             }
@@ -1678,7 +1797,13 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
                     Swal.fire({
                         icon: 'success',
                         title: 'Added to Cart',
-                        text: responseData.message
+                        text: responseData.message,
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     }).then(() => {
                         // Redirect to cart page after success message
                         window.location.href = cart_page; // Update URL as needed
@@ -1687,7 +1812,13 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: responseData.message || 'An error occurred.'
+                        text: responseData.message || 'An error occurred.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             })
@@ -1696,7 +1827,13 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Failed to add products to cart.'
+                    text: 'Failed to add products to cart.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__faster'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut animate__faster'
+                    }
                 });
             });
         })
@@ -1705,7 +1842,13 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Failed to get images.'
+                text: 'Failed to get images.',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             });
         });
 });

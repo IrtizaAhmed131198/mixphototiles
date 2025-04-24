@@ -499,7 +499,13 @@
                 text: "This image will be permanently deleted.",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Yes, delete it!",
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -511,13 +517,43 @@
                         success: function (response) {
                             if (response.success) {
                                 imageElement.remove();  // Remove image from the DOM
-                                Swal.fire("Deleted!", response.message, "success");
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: response.message,
+                                    icon: "success",
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
+                                });
                             } else {
-                                Swal.fire("Error!", response.message, "error");
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: response.message,
+                                    icon: "error",
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
+                                });
                             }
                         },
                         error: function () {
-                            Swal.fire("Error!", "Unable to delete the image.", "error");
+                            Swal.fire({
+                                title: "Error!",
+                                text: "Unable to delete the image.",
+                                icon: "error",
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
                         }
                     });
                 }
@@ -533,7 +569,13 @@
                 text: "This frame and all associated images will be deleted.",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Yes, delete it!",
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -544,14 +586,44 @@
                         },
                         success: function (response) {
                             if (response.success) {
-                                Swal.fire("Deleted!", response.message, "success");
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: response.message,
+                                    icon: "success",
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
+                                });
                                 $('#example').DataTable().ajax.reload();  // Reload DataTable after deletion
                             } else {
-                                Swal.fire("Error!", response.message, "error");
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: response.message,
+                                    icon: "error",
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
+                                });
                             }
                         },
                         error: function () {
-                            Swal.fire("Error!", "Unable to delete the product.", "error");
+                            Swal.fire({
+                                title: "Error!",
+                                text: "Unable to delete the product.",
+                                icon: "error",
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
                         }
                     });
                 }
@@ -708,6 +780,12 @@
                     title: "No Selection",
                     text: "Please select at least one rectangle!",
                     confirmButtonColor: "#3085d6",
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__faster'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut animate__faster'
+                    }
                 });
                 return;
             }
@@ -729,6 +807,12 @@
                         title: "Saved!",
                         text: "Coordinates saved successfully!",
                         confirmButtonColor: "#28a745",
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     }).then(() => {
                         console.log(response);
                     });
@@ -739,6 +823,12 @@
                         title: "Error!",
                         text: "Failed to save coordinates. Please try again.",
                         confirmButtonColor: "#d33",
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                     console.error("Error saving coordinates:", xhr.responseText);
                 }

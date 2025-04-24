@@ -247,6 +247,12 @@
                             icon: 'success',
                             title: 'Size Added!',
                             text: 'The size has been added successfully.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $('#addSizesModal').modal('hide');
@@ -263,6 +269,12 @@
                             icon: 'error',
                             title: 'Oops...',
                             text: 'Please fix the errors in the form.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         });
                     }
                 },
@@ -272,6 +284,12 @@
                         icon: 'error',
                         title: 'Something went wrong',
                         text: 'There was an issue with the server. Please try again.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
@@ -313,6 +331,12 @@
                         icon: 'error',
                         title: 'Error',
                         text: 'Could not load size data.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
@@ -337,6 +361,12 @@
                             icon: 'success',
                             title: 'Size Updated!',
                             text: 'The size details have been updated successfully.',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $('#editSizesModal').modal('hide');
@@ -354,6 +384,12 @@
                                 icon: 'error',
                                 title: 'Something went wrong',
                                 text: 'There was an issue with the server. Please try again.',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
                             });
                         }
                     }
@@ -363,6 +399,12 @@
                         icon: 'error',
                         title: 'Something went wrong',
                         text: 'There was an issue with the server (500). Please try again.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             });
@@ -385,6 +427,12 @@
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'No, cancel!',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -392,29 +440,47 @@
                         type: 'DELETE',
                         success: function(response) {
                             if (response.success) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    'The size has been deleted.',
-                                    'success'
-                                ).then((result) => {
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'The size has been deleted.',
+                                    icon: 'success',
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
+                                }).then((result) => {
                                     if (result.isConfirmed) {
                                         $('#example').DataTable().ajax.reload();
                                     }
                                 });
                             } else {
-                                Swal.fire(
-                                    'Error!',
-                                    'There was an issue deleting the size.',
-                                    'error'
-                                );
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'There was an issue deleting the size.',
+                                    icon: 'error',
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                    }
+                                });
                             }
                         },
                         error: function(xhr, status, error) {
-                            Swal.fire(
-                                'Error!',
-                                'There was an issue deleting the size.',
-                                'error'
-                            );
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'There was an issue deleting the size.',
+                                icon: 'error',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
                         }
                     });
                 }
