@@ -719,7 +719,8 @@ class MainController extends Controller
     {
         $cart = session()->get('cart', []); // Product details
         $cartGrandTotal = session()->get('cart_grand_total', 0); // Total price
-        $giftCard = session()->get('gift_card_applied', 0); // Gift card (optional)
+        $giftCard = 0; // Gift card (optional)
+        // $giftCard = session()->get('gift_card_applied', 0); // Gift card (optional)
         // $shipping = session()->get('shipping', 0); // Gift card (optional)
 
         // Example: Assume you set coupon data in session somewhere earlier

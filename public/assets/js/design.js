@@ -1283,13 +1283,14 @@ hangOptions.forEach(option => {
 // }
 
 function saveFrameConfigToDatabase(frameConfig, type) {
+    console.log("Saving frame configuration to database:", frameConfig);
     const activeSlide = document.querySelector('.swiper-slide-active');
 
     if (activeSlide) {
         const activeImg = activeSlide.querySelector('img');
         if (activeImg) {
             const activeSrc = activeImg.getAttribute('src'); // Example: "uploads/image.jpg"
-            const imageName = activeSrc.split('/').pop();    // Just the file name (image.jpg)
+            const imageName = activeSrc.split('/').pop().split('.').slice(0, -1).join('.');   // Just the file name (image.jpg)
 
             sendFrameConfigToServer(imageName, frameConfig, type);
         }

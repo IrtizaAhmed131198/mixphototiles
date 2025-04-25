@@ -153,10 +153,10 @@
                                     </li>
                                     @endif
 
-                                    <li>
+                                    {{-- <li>
                                         <p class="customTilename">Gift Card</p>
                                         <span class="">₹{{ number_format($giftCard, 2) }}</span>
-                                    </li>
+                                    </li> --}}
 
                                     <li>
                                         <p class="customTilename">Shipping</p>
