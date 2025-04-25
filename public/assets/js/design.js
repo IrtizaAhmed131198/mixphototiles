@@ -506,8 +506,8 @@ async function processAndUploadImages(files, mainLoader) {
             if (mainLoader) mainLoader.style.display = 'none';
 
             const result = await Swal.fire({
-                title: 'Image Issue',
-                text: 'Your image is either too small or blurry. Do you want to keep it anyway?',
+                title: 'Low Quality Image',
+                text: 'Your image is pretty small and may make blurry frames. Do you want to keep it anyway?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Keep Anyway',
@@ -525,6 +525,7 @@ async function processAndUploadImages(files, mainLoader) {
             });
 
             if (!result.isConfirmed) {
+                uploadInput.disabled = false;
                 continue;
             }
         }

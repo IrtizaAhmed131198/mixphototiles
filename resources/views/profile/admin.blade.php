@@ -37,6 +37,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -236,6 +237,7 @@
                 { data: 'name', name: 'name' },
                 { data: 'email', name: 'email' },
                 { data: 'role', name: 'role' },
+                { data: 'status', name: 'status' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });

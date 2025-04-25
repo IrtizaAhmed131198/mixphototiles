@@ -13,6 +13,7 @@ use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Carbon\Carbon;
 use App\Mail\OtpMail;
+use App\Mail\AccountVerified;
 
 class AuthController extends Controller
 {
@@ -85,7 +86,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'phone' => 'nullable|unique:users,phone',
+            'phone' => 'nullable|unique:users,phone|regex:/^[0-9]{10,15}$/',
             'password' => 'required|min:6|confirmed',
         ]);
 
@@ -156,7 +157,7 @@ class AuthController extends Controller
     public function verifyOtp(Request $request)
     {
         $request->validate([
-            'otp' => 'required|digits:6'
+            'otp' => 'required'
         ]);
 
         $user = User::where('otp', $request->otp)->first();
@@ -175,7 +176,14 @@ class AuthController extends Controller
         $user->status = 1; // Activate user
         $user->save();
 
-        return response()->json(['status' => 'success', 'message' => 'OTP verified. Proceed to reset your password.', 'email' => $user->email]);
+        // Send verification email
+        Mail::to($user->email)->send(new AccountVerified($user, $request->password));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'OTP verified. Proceed to reset your password.',
+            'email' => $user->email
+        ]);
     }
 
     public function reset(Request $request)

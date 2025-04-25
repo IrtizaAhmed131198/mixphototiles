@@ -121,7 +121,7 @@
                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email: email, otp: otp })
+            body: JSON.stringify({ email: email, otp: otp, password: 1 })
         })
         .then(response => response.json())
         .then(data => {
@@ -182,21 +182,38 @@
                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email: email, otp: otp })
+            body: JSON.stringify({ email: email, otp: otp, password: 0 })
         })
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                otpMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+                // otpMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
 
                 document.getElementById("get_email").value = email;
 
-                // ✅ Get the existing OTP modal instance and hide it
-                let otpModalEl = document.getElementById('exampleModalToggleOtpSign');
-                let otpModalInstance = bootstrap.Modal.getInstance(otpModalEl);
-                if (otpModalInstance) {
-                    otpModalInstance.hide();
-                }
+                // ✅ Show SweetAlert success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'You are verified!',
+                    text: 'Your account has been successfully verified.',
+                    confirmButtonText: 'OK',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__faster'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut animate__faster'
+                    }
+                }).then((result) => {
+                    // Check if the user clicked "OK"
+                    if (result.isConfirmed) {
+                        // ✅ Get the existing OTP modal instance and hide it
+                        let otpModalEl = document.getElementById('exampleModalToggleOtpSign');
+                        let otpModalInstance = bootstrap.Modal.getInstance(otpModalEl);
+                        if (otpModalInstance) {
+                            otpModalInstance.hide();
+                        }
+                    }
+                });
 
             } else {
                 otpError.textContent = data.message;
@@ -337,12 +354,10 @@
                         // Store user ID or email temporarily for OTP verification
                         $('#signupForm').data('user-email', response.email); // or response.user_id if preferred
 
+                        // Close the current modal
                         $('#exampleModalToggle2').modal('hide');
-                        // Show OTP modal
-                        setTimeout(() => {
-                            $('#exampleModalToggleOtpSign').modal('show');
-                        }, 500);
 
+                        // Show SweetAlert and wait for user to click "OK"
                         Swal.fire({
                             icon: 'success',
                             title: 'Almost there!',
@@ -353,8 +368,16 @@
                             hideClass: {
                                 popup: 'animate__animated animate__fadeOut animate__faster'
                             }
+                        }).then((result) => {
+                            // After the user clicks "OK", show the OTP modal
+                            if (result.isConfirmed) {
+                                setTimeout(() => {
+                                    $('#exampleModalToggleOtpSign').modal('show');
+                                }, 500);
+                            }
                         });
                     }
+
                 },
                 error: function (xhr) {
                     $('#signupBtn').prop('disabled', false).text('Sign Up');

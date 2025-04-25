@@ -147,7 +147,7 @@
                                                             Orders</a>
                                                     </li>
                                                     <li>
-
+                                                        @if(in_array(Auth::user()->role, ['user']))
                                                         <a href="{{ route('address') }}">
                                                             <span><svg width="22" height="22" viewBox="0 0 22 22"
                                                                     class="w-em h-em fs-18 me-2"
@@ -174,6 +174,35 @@
                                                                     </g>
                                                                 </svg></span>
                                                             Addresses</a>
+                                                        @else
+                                                        <a href="{{ route('addresses.index') }}">
+                                                            <span><svg width="22" height="22" viewBox="0 0 22 22"
+                                                                    class="w-em h-em fs-18 me-2"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <g transform="translate(20197 -555)">
+                                                                        <g transform="translate(0.978 -10.8)">
+                                                                            <path fill="none" stroke-width="1.5"
+                                                                                stroke-miterlimit="10"
+                                                                                stroke="currentColor"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                transform="translate(-20194.016 567.763)"
+                                                                                d="M6.673,17.855l.43.392.43-.392c.27-.244,6.635-6.025,6.635-10.752A7.065,7.065,0,0,0,.038,7.1c0,4.727,6.365,10.508,6.634,10.752Z">
+                                                                            </path>
+                                                                            <g fill="none" stroke-width="1.5"
+                                                                                stroke="currentColor"
+                                                                                transform="translate(-20190.488 571.316)">
+                                                                                <circle cx="3.574" cy="3.574"
+                                                                                    r="3.574" stroke="none"></circle>
+                                                                                <circle cx="3.574" cy="3.574"
+                                                                                    r="2.824" fill="none"></circle>
+                                                                            </g>
+                                                                        </g>
+                                                                    </g>
+                                                                </svg></span>
+                                                            Addresses</a>
+                                                        @endif
+
                                                     </li>
                                                     <li>
 

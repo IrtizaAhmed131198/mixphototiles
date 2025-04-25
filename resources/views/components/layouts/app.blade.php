@@ -98,7 +98,13 @@ https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js
             icon: 'success',
             title: 'Success!',
             text: '{{ session('success') }}',
-            confirmButtonText: 'OK'
+            confirmButtonText: 'OK',
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
         });
     </script>
 @endif
@@ -109,7 +115,13 @@ https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js
             icon: 'error',
             title: 'Error!',
             text: '{{ session('error') }}',
-            confirmButtonText: 'OK'
+            confirmButtonText: 'OK',
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
         });
     </script>
 @endif

@@ -2,6 +2,26 @@
 
 @section('title', 'Order Summary')
 
+@section('css')
+<style>
+#example td:nth-child(2) {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    max-height: 50px;
+    overflow-y: auto;
+}
+
+#example td:nth-child(2).scrollable {
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+</style>
+@endsection
+
 @section('content')
 
     <section class="profile-section">
@@ -21,9 +41,6 @@
                                     <th>Price</th>
                                     <th>Status</th>
                                     <th>Payment Method</th>
-                                    {{-- <th>Coupon</th>
-                                    <th>Discount</th>
-                                    <th>Shipping</th> --}}
                                     <th>Date/Time</th>
                                     <th>Action</th>
                                 </tr>
@@ -49,13 +66,17 @@ $(document).ready(function () {
         ajax: '{{ route("get.orders") }}',
         columns: [
             { data: 'id', name: 'id' },
-            { data: 'title', name: 'title' },
+            {
+                data: 'title',
+                name: 'title',
+                render: function(data, type, row) {
+                    // Add scrollable style if content is long
+                    return '<div class="scrollable" style="max-width: 200px; overflow-y: auto;">' + data + '</div>';
+                }
+            },
             { data: 'price', name: 'price' },
             { data: 'status', name: 'status' },
             { data: 'payment_method', name: 'payment_method' },
-            // { data: 'coupon', name: 'coupon' },
-            // { data: 'discount', name: 'discount' },
-            // { data: 'shipping', name: 'shipping' },
             { data: 'datetime', name: 'datetime' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
@@ -81,5 +102,36 @@ $(document).on('change', '.order-status-dropdown', function () {
         }
     });
 });
+// Wait for the document to be ready
+$(document).ready(function () {
+    // Add a click event listener to the delete button
+    $(document).on('click', '#deleteButton', function (e) {
+        e.preventDefault(); // Prevent the default link behavior
+
+        var deleteUrl = $(this).data('href'); // Get the URL from the data-href attribute
+
+        // Show SweetAlert2 confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms, redirect to the delete URL
+                window.location.href = deleteUrl;
+            }
+        });
+    });
+});
+
 </script>
 @endpush

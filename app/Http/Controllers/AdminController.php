@@ -48,11 +48,14 @@ class AdminController extends Controller
                 $counter++;
                 return $counter;
             })
+            ->addColumn('status', function ($row) {
+                return $row->status == 1 ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-secondary">Inactive</span>';
+            })
             ->addColumn('action', function ($user) {
                 return '<button class="btn btn-sm btn-primary edit-user" data-id="'.$user->id.'">Edit</button>
                         <button class="btn btn-sm btn-danger delete-user" data-id="'.$user->id.'">Delete</button>';
             })
-            ->rawColumns(['id', 'action'])
+            ->rawColumns(['id', 'status', 'action']) // Include 'status' here to allow HTML badges
             ->make(true);
     }
 

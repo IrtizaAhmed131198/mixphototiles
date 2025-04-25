@@ -122,8 +122,15 @@ class ProfileController extends Controller
             ->addColumn('datetime', function ($order) {
                 return $order->created_at->format('Y-m-d H:i:s');
             })
-            ->addColumn('action', function ($order) {
-                return '<a href="'.route('orders.view', $order->id).'" class="btn btn-sm btn-info">View</a>';
+            ->addColumn('action', function ($order) use ($user) {
+                $action = '<a href="'.route('orders.view', $order->id).'" class="btn btn-sm btn-info">View</a>';
+
+                // Show delete button only for admin or super admin
+                if (in_array($user->role, ['admin', 'super_admin'])) {
+                    $action .= '<a href="#" data-href="'.route('orders.delete', $order->id).'" id="deleteButton" class="btn btn-sm btn-danger">Delete</a>';
+                }
+
+                return $action;
             })
             ->rawColumns(['id', 'status', 'action'])
             ->make(true);
@@ -140,6 +147,14 @@ class ProfileController extends Controller
         $custom_color = CustomColor::where('status', 1)->get();
 
         return view('profile.receipt', compact('order', 'custom_color'));
+    }
+
+    public function deleteOrder($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->delete();
+
+        return redirect()->route('orders')->with('success', 'Order deleted successfully!');
     }
 
     public function updateStatus(Request $request, Order $order)

@@ -90,6 +90,7 @@ Route::get('/myprofile', [ProfileController::class, 'profile'])->name('profile')
 Route::post('/update-myprofile', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
 Route::get('/orders/{id}', [ProfileController::class, 'viewOrder'])->name('orders.view');
+Route::get('/orders/delete/{id}', [ProfileController::class, 'deleteOrder'])->name('orders.delete');
 Route::get('/get-orders', [ProfileController::class, 'getOrders'])->name('get.orders');
 Route::post('/orders/update-status/{order}', [ProfileController::class, 'updateStatus'])->name('orders.update-status');
 Route::get('/address', [ProfileController::class, 'address'])->name('address');
