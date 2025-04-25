@@ -3,92 +3,169 @@
 @section('title', 'FAQs')
 
 @push('css')
-    <style>
-        .child-faq {
-            margin: auto;
-            width: 70%;
-            margin-top: 30px;
-            margin-bottom: 50px;
-        }
+<style>
+</style>
 
-        .child-faq h1 {
-            color: black;
-            text-align: start !important;
-            margin-bottom: 30px;
-            font-weight: 600;
-            font-size: 35px;
-        }
-
-        .child-faq p {
-            color: black;
-            font-weight: 400;
-            font-size: 15px;
-            line-height: 25px;
-        }
-
-        .child-faq ul li {
-            margin-bottom: 10px;
-            list-style: number;
-        }
-
-        .child-faq h2 {
-            color: black;
-            font-weight: 500;
-            font-size: 30px;
-            margin: 30px 0;
-        }
-
-        .child-faq table {
-            margin: 40px 0;
-        }
-
-        .child-faq table tr th {
-            color: black;
-            font-size: 16px;
-            padding-bottom: 20px !important;
-        }
-
-        .child-faq table tr td {
-            padding-bottom: 15px;
-        }
-
-        .child-faq ul li strong {
-            color: black;
-        }
-
-        .child-faq ul li ul li {
-            list-style: none;
-            position: relative;
-            z-index: 0;
-        }
-
-        .child-faq ul li ul li:before {
-            position: absolute;
-            z-index: 0;
-            content: "";
-            left: -20px;
-            top: 10px;
-            width: 8px;
-            height: 8px;
-            background: #ff0168;
-            border-radius: 0;
-        }
-
-        .child-faq ul li ul {
-            margin-top: 10px;
-        }
-    </style>
 @endpush
 
 @section('content')
-<section class="faq-policy">
+
+<section class="faq-section">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <div class="child-faq">
-                    <h1 class="text-center">FAQs</h1>
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <div class="faqsidebar">
+                    <ul>
+                        <li><a href="#website-faq" class="scroll-link">Website</a></li>
+                        <li><a href="#frames-faq" class="scroll-link">Frames</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FAQ Content Area -->
+            <div class="col-lg-9">
+                <!-- Website FAQ -->
+                <div id="website-faq" class="faq-content mb-5">
+                    <h3>Website FAQs</h3>
+                    <div class="accordion accordion-flush" id="websiteAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="websiteQ1">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#websiteA1" aria-expanded="false"
+                                    aria-controls="websiteA1">
+                                    How do I use the website?
+                                </button>
+                            </h2>
+                            <div id="websiteA1" class="accordion-collapse collapse"
+                                aria-labelledby="websiteQ1" data-bs-parent="#websiteAccordion">
+                                <div class="accordion-body">
+                                    You can browse, register, and explore various features provided on the site.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="websiteQ2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#websiteA2" aria-expanded="false"
+                                    aria-controls="websiteA2">
+                                    Is registration required?
+                                </button>
+                            </h2>
+                            <div id="websiteA2" class="accordion-collapse collapse"
+                                aria-labelledby="websiteQ2" data-bs-parent="#websiteAccordion">
+                                <div class="accordion-body">
+                                    Yes, registration is required to access personalized features.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Frames FAQ -->
+                <div id="frames-faq" class="faq-content">
+                    <h3>Frames FAQs</h3>
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                    What does Magnetic Photo Frames have to offer?
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    Magnetic Photo Frames offers you to create your own masterpiece with our customizable photo frames.
+                                    Simply upload your images. We’ll print, frame, and deliver them right to your doorstep.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                    aria-controls="flush-collapseTwo">
+                                    Is it simple to rearrange the tiles?
+                                </button>
+                            </h2>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    It’s incredibly easy! Each frame comes with strong, re-stickable adhesive stickers attached to the sides...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                    aria-controls="flush-collapseThree">
+                                    What comes with my order?
+                                </button>
+                            </h2>
+                            <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    Magnetic Photo Frames frames are crafted with a solid foundation, our frames exude durability and elegance...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseFour" aria-expanded="false"
+                                    aria-controls="flush-collapseFour">
+                                    Do your photo tiles cost a lot?
+                                </button>
+                            </h2>
+                            <div id="flush-collapseFour" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    We offer premium-quality photo tiles at prices designed for everyone...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingFive">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseFive" aria-expanded="false"
+                                    aria-controls="flush-collapseFive">
+                                    What size options do the photo tiles offer?
+                                </button>
+                            </h2>
+                            <div id="flush-collapseFive" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    You can explore sizes from 8" x 8" to 28" x 36", with the flexibility to customize...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
+
 @endsection
+
+@push('scripts')
+
+<script>
+    document.querySelectorAll('.scroll-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 100, // offset for fixed headers
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+
+@endpush

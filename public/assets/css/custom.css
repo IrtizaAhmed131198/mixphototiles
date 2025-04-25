@@ -3176,6 +3176,10 @@ button.btn.custom-btn.transparent.copied svg {
     padding: 50px 0;
 }
 
+.faq-section {
+    padding: 50px 0;
+}
+
 .profilesidebar ul {
     border: 1px solid #e2e2e2;
     list-style: none;
@@ -3206,6 +3210,40 @@ button.btn.custom-btn.transparent.copied svg {
 }
 
 .profilesidebar ul li:last-child a {
+    border: none;
+}
+
+
+.faqsidebar ul {
+    border: 1px solid #e2e2e2;
+    list-style: none;
+    padding: 0;
+}
+
+.faqsidebar ul li {
+    padding: 0px 30px;
+}
+
+.faqsidebar ul li a {
+    text-decoration: none;
+    display: flex;
+    padding: 25px 0px;
+    border-bottom: 1px solid;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.faqsidebar ul li a svg {
+    font-size: 22px;
+}
+
+
+/* .faqsidebar ul li:last-child {
+    margin-top: 120px;
+    margin-bottom: 10px;
+} */
+
+.faqsidebar ul li:last-child a {
     border: none;
 }
 
