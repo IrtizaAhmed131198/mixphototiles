@@ -38,10 +38,10 @@
                                     <a class="nav-link" href="javascript:;">Installation & Care</a>
                                 </li> --}}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="javascript:;">FAQs</a>
+                                    <a class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}" href="{{ route('faq') }}">FAQs</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="javascript:;">Contact Us</a>
+                                    <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact Us</a>
                                 </li>
                             </ul>
                             <span class="break-line"></span>
