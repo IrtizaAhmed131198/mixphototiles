@@ -436,7 +436,7 @@
                         type: 'DELETE',
                         success: function(response) {
                             if (response.success) {
-                                Swal.fire(
+                                Swal.fire({
                                     title: 'Deleted!',
                                     text: 'The coupon has been deleted.',
                                     icon: 'success',
@@ -446,7 +446,7 @@
                                     hideClass: {
                                         popup: 'animate__animated animate__fadeOut animate__faster'
                                     }
-                                ).then((result) => {
+                                }).then((result) => {
                                     if (result.isConfirmed) {
                                         $('#example').DataTable().ajax.reload();
                                     }
