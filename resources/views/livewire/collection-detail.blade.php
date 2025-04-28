@@ -716,8 +716,10 @@
 <div id="cropImagePop" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content p-3">
-        <div id="upload-demo" class="upload-demo"></div>
+        <div id="upload-demo-collection" class="upload-demo-collection"></div>
         <div class="mt-3 text-end">
+        </div>
+        <div class="mt-5 text-center">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           <button id="cropImageBtn" class="btn btn-primary">Crop</button>
         </div>
@@ -1185,18 +1187,18 @@ document.getElementById("crop-image").addEventListener("click", function () {
 
     // Destroy existing Croppie instance if any
     if ($uploadCrop) {
-        $('#upload-demo').croppie('destroy');
+        $('#upload-demo-collection').croppie('destroy');
     }
 
     // Initialize new Croppie instance with better zoom control
-    $uploadCrop = $('#upload-demo').croppie({
+    $uploadCrop = $('#upload-demo-collection').croppie({
         viewport: {
-            width: clusterWidth,
-            height: clusterHeight
+            width: clusterWidth * 2,
+            height: clusterHeight * 2
         },
         boundary: {
-            width: clusterWidth + 100,
-            height: clusterHeight + 100
+            width: (clusterWidth * 2) + 100,
+            height: (clusterHeight * 2) + 100
         },
         enforceBoundary: true,
         enableExif: true,
