@@ -550,12 +550,12 @@
                                         <div class="modal-body">
                                             <div id="upload-demo" class="mx-auto"></div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer mt-4">
-                                        <button type="button" class="btn custom-btn filled"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="button" id="cropImageBtn"
-                                            class="btn custom-btn filled">Crop</button>
+                                        <div class="modal-footer mt-4">
+                                            <button type="button" class="btn custom-btn filled"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" id="cropImageBtn"
+                                                class="btn custom-btn filled">Crop</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
