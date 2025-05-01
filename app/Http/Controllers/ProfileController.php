@@ -139,9 +139,9 @@ class ProfileController extends Controller
     public function viewOrder($id)
     {
         if(Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'){
-            $order = Order::with(['orderItems.product'])->findOrFail($id);
+            $order = Order::with(['orderItems.product', 'user', 'address'])->findOrFail($id);
         }else{
-            $order = Order::with(['orderItems.product'])->where('user_id', Auth::id())->findOrFail($id);
+            $order = Order::with(['orderItems.product', 'user', 'address'])->where('user_id', Auth::id())->findOrFail($id);
         }
 
         $custom_color = CustomColor::where('status', 1)->get();

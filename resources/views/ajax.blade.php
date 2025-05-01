@@ -191,7 +191,6 @@
 
                 document.getElementById("get_email").value = email;
 
-                // ✅ Show SweetAlert success message
                 Swal.fire({
                     icon: 'success',
                     title: 'You are verified!',
@@ -204,14 +203,26 @@
                         popup: 'animate__animated animate__fadeOut animate__faster'
                     }
                 }).then((result) => {
-                    // Check if the user clicked "OK"
                     if (result.isConfirmed) {
-                        // ✅ Get the existing OTP modal instance and hide it
+                        // Hide the OTP modal
                         let otpModalEl = document.getElementById('exampleModalToggleOtpSign');
                         let otpModalInstance = bootstrap.Modal.getInstance(otpModalEl);
                         if (otpModalInstance) {
                             otpModalInstance.hide();
                         }
+
+                        // Show the "Please login" alert
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Please login',
+                            confirmButtonText: 'OK',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__faster'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
+                        });
                     }
                 });
 

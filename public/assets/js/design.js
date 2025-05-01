@@ -160,6 +160,22 @@ function applyInitialFrameDesign(imageObj) {
 
     // Apply new design and shadow class
     frameWrap.classList.add(initialDesignClass);
+
+    // --- Hide/Show color options based on frameless selection ---
+    const colorOptionsTemp = document.querySelectorAll('.frame-color');
+    if (initialDesignClass === 'frameless-card-design') {
+        colorOptionsTemp.forEach((colorOption, index) => {
+            if (index === 0) {
+                colorOption.style.display = 'flex'; // or 'block' depending on your layout
+            } else {
+                colorOption.style.display = 'none';
+            }
+        });
+    } else {
+        colorOptionsTemp.forEach(colorOption => {
+            colorOption.style.display = 'flex'; // or 'block'
+        });
+    }
 }
 
 function applyInitialFrameColor(imageObj) {
@@ -1044,6 +1060,22 @@ designOptions.forEach(option => {
             displayText: displayText,
             design_price: design_price
         }, 'design');
+
+        // --- Hide/Show color options based on frameless selection ---
+        const colorOptionsTemp = document.querySelectorAll('.frame-color');
+        if (designClass === 'frameless-card-design') {
+            colorOptionsTemp.forEach((colorOption, index) => {
+                if (index === 0) {
+                    colorOption.style.display = 'flex'; // or 'block' depending on your layout
+                } else {
+                    colorOption.style.display = 'none';
+                }
+            });
+        } else {
+            colorOptionsTemp.forEach(colorOption => {
+                colorOption.style.display = 'flex'; // or 'block'
+            });
+        }
 
         setTimeout(() => {
             updateFramePrice(get_active_config);

@@ -19,10 +19,12 @@ use App\Models\State;
 use App\Models\City;
 use App\Models\ProductImage;
 use Carbon\Carbon;
+use App\Mail\OtpMail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class MainController extends Controller
 {
@@ -687,12 +689,12 @@ class MainController extends Controller
 
     public function update_cart_grand_total(Request $request)
     {
-        if(!Auth::check()){
-            return response()->json([
-                'error' => true,
-                'message' => 'User not authenticated. Please login to continue.'
-            ]);
-        }
+        // if(!Auth::check()){
+        //     return response()->json([
+        //         'error' => true,
+        //         'message' => 'User not authenticated. Please login to continue.'
+        //     ]);
+        // }
         session()->forget('cart_grand_total');
         session()->forget('gift_card_applied');
         // session()->forget('shipping');
@@ -779,19 +781,31 @@ class MainController extends Controller
 
         if ($user) {
             // Update existing user
-            $user->name = $get_address['full_name'];
-            $user->phone = $get_address['phone_number'];
-            $user->save();
+            // $user->name = $get_address['full_name'];
+            // $user->phone = $get_address['phone_number'];
+            // $user->save();
         } else {
             // Create new user
             $user = new User();
             $user->name = $get_address['full_name'];
             $user->email = $get_address['email'];
             $user->phone = $get_address['phone_number'];
-            $user->password = bcrypt('123456789');  // Set default password (optional)
-            $user->status = 1; // Assuming 1 is for active
+            $user->password = bcrypt($get_address['password']);  // Set default password (optional)
+            $user->status = 0; // Assuming 1 is for active
             $user->role = 'user'; // Assuming you have a role column
             $user->save();
+
+            do {
+                $otp = rand(100000, 999999);
+                $exists = User::where('otp', $otp)->exists();
+            } while ($exists);
+
+            // Save OTP with expiration time
+            $user->otp = $otp;
+            $user->otp_expires_at = Carbon::now()->addMinutes(10);
+            $user->save();
+
+            Mail::to($user->email)->send(new OtpMail($otp, $user->name));
         }
 
 
@@ -847,6 +861,7 @@ class MainController extends Controller
             'full_name' => 'required|string|max:255',
             'phone_number' => 'required',
             'email' => 'required|email',
+            'password' => 'nullable|min:6',
             'pincode' => 'required|digits:6',
             'address_line1' => 'required|string|max:500',
             'address_line2' => 'nullable|string|max:500',
@@ -855,6 +870,20 @@ class MainController extends Controller
             'alternate_phone_number' => 'nullable',
         ]);
 
+        $message = '';
+        if(!Auth::check()){
+            $existUser = User::where('email', $request->email)->first();
+            if($existUser){
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Email is already exist'
+                ]);
+            }
+            $message = "Address and account saved successfully!";
+        }else{
+            $message = "Address saved successfully!";
+        }
+
         Session::forget('user_address');
 
         // Save to session (you can also save to database if needed)
@@ -862,7 +891,8 @@ class MainController extends Controller
 
         return response()->json([
             'success' => true,
-            'address' => $validated
+            'address' => $validated,
+            'message' => $message
         ]);
     }
 

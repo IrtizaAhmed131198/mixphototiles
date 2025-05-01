@@ -45,19 +45,29 @@
                                             <div class="row GuestAddress_addressFormRow__Tupge">
                                                 <div class="col-lg-6">
                                                     <div label="Full Name">
-                                                        <input placeholder="Full Name" id="nameInput" class="form-control" type="text" name="full_name" value="{{ Auth::user()->name }}">
+                                                        <input placeholder="Full Name" id="nameInput" class="form-control" type="text" name="full_name" value="{{ Auth::user()->name ?? '' }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div label="Mobile Number">
-                                                        <input placeholder="Mobile number" maxlength="10" id="phoneInput" class="form-control" type="tel" name="phone_number" value="{{ Auth::user()->phone }}">
+                                                        <input placeholder="Mobile number" maxlength="10" id="phoneInput" class="form-control" type="tel" name="phone_number" value="{{ Auth::user()->phone ?? '' }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div label="Email">
-                                                        <input placeholder="Email" id="emailInput" class="form-control" type="email" name="email" value="{{ Auth::user()->email }}">
+                                                        <input placeholder="Email" id="emailInput" class="form-control" autocomplete="off"  type="email" name="email" value="{{ Auth::user()->email ?? '' }}">
                                                     </div>
                                                 </div>
+
+                                                <!--signup-->
+                                                @if(!Auth::check())
+                                                <div class="col-lg-6">
+                                                    <div label="Password">
+                                                        <input placeholder="Password" id="passwordInput" class="form-control" autocomplete="new-password" type="password" name="password" value="">
+                                                    </div>
+                                                </div>
+                                                @endif
+
                                                 <div class="col-lg-6">
                                                     <div label="Pin Code">
                                                         <input placeholder="Pin Code" maxlength="6" id="pinCodeInput" class="form-control" type="number" name="pincode">
@@ -90,7 +100,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <button type="button" id="saveAddressBtn" class="btn custom-btn filled">Save</button>
+                                                    <button type="button" id="saveAddressBtn" class="btn custom-btn filled">Save @if(!Auth::check()) & Sign Up @endif</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -207,8 +217,8 @@
                         </p>
                     </div>
                     <div class="productpolicylinks">
-                        <a class="" href="javascript:;">Shipping Policy</a>
-                        <a class="" href="javascript:;">FAQ's</a>
+                        <a class="" href="{{ route('shipping') }}" target="_blank">Shipping Policy</a>
+                        <a class="" href="{{ route('faq') }}" target="_blank">FAQ's</a>
                     </div>
 
                 </div>
@@ -292,9 +302,15 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Success',
-                        text: 'Address saved successfully!',
+                        text: response.message,
                         timer: 2000,
-                        showConfirmButton: false
+                        showConfirmButton: false,
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
 
                     // Update the address display
@@ -306,11 +322,29 @@
                         toggle: false // Prevent auto-toggle (because it's open already)
                     });
                     bsCollapse.hide();  // This will close the accordion section
+                } else if(response.error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.message,
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
+                    });
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Failed to save address.'
+                        text: 'Failed to save address.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             },
@@ -326,13 +360,25 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Validation Error',
-                        html: errorHtml
+                        html: errorHtml,
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Something went wrong. Please try again.'
+                        text: 'Something went wrong. Please try again.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 }
             }
@@ -357,7 +403,13 @@
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'You must agree to the Terms and Conditions.'
+                text: 'You must agree to the Terms and Conditions.',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             });
             return;
         }
@@ -370,7 +422,13 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Please add your address before proceeding.'
+                        text: 'Please Save your Address before proceeding.',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        }
                     });
                 } else {
                     window.location.href = "{{ route('place_order') }}";

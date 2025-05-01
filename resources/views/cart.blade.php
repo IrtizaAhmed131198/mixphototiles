@@ -218,7 +218,7 @@
 
                     <div class="noticeproductdetail">
                         <p>
-                            Magnetic Photo frames are made to order. Once you place an order, we take about 1-2 working days to manufacture your beautiful frames. It is then shipped & timings can vary due to holidays, closures, weather etc. Please anticipate delays when placing your order. For estimated times, please check out our shipping policy.
+                            Our Magnetic Photo Frames are custom-made to order. Once your order is placed, please allow 2–3 business days for production. After that, your frames will be shipped. Delivery times may vary depending on holidays, weather conditions, or courier delays. As this is a customized product, we kindly ask you to anticipate potential delays. For more accurate delivery estimates, please refer to our Shipping Policy
                         </p>
                     </div>
                     <div class="productpolicylinks">

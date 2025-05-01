@@ -733,7 +733,7 @@
                                                 </svg>
                                                 <div class="frame-detail">
                                                     <p class="para">Finish </p>
-                                                    <h6 class="heading-4" id="finish-show">Normal</h6>
+                                                    <h6 class="heading-4" id="finish-show">{{ $finish[0]->label }}</h6>
                                                 </div>
                                             </div>
                                         </li>
@@ -782,8 +782,8 @@
                                                 <div class="frame-detail">
                                                     <p class="para">Hang</p>
                                                     <ul class="ordered-list">
-                                                        <li id="hang1-show" class="heading-4">Free Re-stickable tape roll</li>
-                                                        <li id="hang2-show" class="heading-4">Free Hanging hooks</li>
+                                                        <li id="hang1-show" class="heading-4">Free magnetic reusable stickers</li>
+                                                        {{-- <li id="hang2-show" class="heading-4">Free Hanging hooks</li> --}}
                                                     </ul>
                                                 </div>
                                             </div>

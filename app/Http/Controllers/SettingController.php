@@ -26,7 +26,6 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-
         // Fetch all settings from the database
         $settings = Settings::all();
 
@@ -34,7 +33,7 @@ class SettingController extends Controller
         $rules = [];
         foreach ($settings as $setting) {
             if ($setting->type === 'file') {
-                $rules[$setting->name] = 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'; // Adjust file types and size as needed
+                $rules[$setting->name] = 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048';
             } elseif ($setting->type === 'number') {
                 $rules[$setting->name] = 'nullable|numeric';
             } else {
@@ -47,18 +46,23 @@ class SettingController extends Controller
 
         // Process and update settings
         foreach ($settings as $setting) {
-            if ($setting->type == 'file' && $request->hasFile($setting->name)) {
-                // Store file
-                $filePath = $request->file($setting->name)->store('uploads/settings', 'public');
+            if ($setting->type == 'file') {
+                if ($request->hasFile($setting->name)) {
+                    // Store file
+                    $filePath = $request->file($setting->name)->store('uploads/settings', 'public');
 
-                // Delete the old file if it exists
-                if ($setting->value) {
-                    \Storage::disk('public')->delete($setting->value);
+                    // Delete the old file if it exists
+                    if ($setting->value) {
+                        \Storage::disk('public')->delete($setting->value);
+                    }
+
+                    $setting->update(['value' => $filePath]);
                 }
-
-                $setting->update(['value' => $filePath]);
             } else {
-                $setting->update(['value' => $validatedData[$setting->name] ?? null]);
+                // Only update if the field was actually submitted and not empty
+                if ($request->has($setting->name)) {
+                    $setting->update(['value' => $validatedData[$setting->name] ?? $setting->value]);
+                }
             }
         }
 

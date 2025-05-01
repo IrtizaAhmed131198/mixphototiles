@@ -161,6 +161,10 @@
             </div>
             <div class="card p-4 mb-4">
                 <h5><strong>Order ID:</strong> #{{ $order->id }}</h5>
+                <p><strong>Customer Name:</strong> {{$order->user->name }}</p>
+                <p><strong>Customer Email:</strong> {{$order->user->email }}</p>
+                <p><strong>Customer Phone:</strong> {{$order->user->phone }}</p>
+                <p><strong>Address:</strong> {{$order->address->address_line1.' '.$order->address->address_line2 }}</p>
                 <p><strong>Status:</strong> {{ ucfirst($order->status) }}</p>
                 <p><strong>Date:</strong> {{ $order->created_at->format('Y-m-d H:i') }}</p>
                 <p><strong>Payment Method:</strong> {{ strtoupper($order->payment_method) }}</p>
@@ -281,7 +285,7 @@
             </table>
 
             <div class="text-end mt-3">
-                <h4>Total Amount: R.{{ number_format($order->total_amount, 2) }}</h4>
+                <h4>Total Amount: Rs.{{ number_format($order->total_amount, 2) }}</h4>
             </div>
 
             @if ($item->product->type == 'manual')

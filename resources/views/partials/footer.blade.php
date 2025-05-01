@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="col-md">
-                    <p class="mb-4">Quick Links</p>
+                    <h4 class="mb-4 text-black fw-bold">Quick Links</h4>
                     <div class="flex-column Footer_footerLinks nav nav-underline">
                         <div><a href="{{ route('home') }}" class="active link" style=" text-decoration: none; ">Home</a>
                         </div>
@@ -69,19 +69,20 @@
                     </div>
                 </div>
                 <div class="col-md">
-                    <p class="mb-4">Help</p>
+                    <h4 class="mb-4 text-black fw-bold">Help</h4>
                     <div class="flex-column Footer_footerLinks nav nav-underline">
                         <div><span class=" link">FAQs </span></div>
                         <div><span class=" link">Contact Us </span></div>
                     </div>
                 </div>
                 <div class="col-md">
+                    <h4 class="mb-4 text-black fw-bold">Email</h4>
                     {{-- <p class="mb-4">Contact</p>
                     <address class="mb-4">Pearl Venture, First Floor, 190/218,
                         Outer Ring Road, Agara, 1st Sector,
                         HSR Layout, Bangalore - 560102, KA</address>
                     <p class="mb-2 Footer_footerContact">Call:<a class="text-decoration-none ps-1" href="javascript:;">+917975339182</a></p> --}}
-                    <p class="mb-2 Footer_footerContact">Email: <a class="text-decoration-none ps-1" href="mailto:{{ get_setting('contact_email', 'help@magneticphotoframes.com') }}">
+                    <p class="mb-2 Footer_footerContact"><a class="text-decoration-none ps-1" href="mailto:{{ get_setting('contact_email', 'help@magneticphotoframes.com') }}">
                         {{ get_setting('contact_email', 'help@magneticphotoframes.com') }}</a></p>
                 </div>
             </div>
@@ -178,6 +179,9 @@
                             have an account?<button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
                                 class="Login_authSwitch">Signup</button>
                         </p>
+                        <p class="mb-0 text-center">Verify OTP
+                            <button data-bs-target="#exampleModalToggleOtpSign" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Verify Otp</button>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -255,6 +259,9 @@
                             <p class="mb-0 text-center d-flex align-items-center justify-content-center">Already have an account?
                                 <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
                                     id="signupBtn" class="Login_authSwitch">Login</button>
+                            </p>
+                            <p class="mb-0 text-center">Verify OTP
+                                <button data-bs-target="#exampleModalToggleOtpSign" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Verify Otp</button>
                             </p>
                         </div>
                     </div>

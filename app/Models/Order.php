@@ -12,4 +12,14 @@ class Order extends Model
     {
         return $this->hasMany(OrderItems::class)->with('product');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
 }

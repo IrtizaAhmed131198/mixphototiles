@@ -48,7 +48,7 @@
     }
 
     .frameinner-pad {
-        padding: 3px !important;
+        padding: 4px !important;
     }
     .frameinner-less {
         padding: 0 !important;
@@ -378,47 +378,6 @@
                                                     </div>
                                                 </li>
                                             @endforeach
-
-
-                                            {{-- <li type="button" class="parentProperties frame-change active" data-price="0"
-                                                data-color="Black" data-class="black-frame">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1703756434121.jpeg') }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">Black</p>
-                                                </div>
-                                            </li>
-
-                                            <li type="button" class="parentProperties frame-change" data-price="0"
-                                                data-color="Dark" data-class="dark-frame">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1708685596474.jpeg') }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">Dark</p>
-                                                </div>
-                                            </li>
-
-                                            <li type="button" class="parentProperties frame-change" data-price="0"
-                                                data-color="White" data-class="white-frame">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/170868561394.jpeg') }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">White</p>
-                                                </div>
-                                            </li>
-
-                                            <li type="button" class="parentProperties frame-change" data-price="0"
-                                                data-color="Light" data-class="light-frame">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1708685632234.jpeg') }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">Light</p>
-                                                </div>
-                                            </li> --}}
                                         </ul>
 
                                     </div>
@@ -769,22 +728,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (config.frame) {
         updateActiveClass(".select-frame .parentProperties.frame-change", "data-class", config.frame.class);
-        if(config.frame.name == "bold") {
+        if(config.frame.name == "border") {
+            let framinners = document.querySelectorAll('.frameinner'); // Note: It's now framinners (plural)
+            framinners.forEach(framinner => { // Loop over the NodeList
+                framinner.classList.remove('frameinner-pad');
+                framinner.classList.remove('frameinner-less');
+            });
+        } else if(config.frame.name == "noborder") {
             let framinners = document.querySelectorAll('.frameinner'); // Note: It's now framinners (plural)
             framinners.forEach(framinner => { // Loop over the NodeList
                 framinner.classList.add('frameinner-pad');
                 framinner.classList.remove('frameinner-less');
             });
-        } else if(config.frame.name == "classic") {
-            let framinners = document.querySelectorAll('.frameinner'); // Note: It's now framinners (plural)
-            framinners.forEach(framinner => { // Loop over the NodeList
-                framinner.classList.remove('frameinner-pad');
-                framinner.classList.add('frameinner-less');
-            });
         } else if(config.frame.name == "frameless") {
             let framinners = document.querySelectorAll('.frameinner'); // Note: It's now framinners (plural)
             framinners.forEach(framinner => { // Loop over the NodeList
                 framinner.classList.add('frameinner-less');
+                framinner.classList.remove('frameinner-pad');
+            });
+        }
+
+        // NEW: Hide colors except the first if frameless is selected
+        const colorItems = document.querySelectorAll('.select-color .parentProperties.frame-change');
+        if (config.frame.name === "frameless") {
+            colorItems.forEach((li, index) => {
+                li.style.display = index === 0 ? 'flex' : 'none';
+            });
+        } else {
+            colorItems.forEach(li => {
+                li.style.display = 'flex'; // or '' if you're relying on CSS
             });
         }
     }
@@ -1277,19 +1249,22 @@ document.querySelectorAll('.select-frame .parentProperties.frame-change').forEac
         let name = this.getAttribute('data-name'); // Use 'data-class' instead of 'data-src'
         let framinners = document.querySelectorAll('.frameinner'); // Note: It's now framinners (plural)
 
-        if(name == "bold") {
+        if(name == "border") {
+            console.log(name, 1);
             framinners.forEach(framinner => { // Loop over the NodeList
                 framinner.classList.remove('frameinner-less');
-                framinner.classList.add('frameinner-pad');
+                framinner.classList.remove('frameinner-pad');
             });
         } else if(name == "frameless") {
+            console.log(name, 2);
             framinners.forEach(framinner => { // Loop over the NodeList
                 framinner.classList.remove('frameinner-pad');
                 framinner.classList.add('frameinner-less');
             });
         } else {
+            console.log(name, 3);
             framinners.forEach(framinner => { // Loop over the NodeList
-                framinner.classList.remove('frameinner-pad');
+                framinner.classList.add('frameinner-pad');
                 framinner.classList.remove('frameinner-less');
             });
         }
@@ -1300,6 +1275,18 @@ document.querySelectorAll('.select-frame .parentProperties.frame-change').forEac
             cluster.classList.remove('bold-image-width', 'box-shadow-dark'); // Remove all possible classes
             cluster.classList.add(newFrameClass);
         });
+
+        // NEW: Hide colors except the first if frameless is selected
+        const colorItems = document.querySelectorAll('.select-color .parentProperties.frame-change');
+        if (name === "frameless") {
+            colorItems.forEach((li, index) => {
+                li.style.display = index === 0 ? 'flex' : 'none';
+            });
+        } else {
+            colorItems.forEach(li => {
+                li.style.display = 'flex'; // or '' if you're relying on CSS
+            });
+        }
 
         updateSelectedConfig();
     });
