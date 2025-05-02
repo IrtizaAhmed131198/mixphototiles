@@ -38,8 +38,8 @@ class CityController extends Controller
                 return $counter;
             })
             ->addColumn('action', function ($city) {
-                return '<button class="btn btn-sm btn-primary edit-city" data-id="'.$city->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-city" data-id="'.$city->id.'">Delete</button>';
+                return '<button class="btn btn-sm btn-brand-dark edit-city" data-id="'.$city->id.'">Edit</button>
+                        <button class="btn btn-sm btn-brand-dark delete-city" data-id="'.$city->id.'">Delete</button>';
             })
             ->rawColumns(['id', 'action'])
             ->make(true);

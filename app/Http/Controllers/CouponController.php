@@ -36,8 +36,8 @@ class CouponController extends Controller
                 return $counter;
             })
             ->addColumn('action', function ($coupon) {
-                return '<button class="btn btn-sm btn-primary edit-coupon" data-id="'.$coupon->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-coupon" data-id="'.$coupon->id.'">Delete</button>';
+                return '<button class="btn btn-sm btn-brand-dark edit-coupon" data-id="'.$coupon->id.'">Edit</button>
+                        <button class="btn btn-sm btn-brand-dark delete-coupon" data-id="'.$coupon->id.'">Delete</button>';
             })
             ->rawColumns(['id', 'action'])
             ->make(true);

@@ -39,6 +39,19 @@ p.para {
     object-fit: contain;
 } */
 
+.text-brand-dark{
+    color: #99003e;
+}
+
+.btn-brand-dark{
+    background-color: #99003e !important;
+    color: #fff !important;
+}
+
+.btn-brand-dark:hover {
+    box-shadow: 0 0 5px 1px #99003e;
+}
+
 .custom-btn {
     background: transparent;
     border: 2px solid #ff0168;
@@ -1635,7 +1648,7 @@ div#accordionFlushExample {
     padding-bottom: 1rem;
     font-size: 22px;
     color: #000000;
-    margin-top: 2.8rem
+    margin-top: 0;
 }
 
 .Footer_footer .Footer_footerLinksWrp address {

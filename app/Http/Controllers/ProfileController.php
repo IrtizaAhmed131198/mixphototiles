@@ -123,11 +123,11 @@ class ProfileController extends Controller
                 return $order->created_at->format('Y-m-d H:i:s');
             })
             ->addColumn('action', function ($order) use ($user) {
-                $action = '<a href="'.route('orders.view', $order->id).'" class="btn btn-sm btn-info">View</a>';
+                $action = '<a href="'.route('orders.view', $order->id).'" class="btn btn-sm btn-brand-dark">View</a>';
 
                 // Show delete button only for admin or super admin
                 if (in_array($user->role, ['admin', 'super_admin'])) {
-                    $action .= '<a href="#" data-href="'.route('orders.delete', $order->id).'" id="deleteButton" class="btn btn-sm btn-danger">Delete</a>';
+                    $action .= '<a href="#" data-href="'.route('orders.delete', $order->id).'" id="deleteButton" class="btn btn-sm btn-brand-dark ms-1">Delete</a>';
                 }
 
                 return $action;

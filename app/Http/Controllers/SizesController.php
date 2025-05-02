@@ -40,8 +40,8 @@ class SizesController extends Controller
                 return '<img src="' . asset($row->image) . '" alt="Image" style="max-width: 100px;">';
             })
             ->addColumn('action', function ($sizes) {
-                return '<button class="btn btn-sm btn-primary edit-sizes" data-id="'.$sizes->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-sizes" data-id="'.$sizes->id.'">Delete</button>';
+                return '<button class="btn btn-sm btn-brand-dark edit-sizes" data-id="'.$sizes->id.'">Edit</button>
+                        <button class="btn btn-sm btn-brand-dark delete-sizes" data-id="'.$sizes->id.'">Delete</button>';
             })
             ->rawColumns(['id', 'action', 'image']) // Add 'img' and 'image' to rawColumns
             ->make(true);

@@ -305,7 +305,7 @@
                     <div id="image-container">
                         <canvas id="canvas"></canvas>
                     </div>
-                    <button class="btn btn-primary mt-3" id="get-selected">Get Selected Rectangles</button>
+                    <button class="btn btn-brand-dark mt-3" id="get-selected">Get Selected Rectangles</button>
                 </div>
             </div>
         </div>

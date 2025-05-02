@@ -181,6 +181,7 @@ Route::post('/city/update/{id}', [CityController::class, 'update'])->name('city.
 Route::delete('/city/delete/{id}', [CityController::class, 'destroy'])->name('city.destroy');
 
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
+Route::get('/frame-defaults', [MainController::class, 'getFrameDefaults'])->name('getFrameDefaults');
 
 Route::get('/canvas', function () {
     return view('canvas');

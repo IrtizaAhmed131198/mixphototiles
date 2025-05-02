@@ -44,8 +44,8 @@ class CustomColorController extends Controller
                 return '<img src="' . asset($row->frame_img) . '" alt="Frame Image" style="max-width: 100px;">';
             })
             ->addColumn('action', function ($color) {
-                return '<button class="btn btn-sm btn-primary edit-color" data-id="'.$color->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-color" data-id="'.$color->id.'">Delete</button>';
+                return '<button class="btn btn-sm btn-brand-dark edit-color" data-id="'.$color->id.'">Edit</button>
+                        <button class="btn btn-sm btn-brand-dark delete-color" data-id="'.$color->id.'">Delete</button>';
             })
             ->rawColumns(['id', 'action', 'option_img', 'frame_img']) // Add 'option_img' and 'frame_img' to rawColumns
             ->make(true);

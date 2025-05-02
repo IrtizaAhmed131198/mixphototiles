@@ -36,8 +36,8 @@ class AddressController extends Controller
                 return $counter;
             })
             ->addColumn('action', function ($address) {
-                return '<button class="btn btn-sm btn-primary edit-address" data-id="'.$address->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-address" data-id="'.$address->id.'">Delete</button>';
+                return '<button class="btn btn-sm btn-brand-dark edit-address" data-id="'.$address->id.'">Edit</button>
+                        <button class="btn btn-sm btn-brand-dark delete-address" data-id="'.$address->id.'">Delete</button>';
             })
             ->rawColumns(['id', 'action']) // Add 'img' and 'image' to rawColumns
             ->make(true);

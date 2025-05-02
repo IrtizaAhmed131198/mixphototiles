@@ -36,8 +36,8 @@ class StatesController extends Controller
                 return $counter;
             })
             ->addColumn('action', function ($states) {
-                return '<button class="btn btn-sm btn-primary edit-states" data-id="'.$states->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-states" data-id="'.$states->id.'">Delete</button>';
+                return '<button class="btn btn-sm btn-brand-dark edit-states" data-id="'.$states->id.'">Edit</button>
+                        <button class="btn btn-sm btn-brand-dark delete-states" data-id="'.$states->id.'">Delete</button>';
             })
             ->rawColumns(['id', 'action'])
             ->make(true);

@@ -18,8 +18,14 @@ use App\Models\Coupon;
 use App\Models\State;
 use App\Models\City;
 use App\Models\ProductImage;
+use App\Models\Finish;
+use App\Models\Led;
+use App\Models\CustomColor;
+use App\Models\Sizes;
 use Carbon\Carbon;
 use App\Mail\OtpMail;
+use App\Mail\OrderPlacedUserMail;
+use App\Mail\OrderPlacedAdminMail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -436,7 +442,7 @@ class MainController extends Controller
 
             $product_images = new ProductImage();
             $product_images->product_id = $product->id;
-            $product_images->image_path = $sessionImage->original_file_url;
+            $product_images->image_path = $sessionImage->file_url;
             $product_images->save();
 
             // Add product to `carts` table
@@ -845,6 +851,15 @@ class MainController extends Controller
 
         }
 
+        $order = Order::with(['orderItems.product', 'user', 'address'])->findOrFail($order->id);
+        $admin_email = get_setting('contact_email', 'help@magneticphotoframes.com');
+
+        // Send order confirmation to user
+        Mail::to($user->email)->send(new OrderPlacedUserMail($order));
+
+        // Send order notification to admin
+        Mail::to($admin_email)->send(new OrderPlacedAdminMail($order));
+
         // Clear cart and session items after order placed
         session()->forget(['cart', 'applied_coupon', 'gift_card_applied', 'user_address']);
 
@@ -958,5 +973,45 @@ class MainController extends Controller
         $cities = City::where('state_id', $state_id)->select('id', 'name', 'shipping')->get();
 
         return response()->json(['success' => true, 'data' => $cities]);
+    }
+
+    public function getFrameDefaults()
+    {
+        $finish = Finish::where('status', '1')->first();
+        $led = Led::where('status', '1')->first();
+        $color = CustomColor::where('status', 1)->first();
+        $size = Sizes::where('status', '1')->first();
+
+        $defaults = [
+            'design' => [
+                'designClass' => 'classic-card-design',
+                'displayText' => 'Border',
+                'design_price' => 0,
+            ],
+            'color' => [
+                'img_src' => asset($color->frame_img),
+                'color_name' => $color->name,
+                'shadowClass' => 'box-shadow-black', // adjust based on color if needed
+                'color_price' => $color->price,
+            ],
+            'size' => [
+                'width' => $size->width,
+                'height' => $size->height,
+                'max_width' => '500px',
+                'frame_price' => $size->price,
+                'frameSizeText' => $size->label,
+            ],
+            'finish' => [
+                'finish_price' => $finish->price,
+                'frameFinishText' => $finish->label,
+            ],
+            'led' => [
+                'price' => $led->price,
+                'value' => $led->name,
+                'framehangText' => $led->name,
+            ],
+        ];
+
+        return response()->json($defaults);
     }
 }

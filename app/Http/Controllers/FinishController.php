@@ -36,8 +36,8 @@ class FinishController extends Controller
                 return $counter;
             })
             ->addColumn('action', function ($finish) {
-                return '<button class="btn btn-sm btn-primary edit-finish" data-id="'.$finish->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-finish" data-id="'.$finish->id.'">Delete</button>';
+                return '<button class="btn btn-sm btn-brand-dark edit-finish" data-id="'.$finish->id.'">Edit</button>
+                        <button class="btn btn-sm btn-brand-dark delete-finish" data-id="'.$finish->id.'">Delete</button>';
             })
             ->rawColumns(['id', 'action'])
             ->make(true);

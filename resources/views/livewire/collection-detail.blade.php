@@ -679,8 +679,8 @@
         <div class="mt-3 text-end">
         </div>
         <div class="mt-5 text-center">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button id="cropImageBtn" class="btn btn-primary">Crop</button>
+          <button type="button" class="btn btn-brand-dark" data-bs-dismiss="modal">Cancel</button>
+          <button id="cropImageBtn" class="btn btn-brand-dark">Crop</button>
         </div>
       </div>
     </div>

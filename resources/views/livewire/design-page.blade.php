@@ -48,6 +48,10 @@
         height: unset;
     }
 
+    .frameless-design {
+        padding: 0 !important;
+    }
+
 </style>
 @endpush
 
@@ -564,7 +568,7 @@
                         <span class="caption-crop">If needed, use the Crop button to adjust your pictures</span>
                         <div class="box frame-box">
                             <div class="frame-main-wrap classic-card-design box-shadow-black frame-main-wrap-main" id="frameWrap">
-                                <div class="frameborder inherit-design">
+                                <div class="frameborder inherit-design" id="frameWrapChild">
                                     <div class="frameinner child-inherit-design">
                                         <!-- Placeholder for uploaded image -->
                                         <img alt="Frame" class="img-fluid" id="uploaded-image" src="">
@@ -840,6 +844,7 @@
                             <input type="hidden" name="add_to_cart" id="add_to_cart" value="{{ route('add_to_cart') }}">
                             <input type="hidden" name="cart_page" id="cart_page" value="{{ route('cart') }}">
                             <input type="hidden" name="reset_cropped_image" id="reset_cropped_image" value="{{ route('reset_cropped_image') }}">
+                            <input type="hidden" name="getFrameDefaults" id="getFrameDefaults" value="{{ route('getFrameDefaults') }}">
 
                         </div>
                     </div>

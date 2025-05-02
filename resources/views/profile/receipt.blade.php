@@ -203,13 +203,13 @@
                             <td>{{ $item->product->name ?? 'N/A' }}</td>
                             <td>
                                 @if ($item->product && $item->product->image && $item->product->type == 'manual')
-                                    <a href="{{ asset($item->product->image) }}" download class="btn btn-sm btn-primary"
+                                    <a href="{{ asset($item->product->image) }}" download class="btn btn-sm btn-brand-dark"
                                         data-bs-toggle="modal" data-bs-target="#imageModal"
                                         data-image="{{ asset($item->product->image) }}"
                                         data-frame-config='{{ $item->product->frame_config }}'>View Image</a>
                                 @else
                                     <a href="{{ asset($item->product->no_coordinates_image) }}" download
-                                        class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        class="btn btn-sm btn-brand-dark" data-bs-toggle="modal"
                                         data-bs-target="#imageModal2"
                                         data-image="{{ asset($item->product->no_coordinates_image) }}">View Image</a>
                                 @endif
@@ -220,7 +220,7 @@
                                     $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->first();
                                     $image_path = asset($product_images?->image_path ?? '');
                                 @endphp
-                                <a href="javascript:void(0)" download class="btn btn-sm btn-primary"
+                                <a href="javascript:void(0)" download class="btn btn-sm btn-brand-dark"
                                         data-bs-toggle="modal" data-bs-target="#orignalImageModal">View Image</a>
 
                                 <div class="modal fade" id="orignalImageModal" tabindex="-1" aria-labelledby="orignalImageModalLabel" aria-hidden="true">
@@ -247,7 +247,7 @@
                                 @php
                                     $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->get();
                                 @endphp
-                                <a href="javascript:void(0)" download class="btn btn-sm btn-primary"
+                                <a href="javascript:void(0)" download class="btn btn-sm btn-brand-dark"
                                         data-bs-toggle="modal" data-bs-target="#orignalImageModal">View Image</a>
 
                                 <div class="modal fade" id="orignalImageModal" tabindex="-1" aria-labelledby="orignalImageModalLabel" aria-hidden="true">
@@ -306,7 +306,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button id="printButton" class="btn btn-primary mt-3">Print Image</button>
+                                <button id="printButton" class="btn btn-brand-dark mt-3">Print Image</button>
                             </div>
                         </div>
                     </div>
@@ -365,7 +365,7 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <button id="printButtonCollection" class="btn btn-primary mt-3">Print Image</button>
+                                <button id="printButtonCollection" class="btn btn-brand-dark mt-3">Print Image</button>
                             </div>
                         </div>
                     </div>
@@ -487,7 +487,7 @@
                 // } else {
                 //     frameClass = 'classic-card-design';
                 // }
-                console.log(config);
+                // console.log(config);
 
                 // Update wrapper classes
                 frameWrapper.className = `frame-main-wrap ${designClass} ${shadowClass} frame-main-wrap-main`;

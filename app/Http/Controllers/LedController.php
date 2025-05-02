@@ -40,8 +40,8 @@ class LedController extends Controller
                 return '<img src="' . asset($row->image) . '" alt="Image" style="max-width: 100px;">';
             })
             ->addColumn('action', function ($led) {
-                return '<button class="btn btn-sm btn-primary edit-led" data-id="'.$led->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-led" data-id="'.$led->id.'">Delete</button>';
+                return '<button class="btn btn-sm btn-brand-dark edit-led" data-id="'.$led->id.'">Edit</button>
+                        <button class="btn btn-sm btn-brand-dark delete-led" data-id="'.$led->id.'">Delete</button>';
             })
             ->rawColumns(['id', 'action', 'image'])
             ->make(true);

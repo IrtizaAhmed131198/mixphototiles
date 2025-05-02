@@ -123,9 +123,9 @@ class ProductController extends Controller
                     : '<span class="text-danger">You need to add coordinates</span>';
             })
             ->addColumn('action', function ($product) {
-                return '<button class="btn btn-sm btn-primary edit-frame" data-id="'.$product->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-product" data-id="'.$product->id.'">Delete</button>
-                        <button class="btn btn-sm btn-success set-coordinates" data-id="'.$product->id.'" data-bs-toggle="modal"
+                return '<button class="btn btn-sm btn-brand-dark edit-frame" data-id="'.$product->id.'">Edit</button>
+                        <button class="btn btn-sm btn-brand-dark delete-product" data-id="'.$product->id.'">Delete</button>
+                        <button class="btn btn-sm btn-brand-dark set-coordinates" data-id="'.$product->id.'" data-bs-toggle="modal"
                                     data-bs-target="#coordinates">Set Coordinates</button>';
             })
             ->rawColumns(['id', 'image', 'coordinates', 'action'])

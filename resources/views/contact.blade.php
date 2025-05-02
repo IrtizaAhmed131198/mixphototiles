@@ -81,17 +81,17 @@
     <div class="container">
        <div class="row align-items-end flex-column-reverse flex-md-row">
           <div class="col-md-7 mb-md-auto">
-             <h1 class="ttl-60 mb-4 d-none d-md-block contact-title">We’re here to help. Let’s talk!</h1>
+             <h1 class="ttl-60 mb-4 d-none d-md-block contact-title">Got questions? We've got answers—let's chat!</h1>
              <div class="ContactInfo_contactInfoWrp__wBllg">
-                <div class="contact-info py-4 mb-md-3">
+                {{-- <div class="contact-info py-4 mb-md-3">
                    <h2 class="ttl-18 mb-3">Address:</h2>
                    <address class="mb-0 fs-18">Pearl Venture, First Floor, 190/218, Outer Ring Road, Agara, 1st Sector, HSR Layout, Bangalore - 560102, KA</address>
-                </div>
+                </div> --}}
                 <div class="contact-info-2 pt-4">
                    <h2 class="ttl-18 mb-3">Call/WhatsApp:</h2>
-                   <a href="tel:+91 797 533 9182" class="ttl-28 text-decoration-none text-primary mb-4 d-inline-block">+91 797 533 9182</a>
+                   <a href="tel:+91 9342874392" class="ttl-28 text-decoration-none text-primary mb-4 d-inline-block">+91 9342874392</a>
                    <h2 class="ttl-18 pt-3">Email ID:</h2>
-                   <a href="mailto:help@frameley.com" class="ttl-28 text-decoration-none text-primary d-inline-block mb-0">help@frameley.com</a>
+                   <a href="mailto:support@magneticphotoframes.com" class="ttl-28 text-decoration-none text-primary d-inline-block mb-0">support@magneticphotoframes.com</a>
                 </div>
              </div>
           </div>
@@ -112,11 +112,11 @@
     </div>
 </section>
 
-<section class="contact-map">
+{{-- <section class="contact-map">
     <div class="container">
        <div class="contact-map-child"><iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" class="d-block ContactFormMap_gmapIframe__mgKUo" src="https://maps.google.com/maps?width=802&amp;height=400&amp;hl=en&amp;q=Frameley - Pearl Venture&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe></div>
     </div>
-</section>
+</section> --}}
 
 @endsection
 

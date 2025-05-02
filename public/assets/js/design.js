@@ -15,6 +15,7 @@ let get_all_images = $('#get_all_images').val();
 let add_to_cart = $('#add_to_cart').val();
 let cart_page = $('#cart_page').val();
 let reset_cropped_image = $('#reset_cropped_image').val();
+let getFrameDefaults = $('#getFrameDefaults').val();
 
 let allFrameConfigurations = {}; // This should be populated on each frame load
 
@@ -161,6 +162,13 @@ function applyInitialFrameDesign(imageObj) {
     // Apply new design and shadow class
     frameWrap.classList.add(initialDesignClass);
 
+    const frameWrapChild = document.getElementById('frameWrapChild');
+    if(initialDesignClass === 'frameless-card-design'){
+        frameWrapChild.classList.add('frameless-design');
+    }else{
+        frameWrapChild.classList.remove('frameless-design');
+    }
+
     // --- Hide/Show color options based on frameless selection ---
     const colorOptionsTemp = document.querySelectorAll('.frame-color');
     if (initialDesignClass === 'frameless-card-design') {
@@ -282,6 +290,7 @@ function applyInitialFrameFinish(imageObj) {
     }
 
     const frameConfig = JSON.parse(imageObj.frame_configuration);
+    console.log(frameConfig);
 
     const initialFinish = frameConfig.finish || {
         finish_price: 0,
@@ -353,15 +362,56 @@ function applyInitialFrameLED(imageObj) {
 }
 
 
+// function getDefaultFrameConfig() {
+//     return {
+//         design: { designClass: "classic-card-design", displayText: "Border", design_price: 0 },
+//         color: { img_src: "assets/images/black-frame.png", color_name: "Black", shadowClass: "box-shadow-black", color_price: 0 },
+//         size: { width: "309px", height: "318px", max_width: "500px", frame_price: 0, frameSizeText: '8" X 8"' },
+//         finish: { finish_price: 0, frameFinishText: "Normal" },
+//         led: { price: 0, value: "no", framehangText: "No" },
+//     };
+// }
+
 function getDefaultFrameConfig() {
-    return {
-        design: { designClass: "classic-card-design", displayText: "Border", design_price: 0 },
-        color: { img_src: "assets/images/black-frame.png", color_name: "Black", shadowClass: "box-shadow-black", color_price: 0 },
-        size: { width: "309px", height: "318px", max_width: "500px", frame_price: 0, frameSizeText: '8" X 8"' },
-        finish: { finish_price: 0, frameFinishText: "Normal" },
-        led: { price: 0, value: "no", framehangText: "No" },
-    };
+    return fetch(getFrameDefaults)
+        .then(response => response.json())
+        .then(data => {
+            return {
+                design: {
+                    designClass: data.design.designClass,
+                    displayText: data.design.displayText,
+                    design_price: Number(data.design.design_price) || 0
+                },
+                color: {
+                    img_src: data.color.img_src, // override if you want local static path
+                    color_name: data.color.color_name,
+                    shadowClass: data.color.shadowClass,
+                    color_price: Number(data.color.color_price) || 0
+                },
+                size: {
+                    width: data.size.width + 'px',
+                    height: data.size.height + 'px',
+                    max_width: data.size.max_width,
+                    frame_price: Number(data.size.frame_price) || 0,
+                    frameSizeText: data.size.frameSizeText
+                },
+                finish: {
+                    finish_price: Number(data.finish.finish_price) || 0,
+                    frameFinishText: data.finish.frameFinishText
+                },
+                led: {
+                    price: Number(data.led.price) || 0,
+                    value: data.led.value.toLowerCase(), // normalize to 'no'
+                    framehangText: data.led.framehangText
+                }
+            };
+        })
+        .catch(error => {
+            console.error("Failed to load frame defaults:", error);
+            return {}; // fallback
+        });
 }
+
 
 function updateGrandTotal() {
     fetch(get_grand_total) // Update this to match your route
@@ -447,31 +497,31 @@ uploadPhotoElements.forEach(element => {
 });
 
 function uploadImageToServer(file, newFileName) {
-    const formData = new FormData();
-    formData.append('image', file, newFileName);
+    return getDefaultFrameConfig().then(defaultConfig => {
+        const formData = new FormData();
+        formData.append('image', file, newFileName);
+        formData.append('frame_configuration', JSON.stringify(defaultConfig));
 
-    const defaultConfig = getDefaultFrameConfig();
-    formData.append('frame_configuration', JSON.stringify(defaultConfig));
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    return fetch(upload_image, {   // Laravel route
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': csrfToken
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            return {
-                name: newFileName,
-                url: data.file_url
-            };
-        } else {
-            throw new Error('Image upload failed');
-        }
+        return fetch(upload_image, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                return {
+                    name: newFileName,
+                    url: data.file_url
+                };
+            } else {
+                throw new Error('Image upload failed');
+            }
+        });
     });
 }
 
@@ -1041,6 +1091,13 @@ designOptions.forEach(option => {
         const frameWrap = document.getElementById('frameWrap');
         frameWrap.classList.remove('classic-card-design', 'bold-card-design');
         frameWrap.classList.add(designClass);
+
+        const frameWrapChild = document.getElementById('frameWrapChild');
+        if(designClass === 'frameless-card-design'){
+            frameWrapChild.classList.add('frameless-design');
+        }else{
+            frameWrapChild.classList.remove('frameless-design');
+        }
 
         document.getElementById('frame-show').textContent = displayText;
 

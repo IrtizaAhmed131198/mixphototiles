@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="col-md">
-                    <h4 class="mb-4 text-black fw-bold">Quick Links</h4>
+                    <h5 class="mb-4 text-brand-dark fw-bold">Quick Links</h5>
                     <div class="flex-column Footer_footerLinks nav nav-underline">
                         <div><a href="{{ route('home') }}" class="active link" style=" text-decoration: none; ">Home</a>
                         </div>
@@ -69,14 +69,14 @@
                     </div>
                 </div>
                 <div class="col-md">
-                    <h4 class="mb-4 text-black fw-bold">Help</h4>
+                    <h5 class="mb-4 text-brand-dark fw-bold">Help</h5>
                     <div class="flex-column Footer_footerLinks nav nav-underline">
                         <div><span class=" link">FAQs </span></div>
                         <div><span class=" link">Contact Us </span></div>
                     </div>
                 </div>
                 <div class="col-md">
-                    <h4 class="mb-4 text-black fw-bold">Email</h4>
+                    <h5 class="mb-4 text-brand-dark fw-bold">Email</h5>
                     {{-- <p class="mb-4">Contact</p>
                     <address class="mb-4">Pearl Venture, First Floor, 190/218,
                         Outer Ring Road, Agara, 1st Sector,

@@ -28,6 +28,7 @@ class PagesController extends Controller
 
     public function faq()
     {
+        abort(403);
         return view('faq');
     }
 
