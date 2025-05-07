@@ -73,7 +73,7 @@ function fetchAndRenderSessionImages() {
                     if (inheritDesignDiv) {
                         inheritDesignDiv.style.position = 'absolute';
                         inheritDesignDiv.style.zIndex = '-1';
-                        inheritDesignDiv.style.padding = '15px';
+                        inheritDesignDiv.style.padding = '23px';
                     }
                 }
             }else{
@@ -991,7 +991,7 @@ function updateActiveImage() {
                                 if (inheritDesignDiv) {
                                     inheritDesignDiv.style.position = 'absolute';
                                     inheritDesignDiv.style.zIndex = '-1';
-                                    inheritDesignDiv.style.padding = '15px';
+                                    inheritDesignDiv.style.padding = '23px';
                                 }
                             } else {
                                 // Optionally reset styles if crop is not 1 (in case user switches images)
@@ -1054,7 +1054,7 @@ document.querySelector('.Images-frame-slider .swiper-wrapper').addEventListener(
                         if (inheritDesignDiv) {
                             inheritDesignDiv.style.position = 'absolute';
                             inheritDesignDiv.style.zIndex = '-1';
-                            inheritDesignDiv.style.padding = '15px';
+                            inheritDesignDiv.style.padding = '23px';
                         }
                     } else {
                         // Optionally reset styles if crop is not 1 (in case user switches images)
@@ -1615,7 +1615,7 @@ function saveFrameConfigInDB(imageUrl) {
 //                     $('#frameWrap .inherit-design').css({
 //                         'position': 'absolute',
 //                         'z-index': '-1',
-//                         'padding': '15px'
+//                         'padding': '23px'
 //                     });
 
 //                     let imgElement = document.querySelector('.swiper-slide-active img');
@@ -1794,7 +1794,7 @@ $(document).ready(function () {
                     $('#frameWrap .inherit-design').css({
                         'position': 'absolute',
                         'z-index': '-1',
-                        'padding': '15px'
+                        'padding': '23px'
                     });
 
                     let imgElement = document.querySelector('.swiper-slide-active img');
