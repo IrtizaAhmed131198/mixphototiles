@@ -872,11 +872,13 @@ class MainController extends Controller
 
     public function add_address(Request $request)
     {
+        $passwordRule = Auth::check() ? 'nullable|min:6' : 'required|min:6';
+
         $validated = $request->validate([
             'full_name' => 'required|string|max:255',
             'phone_number' => 'required',
             'email' => 'required|email',
-            'password' => 'nullable|min:6',
+            'password' => $passwordRule,
             'pincode' => 'required|digits:6',
             'address_line1' => 'required|string|max:500',
             'address_line2' => 'nullable|string|max:500',
