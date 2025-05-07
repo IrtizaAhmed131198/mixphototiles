@@ -443,6 +443,7 @@ class MainController extends Controller
             $product_images = new ProductImage();
             $product_images->product_id = $product->id;
             $product_images->image_path = $sessionImage->file_url;
+            $product_images->crop_image_path = $sessionImage->original_file_url;
             $product_images->save();
 
             // Add product to `carts` table

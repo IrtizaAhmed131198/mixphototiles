@@ -218,7 +218,11 @@
                                 @if ($item->product->type == 'manual')
                                 @php
                                     $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->first();
-                                    $image_path = asset($product_images?->image_path ?? '');
+                                    if($product_images->crop_image_path != null){
+                                        $image_path = asset($product_images->crop_image_path ?? '');
+                                    }else{
+                                        $image_path = asset($product_images->image_path ?? '');
+                                    }
                                 @endphp
                                 <a href="javascript:void(0)" download class="btn btn-sm btn-brand-dark"
                                         data-bs-toggle="modal" data-bs-target="#orignalImageModal">View Image</a>
