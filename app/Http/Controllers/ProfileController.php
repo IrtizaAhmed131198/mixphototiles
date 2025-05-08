@@ -84,7 +84,15 @@ class ProfileController extends Controller
             })
             ->addColumn('status', function ($order) {
                 $user = Auth::user();
-                $statuses = ['pending' => 'warning', 'shipping' => 'primary', 'delivered' => 'info', 'completed' => 'success'];
+                $statuses = [
+                    'ordered'   => 'warning',    // Pending action (yellow/orange)
+                    'dispatched' => 'info',      // In transit (light blue)
+                    'shipped'    => 'primary',   // Confirmed shipment (blue)
+                    'delivered'  => 'success',   // Completed (green)
+                    'returned'   => 'secondary', // Neutral/gray (return is not success/failure)
+                    'refund'    => 'success',    // Refund processed (green)
+                    'cancelled'  => 'danger'     // Failed/terminated (red)
+                ];
 
                 // If user is admin or super admin, show editable dropdown
                 if (in_array($user->role, ['admin', 'super_admin'])) {

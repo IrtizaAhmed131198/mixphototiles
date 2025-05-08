@@ -22,6 +22,7 @@ use App\Models\Finish;
 use App\Models\Led;
 use App\Models\CustomColor;
 use App\Models\Sizes;
+use App\Models\ShippingAddress;
 use Carbon\Carbon;
 use App\Mail\OtpMail;
 use App\Mail\OrderPlacedUserMail;
@@ -732,13 +733,17 @@ class MainController extends Controller
         // $giftCard = session()->get('gift_card_applied', 0); // Gift card (optional)
         // $shipping = session()->get('shipping', 0); // Gift card (optional)
 
+        $shipping_address = ShippingAddress::where('user_id', Auth::user()->id ?? null)
+            ->where('default_address', 1)
+            ->first();
+
         // Example: Assume you set coupon data in session somewhere earlier
         $appliedCoupon = session()->get('applied_coupon', [
             'code' => null,
             'discount' => 0
         ]);
 
-        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon'));
+        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon', 'shipping_address'));
     }
 
     public function place_order(Request $request)
@@ -819,7 +824,7 @@ class MainController extends Controller
         // Create order
         $order = new Order();
         $order->user_id = $user->id;  // or $request->user_id if guest user
-        $order->status = 'pending';
+        $order->status = 'ordered';
         $order->total_amount = $grandTotal;
         $order->payment_method = 'cod';  // Or you can get it from the form e.g. $request->payment_method
         $order->coupon = $code;

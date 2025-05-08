@@ -442,7 +442,7 @@
                     title: 'Error',
                     text: 'Invalid Coupon Code',
                     showClass: {
-                        popup: 'animate__animated animate__fadeIn animate__faster'
+                        popup: 'animate__animated animate__fadeIn animate__slow'
                     },
                     hideClass: {
                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -677,7 +677,7 @@
                 confirmButtonText: 'Yes, remove it!',
                 cancelButtonText: 'Cancel',
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -703,7 +703,7 @@
                                 title: 'Deleted!',
                                 text: data.message,
                                 showClass: {
-                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
                                 },
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -717,7 +717,7 @@
                                 title: 'Something went wrong',
                                 text: data.message,
                                 showClass: {
-                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
                                 },
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -731,7 +731,7 @@
                             text: 'Something went wrong. Please try again.',
                             icon: 'error',
                             showClass: {
-                                popup: 'animate__animated animate__fadeIn animate__faster'
+                                popup: 'animate__animated animate__fadeIn animate__slow'
                             },
                             hideClass: {
                                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -792,7 +792,7 @@
                     title: 'Error',
                     text: data.message,
                     showClass: {
-                        popup: 'animate__animated animate__fadeIn animate__faster'
+                        popup: 'animate__animated animate__fadeIn animate__slow'
                     },
                     hideClass: {
                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -804,7 +804,7 @@
                     title: 'Error',
                     text: 'Failed to update cart. Try again.',
                     showClass: {
-                        popup: 'animate__animated animate__fadeIn animate__faster'
+                        popup: 'animate__animated animate__fadeIn animate__slow'
                     },
                     hideClass: {
                         popup: 'animate__animated animate__fadeOut animate__faster'

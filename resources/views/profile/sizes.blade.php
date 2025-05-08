@@ -248,7 +248,7 @@
                             title: 'Size Added!',
                             text: 'The size has been added successfully.',
                             showClass: {
-                                popup: 'animate__animated animate__fadeIn animate__faster'
+                                popup: 'animate__animated animate__fadeIn animate__slow'
                             },
                             hideClass: {
                                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -270,7 +270,7 @@
                             title: 'Oops...',
                             text: 'Please fix the errors in the form.',
                             showClass: {
-                                popup: 'animate__animated animate__fadeIn animate__faster'
+                                popup: 'animate__animated animate__fadeIn animate__slow'
                             },
                             hideClass: {
                                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -285,7 +285,7 @@
                         title: 'Something went wrong',
                         text: 'There was an issue with the server. Please try again.',
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -332,7 +332,7 @@
                         title: 'Error',
                         text: 'Could not load size data.',
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -362,7 +362,7 @@
                             title: 'Size Updated!',
                             text: 'The size details have been updated successfully.',
                             showClass: {
-                                popup: 'animate__animated animate__fadeIn animate__faster'
+                                popup: 'animate__animated animate__fadeIn animate__slow'
                             },
                             hideClass: {
                                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -385,7 +385,7 @@
                                 title: 'Something went wrong',
                                 text: 'There was an issue with the server. Please try again.',
                                 showClass: {
-                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
                                 },
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -400,7 +400,7 @@
                         title: 'Something went wrong',
                         text: 'There was an issue with the server (500). Please try again.',
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -428,7 +428,7 @@
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'No, cancel!',
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -445,7 +445,7 @@
                                     text: 'The size has been deleted.',
                                     icon: 'success',
                                     showClass: {
-                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                        popup: 'animate__animated animate__fadeIn animate__slow'
                                     },
                                     hideClass: {
                                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -461,7 +461,7 @@
                                     text: 'There was an issue deleting the size.',
                                     icon: 'error',
                                     showClass: {
-                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                        popup: 'animate__animated animate__fadeIn animate__slow'
                                     },
                                     hideClass: {
                                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -475,7 +475,7 @@
                                 text: 'There was an issue deleting the size.',
                                 icon: 'error',
                                 showClass: {
-                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
                                 },
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOut animate__faster'

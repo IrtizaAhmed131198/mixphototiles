@@ -71,7 +71,7 @@ class AuthController extends Controller
             // Check if the user's status is 1 (active)
             if ($user->status !== 1) {
                 Auth::logout(); // Log out if status is not 1
-                return response()->json(['success' => false, 'message' => 'Account is not active'], 403);
+                return response()->json(['success' => false, 'message' => 'Please verify your Email'], 403);
             }
 
             // If status is 1, return success

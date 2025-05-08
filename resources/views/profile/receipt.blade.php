@@ -184,9 +184,9 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Collection</th>
-                        <th>Image</th>
-                        <th>Orignal Image</th>
+                        <th>Products</th>
+                        <th>Your Design</th>
+                        <th>Uploaded Image</th>
                         {{-- <th>Quantity</th> --}}
                         <th>Price (Each)</th>
                         <th>Total</th>
@@ -225,13 +225,13 @@
                                     }
                                 @endphp
                                 <a href="javascript:void(0)" download class="btn btn-sm btn-brand-dark"
-                                        data-bs-toggle="modal" data-bs-target="#orignalImageModal">View Image</a>
+                                        data-bs-toggle="modal" data-bs-target="#orignalImageModal{{ $item->product->id }}">View Image</a>
 
-                                <div class="modal fade" id="orignalImageModal" tabindex="-1" aria-labelledby="orignalImageModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="orignalImageModal{{ $item->product->id }}" tabindex="-1" aria-labelledby="orignalImageModal{{ $item->product->id }}Label" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="orignalImageModalLabel">Collection Image</h5>
+                                                <h5 class="modal-title" id="orignalImageModal{{ $item->product->id }}Label">Uploaded Image</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -252,13 +252,13 @@
                                     $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->get();
                                 @endphp
                                 <a href="javascript:void(0)" download class="btn btn-sm btn-brand-dark"
-                                        data-bs-toggle="modal" data-bs-target="#orignalImageModal">View Image</a>
+                                        data-bs-toggle="modal" data-bs-target="#orignalImageModal{{ $item->product->id }}">View Image</a>
 
-                                <div class="modal fade" id="orignalImageModal" tabindex="-1" aria-labelledby="orignalImageModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="orignalImageModal{{ $item->product->id }}" tabindex="-1" aria-labelledby="orignalImageModal{{ $item->product->id }}Label" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="orignalImageModalLabel">Collection Image</h5>
+                                                <h5 class="modal-title" id="orignalImageModal{{ $item->product->id }}Label">Uploaded Image</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -298,7 +298,7 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="imageModalLabel">Collection Image</h5>
+                                <h5 class="modal-title" id="imageModalLabel">Your Design</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>

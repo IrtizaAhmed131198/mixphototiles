@@ -501,7 +501,7 @@
                 showCancelButton: true,
                 confirmButtonText: "Yes, delete it!",
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -522,7 +522,7 @@
                                     text: response.message,
                                     icon: "success",
                                     showClass: {
-                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                        popup: 'animate__animated animate__fadeIn animate__slow'
                                     },
                                     hideClass: {
                                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -534,7 +534,7 @@
                                     text: response.message,
                                     icon: "error",
                                     showClass: {
-                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                        popup: 'animate__animated animate__fadeIn animate__slow'
                                     },
                                     hideClass: {
                                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -548,7 +548,7 @@
                                 text: "Unable to delete the image.",
                                 icon: "error",
                                 showClass: {
-                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
                                 },
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -571,7 +571,7 @@
                 showCancelButton: true,
                 confirmButtonText: "Yes, delete it!",
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -591,7 +591,7 @@
                                     text: response.message,
                                     icon: "success",
                                     showClass: {
-                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                        popup: 'animate__animated animate__fadeIn animate__slow'
                                     },
                                     hideClass: {
                                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -604,7 +604,7 @@
                                     text: response.message,
                                     icon: "error",
                                     showClass: {
-                                        popup: 'animate__animated animate__fadeIn animate__faster'
+                                        popup: 'animate__animated animate__fadeIn animate__slow'
                                     },
                                     hideClass: {
                                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -618,7 +618,7 @@
                                 text: "Unable to delete the product.",
                                 icon: "error",
                                 showClass: {
-                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
                                 },
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -781,7 +781,7 @@
                     text: "Please select at least one rectangle!",
                     confirmButtonColor: "#3085d6",
                     showClass: {
-                        popup: 'animate__animated animate__fadeIn animate__faster'
+                        popup: 'animate__animated animate__fadeIn animate__slow'
                     },
                     hideClass: {
                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -808,7 +808,7 @@
                         text: "Coordinates saved successfully!",
                         confirmButtonColor: "#28a745",
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -824,7 +824,7 @@
                         text: "Failed to save coordinates. Please try again.",
                         confirmButtonColor: "#d33",
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'

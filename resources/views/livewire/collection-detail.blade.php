@@ -74,6 +74,29 @@
     button.btn-close.position-absolute.top-0.end-0.m-3 {
         z-index: 1;
     }
+
+    .productdeatailslist .ClusterDetails_detailsList {
+        padding: 0;
+    }
+
+    .productdeatailslist .ClusterDetails_detailsList ul {
+        padding-left: 1rem;
+    }
+
+    .swal2-show-custom {
+        animation: swal2-fade-in 1s ease-out;
+    }
+
+    @keyframes swal2-fade-in {
+        0% {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
 </style>
 
 @foreach ($custom_color as $val)
@@ -507,12 +530,12 @@
 
                     <div class="noticeproductdetail">
                         <p>
-                            Frameley frames are made to order. Once you place an order, we take about 1-2 working days to manufacture your beautiful frames. It is then shipped & timings can vary due to holidays, closures, weather etc. Please anticipate delays when placing your order. For estimated times, please check out our shipping policy.
+                            Our Magnetic Photo Frames are custom-made to order. Once your order is placed, please allow 2–3 business days for production. After that, your frames will be shipped. Delivery times may vary depending on holidays, weather conditions, or courier delays. As this is a customized product, we kindly ask you to anticipate potential delays. For more accurate delivery estimates, please refer to our Shipping Policy
                         </p>
                     </div>
                     <div class="productpolicylinks">
-                        <a class="" href="javascript:;">Shipping Policy</a>
-                        <a class="" href="javascript:;">FAQ's</a>
+                        <a class="" href="{{ route('shipping') }}" target="_blank">Shipping Policy</a>
+                        {{-- <a class="" href="javascript:;">FAQ's</a> --}}
                     </div>
 
                 </div>
@@ -937,7 +960,7 @@ function deleteSelectedImage() {
             timer: 2000,
             showConfirmButton: false,
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -990,7 +1013,7 @@ function updateClusterImage() {
             timer: 2000,
             showConfirmButton: false,
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1030,7 +1053,7 @@ document.getElementById("remove-image").addEventListener("click", function () {
             timer: 2000,
             showConfirmButton: false,
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1467,7 +1490,6 @@ function addToCart() {
             // document.getElementById(`cluster-block-${cluster.id}`).style.border = ''; // Remove any previous highlight
         }
     });
-    console.log(colImageArr);
 
     if (!isValid) {
         // Show a SweetAlert2 error message
@@ -1476,7 +1498,7 @@ function addToCart() {
             title: 'Oops...',
             text: 'Please upload an image for all frames before adding to cart.',
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1534,7 +1556,7 @@ function addToCart() {
                         title: 'Added to Cart',
                         text: 'Your frame has been added to the cart.',
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1550,7 +1572,7 @@ function addToCart() {
                         title: 'Error!',
                         text: 'Something went wrong. Please try again.',
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1595,7 +1617,7 @@ function continueToCart() {
             title: 'Oops...',
             text: 'Please upload an image for all frames before adding to cart.',
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1645,7 +1667,7 @@ function continueToCart() {
                         title: 'Added to Cart',
                         text: 'Your frame has been added to the cart.',
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1661,7 +1683,7 @@ function continueToCart() {
                         title: 'Error!',
                         text: 'Something went wrong. Please try again.',
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'

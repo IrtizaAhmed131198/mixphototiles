@@ -164,9 +164,14 @@ function applyInitialFrameDesign(imageObj) {
 
     const frameWrapChild = document.getElementById('frameWrapChild');
     if(initialDesignClass === 'frameless-card-design'){
+        frameWrapChild.classList.remove('no-border-design');
         frameWrapChild.classList.add('frameless-design');
+    }else if(initialDesignClass === 'bold-card-design'){
+        frameWrapChild.classList.remove('frameless-design');
+        frameWrapChild.classList.add('no-border-design');
     }else{
         frameWrapChild.classList.remove('frameless-design');
+        frameWrapChild.classList.remove('no-border-design');
     }
 
     // --- Hide/Show color options based on frameless selection ---
@@ -544,7 +549,7 @@ async function processAndUploadImages(files, mainLoader) {
                 text: 'Only image files are allowed!',
                 icon: 'error',
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -583,7 +588,7 @@ async function processAndUploadImages(files, mainLoader) {
                     cancelButton: 'swal-image-cancel-button'
                 },
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -628,7 +633,7 @@ async function processAndUploadImages(files, mainLoader) {
                 text: 'Your images have been uploaded successfully!',
                 icon: 'success',
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -642,7 +647,7 @@ async function processAndUploadImages(files, mainLoader) {
             text: 'There was a problem uploading images',
             icon: 'error',
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -712,7 +717,7 @@ document.getElementById('remove-image').addEventListener('click', async function
                     cancelButton: 'swal-image-cancel-button'
                 },
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -747,7 +752,7 @@ document.getElementById('remove-image').addEventListener('click', async function
             text: 'Please select an image to delete.',
             icon: 'warning',
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -778,7 +783,7 @@ async function deleteImageFromDatabase(imageName) {
                 text: 'Image has been deleted successfully',
                 icon: 'success',
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -794,7 +799,7 @@ async function deleteImageFromDatabase(imageName) {
             text: error.message || 'Failed to delete image',
             icon: 'error',
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -828,7 +833,7 @@ document.getElementById('reset-image').addEventListener('click', async function 
                     cancelButton: 'swal-image-cancel-button'
                 },
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -865,7 +870,7 @@ document.getElementById('reset-image').addEventListener('click', async function 
             text: 'Please select an image to reset.',
             icon: 'warning',
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -896,7 +901,7 @@ async function resetImageToOriginal(filename) {
                 text: 'Image has been restored to original.',
                 icon: 'success',
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -912,7 +917,7 @@ async function resetImageToOriginal(filename) {
             text: error.message || 'Something went wrong.',
             icon: 'error',
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1094,9 +1099,14 @@ designOptions.forEach(option => {
 
         const frameWrapChild = document.getElementById('frameWrapChild');
         if(designClass === 'frameless-card-design'){
+            frameWrapChild.classList.remove('no-border-design');
             frameWrapChild.classList.add('frameless-design');
+        }else if(designClass === 'bold-card-design'){
+            frameWrapChild.classList.remove('frameless-design');
+            frameWrapChild.classList.add('no-border-design');
         }else{
             frameWrapChild.classList.remove('frameless-design');
+            frameWrapChild.classList.remove('no-border-design');
         }
 
         document.getElementById('frame-show').textContent = displayText;
@@ -1783,7 +1793,7 @@ $(document).ready(function () {
                         title: 'Crop Image',
                         text: 'Image saved successfully!',
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1808,7 +1818,7 @@ $(document).ready(function () {
                         title: 'Crop Image',
                         text: 'Failed to save image.',
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1864,7 +1874,7 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
                     title: 'Error',
                     text: response.message || 'No images found.',
                     showClass: {
-                        popup: 'animate__animated animate__fadeIn animate__faster'
+                        popup: 'animate__animated animate__fadeIn animate__slow'
                     },
                     hideClass: {
                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1890,7 +1900,7 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
                         title: 'Added to Cart',
                         text: responseData.message,
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1905,7 +1915,7 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
                         title: 'Error',
                         text: responseData.message || 'An error occurred.',
                         showClass: {
-                            popup: 'animate__animated animate__fadeIn animate__faster'
+                            popup: 'animate__animated animate__fadeIn animate__slow'
                         },
                         hideClass: {
                             popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1920,7 +1930,7 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
                     title: 'Error',
                     text: 'Failed to add products to cart.',
                     showClass: {
-                        popup: 'animate__animated animate__fadeIn animate__faster'
+                        popup: 'animate__animated animate__fadeIn animate__slow'
                     },
                     hideClass: {
                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -1935,7 +1945,7 @@ document.getElementById('add-to-cart').addEventListener('click', function() {
                 title: 'Error',
                 text: 'Failed to get images.',
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'

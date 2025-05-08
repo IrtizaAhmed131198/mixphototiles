@@ -179,8 +179,8 @@
                             have an account?<button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
                                 class="Login_authSwitch">Signup</button>
                         </p>
-                        <p class="mb-0 text-center">Verify OTP
-                            <button data-bs-target="#exampleModalToggleOtpSign" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Verify Otp</button>
+                        <p class="mb-0 text-center">
+                            <button data-bs-target="#exampleModalToggleVerify" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Verify Email OTP</button>
                         </p>
                     </div>
                 </div>
@@ -260,10 +260,41 @@
                                 <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
                                     id="signupBtn" class="Login_authSwitch">Login</button>
                             </p>
-                            <p class="mb-0 text-center">Verify OTP
-                                <button data-bs-target="#exampleModalToggleOtpSign" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Verify Otp</button>
+                            <p class="mb-0 text-center">
+                                <button data-bs-target="#exampleModalToggleVerify" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Verify Email OTP</button>
                             </p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalToggleVerify" aria-hidden="true" aria-labelledby="exampleModalToggleLabelVerify" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="Login_authWrp">
+                        <h4 class="heading-6">Verify Email</h4>
+                        <p>Enter your email to receive an OTP.</p>
+                        <form>
+                            <div class="mb-4 form-floating">
+                                <input placeholder="Email" id="emailInputVerify" class="form-control" type="text" name="email">
+                                <label for="emailInputVerify">Email</label>
+                                <small class="text-danger" id="emailErrorVerify"></small>
+                            </div>
+                            <div class="d-grid pt-3 pb-4">
+                                <button type="button" class="btn custom-btn btn-otp-verify" onclick="sendOtpEmail()">Send OTP</button>
+                            </div>
+                            <div id="forgotPasswordMessageVerify"></div>
+                        </form>
+
+                        <p class="mb-0 text-center">Back To Login
+                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Login</button>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -353,7 +384,7 @@
                             <div id="otpMessageSign"></div>
                         </form>
                         <p class="mb-0 text-center">Resend OTP
-                            <button type="button" class="Login_authSwitch btn-verify-resend-sign" onclick="resendOtp()">Resend</button>
+                            <button type="button" class="Login_authSwitch btn-verify-resend-sign" onclick="resendOtpVerify()">Resend</button>
                         </p>
                     </div>
                 </div>
@@ -387,7 +418,7 @@
                                 <label for="confirmPassword">Confirm Password</label>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn" onclick="resetPassword()">Reset Password</button>
+                                <button type="button" class="btn custom-btn btn-reset" onclick="resetPassword()">Reset Password</button>
                             </div>
                             <div id="resetPasswordMessage"></div>
                         </form>

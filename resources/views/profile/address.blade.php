@@ -193,8 +193,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="save-btn">
-                                        <button class="btn custom-btn" type="button">Cancel</button>
-                                        <button class="btn custom-btn filled" type="submit">Save</button>
+                                        <button class="btn custom-btn" id="btn-cancel" type="button">Cancel</button>
+                                        <button class="btn custom-btn filled" id="btn-save" type="submit">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -268,8 +268,15 @@
                 isValid = false;
             }
 
-            // If any validation fails, prevent form submission
-            if (!isValid) {
+            const saveBtn = document.getElementById("btn-save");
+            const cancelBtn = document.getElementById("btn-cancel");
+
+            // If validation passes, disable buttons to prevent multiple submissions
+            if (isValid) {
+                saveBtn.disabled = true;
+                cancelBtn.disabled = true;
+            } else {
+                // Prevent form submission if validation fails
                 event.preventDefault();
             }
         });
@@ -315,7 +322,7 @@
                 cancelButtonColor: "#3085d6",
                 confirmButtonText: "Yes, delete it!",
                 showClass: {
-                    popup: 'animate__animated animate__fadeIn animate__faster'
+                    popup: 'animate__animated animate__fadeIn animate__slow'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -332,7 +339,7 @@
                                 text: response.message,
                                 icon: "success",
                                 showClass: {
-                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
                                 },
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -347,7 +354,7 @@
                                 text: "Error deleting address.",
                                 icon: "error",
                                 showClass: {
-                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
                                 },
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -390,7 +397,7 @@
                                 title: "Success",
                                 text: response.message,
                                 showClass: {
-                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
                                 },
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -402,7 +409,7 @@
                                 title: "Error",
                                 text: "Failed to update default address.",
                                 showClass: {
-                                    popup: 'animate__animated animate__fadeIn animate__faster'
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
                                 },
                                 hideClass: {
                                     popup: 'animate__animated animate__fadeOut animate__faster'
@@ -416,7 +423,7 @@
                             title: "Error",
                             text: "An error occurred while updating default address.",
                             showClass: {
-                                popup: 'animate__animated animate__fadeIn animate__faster'
+                                popup: 'animate__animated animate__fadeIn animate__slow'
                             },
                             hideClass: {
                                 popup: 'animate__animated animate__fadeOut animate__faster'

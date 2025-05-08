@@ -81,14 +81,14 @@
     <div class="container">
        <div class="row align-items-end flex-column-reverse flex-md-row">
           <div class="col-md-7 mb-md-auto">
-             <h1 class="ttl-60 mb-4 d-none d-md-block contact-title">Got questions? We've got answers—let's chat!</h1>
+             <h1 class="ttl-60 mb-4 d-none d-md-block contact-title">Got questions? We've got answers let's chat!</h1>
              <div class="ContactInfo_contactInfoWrp__wBllg">
                 {{-- <div class="contact-info py-4 mb-md-3">
                    <h2 class="ttl-18 mb-3">Address:</h2>
                    <address class="mb-0 fs-18">Pearl Venture, First Floor, 190/218, Outer Ring Road, Agara, 1st Sector, HSR Layout, Bangalore - 560102, KA</address>
                 </div> --}}
                 <div class="contact-info-2 pt-4">
-                   <h2 class="ttl-18 mb-3">Call/WhatsApp:</h2>
+                   <h2 class="ttl-18 mb-3">WhatsApp:</h2>
                    <a href="tel:+91 9342874392" class="ttl-28 text-decoration-none text-primary mb-4 d-inline-block">+91 9342874392</a>
                    <h2 class="ttl-18 pt-3">Email ID:</h2>
                    <a href="mailto:support@magneticphotoframes.com" class="ttl-28 text-decoration-none text-primary d-inline-block mb-0">support@magneticphotoframes.com</a>

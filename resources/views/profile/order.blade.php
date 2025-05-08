@@ -119,7 +119,7 @@ $(document).ready(function () {
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'No, cancel!',
             showClass: {
-                popup: 'animate__animated animate__fadeIn animate__faster'
+                popup: 'animate__animated animate__fadeIn animate__slow'
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOut animate__faster'

@@ -36,6 +36,59 @@
         });
     }
 
+    function sendOtpEmail() {
+        let email = document.getElementById("emailInputVerify").value.trim();
+        let emailError = document.getElementById("emailErrorVerify");
+        let sendOtpButton = document.querySelector(".btn-otp-verify"); // Target Send OTP button
+        let loginButton = document.querySelector(".btn-otp-login"); // Target Login button
+
+        emailError.innerText = "";
+
+        if (email === "") {
+            emailError.innerText = "Email is required.";
+            return;
+        }
+
+        // Disable buttons during request
+        sendOtpButton.disabled = true;
+        loginButton.disabled = true;
+        sendOtpButton.innerHTML = "Sending..."; // Show loading state
+
+        fetch("{{ route('password.sendOtp') }}", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({ email: email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+
+                // Close the Forgot Password modal using Bootstrap's built-in method
+                let verifyModal = document.getElementById("exampleModalToggleVerify");
+                let modalInstance = bootstrap.Modal.getInstance(verifyModal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+
+                // Wait for the modal to close before opening the next one
+                setTimeout(() => {
+                    let verifyOtpModal = new bootstrap.Modal(document.getElementById("exampleModalToggleOtpSign"));
+                    verifyOtpModal.show();
+                }, 500); // Adjust timing if needed
+            } else {
+            }
+        })
+        .catch(error => console.error("Error:", error))
+        .finally(() => {
+            // Re-enable buttons after request completes
+            sendOtpButton.disabled = false;
+            loginButton.disabled = false;
+            sendOtpButton.innerHTML = "Send OTP"; // Reset button text
+        });
+    }
     function sendOtp() {
         let email = document.getElementById("emailInputPass").value.trim();
         let emailError = document.getElementById("emailError");
@@ -129,6 +182,7 @@
                 otpMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
 
                 document.getElementById("get_email").value = email;
+                document.getElementById("otpInputEdit").value = '';
 
                 // ✅ Get the existing OTP modal instance and hide it
                 let otpModalEl = document.getElementById('exampleModalToggleOtp');
@@ -139,6 +193,8 @@
 
                 // Wait for the modal to close before opening the next one
                 setTimeout(() => {
+                    otpMessage.innerHTML = "";
+                    otpError.innerText = "";
                     let resetPasswordModal = new bootstrap.Modal(document.getElementById('exampleModalToggleReset'));
                     resetPasswordModal.show();
                 }, 500); // Adjust timing if needed
@@ -190,6 +246,7 @@
                 // otpMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
 
                 document.getElementById("get_email").value = email;
+                document.getElementById("otpInputEditSign").value = '';
 
                 Swal.fire({
                     icon: 'success',
@@ -197,7 +254,7 @@
                     text: 'Your account has been successfully verified.',
                     confirmButtonText: 'OK',
                     showClass: {
-                        popup: 'animate__animated animate__fadeIn animate__faster'
+                        popup: 'animate__animated animate__fadeIn animate__slow'
                     },
                     hideClass: {
                         popup: 'animate__animated animate__fadeOut animate__faster'
@@ -217,7 +274,7 @@
                             title: 'Please login',
                             confirmButtonText: 'OK',
                             showClass: {
-                                popup: 'animate__animated animate__fadeIn animate__faster'
+                                popup: 'animate__animated animate__fadeIn animate__slow'
                             },
                             hideClass: {
                                 popup: 'animate__animated animate__fadeOut animate__faster'
@@ -264,7 +321,7 @@
         let newPassword = document.getElementById('newPassword').value;
         let confirmPassword = document.getElementById('confirmPassword').value;
         let resetPasswordMessage = document.getElementById('resetPasswordMessage');
-        let resetPasswordButton = document.querySelector(".custom-btn");
+        let resetPasswordButton = document.querySelector(".btn-reset");
 
         resetPasswordMessage.innerHTML = '';
 
@@ -331,6 +388,21 @@
         }, { once: true }); // Ensures event runs only once
     }
 
+    function resendOtpVerify() {
+        let otpModalEl = document.getElementById('exampleModalToggleOtpSign');
+        let otpModalInstance = bootstrap.Modal.getInstance(otpModalEl);
+
+        if (otpModalInstance) {
+            otpModalInstance.hide();
+        }
+
+        // Listen for the modal close event before opening the next one
+        otpModalEl.addEventListener("hidden.bs.modal", function () {
+            let resendModal = new bootstrap.Modal(document.getElementById('exampleModalToggleVerify'));
+            resendModal.show();
+        }, { once: true }); // Ensures event runs only once
+    }
+
     // Optional function to highlight errors
     function handleValidationErrors(errors) {
         $('.form-control').removeClass('is-invalid');
@@ -374,7 +446,7 @@
                             title: 'Almost there!',
                             text: 'An OTP has been sent to your email for verification.',
                             showClass: {
-                                popup: 'animate__animated animate__fadeIn animate__faster'
+                                popup: 'animate__animated animate__fadeIn animate__slow'
                             },
                             hideClass: {
                                 popup: 'animate__animated animate__fadeOut animate__faster'

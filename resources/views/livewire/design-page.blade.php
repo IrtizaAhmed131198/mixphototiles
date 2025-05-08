@@ -51,6 +51,9 @@
     .frameless-design {
         padding: 0 !important;
     }
+    .no-border-design {
+        padding: 18px !important;
+    }
 
 </style>
 @endpush
@@ -351,7 +354,7 @@
                                             </figure>
                                             <div class="PropertiesRightChild">
                                                 <p class="propertyName">{{ $val->label }}</p>
-                                                <p class="propertyPrize">Rs.{{ $val->price }}</p>
+                                                {{-- <p class="propertyPrize">Rs.{{ $val->price }}</p> --}}
                                             </div>
                                         </li>
 
@@ -757,7 +760,7 @@
 
                                         <li class="col-6">
                                             <div class="d-flex align-items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" style="font-size: 26px; margin-top: -157px"
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="font-size: 28px;margin-top: -60px;margin-left: 3px;"
                                                     width="18" height="24.413" viewBox="0 0 18 24.413"
                                                     class="w-em h-em ttl-24 mb-0">
                                                     <g transform="translate(2638 17326.398)">
@@ -785,10 +788,7 @@
                                                 </svg>
                                                 <div class="frame-detail">
                                                     <p class="para">Hang</p>
-                                                    <ul class="ordered-list">
-                                                        <li id="hang1-show" class="heading-4">Free magnetic reusable stickers</li>
-                                                        {{-- <li id="hang2-show" class="heading-4">Free Hanging hooks</li> --}}
-                                                    </ul>
+                                                    <h6 class="heading-4" id="hang1-show">Free magnetic reusable stickers</h6>
                                                 </div>
                                             </div>
                                         </li>
