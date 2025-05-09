@@ -58,11 +58,22 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // Check if input is email or mobile
+        // Determine whether it's an email or a mobile number
+        $loginKey = filter_var($request->emailOrMobile, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
         $credentials = [
-            filter_var($request->emailOrMobile, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile' => $request->emailOrMobile,
+            $loginKey => $request->emailOrMobile,
             'password' => $request->password,
         ];
+
+        // Check if the user exists
+        $user = User::where($loginKey, $request->emailOrMobile)->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The account does not exist, please signup.'
+            ], 404);
+        }
 
         // Attempt to authenticate the user
         if (Auth::attempt($credentials)) {
@@ -71,14 +82,24 @@ class AuthController extends Controller
             // Check if the user's status is 1 (active)
             if ($user->status !== 1) {
                 Auth::logout(); // Log out if status is not 1
-                return response()->json(['success' => false, 'message' => 'Please verify your Email'], 403);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please verify your Email'
+                ], 403);
             }
 
             // If status is 1, return success
-            return response()->json(['success' => true, 'message' => 'Login successful', 'url' => route('profile')]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Login successful',
+                'url' => route('profile')
+            ]);
         }
 
-        return response()->json(['success' => false, 'message' => 'Invalid credentials'], 401);
+        return response()->json([
+            'success' => false,
+            'message' => 'Invalid credentials'
+        ], 401);
     }
 
     public function register(Request $request)
