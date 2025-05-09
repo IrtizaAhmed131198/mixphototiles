@@ -284,6 +284,9 @@ function applyInitialFrameSize(imageObj) {
 
     // (Optional) If you want to log or display price somewhere
     const framePriceShow = document.getElementById('frame-price-show'); // Optional price display
+    if(initialSize.frame_price > 0){
+        document.getElementById('price-show').textContent = '₹' + initialSize.frame_price;
+    }
     if (framePriceShow) {
         framePriceShow.textContent = initialSize.frame_price > 0 ? `$${initialSize.frame_price}` : 'Free';
     }
@@ -477,7 +480,9 @@ function updateFramePrice(frameConfig) {
     }
 
     // Update the price on the UI
-    document.getElementById('price-show').textContent = '₹' + total;
+    // if(sizePrice != null && sizePrice > 0){
+    //     document.getElementById('price-show').textContent = '₹' + sizePrice;
+    // }
 
     // Optionally update the grand total if you are tracking all frames (for multiple frames setup)
     updateGrandTotal();
@@ -1121,12 +1126,17 @@ designOptions.forEach(option => {
         get_active_config.frame_configuration = JSON.stringify(frameConfig);
         $('#active_config').val(JSON.stringify(get_active_config));
 
+        let active_price = this.getAttribute('data-price');
+        if(active_price != '0'){
+            document.getElementById('price-show').textContent = '₹' + active_price;
+        }
         // Save the selected design into the session_images table for the active image
         saveFrameConfigToDatabase({
             designClass: designClass,
             displayText: displayText,
             design_price: design_price
         }, 'design');
+
 
         // --- Hide/Show color options based on frameless selection ---
         const colorOptionsTemp = document.querySelectorAll('.frame-color');
@@ -1203,6 +1213,11 @@ document.querySelectorAll('.frame-color').forEach(item => {
         get_active_config.frame_configuration = JSON.stringify(frameConfig);
         $('#active_config').val(JSON.stringify(get_active_config));
 
+        let active_price = this.getAttribute('data-price');
+        if(active_price != '0'){
+            document.getElementById('price-show').textContent = '₹' + active_price;
+        }
+
         // Save the color selection for the active image
         saveFrameConfigToDatabase({
             img_src: img_src,
@@ -1252,6 +1267,11 @@ sizeOptions.forEach(option => {
         get_active_config.frame_configuration = JSON.stringify(frameConfig);
         $('#active_config').val(JSON.stringify(get_active_config));
 
+        let active_price = parseFloat(this.getAttribute('data-price'));
+        if(active_price != '0'){
+            document.getElementById('price-show').textContent = '₹' + active_price;
+        }
+
         // Save the size selection for the active image
         saveFrameConfigToDatabase({
             width: width,
@@ -1289,6 +1309,11 @@ finishOptions.forEach(option => {
 
         get_active_config.frame_configuration = JSON.stringify(frameConfig);
         $('#active_config').val(JSON.stringify(get_active_config));
+
+        let active_price = parseFloat(this.getAttribute('data-price'));
+        if(active_price != '0'){
+            document.getElementById('price-show').textContent = '₹' + active_price;
+        }
 
         // Save the finish selection for the active image
         saveFrameConfigToDatabase({
@@ -1336,6 +1361,10 @@ hangOptions.forEach(option => {
         get_active_config.frame_configuration = JSON.stringify(frameConfig);
         $('#active_config').val(JSON.stringify(get_active_config));
 
+        let active_price = parseFloat(this.getAttribute('data-price'));
+        if(active_price != '0'){
+            document.getElementById('price-show').textContent = '₹' + active_price;
+        }
 
         // Save the LED selection for the active image
         saveFrameConfigToDatabase({

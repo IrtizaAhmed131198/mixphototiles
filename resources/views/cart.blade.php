@@ -223,7 +223,7 @@
                     </div>
                     <div class="productpolicylinks">
                         <a class="" href="{{ route('shipping') }}">Shipping Policy</a>
-                        <a class="" href="{{ route('faq') }}">FAQ's</a>
+                        {{-- <a class="" href="{{ route('faq') }}">FAQ's</a> --}}
                     </div>
 
                 </div>

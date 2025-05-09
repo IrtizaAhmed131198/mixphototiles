@@ -51,7 +51,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        $ordersQuery = Order::with('orderItems');
+        $ordersQuery = Order::with(['orderItems', 'user']);
 
         // If not admin or super admin, filter by user ID
         if (!in_array($user->role, ['admin', 'super_admin'])) {
@@ -108,6 +108,14 @@ class ProfileController extends Controller
                 // Otherwise, show a colored badge or plain status text
                 $color = $statuses[$order->status] ?? 'secondary';
                 return '<span class="badge bg-'.$color.'">'.ucfirst($order->status).'</span>';
+            })
+            ->addColumn('username', function ($order) {
+                return $order->user->name ?? '-';
+            })
+            ->filterColumn('username', function ($query, $keyword) {
+                $query->whereHas('user', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
             })
             ->filterColumn('status', function ($query, $keyword) {
                 $query->where('status', 'like', "%{$keyword}%");

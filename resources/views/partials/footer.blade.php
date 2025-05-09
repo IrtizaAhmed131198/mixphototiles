@@ -154,9 +154,9 @@
                                 class="bg-white px-2 position-relative">or</span></div>
                             <form class="loginForm">
                                 <div class="mb-4 form-floating">
-                                    <input placeholder="Email or Mobile number" id="emailInput" class="form-control" type="text" value=""
+                                    <input placeholder="Email address" id="emailInput" class="form-control" type="email" value=""
                                         name="emailOrMobile">
-                                    <label for="emailInput">Email or Mobile number</label>
+                                    <label for="emailInput">Email address</label>
                                     <small class="text-danger" id="emailOrMobileError"></small>
                                 </div>
                                 <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">

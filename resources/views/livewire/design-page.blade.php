@@ -41,7 +41,7 @@
     }
 
     .frameinner img {
-        object-fit: contain !important;
+        object-fit: fill !important;
     }
 
     .grid-2 {
@@ -67,7 +67,7 @@
         }
 
         /* Animation for image loading */
-        @keyframes fadeIn {
+        /* @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: rotate(0deg);
@@ -77,7 +77,7 @@
                 opacity: 1;
                 transform: rotate(360deg);
             }
-        }
+        } */
 
         .frameinner img {
             animation: fadeIn 0.5s ease-in-out;
@@ -264,7 +264,7 @@
                                             </figure>
                                             <div class="PropertiesRightChild">
                                                 <p class="propertyName">{{ $val->name }}</p>
-                                                <p class="propertyPrize">Rs.{{ $val->price }}</p>
+                                                {{-- <p class="propertyPrize">Rs.{{ $val->price }}</p> --}}
                                             </div>
                                         </li>
                                     @endforeach
@@ -314,7 +314,7 @@
                                             </figure>
                                             <div class="PropertiesRightChild">
                                                 <p class="propertyName">{{ $val->label }}</p>
-                                                <p class="propertyPrize">Rs.{{ $val->price }}</p>
+                                                {{-- <p class="propertyPrize">Rs.{{ $val->price }}</p> --}}
                                             </div>
                                         </li>
 

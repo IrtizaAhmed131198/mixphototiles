@@ -41,6 +41,7 @@
                                     <th>Price</th>
                                     <th>Status</th>
                                     <th>Payment Method</th>
+                                    <th>Username</th>
                                     <th>Date/Time</th>
                                     <th>Action</th>
                                 </tr>
@@ -77,6 +78,7 @@ $(document).ready(function () {
             { data: 'price', name: 'price' },
             { data: 'status', name: 'status' },
             { data: 'payment_method', name: 'payment_method' },
+            { data: 'username', name: 'username' },
             { data: 'datetime', name: 'datetime' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]

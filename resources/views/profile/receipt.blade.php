@@ -186,7 +186,9 @@
                         <th>#</th>
                         <th>Products</th>
                         <th>Your Design</th>
-                        <th>Uploaded Image</th>
+                        @if(in_array(Auth::user()->role, ['super_admin', 'admin']))
+                            <th>Uploaded Image</th>
+                        @endif
                         {{-- <th>Quantity</th> --}}
                         <th>Price (Each)</th>
                         <th>Total</th>
@@ -214,62 +216,33 @@
                                         data-image="{{ asset($item->product->no_coordinates_image) }}">View Image</a>
                                 @endif
                             </td>
-                            <td>
-                                @if ($item->product->type == 'manual')
-                                @php
-                                    $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->first();
-                                    if($product_images->crop_image_path != null){
-                                        $image_path = asset($product_images->crop_image_path ?? '');
-                                    }else{
-                                        $image_path = asset($product_images->image_path ?? '');
-                                    }
-                                @endphp
-                                <a href="javascript:void(0)" download class="btn btn-sm btn-brand-dark"
-                                        data-bs-toggle="modal" data-bs-target="#orignalImageModal{{ $item->product->id }}">View Image</a>
+                            @if(in_array(Auth::user()->role, ['super_admin', 'admin']))
+                                <td>
+                                    @if ($item->product->type == 'manual')
+                                    @php
+                                        $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->first();
+                                        if($product_images->crop_image_path != null){
+                                            $image_path = asset($product_images->crop_image_path ?? '');
+                                        }else{
+                                            $image_path = asset($product_images->image_path ?? '');
+                                        }
+                                    @endphp
+                                    <a href="javascript:void(0)" download class="btn btn-sm btn-brand-dark"
+                                            data-bs-toggle="modal" data-bs-target="#orignalImageModal{{ $item->product->id }}">View Image</a>
 
-                                <div class="modal fade" id="orignalImageModal{{ $item->product->id }}" tabindex="-1" aria-labelledby="orignalImageModal{{ $item->product->id }}Label" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="orignalImageModal{{ $item->product->id }}Label">Uploaded Image</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body text-center">
-                                                <div class="frame-main-wrap frame-main-wrap-main">
-                                                    <div class="frameborder inherit-design">
-                                                        <div class="frameinner-manual child-inherit-design">
-                                                            <img id="modalOrignalImage" src="{{ $image_path }}" class="img-fluid" alt="Preview">
-                                                        </div>
-                                                    </div>
+                                    <div class="modal fade" id="orignalImageModal{{ $item->product->id }}" tabindex="-1" aria-labelledby="orignalImageModal{{ $item->product->id }}Label" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="orignalImageModal{{ $item->product->id }}Label">Uploaded Image</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @else
-                                @php
-                                    $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->get();
-                                @endphp
-                                <a href="javascript:void(0)" download class="btn btn-sm btn-brand-dark"
-                                        data-bs-toggle="modal" data-bs-target="#orignalImageModal{{ $item->product->id }}">View Image</a>
-
-                                <div class="modal fade" id="orignalImageModal{{ $item->product->id }}" tabindex="-1" aria-labelledby="orignalImageModal{{ $item->product->id }}Label" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="orignalImageModal{{ $item->product->id }}Label">Uploaded Image</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body text-center">
-                                                <div class="frame-main-wrap frame-main-wrap-main">
-                                                    <div class="frameborder inherit-design">
-                                                        <div class="frameinner-manual child-inherit-design">
-                                                            <div class="gallery-grid">
-                                                                @foreach ($product_images as $item)
-                                                                    <img id="modalOrignalImage" src="{{ asset($item->image_path) }}" class="img-fluid" alt="Preview">
-                                                                @endforeach
+                                                <div class="modal-body text-center">
+                                                    <div class="frame-main-wrap frame-main-wrap-main">
+                                                        <div class="frameborder inherit-design">
+                                                            <div class="frameinner-manual child-inherit-design">
+                                                                <img id="modalOrignalImage" src="{{ $image_path }}" class="img-fluid" alt="Preview">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -277,9 +250,46 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                    @else
+                                    @php
+                                        $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->get();
+                                    @endphp
+                                    <a href="javascript:void(0)" download class="btn btn-sm btn-brand-dark"
+                                            data-bs-toggle="modal" data-bs-target="#orignalImageModal{{ $item->product->id }}">View Image</a>
+
+                                    <div class="modal fade" id="orignalImageModal{{ $item->product->id }}" tabindex="-1" aria-labelledby="orignalImageModal{{ $item->product->id }}Label" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="orignalImageModal{{ $item->product->id }}Label">Uploaded Image</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-center">
+                                                    <div class="frame-main-wrap frame-main-wrap-main">
+                                                        <div class="frameborder inherit-design">
+                                                            <div class="frameinner-manual child-inherit-design">
+                                                                <div class="gallery-grid">
+                                                                    @foreach ($product_images as $item)
+                                                                        <img id="modalOrignalImage" src="{{ asset($item->image_path) }}" class="img-fluid" alt="Preview">
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </td>
+                            @endif
+                            {{-- <td>
+                                @if ($item->product && $item->product->image)
+                                    <img src="{{ asset($item->product->image) }}" alt="Product Image" width="50">
+                                @else
+                                    N/A
                                 @endif
-                            </td>
                             {{-- <td>{{ $item->quantity }}</td> --}}
                             <td>Rs.{{ number_format($price, 2) }}</td>
                             <td>Rs.{{ number_format($price * $quantity, 2) }}</td>
