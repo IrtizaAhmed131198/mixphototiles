@@ -354,7 +354,7 @@
                                             </figure>
                                             <div class="PropertiesRightChild">
                                                 <p class="propertyName">{{ $val->label }}</p>
-                                                {{-- <p class="propertyPrize">Rs.{{ $val->price }}</p> --}}
+                                                <p class="propertyPrize">Rs.{{ $val->price }}</p>
                                             </div>
                                         </li>
 

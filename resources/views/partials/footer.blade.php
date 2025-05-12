@@ -75,15 +75,20 @@
                         <div><span class=" link">Contact Us </span></div>
                     </div>
                 </div>
-                <div class="col-md">
-                    <h5 class="mb-4 text-brand-dark fw-bold">Email</h5>
-                    {{-- <p class="mb-4">Contact</p>
-                    <address class="mb-4">Pearl Venture, First Floor, 190/218,
-                        Outer Ring Road, Agara, 1st Sector,
-                        HSR Layout, Bangalore - 560102, KA</address>
-                    <p class="mb-2 Footer_footerContact">Call:<a class="text-decoration-none ps-1" href="javascript:;">+917975339182</a></p> --}}
+                {{-- <div class="col-md">
+                    <h5 class="mb-4 text-brand-dark fw-bold">Not sure how to do?</h5>
+                    <p class="mb-2 Footer_footerContact">Call:<a class="text-decoration-none ps-1" href="javascript:;">+917975339182</a></p>
                     <p class="mb-2 Footer_footerContact"><a class="text-decoration-none ps-1" href="mailto:{{ get_setting('contact_email', 'help@magneticphotoframes.com') }}">
                         {{ get_setting('contact_email', 'help@magneticphotoframes.com') }}</a></p>
+                </div> --}}
+                <div class="col-md">
+                    <h5 class="mb-4 text-brand-dark fw-bold">Not sure how to do?</h5>
+                    <p class="mb-2 Footer_footerContact">
+                        <a class="text-decoration-none d-flex align-items-center" href="https://wa.me/919342874392" target="_blank">
+                            <img src="{{ asset('assets/images/whatsapp.png') }}" alt="WhatsApp" style="width: 50px;height: 51px;vertical-align: middle;margin-left: -5px;">
+                            <span class="ps-1" style=" font-size: 14px; font-weight: 400; line-height: 20px; ">Send your picture to our way and we'll frame it.</span>
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
