@@ -295,7 +295,6 @@ function applyInitialFrameFinish(imageObj) {
     }
 
     const frameConfig = JSON.parse(imageObj.frame_configuration);
-    console.log(frameConfig);
 
     const initialFinish = frameConfig.finish || {
         finish_price: 0,
@@ -365,17 +364,6 @@ function applyInitialFrameLED(imageObj) {
         }
     }
 }
-
-
-// function getDefaultFrameConfig() {
-//     return {
-//         design: { designClass: "classic-card-design", displayText: "Border", design_price: 0 },
-//         color: { img_src: "assets/images/black-frame.png", color_name: "Black", shadowClass: "box-shadow-black", color_price: 0 },
-//         size: { width: "309px", height: "318px", max_width: "500px", frame_price: 0, frameSizeText: '8" X 8"' },
-//         finish: { finish_price: 0, frameFinishText: "Normal" },
-//         led: { price: 0, value: "no", framehangText: "No" },
-//     };
-// }
 
 function getDefaultFrameConfig() {
     return fetch(getFrameDefaults)
@@ -961,13 +949,14 @@ var swiper = new Swiper(".Images-frame-slider", {
 
 // Function to update the #uploaded-image based on the active slide
 function updateActiveImage() {
+    console.log('Updating active image...');
     setTimeout(() => {
         const activeSlide = document.querySelector('.swiper-slide-active');
         if (activeSlide) {
             const img = activeSlide.querySelector('img');
             if (img) {
                 const activeSrc = img.src;
-                document.getElementById('uploaded-image').src = activeSrc;
+                // document.getElementById('uploaded-image').src = activeSrc;
 
                 // Fetch and apply frame configuration
                 const filename = img.getAttribute('data-frame-config') || '';
@@ -989,6 +978,7 @@ function updateActiveImage() {
                             applyInitialFrameSize(data.frame_configuration);
                             applyInitialFrameFinish(data.frame_configuration);
                             applyInitialFrameLED(data.frame_configuration);
+                            document.getElementById('uploaded-image').src = activeSrc;
                             updateFramePrice(data.frame_configuration);
 
                             if (data.frame_configuration.crop === 1) {
@@ -1032,7 +1022,7 @@ document.querySelector('.Images-frame-slider .swiper-wrapper').addEventListener(
     slide.classList.add('swiper-slide-active');
     const img = slide.querySelector('img');
     if (img) {
-        document.getElementById('uploaded-image').src = img.src;
+        // document.getElementById('uploaded-image').src = img.src;
         // applyFrameConfiguration(img.src);
         const filename = img.getAttribute('data-frame-config') || '';
         if(filename){
@@ -1052,6 +1042,7 @@ document.querySelector('.Images-frame-slider .swiper-wrapper').addEventListener(
                     applyInitialFrameSize(data.frame_configuration);
                     applyInitialFrameFinish(data.frame_configuration);
                     applyInitialFrameLED(data.frame_configuration);
+                    document.getElementById('uploaded-image').src = img.src;
                     updateFramePrice(data.frame_configuration);
 
                     if (data.frame_configuration.crop === 1) {
