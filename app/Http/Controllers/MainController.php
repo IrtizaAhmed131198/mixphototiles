@@ -574,7 +574,7 @@ class MainController extends Controller
                 // Validate URL format
                 if (preg_match('/^data:image\/(\w+);base64,/', $imageUrl, $type)) {
                     // Handle base64 image
-                    $imageData = base64_decode(preg_replace('/^data:image\/\w+;base64,/', '', $imageSrc));
+                    $imageData = base64_decode(preg_replace('/^data:image\/\w+;base64,/', '', $imageUrl));
                     $extension = $type[1] ?? 'png'; // Default to PNG if extension is missing
 
                     // Generate a unique filename
