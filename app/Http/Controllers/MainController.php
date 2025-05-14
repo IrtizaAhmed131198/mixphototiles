@@ -568,61 +568,74 @@ class MainController extends Controller
 
         if ($sessionCollection->id) {
             $tempArr = json_decode($request->input('colImageArr'));
+            $tempOrgArr = json_decode($request->input('colImageOrignalArr'));
             $count = 1;
 
-            foreach ($tempArr as $imageUrl) {
-                // Validate URL format
-                if (preg_match('/^data:image\/(\w+);base64,/', $imageUrl, $type)) {
-                    // Handle base64 image
-                    $imageData = base64_decode(preg_replace('/^data:image\/\w+;base64,/', '', $imageUrl));
-                    $extension = $type[1] ?? 'png'; // Default to PNG if extension is missing
+            // Process both arrays together
+            foreach ($tempArr as $key => $imageUrl) {
+                $originalImageUrl = $tempOrgArr[$key] ?? null;
 
-                    // Generate a unique filename
-                    $imageName = $request->input('name') . '_' . time() . '_' . $count . '.' . $extension;
+                // Process main image
+                $imageName = $this->processAndSaveImage($imageUrl, $request->input('name'), $count);
 
-                    // Define the storage path
-                    $imagePath = public_path('uploads/collections/' . $imageName);
+                // Process original image if it exists
+                $originalImageName = $originalImageUrl ?
+                    $this->processAndSaveImage($originalImageUrl, $request->input('name') . '_original', $count) :
+                    $imageName;
 
-                    // Save the image file
-                    file_put_contents($imagePath, $imageData);
-                } elseif (filter_var($imageUrl, FILTER_VALIDATE_URL)) {
-                    // Handle image from URL
-                    $imageData = file_get_contents($imageUrl);
-
-                    if ($imageData !== false) {
-                        $extension = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_EXTENSION);
-                        if (!in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'webp'])) {
-                            $extension = 'png'; // Default to PNG if extension is invalid
-                        }
-
-                        // Generate a unique filename
-                        $imageName = $request->input('name') . '_' . time() . '_' . $count . '.' . $extension;
-
-                        // Define the storage path
-                        $imagePath = public_path('uploads/collections/' . $imageName);
-
-                        // Save the image file
-                        file_put_contents($imagePath, $imageData);
-                    }
-                }
-
-                // Save the image path in CollectionImages table (relative path)
+                // Save the image paths in CollectionImages table
                 $collectionImage = new CollectionImages();
                 $collectionImage->collection_id = $sessionCollection->id;
-                $collectionImage->image = 'uploads/collections/' . $imageName; // Save relative path
+                $collectionImage->image = 'uploads/collections/' . $imageName;
+                $collectionImage->original_image = 'uploads/collections/' . $originalImageName;
                 $collectionImage->save();
 
+                // Save in ProductImage table
                 $product_images = new ProductImage();
                 $product_images->product_id = $product->id;
                 $product_images->image_path = 'uploads/collections/' . $imageName;
+                $product_images->crop_image_path = 'uploads/collections/' . $originalImageName;
                 $product_images->save();
 
                 $count++;
-
             }
         }
 
         return response()->json(['success' => true, 'message' => 'Added to cart successfully!', 'image' => $imageUrl]);
+    }
+
+    private function processAndSaveImage($imageUrl, $namePrefix, $count)
+    {
+        if (preg_match('/^data:image\/(\w+);base64,/', $imageUrl, $type)) {
+            // Handle base64 image
+            $imageData = base64_decode(preg_replace('/^data:image\/\w+;base64,/', '', $imageUrl));
+            $extension = $type[1] ?? 'png';
+
+            $imageName = $namePrefix . '_' . time() . '_' . $count . '.' . $extension;
+            $imagePath = public_path('uploads/collections/' . $imageName);
+            file_put_contents($imagePath, $imageData);
+
+            return $imageName;
+        } elseif (filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+            // Handle image from URL
+            $imageData = file_get_contents($imageUrl);
+
+            if ($imageData !== false) {
+                $extension = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_EXTENSION);
+                if (!in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'webp'])) {
+                    $extension = 'png';
+                }
+
+                $imageName = $namePrefix . '_' . time() . '_' . $count . '.' . $extension;
+                $imagePath = public_path('uploads/collections/' . $imageName);
+                file_put_contents($imagePath, $imageData);
+
+                return $imageName;
+            }
+        }
+
+        // Return a default name if processing fails
+        return $namePrefix . '_' . time() . '_' . $count . '.png';
     }
 
     public function save_coupon(Request $request)

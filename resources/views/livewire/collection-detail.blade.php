@@ -189,6 +189,7 @@
                                                             $image_path = $collectionImages[$key]['image'];
                                                             @endphp
                                                             <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}" class="image-preview w-100 h-100 object-fit-cover" alt="Preview">
+                                                            <img src="{{ asset($image_path) }}" id="preview-{{ $cluster->id }}-orignal" class="d-none orignal-image">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -216,6 +217,7 @@
                                                                 </path>
                                                             </svg>
                                                             <img src="" id="preview-{{ $cluster->id }}" class="image-preview d-none w-100 h-100 object-fit-cover" alt="Preview">
+                                                            <img src="" id="preview-{{ $cluster->id }}-orignal" class="d-none orignal-image">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1025,10 +1027,15 @@ function updateClusterImage() {
     const selectedImageSrc = document.querySelector(`[data-id="${selectedImageId}"]`).src;
     const clusterBlock = document.getElementById(`cluster-block-${selectedClusterId}`);
     const previewImg = document.getElementById(`preview-${selectedClusterId}`);
+    const previewImgOrignal = document.getElementById(`preview-${selectedClusterId}-orignal`);
 
     if (previewImg) {
         previewImg.src = selectedImageSrc;
         previewImg.classList.remove('d-none'); // Show the image
+    }
+
+    if (previewImgOrignal) {
+        previewImgOrignal.src = selectedImageSrc;
     }
 
     // Find and remove the SVG inside the selected cluster
@@ -1474,11 +1481,13 @@ function addToCart() {
     const clusters = @json($clusters);  // Pass the clusters data to JavaScript
     let currentUrl = window.location.href;
     let colImageArr = [];
+    let colImageOrignalArr = [];
     let selectedConfigurations = {};
 
 
     clusters.forEach(cluster => {
         let imagePreview = document.getElementById(`preview-${cluster.id}`);
+        let imagePreviewOrignal = document.getElementById(`preview-${cluster.id}-orignal`);
 
         if (!imagePreview.src || imagePreview.src === currentUrl) {
             // Handle the empty or uninitialized state
@@ -1487,6 +1496,7 @@ function addToCart() {
 
         } else {
             colImageArr.push(imagePreview.src);
+            colImageOrignalArr.push(imagePreviewOrignal.src);
             // document.getElementById(`cluster-block-${cluster.id}`).style.border = ''; // Remove any previous highlight
         }
     });
@@ -1541,6 +1551,7 @@ function addToCart() {
             formData.append("total", price);
             formData.append("slug", "{{ $product->slug }}");
             formData.append("colImageArr", JSON.stringify(colImageArr));
+            formData.append("colImageOrignalArr", JSON.stringify(colImageOrignalArr));
             formData.append("configuration", JSON.stringify(selectedConfig));
 
             // Send AJAX request to save image and add to cart
@@ -1592,9 +1603,11 @@ function continueToCart() {
     const clusters = @json($clusters);  // Pass the clusters data to JavaScript
     let currentUrl = window.location.href;
     let colImageArr = [];
+    let colImageOrignalArr = [];
 
     clusters.forEach(cluster => {
         let imagePreview = document.getElementById(`preview-${cluster.id}`);
+        let imagePreviewOrignal = document.getElementById(`preview-${cluster.id}-orignal`);
         // console.log(imagePreview.src);
 
         if (!imagePreview.src || imagePreview.src === currentUrl) {
@@ -1604,6 +1617,7 @@ function continueToCart() {
 
         } else {
             colImageArr.push(imagePreview.src);
+            colImageOrignalArr.push(imagePreviewOrignal.src);
             // document.getElementById(`cluster-block-${cluster.id}`).style.border = ''; // Remove any previous highlight
         }
     });
@@ -1652,6 +1666,7 @@ function continueToCart() {
             formData.append("slug", "{{ $product->slug }}");
             formData.append("exist_image", "{{ $image_name }}");
             formData.append("colImageArr", JSON.stringify(colImageArr));
+            formData.append("colImageOrignalArr", JSON.stringify(colImageOrignalArr));
             formData.append("configuration", JSON.stringify(selectedConfig));
 
             // Send AJAX request to save image and add to cart

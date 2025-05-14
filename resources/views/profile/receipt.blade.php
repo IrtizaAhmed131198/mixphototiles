@@ -271,7 +271,14 @@
                                                             <div class="frameinner-manual child-inherit-design">
                                                                 <div class="gallery-grid">
                                                                     @foreach ($product_images as $item)
-                                                                        <img id="modalOrignalImage" src="{{ asset($item->image_path) }}" class="img-fluid" alt="Preview">
+                                                                        @php
+                                                                            if($item->crop_image_path != null){
+                                                                                $image_path = asset($item->crop_image_path ?? '');
+                                                                            }else{
+                                                                                $image_path = asset($item->image_path ?? '');
+                                                                            }
+                                                                        @endphp
+                                                                        <img id="modalOrignalImage" src="{{ asset($image_path) }}" class="img-fluid" alt="Preview">
                                                                     @endforeach
                                                                 </div>
                                                             </div>
