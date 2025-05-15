@@ -51,11 +51,18 @@ class AdminController extends Controller
             ->addColumn('status', function ($row) {
                 return $row->status == 1 ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-secondary">Inactive</span>';
             })
+            ->addColumn('login_as', function ($user) {
+                if (Auth::user()->role === 'super_admin' && $user->status == 1) {
+                    $route = route('admin.login.as', ['id' => $user->id]);
+                    return '<a href="'.$route.'" class="btn btn-sm btn-info">Login As</a>';
+                }
+                return '';
+            })
             ->addColumn('action', function ($user) {
                 return '<button class="btn btn-sm btn-brand-dark edit-user" data-id="'.$user->id.'">Edit</button>
                         <button class="btn btn-sm btn-brand-dark delete-user" data-id="'.$user->id.'">Delete</button>';
             })
-            ->rawColumns(['id', 'status', 'action']) // Include 'status' here to allow HTML badges
+            ->rawColumns(['id', 'status', 'action', 'login_as']) // Include 'status' here to allow HTML badges
             ->make(true);
     }
 
@@ -154,4 +161,23 @@ class AdminController extends Controller
             ]);
         }
     }
+
+    public function loginAsUser($id)
+    {
+        if (Auth::user()->role !== 'super_admin') {
+            abort(403);
+        }
+
+        $user = User::findOrFail($id);
+
+        if ($user->status != 1) {
+            return redirect()->back()->with('error', 'Cannot login as inactive user.');
+        }
+
+        Auth::logout(); // logout current super_admin
+        Auth::login($user); // login as selected user
+
+        return redirect()->route('profile'); // change to whatever route you want to redirect to
+    }
+
 }

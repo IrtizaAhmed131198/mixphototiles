@@ -119,6 +119,7 @@ Route::post('/admin/store', [AdminController::class, 'store'])->name('admin.stor
 Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
 Route::post('/admin/update/{id}', [AdminController::class, 'update'])->name('admin.update');
 Route::delete('/admin/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+Route::get('/admin/login-as/{id}', [AdminController::class, 'loginAsUser'])->name('admin.login.as');
 
 Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 Route::post('/settings/update', [SettingController::class, 'update'])->name('settings.update');

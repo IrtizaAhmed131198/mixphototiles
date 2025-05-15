@@ -38,6 +38,7 @@
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Status</th>
+                                    <th class="d-none">Login As</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -238,6 +239,7 @@
                 { data: 'email', name: 'email' },
                 { data: 'role', name: 'role' },
                 { data: 'status', name: 'status' },
+                { data: 'login_as', name: 'login_as', orderable: false, searchable: false, visible: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });
