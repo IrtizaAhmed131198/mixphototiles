@@ -720,7 +720,7 @@ document.getElementById('remove-image').addEventListener('click', async function
                 progressBarContainer.style.display = 'block';
                 progressBar.style.width = '0%';
 
-                await deleteImageFromDatabase(imageName);
+                await deleteImageFromDatabase(imageName, imageSrc);
 
                 progressBar.style.width = '100%';
                 setTimeout(() => {
@@ -749,7 +749,7 @@ document.getElementById('remove-image').addEventListener('click', async function
     }
 });
 
-async function deleteImageFromDatabase(imageName) {
+async function deleteImageFromDatabase(imageName, imageSrc) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     try {
@@ -759,7 +759,7 @@ async function deleteImageFromDatabase(imageName) {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken
             },
-            body: JSON.stringify({ image_name: imageName })
+            body: JSON.stringify({ image_name: imageName, image_src: imageSrc })
         });
 
         const result = await response.json();

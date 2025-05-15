@@ -205,16 +205,27 @@ class MainController extends Controller
     {
         $sessionId = session()->getId();
         $imageName = $request->input('image_name');
+        $imageSrc = $request->input('image_src');
 
-
-        $deleted = SessionImage::where('session_id', $sessionId)
+        $sessionImage = SessionImage::where('session_id', $sessionId)
             ->where('filename', $imageName)
-            ->delete();
+            ->first();
+
+        if (!$sessionImage) {
+            return response()->json(['success' => false, 'message' => 'Image not found']);
+        }
+
+        $deleted = $sessionImage->delete();
 
         if ($deleted) {
-            $filePath = public_path($imageName);
+            $filePath = public_path($imageSrc);
             if (file_exists($filePath)) {
-                unlink($filePath);  // delete file from public folder
+                unlink($filePath);
+            }
+
+            $originalFilePath = public_path($sessionImage->original_file_url);
+            if (file_exists($originalFilePath)) {
+                unlink($originalFilePath);
             }
 
             return response()->json(['success' => true, 'message' => 'Image deleted successfully']);
