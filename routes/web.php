@@ -22,6 +22,7 @@ use App\Http\Controllers\LedController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\StatesController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\RazorpayController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
 Route::get('/', HomePage::class)->name('home');
@@ -58,7 +59,7 @@ Route::post('/remove-coupon', [MainController::class, 'remove_coupon'])->name('r
 Route::get('/get-applied-coupon', [MainController::class, 'get_applied_coupon'])->name('get_applied_coupon');
 Route::post('/remove-from-cart', [MainController::class, 'remove_from_cart'])->name('remove_from_cart');
 Route::post('/update-cart-grand-total', [MainController::class, 'update_cart_grand_total'])->name('update_cart_grand_total');
-Route::get('/place-order', [MainController::class, 'place_order'])->name('place_order');
+Route::post('/place-order', [MainController::class, 'place_order'])->name('place_order');
 Route::post('/add-address', [MainController::class, 'add_address'])->name('add_address');
 
 Route::post('/upload-images', [MainController::class, 'upload_images'])->name('upload_images');
@@ -184,6 +185,9 @@ Route::delete('/city/delete/{id}', [CityController::class, 'destroy'])->name('ci
 
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 Route::get('/frame-defaults', [MainController::class, 'getFrameDefaults'])->name('getFrameDefaults');
+
+Route::post('/razorpay/create-order', [RazorpayController::class, 'createOrder'])->name('razorpay.create_order');
+Route::post('/razorpay/verify-payment', [RazorpayController::class, 'verifyPayment'])->name('razorpay.verify_payment');
 
 Route::get('/canvas', function () {
     return view('canvas');

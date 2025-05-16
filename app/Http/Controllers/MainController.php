@@ -850,7 +850,8 @@ class MainController extends Controller
         $order->user_id = $user->id;  // or $request->user_id if guest user
         $order->status = 'ordered';
         $order->total_amount = $grandTotal;
-        $order->payment_method = 'cod';  // Or you can get it from the form e.g. $request->payment_method
+        $order->payment_method = $request->input('payment_method', 'cod');
+        $order->payment_id = $request->input('razorpay_payment_id'); // Save this
         $order->coupon = $code;
         $order->discount = $couponDiscount;
         $order->shipping = $shipping;
@@ -896,7 +897,8 @@ class MainController extends Controller
         $deleted = SessionImage::where('session_id', session()->getId())
             ->delete();
 
-        return redirect()->route('home')->with('success', 'Order placed successfully!');
+        // return redirect()->route('home')->with('success', 'Order placed successfully!');
+        return response()->json(['success' => true, 'message' => 'Order placed successfully!']);
     }
 
 

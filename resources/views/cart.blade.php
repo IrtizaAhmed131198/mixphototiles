@@ -389,11 +389,10 @@
             updateGrandTotal(giftAmount, isChecked);
         }
 
-        // Attach change event
-        giftCheckbox.addEventListener('change', handleGiftSection);
-
-        // Run once on page load
-        handleGiftSection();
+        if (giftCheckbox) {
+            giftCheckbox.addEventListener('change', handleGiftSection);
+            handleGiftSection(); // Initial setup only if checkbox exists
+        }
 
         // Grand total function
         function updateGrandTotal(giftAmount, isGiftChecked) {

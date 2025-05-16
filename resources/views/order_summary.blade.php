@@ -20,10 +20,28 @@
         .show_address li {
             margin: 10px 0;
         }
+
+        @keyframes circle {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+
+            }
+        }
     </style>
 @endpush
 
 @section('content')
+<div class="loadermain">
+    <div class="loader-container">
+        <div class="loaderMain">
+            <img src="{{ asset('assets/images/loader.png') }}" class="img-fluid" alt="">
+        </div>
+    </div>
+</div>
 
     <section class="myinformatinfoamsection">
         <div class="container">
@@ -247,9 +265,12 @@
 
                         <div class="noticeproductdetail">
                             <p>
-                                Our Magnetic Photo Frames are custom-made to order. Once your order is placed, please allow 2–3 business days for production.
-                                After that, your frames will be shipped. Delivery times may vary depending on holidays, weather conditions, or courier delays.
-                                As this is a customized product, we kindly ask you to anticipate potential delays. For more accurate delivery estimates, please
+                                Our Magnetic Photo Frames are custom-made to order. Once your order is placed, please allow
+                                2–3 business days for production.
+                                After that, your frames will be shipped. Delivery times may vary depending on holidays,
+                                weather conditions, or courier delays.
+                                As this is a customized product, we kindly ask you to anticipate potential delays. For more
+                                accurate delivery estimates, please
                                 refer to our Shipping Policy.
                             </p>
                         </div>
@@ -268,6 +289,8 @@
 
 @push('scripts')
     <script>
+        const mainLoader = document.querySelector('.loadermain');
+        if (mainLoader) mainLoader.style.display = 'none';
         const selectedStateId = "{{ $shipping_address->state ?? '' }}";
         const selectedCityId = "{{ $shipping_address->city ?? '' }}";
 
@@ -455,7 +478,6 @@
         }
 
         function validateAndProceed() {
-            // Check if terms and conditions checkbox is checked
             let agreeTc = document.getElementById('agreeTc').checked;
             if (!agreeTc) {
                 Swal.fire({
@@ -472,7 +494,6 @@
                 return;
             }
 
-            // Check if user_address session is empty using AJAX request to the backend
             fetch("{{ route('check_user_address') }}")
                 .then(response => response.json())
                 .then(data => {
@@ -480,7 +501,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: 'Please Save your Address before proceeding.',
+                            text: 'Please save your address before proceeding.',
                             showClass: {
                                 popup: 'animate__animated animate__fadeIn animate__slow'
                             },
@@ -489,10 +510,120 @@
                             }
                         });
                     } else {
-                        window.location.href = "{{ route('place_order') }}";
+                        if (mainLoader) mainLoader.style.display = 'flex';
+                        // Step 1: Create Razorpay Order
+                        fetch("{{ route('razorpay.create_order') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                },
+                                body: JSON.stringify({})
+                            })
+                            .then(response => response.json())
+                            .then(order => {
+                                let options = {
+                                    "key": "{{ env('RAZORPAY_KEY') }}", // Or use config('services.razorpay.key')
+                                    "amount": order.amount,
+                                    "currency": "INR",
+                                    "name": "Magnetic Photo Frames",
+                                    "description": "Order Payment",
+                                    "order_id": order.id,
+                                    "handler": function(response) {
+                                        // Step 2: Verify payment
+                                        fetch("{{ route('razorpay.verify_payment') }}", {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                                },
+                                                body: JSON.stringify({
+                                                    razorpay_payment_id: response
+                                                        .razorpay_payment_id,
+                                                    razorpay_order_id: response
+                                                        .razorpay_order_id,
+                                                    razorpay_signature: response
+                                                        .razorpay_signature
+                                                })
+                                            })
+                                            .then(res => res.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    // Step 3: Place order in Laravel
+                                                    fetch("{{ route('place_order') }}", {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                                            },
+                                                            body: JSON.stringify({
+                                                                razorpay_payment_id: response
+                                                                    .razorpay_payment_id,
+                                                                payment_method: 'razorpay'
+                                                            })
+                                                        })
+                                                        .then(res => res.json())
+                                                        .then(result => {
+                                                            if (result.success) {
+                                                                if (mainLoader) mainLoader.style.display = 'none';
+                                                                Swal.fire({
+                                                                    icon: 'success',
+                                                                    title: 'Success',
+                                                                    text: 'Order placed successfully!',
+                                                                    timer: 2000,
+                                                                    showConfirmButton: false,
+                                                                    showClass: {
+                                                                        popup: 'animate__animated animate__fadeIn animate__slow'
+                                                                    },
+                                                                    hideClass: {
+                                                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                                                    }
+                                                                }).then(() => {
+                                                                    window.location.href = "{{ route('home') }}";
+                                                                });
+                                                            } else {
+                                                                Swal.fire({
+                                                                    icon: 'error',
+                                                                    title: 'Error',
+                                                                    text: 'Order placement failed!',
+                                                                    showClass: {
+                                                                        popup: 'animate__animated animate__fadeIn animate__slow'
+                                                                    },
+                                                                    hideClass: {
+                                                                        popup: 'animate__animated animate__fadeOut animate__faster'
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                                } else {
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Error',
+                                                        text: 'Payment verification failed!',
+                                                        showClass: {
+                                                            popup: 'animate__animated animate__fadeIn animate__slow'
+                                                        },
+                                                        hideClass: {
+                                                            popup: 'animate__animated animate__fadeOut animate__faster'
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                    },
+                                    "prefill": {
+                                        "name": order.customer_name ?? "",
+                                        "email": order.customer_email ?? ""
+                                    },
+                                    "theme": {
+                                        "color": "#3399cc"
+                                    }
+                                };
+
+                                let rzp = new Razorpay(options);
+                                rzp.open();
+                            });
                     }
-                })
-                .catch(error => console.error('Error:', error));
+                });
         }
     </script>
 @endpush

@@ -85,6 +85,7 @@ https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js
 <script src="{{ asset('assets/js/dataTables.bootstrap5.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 @livewireScripts
 <script src="{{ asset('assets/js/app.js') }}"></script>
 
