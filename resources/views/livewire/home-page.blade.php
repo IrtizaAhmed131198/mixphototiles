@@ -7,7 +7,7 @@
         <div class="container">
             <div class="fogeffect">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 col-md-12 col-12">
                         <div class="custom-hero-slider-parent">
                             <span class="position-absolute z-2 bannerFrame"></span>
                             <div>
@@ -99,14 +99,15 @@
     <section class="main-banner-section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 col-md-12 col-12">
                     <div class="text-center">
                         <h1 class="main-title">
                             <span class="heading-2">Turn your
                                 photos into a masterpiece</span>
                             <span class="heading-1">let your walls tell your story</span>
                         </h1>
-                        <button type="button" class="btn custom-btn filled" onclick="window.location.href='{{ route('design') }}';">
+                        <button type="button" class="btn custom-btn filled"
+                            onclick="window.location.href='{{ route('design') }}';">
                             <svg width="26.122" height="26.849" class="w-em h-em me-2 ttl-26 mb-0"
                                 viewBox="0 0 26.122 26.849" xmlns="http://www.w3.org/2000/svg">
                                 <g transform="translate(-858.42 -842.908)">
@@ -128,7 +129,7 @@
     <section class="clusters-section">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 col-md-12 col-12">
                     <div class="text-center">
                         <h2 class="heading-2">Collections for your memorable walls</h2>
                         <p class="para">
@@ -141,11 +142,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 col-md-12 col-12">
                     <div class="swiper swiper-horizontal">
                         <div class="swiper-wrapper">
 
-                            @foreach($products as $product)
+                            @foreach ($products as $product)
                                 @php
                                     $discountAmount = ($product->price * $product->discount) / 100;
                                     $finalPrice = $product->price - $discountAmount;
@@ -154,7 +155,8 @@
                                 <div class="swiper-slide">
                                     <div class="ClusterCard" onclick="redirectTo('{{ $url }}')">
                                         <div class="ImgFrame">
-                                            <img alt="{{ $product->name }}" class="img-fluid" src="{{ asset($product->image) }}">
+                                            <img alt="{{ $product->name }}" class="img-fluid"
+                                                src="{{ asset($product->image) }}">
                                         </div>
                                         <div class="custom-card-body">
                                             <h3 class="card-title">{{ $product->name }}</h3>
@@ -192,7 +194,8 @@
                     </div>
 
                     <div class="ctaBtnParent text-center" onclick="window.location.href='{{ route('collections') }}';">
-                        <button type="button" onclick="window.location.href='{{ route('collections') }}';" class="btn custom-btn filled">
+                        <button type="button" onclick="window.location.href='{{ route('collections') }}';"
+                            class="btn custom-btn filled">
                             View All Collections
                         </button>
                     </div>
@@ -205,7 +208,7 @@
     <section class="about-section py">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6 col-12">
                     <div class="parentRightAbout">
                         <div class="RightSliderChild whyChooseUs">
                             <h2 class="heading-3">LED Photo Frames</h2>
@@ -217,8 +220,8 @@
                     </div>
                     <button type="button" class="btn custom-btn filled mt-5"
                         onclick="window.location.href='{{ route('design') }}';">
-                        <svg width="20" height="20" viewBox="0 0 20 20"
-                            class="w-em h-em me-1 ttl-20 mb-0" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="20" height="20" viewBox="0 0 20 20" class="w-em h-em me-1 ttl-20 mb-0"
+                            xmlns="http://www.w3.org/2000/svg">
                             <path fill="currentColor" transform="translate(-2 -2)"
                                 d="M10,16.5,16,12,10,7.5ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z">
                             </path>
@@ -226,18 +229,20 @@
                         Design your frame
                     </button>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6 col-12">
                     <!-- Swiper Slider Start -->
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <figure>
-                                    <img src="{{ asset('assets/images/led_frame_5.jpeg') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('assets/images/led_frame_5.jpeg') }}" class="img-fluid"
+                                        alt="">
                                 </figure>
                             </div>
                             <div class="swiper-slide">
                                 <figure>
-                                    <img src="{{ asset('assets/images/led_frame_6.jpeg') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('assets/images/led_frame_6.jpeg') }}" class="img-fluid"
+                                        alt="">
                                 </figure>
                             </div>
                         </div>
@@ -255,7 +260,7 @@
     <section class="custom-tabs-section py">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-5">
+                <div class="col-lg-5 col-md-5 col-12">
                     <div class="custom-tabs-content">
                         <h2 class="heading-3">
                             Two options for <span>hanging</span>
@@ -292,7 +297,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-7 col-md-7 col-12">
                     <div class="tab-content customTabsContent" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
                             aria-labelledby="v-pills-tap-tab" tabindex="0">
@@ -300,8 +305,8 @@
                                 <img src="{{ asset('assets/images/frame11.jpg') }}" class="img-fluid" alt="">
                             </figure>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-home" role="tabpanel"
-                            aria-labelledby="v-pills-home-tab" tabindex="0">
+                        <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
+                            tabindex="0">
                             <figure class="Tabframed">
                                 <img src="{{ asset('assets/images/frame1.webp') }}" class="img-fluid" alt="">
                             </figure>
@@ -333,10 +338,11 @@
     <section class="about-section py">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-7">
+                <div class="col-lg-7 col-md-7 col-12">
                     <div class="parentRightAbout">
                         <div class="RightSliderChild">
-                            <h2 class="heading-3"><span class="sec-2-span">{{ get_setting('site_name') }}</span> have Got You Covered</h2>
+                            <h2 class="heading-3"><span class="sec-2-span">{{ get_setting('site_name') }}</span> have Got
+                                You Covered</h2>
                         </div>
                         <div class="RightSliderChild">
                             <div class="swiper AboutSlider">
@@ -381,7 +387,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-5 col-md-5 col-12">
                     <figure>
                         <img src="{{ asset('assets/images/home-company-img.png') }}" class="img-fluid" alt="">
                     </figure>
@@ -401,12 +407,13 @@
         <div class="HomeFrameSlider_sliderWrp position-relative">
             <div class="swiper mySwiper-grid px-0 mx-0 HomeFrameSlider_sliderFrames">
                 <div class="swiper-wrapper">
-                    @for($i = 1; $i <= 3; $i++)
+                    @for ($i = 1; $i <= 3; $i++)
                         <div class="swiper-slide">
                             <div class="HomeFrameSlider_frameCard fr-sm card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Wedding image" class="img-fluid" src="{{ asset('assets/images/Animal_1.webp') }}">
+                                        <img alt="Wedding image" class="img-fluid"
+                                            src="{{ asset('assets/images/Animal_1.webp') }}">
                                     </div>
                                     <p>Animal</p>
                                 </div>
@@ -416,7 +423,8 @@
                             <div class="HomeFrameSlider_frameCard fr-xl card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="nature image" class="img-fluid" src="{{ asset('assets/images/Birds.avif') }}">
+                                        <img alt="nature image" class="img-fluid"
+                                            src="{{ asset('assets/images/Birds.avif') }}">
                                     </div>
                                     <p>Birds</p>
                                 </div>
@@ -426,7 +434,8 @@
                             <div class="HomeFrameSlider_frameCard fr-lg card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Childhood image" class="img-fluid" src="{{ asset('assets/images/Child.jpeg') }}">
+                                        <img alt="Childhood image" class="img-fluid"
+                                            src="{{ asset('assets/images/Child.jpeg') }}">
                                     </div>
                                     <p>Childhood</p>
                                 </div>
@@ -436,7 +445,8 @@
                             <div class="HomeFrameSlider_frameCard fr-md card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="sea image" class="img-fluid" src="{{ asset('assets/images/Dog_1.jpg') }}">
+                                        <img alt="sea image" class="img-fluid"
+                                            src="{{ asset('assets/images/Dog_1.jpg') }}">
                                     </div>
                                     <p>Dog</p>
                                 </div>
@@ -446,7 +456,8 @@
                             <div class="HomeFrameSlider_frameCard fr-sm card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Memory image" class="img-fluid" src="{{ asset('assets/images/Food.webp') }}">
+                                        <img alt="Memory image" class="img-fluid"
+                                            src="{{ asset('assets/images/Food.webp') }}">
                                     </div>
                                     <p>Food</p>
                                 </div>
@@ -456,7 +467,8 @@
                             <div class="HomeFrameSlider_frameCard fr-xl card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Art image" class="img-fluid" src="{{ asset('assets/images/Memories_1.jpg') }}">
+                                        <img alt="Art image" class="img-fluid"
+                                            src="{{ asset('assets/images/Memories_1.jpg') }}">
                                     </div>
                                     <p>Memories</p>
                                 </div>
@@ -466,7 +478,8 @@
                             <div class="HomeFrameSlider_frameCard fr-lg card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Travel image" class="img-fluid" src="{{ asset('assets/images/Nature.jpeg') }}">
+                                        <img alt="Travel image" class="img-fluid"
+                                            src="{{ asset('assets/images/Nature.jpeg') }}">
                                     </div>
                                     <p>Nature</p>
                                 </div>
@@ -476,7 +489,8 @@
                             <div class="HomeFrameSlider_frameCard fr-md card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Passion image" class="img-fluid" src="{{ asset('assets/images/Passion.webp') }}">
+                                        <img alt="Passion image" class="img-fluid"
+                                            src="{{ asset('assets/images/Passion.webp') }}">
                                     </div>
                                     <p>Passion</p>
                                 </div>
@@ -486,7 +500,8 @@
                             <div class="HomeFrameSlider_frameCard fr-sm card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Art image" class="img-fluid" src="{{ asset('assets/images/wedding_1.jpeg') }}">
+                                        <img alt="Art image" class="img-fluid"
+                                            src="{{ asset('assets/images/wedding_1.jpeg') }}">
                                     </div>
                                     <p>Wedding</p>
                                 </div>
@@ -496,7 +511,8 @@
                             <div class="HomeFrameSlider_frameCard fr-xl card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Art image" class="img-fluid" src="{{ asset('assets/images/wedding_2.jpeg') }}">
+                                        <img alt="Art image" class="img-fluid"
+                                            src="{{ asset('assets/images/wedding_2.jpeg') }}">
                                     </div>
                                     <p>Wedding</p>
                                 </div>
@@ -506,7 +522,8 @@
                             <div class="HomeFrameSlider_frameCard fr-md card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Passion image" class="img-fluid" src="{{ asset('assets/images/Passion.webp') }}">
+                                        <img alt="Passion image" class="img-fluid"
+                                            src="{{ asset('assets/images/Passion.webp') }}">
                                     </div>
                                     <p>Passion</p>
                                 </div>
@@ -516,7 +533,8 @@
                             <div class="HomeFrameSlider_frameCard fr-sm card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Memory image" class="img-fluid" src="{{ asset('assets/images/Food.webp') }}">
+                                        <img alt="Memory image" class="img-fluid"
+                                            src="{{ asset('assets/images/Food.webp') }}">
                                     </div>
                                     <p>Food</p>
                                 </div>
@@ -531,29 +549,36 @@
     <section class="about-section py">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="parentRightAbout">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="parentRightAbout whychoose">
                         <div class="RightSliderChild whyChooseUs">
                             <h2 class="heading-3">Why choose us?</h2>
                             <p>
                                 Because every order you place is more than just a purchase, it’s a lifeline.
-                                A part of our profits goes toward helping those in need, the homeless and the hungry with children.
+                                A part of our profits goes toward helping those in need, the homeless and the hungry with
+                                children.
                             </p>
                             <p>
-                                We willingly cut a significant share of our earnings because we believe no one should go without a meal.
-                                With every purchase, you’re not just bringing beauty into your home; you're putting food on someone’s plate,
-                                offering hope, and restoring dignity. This is not just our mission, it's something we do hand in hand with you.
-                                And with every meal served, their heartfelt prayers and gratitude extend beyond us, they reach you too.
+                                We willingly cut a significant share of our earnings because we believe no one should go
+                                without a meal.
+                                With every purchase, you’re not just bringing beauty into your home; you're putting food on
+                                someone’s plate,
+                                offering hope, and restoring dignity. This is not just our mission, it's something we do
+                                hand in hand with you.
+                                And with every meal served, their heartfelt prayers and gratitude extend beyond us, they
+                                reach you too.
                             </p>
                             <p>
-                                Together, we’re not just creating art for walls; we’re creating a ripple of kindness and compassion.
+                                Together, we’re not just creating art for walls; we’re creating a ripple of kindness and
+                                compassion.
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6 col-12">
                     <figure>
-                        <img src="{{ asset('assets/images/why-choose-use-1.jpg') }}" class="img-fluid" alt="" style=" margin-left: 41px; ">
+                        <img src="{{ asset('assets/images/why-choose-use-1.jpg') }}" class="img-fluid" alt=""
+                            style=" margin-left: 41px; ">
                     </figure>
                 </div>
             </div>
@@ -565,14 +590,14 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 col-md-12 col-12">
                     <div class="mx-auto text-center HomeTestimonials_htContent__sML46">
                         <h2 class="heading-3">Frequently Asked Questions</h2>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 col-md-12 col-12">
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingOne">
@@ -585,7 +610,8 @@
                             <div id="flush-collapseOne" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    Magnetic Photo Frames offers you to create your own masterpiece with our customizable photo frames.
+                                    Magnetic Photo Frames offers you to create your own masterpiece with our customizable
+                                    photo frames.
                                     Simply upload your images. We’ll print, frame, and deliver them right to your doorstep.
                                 </div>
                             </div>
@@ -600,8 +626,10 @@
                             </h2>
                             <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">It’s incredibly easy! Each frame comes with strong, re-stickable adhesive stickers attached to the sides,
-                                    allowing you to reposition them effortlessly. Plus, Magnetic Photo Frames includes a free roll of re-stickable tape, so you can move your
+                                <div class="accordion-body">It’s incredibly easy! Each frame comes with strong,
+                                    re-stickable adhesive stickers attached to the sides,
+                                    allowing you to reposition them effortlessly. Plus, Magnetic Photo Frames includes a
+                                    free roll of re-stickable tape, so you can move your
                                     tiles around as often as you like—without leaving any marks or damage to your walls.
                                 </div>
                             </div>
@@ -617,16 +645,21 @@
                             <div id="flush-collapseThree" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    Magnetic Photo Frames frames are crafted with a solid foundation, our frames exude durability and elegance,
+                                    Magnetic Photo Frames frames are crafted with a solid foundation, our frames exude
+                                    durability and elegance,
                                     a difference you can feel from the rest. We understand your desire for flexibility,
                                     which is why we go beyond the limited number of repositioning stickers.
                                     Instead, Magnetic Photo Frames provide a generous roll of re-stickable tape,
                                     allowing you to rearrange your frames effortlessly, as many times you like.
-                                    Our premium adhesive ensures no residue or marks, preserving the pristine beauty of your walls.
+                                    Our premium adhesive ensures no residue or marks, preserving the pristine beauty of your
+                                    walls.
 
-                                    Additionally, along with a roll of re-stickable tape, we also provide a set of elegant hooks,
-                                    giving you the choice to hang your frames with nails if you prefer. We care deeply about your
-                                    space, your budget, and your freedom to create luxury walls that truly reflect your happiness.
+                                    Additionally, along with a roll of re-stickable tape, we also provide a set of elegant
+                                    hooks,
+                                    giving you the choice to hang your frames with nails if you prefer. We care deeply about
+                                    your
+                                    space, your budget, and your freedom to create luxury walls that truly reflect your
+                                    happiness.
                                 </div>
                             </div>
                         </div>
@@ -641,10 +674,14 @@
                             <div id="flush-collapseFour" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    We offer premium-quality photo tiles at prices designed for everyone. Our mission is simple — to make beautiful,
-                                    personalized wall décor accessible to all, regardless of class or background. We operate on a minimal profit margin,
-                                    ensuring that affordability never compromises quality. More importantly, a part of every purchase goes towards
-                                    providing meals for the homeless and those in need. With every frame you order, you're not just creating a wall of memories;
+                                    We offer premium-quality photo tiles at prices designed for everyone. Our mission is
+                                    simple — to make beautiful,
+                                    personalized wall décor accessible to all, regardless of class or background. We operate
+                                    on a minimal profit margin,
+                                    ensuring that affordability never compromises quality. More importantly, a part of every
+                                    purchase goes towards
+                                    providing meals for the homeless and those in need. With every frame you order, you're
+                                    not just creating a wall of memories;
                                     you're sharing in a circle of hope and kindness.
                                 </div>
                             </div>
@@ -659,7 +696,8 @@
                             </h2>
                             <div id="flush-collapseFive" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">You can explore sizes from 8" x 8" to 28" x 36", with the flexibility to customize according to your needs.
+                                <div class="accordion-body">You can explore sizes from 8" x 8" to 28" x 36", with the
+                                    flexibility to customize according to your needs.
                                     Available in a range of colours, styles, and elegant options like frameless and canvas
                                 </div>
                             </div>
