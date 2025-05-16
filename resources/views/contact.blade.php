@@ -97,15 +97,19 @@
           </div>
           <div class="col-md-5">
              <div class="ms-auto ContactForm_contactFormWrp__4NjEW">
-                <form class="contact-form" id="contactForm" method="post" action="">
-                   <div class="mb-4" label="Full Name"><input placeholder="Full Name" id="NameInput" class="form-control" type="text" value="" name="name"></div>
-                   <div label="Phone Number" class="mb-4"><input placeholder="Phone Number" maxlength="10" id="phoneInput" class="form-control" type="tel" value="" name="phone"></div>
-                   <div label="Email" class="mb-4"><input placeholder="Email" id="emailInput" class="form-control" type="email" value="" name="email"></div>
-                   <div class="mb-4" label="Message"><textarea placeholder="Message" maxlength="255" name="message" type="text" id="messageInput" class="ContactForm_contactTextarea__8F0iR form-control"></textarea></div>
-                   <div class="d-grid d-md-flex">
-                        <button type="button" class="btn custom-btn filled contact-btn"> Send Message</button>
+                <form class="contact-form" id="contactForm" method="post" action="{{ route('contact.submit') }}">
+                    @csrf
+                    <div class="mb-4"><input placeholder="Full Name" id="NameInput" class="form-control" type="text" name="name"></div>
+                    <div class="mb-4"><input placeholder="Phone Number" maxlength="10" id="phoneInput" class="form-control" type="tel" name="phone"></div>
+                    <div class="mb-4"><input placeholder="Email" id="emailInput" class="form-control" type="email" name="email"></div>
+                    <div class="mb-4"><textarea placeholder="Message" maxlength="255" name="message" id="messageInput" class="form-control"></textarea></div>
+                    <div class="d-grid d-md-flex">
+                        <button type="submit" class="btn custom-btn filled contact-btn">Send Message</button>
                     </div>
                 </form>
+                <div id="thankYouMessage" style="display:none;" class="alert alert-success mt-3">
+                    Thank you for contacting us!
+                </div>
              </div>
           </div>
        </div>

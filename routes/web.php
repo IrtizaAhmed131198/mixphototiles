@@ -35,6 +35,7 @@ Route::get('/shipping-policy', [PagesController::class, 'shipping'])->name('ship
 Route::get('/terms-and-conditions', [PagesController::class, 'terms'])->name('terms');
 Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+Route::post('/contact-form', [PagesController::class, 'submit'])->name('contact.submit');
 
 Route::post('/update-frame-config', [MainController::class, 'update_config'])->name('update.frame.config');
 Route::get('/get-uploaded-images', [MainController::class, 'get_images'])->name('get.uploaded.images');

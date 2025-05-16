@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactAdminMail;
+use App\Mail\ContactUserMail;
 
 class PagesController extends Controller
 {
@@ -35,5 +38,23 @@ class PagesController extends Controller
     public function contact()
     {
         return view('contact');
+    }
+
+    public function submit(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'message' => 'nullable',
+        ]);
+
+        // Send to Admin
+        Mail::to('xefofo3907@jazipo.com')->send(new ContactAdminMail($data));
+
+        // Send to User
+        Mail::to('xefofo3907@jazipo.com')->send(new ContactUserMail($data));
+
+        return redirect()->route('contact')->with('success', 'Thank you for contacting us!');
     }
 }
