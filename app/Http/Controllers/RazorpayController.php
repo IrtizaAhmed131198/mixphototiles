@@ -4,23 +4,37 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Razorpay\Api\Api;
+use Razorpay\Api\Errors\BadRequestError;
 use Illuminate\Support\Facades\Session;
 
 class RazorpayController extends Controller
 {
     public function createOrder()
     {
-        $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        try {
+            $cartTotal = session('cart_grand_total');
 
-        $amount = session('cart_grand_total') * 100; // In paisa
-        $order = $api->order->create([
-            'receipt' => uniqid(),
-            'amount' => $amount,
-            'currency' => 'INR'
-        ]);
+            $amount = (float)$cartTotal * 100;
 
-        session(['razorpay_order_id' => $order['id']]);
-        return response()->json(['id' => $order['id'], 'amount' => $amount]);
+            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+
+            $order = $api->order->create([
+                'receipt' => uniqid(),
+                'amount' => $amount,
+                'currency' => 'INR'
+            ]);
+
+            session(['razorpay_order_id' => $order['id']]);
+
+            return response()->json(['id' => $order['id'], 'amount' => $amount]);
+
+        } catch (\Razorpay\Api\Errors\BadRequestError $e) {
+            return response()->json(['error' => 'Bad request: ' . $e->getMessage()], 400);
+        } catch (\Razorpay\Api\Errors\ServerError $e) {
+            return response()->json(['error' => 'Server error: ' . $e->getMessage()], 500);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'General error: ' . $e->getMessage()], 500);
+        }
     }
 
     public function verifyPayment(Request $request)
@@ -36,14 +50,18 @@ class RazorpayController extends Controller
         try {
             $api->utility->verifyPaymentSignature($attributes);
 
-            // Payment is verified — now place the order
-            // return app(OrderController::class)->place_order($request->merge([
-            //     'payment_method' => 'razorpay',
-            //     'razorpay_payment_id' => $request->razorpay_payment_id
-            // ]));
-            return response()->json(['success' => true]);
+            // Fetch full payment details
+            $payment = $api->payment->fetch($request->razorpay_payment_id);
+            $method = $payment->method;  // <-- Get the method of payment here (upi, card, etc.)
+
+            return response()->json([
+                'success' => true,
+                'method' => $method,
+                'payment' => $payment->toArray() // You can return full details if needed
+            ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Payment verification failed.'], 500);
         }
     }
+
 }

@@ -186,7 +186,7 @@ Route::delete('/city/delete/{id}', [CityController::class, 'destroy'])->name('ci
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 Route::get('/frame-defaults', [MainController::class, 'getFrameDefaults'])->name('getFrameDefaults');
 
-Route::post('/razorpay/create-order', [RazorpayController::class, 'createOrder'])->name('razorpay.create_order');
+Route::get('/razorpay/create-order', [RazorpayController::class, 'createOrder'])->name('razorpay.create_order');
 Route::post('/razorpay/verify-payment', [RazorpayController::class, 'verifyPayment'])->name('razorpay.verify_payment');
 
 Route::get('/canvas', function () {
