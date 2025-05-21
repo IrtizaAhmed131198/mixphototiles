@@ -176,13 +176,47 @@ class ProfileController extends Controller
     public function updateStatus(Request $request, Order $order)
     {
         $request->validate([
-            'status' => 'required|in:pending,shipping,delivered,completed',
+            'status' => 'required',
         ]);
 
         $order->status = $request->status;
         $order->save();
 
         return response()->json(['message' => 'Status updated']);
+    }
+
+    public function getPaymentInfo($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        return response()->json([
+            'payment_id' => $order->payment_id,
+            'amount' => $order->total_amount
+        ]);
+    }
+
+    public function processRefund(Request $request)
+    {
+        $request->validate([
+            'payment_id' => 'required',
+            'refund_amount' => 'required|numeric|min:1'
+        ]);
+
+        try {
+            $api = new \Razorpay\Api\Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+
+            $refund = $api->payment->fetch($request->payment_id)->refund([
+                'amount' => $request->refund_amount * 100
+            ]);
+
+            // Update order status
+            Order::where('id', $request->order_id)->update([
+                'status' => 'refund'
+            ]);
+
+            return response()->json(['success' => true, 'refund' => $refund->toArray()]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 
     public function address()
