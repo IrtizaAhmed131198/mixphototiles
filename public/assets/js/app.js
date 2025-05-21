@@ -2,7 +2,7 @@
 
 
 
-var swiper = new Swiper(".swiper-horizontal", {
+var swiper1 = new Swiper(".swiper-horizontal", {
     // slidesPerView: 4,
     spaceBetween: 30,
     navigation: {
@@ -60,7 +60,7 @@ var swiper = new Swiper(".swiper-horizontal", {
 //     }
 // });
 
-var swiper = new Swiper(".AboutSlider", {
+var swiper2 = new Swiper(".AboutSlider", {
     slidesPerView: 4,
     // slidesPerView: 'auto',
     spaceBetween: 2,
@@ -85,7 +85,7 @@ var swiper = new Swiper(".AboutSlider", {
 });
 
 //  <!-- Initialize Swiper -->
-var swiper = new Swiper(".mySwiper-grid", {
+var swiper3 = new Swiper(".mySwiper-grid", {
     slidesPerView: 6,
     grid: {
         rows: 4,
@@ -106,7 +106,7 @@ var swiper = new Swiper(".mySwiper-grid", {
 });
 
 // <!-- Initialize Swiper -->
-var swiper = new Swiper(".swiper-horizontal-2", {
+var swiper4 = new Swiper(".swiper-horizontal-2", {
     slidesPerView: 1,
     spaceBetween: 200,
     pagination: {
@@ -142,7 +142,7 @@ $(document).ready(function () {
 
 
 
-var swiper = new Swiper(".mySwiper", {
+var swiper5 = new Swiper(".mySwiper", {
     loop: true,
     autoplay: {
         delay: 1200,
@@ -156,10 +156,27 @@ var swiper = new Swiper(".mySwiper", {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
     },
+    breakpoints: {
+        320: {
+            slidesPerView: 1,
+        },
+        576: {
+            slidesPerView: 2,
+        },
+        768: {
+            slidesPerView: 3,
+        },
+        1024: {
+            slidesPerView: 3,
+        },
+        1400: {
+            slidesPerView: 4,
+        },
+    },
 });
 
 
-var swiper = new Swiper(".main-banner-slider", {
+var swiper6 = new Swiper(".main-banner-slider", {
     effect: "coverflow",
     speed: 1000, // Transition duration in milliseconds for smooth animations
     loop: true,
@@ -186,7 +203,7 @@ var swiper = new Swiper(".main-banner-slider", {
 });
 
 
-var swiper = new Swiper(".frame-layout-slider", {
+var swiper7 = new Swiper(".frame-layout-slider", {
     slidesPerView: 1,
     spaceBetween: 40,
     navigation: {
