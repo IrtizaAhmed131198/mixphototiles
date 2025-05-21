@@ -70,7 +70,8 @@
                         <input type="hidden" name="order_id" id="refund_order_id">
                         <div class="mb-3">
                             <label for="refund_amount" class="form-label">Refund Amount (INR)</label>
-                            <input type="number" class="form-control" name="refund_amount" id="refund_amount" min="1" required>
+                            <input type="number" class="form-control" name="refund_amount" id="refund_amount" min="1" required data-max="0">
+                            <div id="refundAmountError" class="text-danger d-none"></div>
                         </div>
                         <div id="refundError" class="text-danger d-none"></div>
                     </div>
@@ -176,6 +177,8 @@ $(document).on('change', '.order-status-dropdown', function () {
                 $('#refund_order_id').val(orderId);
                 $('#refund_payment_id').val(data.payment_id);
                 $('#refund_amount').val(data.amount); // Optional: default refund to full
+                $('#refund_amount').attr('data-max', data.amount);
+                $('#refundAmountError').addClass('d-none').text('');
                 $('#refundModal').modal('show');
             },
             error: function () {
@@ -224,6 +227,16 @@ $(document).on('change', '.order-status-dropdown', function () {
 
 $('#refundForm').on('submit', function (e) {
     e.preventDefault();
+    console.log('Refund form submitted');
+
+    let refundAmount = parseFloat($('#refund_amount').val());
+    let maxAmount = parseFloat($('#refund_amount').data('max'));
+
+    if (refundAmount > maxAmount) {
+        console.log(refundAmount, maxAmount);
+        $('#refundAmountError').removeClass('d-none').text(`Refund amount cannot exceed ₹${maxAmount}`);
+        return;
+    }
 
     // Disable buttons
     $('#refundForm button').attr('disabled', true);
