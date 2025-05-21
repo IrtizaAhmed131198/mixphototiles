@@ -38,6 +38,26 @@
         height: 27px;
     }
 
+    .innerFrame img {
+        height: 275px;
+    }
+
+    .custom-hero-slider-parent .swiper-slide {
+        width: 179px !important;
+    }
+
+    .bannerFrame {
+        top: 8px;
+    }
+
+    .AboutSliderParent {
+        padding: 24px 10px;
+    }
+
+    .AboutSliderParent h5 {
+        font-size: 15px;
+    }
+
 }
 
 @media (max-width: 1199px) {
@@ -63,7 +83,7 @@
     }
 
     .clusters-section {
-        padding: 60px;
+        padding: 30px;
     }
 
     p.para {
@@ -160,6 +180,10 @@
     .about-section img {
         margin: 0 !important;
     }
+
+    .custom-hero-slider-parent .swiper-slide {
+        width: 159px !important;
+    }
 }
 
 @media (max-width: 991px) {
@@ -189,6 +213,7 @@
 
     .RightSliderChild.whyChooseUs p {
         font-size: 22px !important;
+        text-align: start;
     }
 
     .heading-3 {
@@ -302,6 +327,7 @@
 
     .heading-3 {
         font-size: 25px;
+        text-align: start;
     }
 
     .custom-tabs-content {
@@ -309,14 +335,14 @@
     }
 
     .custom-tabs-content #v-pills-tab {
-        flex-direction: row !important;
         gap: 20px;
         justify-content: center;
         margin-bottom: 20px;
     }
 
     .custom-tabs-content button {
-        font-size: 21px;
+        font-size: 13px;
+        text-align: start;
     }
 
     h2.heading-3 span {
@@ -342,12 +368,13 @@
     }
 
     .AboutSliderParent {
-        padding: 10px 20px;
+        padding: 10px 10px;
+        text-align: start;
     }
 
     .HomeFrameSlider_framesSliderWrp {
         background: black;
-        padding-top: 160px;
+        padding-top: 50px;
         padding-bottom: 0;
     }
 
@@ -370,7 +397,9 @@
     }
 
     .HomeEnquire_homeEnquireContent .heading-4 {
-        font-size: 20px;
+        font-size: 32px;
+        text-align: center;
+        width: 100%;
     }
 
     footer.text-white.Footer_footer {
@@ -403,8 +432,216 @@
     section.about-section.py {
         text-align: center;
     }
+
+    .custom-hero-slider-parent .swiper-slide {
+        width: 165px !important;
+    }
+
+    .bannerFrame {
+        width: 230px;
+        left: 51%;
+        top: 19px;
+        height: 320px;
+    }
+
+    .HomeFrameSlider_framesContent h2.heading-3 {
+        text-align: center;
+    }
+
+    .swiper.AboutSlider.swiper-initialized.swiper-horizontal.swiper-backface-hidden {
+        margin-bottom: 30px;
+    }
+
+    section.about-section.py.sofa-covered .row {
+        flex-direction: column-reverse;
+    }
+
+    section.about-section.py.sofa-covered img {
+        width: 100%;
+    }
+
+    section.about-section.py.sofa-covered .row .col-lg-7.col-md-7.col-12 {
+        width: 100%;
+    }
+
+    section.about-section.py.sofa-covered .row .col-lg-5.col-md-5.col-12 {
+        width: 100%;
+    }
+
+    .HomeFrameSlider_sliderWrp .swiper-slide {
+        width: 280px !important;
+    }
+
+    .HomeFrameSlider_framesContent p {
+        margin-bottom: 0 !important;
+    }
+
+    .HomeEnquire_homeEnquireContent {
+        background: none;
+        text-align: center !important;
+    }
+
+    section.py-0.HomeEnquire_homeEnquireWrp.scroll-fade {
+        position: relative;
+        z-index: 0;
+        padding-bottom: 250px !important;
+        background-size: 300px;
+        background-repeat: no-repeat;
+        background-position: center bottom -1px;
+        margin-bottom: 0;
+    }
+
+    .mobile-back-img img {
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 45%;
+        height: 100%;
+        margin: auto;
+    }
+
+    .mobile-back-img img {
+        display: block !important;
+    }
 }
 
-@media (max-width: 767px) {}
+@media (max-width: 767px) {
 
-@media (max-width: 575px) {}
+    .RightSliderChild .heading-3 {
+        text-align: center;
+        margin-bottom: 10px !important;
+    }
+
+    .RightSliderChild.whyChooseUs p {
+        text-align: center;
+        font-size: 16px !important;
+    }
+
+
+    .custom-tabs-content h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .custom-tabs-content h2 span {
+        display: unset;
+    }
+
+    .custom-tabs-content #v-pills-tab {
+        justify-content: center;
+        flex-direction: row !important;
+        margin: 0;
+        margin-bottom: 20px;
+        gap: 15px;
+    }
+
+    .custom-tabs-content button {
+        font-size: 14px;
+        padding: 0;
+    }
+
+    .custom-tabs-content button.active {
+        border-left: 0;
+        border-bottom: 2px solid;
+    }
+
+    figure.sofa-img-setting img {
+        display: none;
+    }
+
+    figure.sofa-img-setting .mobile-sofa-img-setting {
+        display: block !important;
+    }
+
+    .HomeFrameSlider_framesSliderWrp {
+        padding-top: 100px;
+    }
+
+    .HomeFrameSlider_framesContent {
+        left: 18px;
+    }
+
+    .whychoose .RightSliderChild.whyChooseUs p {
+        margin-bottom: 20px;
+    }
+
+    section.py-0.HomeEnquire_homeEnquireWrp.scroll-fade {
+        padding-bottom: 180px !important;
+    }
+
+    .Footer_footer .Footer_footerLinksWrp img {
+        width: 50%;
+    }
+}
+
+@media (max-width: 575px) {
+    .main-banner-section {
+        padding-bottom: 1rem;
+    }
+
+    .heading-2 {
+        font-size: 18px;
+    }
+
+    .main-title span.heading-1 {
+        font-size: 22px;
+        margin-top: 8px;
+    }
+
+    .custom-tabs-content button {
+        font-size: 11px;
+    }
+
+    .whychoose .RightSliderChild.whyChooseUs p {
+        font-size: 12px !important;
+        line-height: 20px !important;
+    }
+
+    button.accordion-button {
+        font-size: 14px;
+        padding-bottom: 10px !important;
+    }
+
+    .accordion-item {
+        padding-top: 10px;
+        padding-right: 10px;
+    }
+
+    .accordion-body {
+        font-size: 12px;
+    }
+
+    .faqSection {
+        padding: 20px 0;
+    }
+
+    .mx-auto.text-center.HomeTestimonials_htContent__sML46 h2 {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    div#accordionFlushExample {
+        margin-top: 15px;
+    }
+
+    .accordion-button::after {
+        width: 21px;
+        height: 14px;
+    }
+
+    .HomeEnquire_homeEnquireContent .heading-4 {
+        font-size: 20px;
+    }
+
+    .mobile-back-img img {
+        width: 70%;
+    }
+
+    .Footer_footer .Footer_footerBottomWrp a {
+        padding: 0px 4px;
+        font-size: 12px;
+    }
+}

@@ -33,14 +33,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <!-- Cropper.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <!-- ckedor js -->
     <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
     <!-- daterangepicker css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -67,65 +67,65 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<!-- Magnific Popup core JS file -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-<!-- crop js cdns  -->
-<script src="https://foliotek.github.io/Croppie/croppie.js"></script>
-<!-- sweetalert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- Dropify JS -->
-<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
-<script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
-<script src="
-https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js
-"></script>
-<!-- Cropper.js JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-<script src="{{ asset('assets/js/dataTables.js') }}"></script>
-<script src="{{ asset('assets/js/dataTables.bootstrap5.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-@livewireScripts
-<script src="{{ asset('assets/js/app.js') }}"></script>
+    <!-- Magnific Popup core JS file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <!-- crop js cdns  -->
+    <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Dropify JS -->
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+    <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+    <script src="
+    https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js
+    "></script>
+    <!-- Cropper.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="{{ asset('assets/js/dataTables.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.bootstrap5.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    @livewireScripts
+    <script src="{{ asset('assets/js/app.js') }}"></script>
 
-@include('ajax')
+    @include('ajax')
 
-@stack('scripts')
+    @stack('scripts')
 
-@if (session('success'))
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: '{{ session('success') }}',
-            confirmButtonText: 'OK',
-            showClass: {
-                popup: 'animate__animated animate__fadeIn animate__slow'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOut animate__faster'
-            }
-        });
-    </script>
-@endif
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'OK',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__slow'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
+            });
+        </script>
+    @endif
 
-@if (session('error'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: '{{ session('error') }}',
-            confirmButtonText: 'OK',
-            showClass: {
-                popup: 'animate__animated animate__fadeIn animate__slow'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOut animate__faster'
-            }
-        });
-    </script>
-@endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'OK',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__slow'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
+            });
+        </script>
+    @endif
 
 </body>
 

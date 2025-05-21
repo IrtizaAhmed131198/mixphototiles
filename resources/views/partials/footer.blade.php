@@ -4,10 +4,10 @@
             <div class="row">
                 <div class="col-md">
                     @php
-                    $img = get_setting('site_logo');
+                        $img = get_setting('site_logo');
                     @endphp
-                    @if($img)
-                        <img src="{{ asset('storage/'.$img) }}" class="img-fluid footer-logo" alt="Logo">
+                    @if ($img)
+                        <img src="{{ asset('storage/' . $img) }}" class="img-fluid footer-logo" alt="Logo">
                     @else
                         <img src="{{ asset('assets/images/logo.jpg') }}" class="img-fluid footer-logo" alt="Logo">
                     @endif
@@ -84,9 +84,12 @@
                 <div class="col-md">
                     <h5 class="mb-4 text-brand-dark fw-bold">Not sure how to do?</h5>
                     <p class="mb-2 Footer_footerContact">
-                        <a class="text-decoration-none d-flex align-items-center" href="https://wa.me/919342874392" target="_blank">
-                            <img src="{{ asset('assets/images/whatsapp.png') }}" alt="WhatsApp" style="width: 50px;height: 51px;vertical-align: middle;margin-left: -5px;">
-                            <span class="ps-1" style=" font-size: 14px; font-weight: 400; line-height: 20px; ">Send your picture to our way and we'll frame it.</span>
+                        <a class="text-decoration-none d-flex align-items-center" href="https://wa.me/919342874392"
+                            target="_blank">
+                            <img src="{{ asset('assets/images/whatsapp.png') }}" alt="WhatsApp"
+                                style="width: 50px;height: 51px;vertical-align: middle;margin-left: -5px;">
+                            <span class="ps-1" style=" font-size: 14px; font-weight: 400; line-height: 20px; ">Send
+                                your picture to our way and we'll frame it.</span>
                         </a>
                     </p>
                 </div>
@@ -99,13 +102,14 @@
                 <div class="Footer_footerBottomNav nav">
                     <div class="nav-item"><a class="nav-link " href="{{ route('privacy') }}">Privacy Policy</a></div>
                     <div class="nav-item"><a class="nav-link " href="{{ route('refund') }}">Refund Policy</a></div>
-                    <div class="nav-item"><a class="nav-link " href="{{ route('terms') }}">Terms &amp; Conditions</a></div>
+                    <div class="nav-item"><a class="nav-link " href="{{ route('terms') }}">Terms &amp; Conditions</a>
+                    </div>
                     <div class="nav-item"><a class="nav-link " href="{{ route('shipping') }}">Shipping Policy</a></div>
                 </div>
                 <div
                     class="d-flex mx-auto me-xl-0 align-items-center flex-wrap text-center justify-content-center flex-column flex-sm-row gap-2">
-                    <p class="mb-0">© <!-- -->{{ date('Y') }}<!-- --> {{ get_setting('site_name') }}, Inc. All rights reserved</p><span
-                        class="d-none d-sm-block"></span>
+                    <p class="mb-0">© <!-- -->{{ date('Y') }}<!-- --> {{ get_setting('site_name') }}, Inc. All
+                        rights reserved</p><span class="d-none d-sm-block"></span>
                     <!-- <p class="mb-0">Designed by<a target="_blank" class="text-decoration-none ps-1" href="javascript:;">Webandcrafts</a></p> -->
                 </div>
             </div>
@@ -130,22 +134,32 @@
                         <p class="text-center">Select method to login</p>
                         <div class="btnParentlogin">
                             <button class="btn google-btn">
-                                @if(session()->has('google_user'))
+                                @if (session()->has('google_user'))
                                     <a href="{{ route('google.login') }}" class="btn google-btn">
                                         <span class="googleimg">
-                                            <img src="{{ session('google_user')->avatar }}" alt="Google Avatar" style="width: 24px; height: 24px; border-radius: 50%;">
+                                            <img src="{{ session('google_user')->avatar }}" alt="Google Avatar"
+                                                style="width: 24px; height: 24px; border-radius: 50%;">
                                         </span>
                                         <span class="btntext">Signed in as {{ session('google_user')->name }}</span>
                                     </a>
                                 @else
                                     <a href="{{ route('google.login') }}" class="btn google-btn">
                                         <span class="googleimg">
-                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="LgbsSe-Bz112c">
+                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 48 48" class="LgbsSe-Bz112c">
                                                 <g>
-                                                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
-                                                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
-                                                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
-                                                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                                                    <path fill="#EA4335"
+                                                        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
+                                                    </path>
+                                                    <path fill="#4285F4"
+                                                        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
+                                                    </path>
+                                                    <path fill="#FBBC05"
+                                                        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
+                                                    </path>
+                                                    <path fill="#34A853"
+                                                        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
+                                                    </path>
                                                     <path fill="none" d="M0 0h48v48H0z"></path>
                                                 </g>
                                             </svg>
@@ -157,35 +171,40 @@
                         </div>
                         <div class="position-relative text-center mb-4 Login_separator"><span
                                 class="bg-white px-2 position-relative">or</span></div>
-                            <form class="loginForm">
-                                <div class="mb-4 form-floating">
-                                    <input placeholder="Email address" id="emailInput" class="form-control" type="email" value=""
-                                        name="emailOrMobile">
-                                    <label for="emailInput">Email address</label>
-                                    <small class="text-danger" id="emailOrMobileError"></small>
-                                </div>
-                                <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
-                                    <input placeholder="Password" id="PasswordInput2" class="form-control" type="password" value="" name="password">
-                                    <button type="button" class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
-                                    <label for="PasswordInput2">Password</label>
-                                    <small class="text-danger" id="passwordError"></small>
-                                </div>
-                                <div class="d-flex Login_forgotBtn">
-                                    <button type="button" class="ms-auto btn btn-text btn-sm" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Forgot password</button>
-                                </div>
-                                <div class="d-grid pt-3 pb-4">
-                                    <button type="button" class="btn custom-btn" onclick="submitLogin()">Login</button>
-                                </div>
-                            </form>
+                        <form class="loginForm">
+                            <div class="mb-4 form-floating">
+                                <input placeholder="Email address" id="emailInput" class="form-control"
+                                    type="email" value="" name="emailOrMobile">
+                                <label for="emailInput">Email address</label>
+                                <small class="text-danger" id="emailOrMobileError"></small>
+                            </div>
+                            <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
+                                <input placeholder="Password" id="PasswordInput2" class="form-control"
+                                    type="password" value="" name="password">
+                                <button type="button"
+                                    class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <label for="PasswordInput2">Password</label>
+                                <small class="text-danger" id="passwordError"></small>
+                            </div>
+                            <div class="d-flex Login_forgotBtn">
+                                <button type="button" class="ms-auto btn btn-text btn-sm"
+                                    data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Forgot
+                                    password</button>
+                            </div>
+                            <div class="d-grid pt-3 pb-4">
+                                <button type="button" class="btn custom-btn" onclick="submitLogin()">Login</button>
+                            </div>
+                        </form>
                         <div id="loginMessage"></div>
                         <p class="mb-0 text-center d-flex align-items-center justify-content-center">Don't
                             have an account?<button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
                                 class="Login_authSwitch">Signup</button>
                         </p>
                         <p class="mb-0 text-center">
-                            <button data-bs-target="#exampleModalToggleVerify" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Verify Email OTP</button>
+                            <button data-bs-target="#exampleModalToggleVerify" data-bs-toggle="modal"
+                                class="Login_authSwitch btn-otp-login">Verify Email OTP</button>
                         </p>
                     </div>
                 </div>
@@ -210,12 +229,21 @@
                                 <button class="btn google-btn">
                                     <a href="{{ route('google.login') }}" class="btn google-btn">
                                         <span class="googleimg">
-                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="LgbsSe-Bz112c">
+                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 48 48" class="LgbsSe-Bz112c">
                                                 <g>
-                                                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
-                                                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
-                                                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
-                                                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                                                    <path fill="#EA4335"
+                                                        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
+                                                    </path>
+                                                    <path fill="#4285F4"
+                                                        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
+                                                    </path>
+                                                    <path fill="#FBBC05"
+                                                        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
+                                                    </path>
+                                                    <path fill="#34A853"
+                                                        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
+                                                    </path>
                                                     <path fill="none" d="M0 0h48v48H0z"></path>
                                                 </g>
                                             </svg>
@@ -229,28 +257,36 @@
                             <form id="signupForm">
                                 @csrf
                                 <div class="mb-4 form-floating">
-                                    <input placeholder="Name" id="nameInput3" class="form-control" type="text" name="name">
+                                    <input placeholder="Name" id="nameInput3" class="form-control" type="text"
+                                        name="name">
                                     <label for="nameInput3">Name </label>
                                 </div>
                                 <div class="mb-4 form-floating">
-                                    <input placeholder="Email" id="emailInput3" class="form-control" type="text" name="email">
+                                    <input placeholder="Email" id="emailInput3" class="form-control" type="text"
+                                        name="email">
                                     <label for="emailInput3">Email </label>
                                 </div>
                                 <div class="mb-4 form-floating">
-                                    <input placeholder="Mobile number" id="phone" class="form-control" type="text" name="phone">
+                                    <input placeholder="Mobile number" id="phone" class="form-control"
+                                        type="text" name="phone">
                                     <label for="phone">Mobile number</label>
                                 </div>
                                 <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
-                                    <input placeholder="Password" id="PasswordInput" class="form-control password-field" type="password" name="password">
-                                    <button type="button" class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
+                                    <input placeholder="Password" id="PasswordInput"
+                                        class="form-control password-field" type="password" name="password">
+                                    <button type="button"
+                                        class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
                                         <i class="fa fa-eye"></i>
                                     </button>
                                     <label for="PasswordInput">Password</label>
                                 </div>
 
                                 <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
-                                    <input placeholder="Confirm Password" id="ConfirmPasswordInput" class="form-control password-field" type="password" name="password_confirmation">
-                                    <button type="button" class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
+                                    <input placeholder="Confirm Password" id="ConfirmPasswordInput"
+                                        class="form-control password-field" type="password"
+                                        name="password_confirmation">
+                                    <button type="button"
+                                        class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
                                         <i class="fa fa-eye"></i>
                                     </button>
                                     <label for="ConfirmPasswordInput">Confirm Password</label>
@@ -261,12 +297,14 @@
                                     <button type="submit" class="btn custom-btn">Sign Up</button>
                                 </div>
                             </form>
-                            <p class="mb-0 text-center d-flex align-items-center justify-content-center">Already have an account?
-                                <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
-                                    id="signupBtn" class="Login_authSwitch">Login</button>
+                            <p class="mb-0 text-center d-flex align-items-center justify-content-center">Already have
+                                an account?
+                                <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" id="signupBtn"
+                                    class="Login_authSwitch">Login</button>
                             </p>
                             <p class="mb-0 text-center">
-                                <button data-bs-target="#exampleModalToggleVerify" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Verify Email OTP</button>
+                                <button data-bs-target="#exampleModalToggleVerify" data-bs-toggle="modal"
+                                    class="Login_authSwitch btn-otp-login">Verify Email OTP</button>
                             </p>
                         </div>
                     </div>
@@ -275,7 +313,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalToggleVerify" aria-hidden="true" aria-labelledby="exampleModalToggleLabelVerify" tabindex="-1">
+    <div class="modal fade" id="exampleModalToggleVerify" aria-hidden="true"
+        aria-labelledby="exampleModalToggleLabelVerify" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -287,18 +326,21 @@
                         <p>Enter your email to receive an OTP.</p>
                         <form>
                             <div class="mb-4 form-floating">
-                                <input placeholder="Email" id="emailInputVerify" class="form-control" type="text" name="email">
+                                <input placeholder="Email" id="emailInputVerify" class="form-control" type="text"
+                                    name="email">
                                 <label for="emailInputVerify">Email</label>
                                 <small class="text-danger" id="emailErrorVerify"></small>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn btn-otp-verify" onclick="sendOtpEmail()">Send OTP</button>
+                                <button type="button" class="btn custom-btn btn-otp-verify"
+                                    onclick="sendOtpEmail()">Send OTP</button>
                             </div>
                             <div id="forgotPasswordMessageVerify"></div>
                         </form>
 
                         <p class="mb-0 text-center">Back To Login
-                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Login</button>
+                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                                class="Login_authSwitch btn-otp-login">Login</button>
                         </p>
                     </div>
                 </div>
@@ -306,7 +348,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3"
+        tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -318,18 +361,21 @@
                         <p>Enter your email to receive an OTP.</p>
                         <form>
                             <div class="mb-4 form-floating">
-                                <input placeholder="Email" id="emailInputPass" class="form-control" type="text" name="email">
+                                <input placeholder="Email" id="emailInputPass" class="form-control" type="text"
+                                    name="email">
                                 <label for="emailInputPass">Email</label>
                                 <small class="text-danger" id="emailError"></small>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn btn-otp" onclick="sendOtp()">Send OTP</button>
+                                <button type="button" class="btn custom-btn btn-otp" onclick="sendOtp()">Send
+                                    OTP</button>
                             </div>
                             <div id="forgotPasswordMessage"></div>
                         </form>
 
                         <p class="mb-0 text-center">Back To Login
-                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" class="Login_authSwitch btn-otp-login">Login</button>
+                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                                class="Login_authSwitch btn-otp-login">Login</button>
                         </p>
                     </div>
                 </div>
@@ -337,7 +383,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalToggleOtp" aria-hidden="true" aria-labelledby="exampleModalToggleOtpLabel" tabindex="-1">
+    <div class="modal fade" id="exampleModalToggleOtp" aria-hidden="true"
+        aria-labelledby="exampleModalToggleOtpLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -349,17 +396,20 @@
                         <p>Enter the OTP sent to your email.</p>
                         <form id="otpForm">
                             <div class="mb-4 form-floating">
-                                <input placeholder="OTP" id="otpInputEdit" class="form-control" type="text" name="otp">
+                                <input placeholder="OTP" id="otpInputEdit" class="form-control" type="text"
+                                    name="otp">
                                 <label for="otpInputEdit">OTP</label>
                                 <small class="text-danger" id="otpError"></small>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn btn-verify" onclick="verifyOtp()">Verify OTP</button>
+                                <button type="button" class="btn custom-btn btn-verify" onclick="verifyOtp()">Verify
+                                    OTP</button>
                             </div>
                             <div id="otpMessage"></div>
                         </form>
                         <p class="mb-0 text-center">Resend OTP
-                            <button type="button" class="Login_authSwitch btn-verify-resend" onclick="resendOtp()">Resend</button>
+                            <button type="button" class="Login_authSwitch btn-verify-resend"
+                                onclick="resendOtp()">Resend</button>
                         </p>
                     </div>
                 </div>
@@ -367,7 +417,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalToggleOtpSign" aria-hidden="true" aria-labelledby="exampleModalToggleOtpSignLabel" tabindex="-1">
+    <div class="modal fade" id="exampleModalToggleOtpSign" aria-hidden="true"
+        aria-labelledby="exampleModalToggleOtpSignLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -379,17 +430,20 @@
                         <p>Enter the OTP sent to your email.</p>
                         <form id="otpFormSign">
                             <div class="mb-4 form-floating">
-                                <input placeholder="OTP" id="otpInputEditSign" class="form-control" type="text" name="otp">
+                                <input placeholder="OTP" id="otpInputEditSign" class="form-control" type="text"
+                                    name="otp">
                                 <label for="otpInputEditSign">OTP</label>
                                 <small class="text-danger" id="otpErrorSign"></small>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn btn-verify-sign" onclick="verifyOtpSign()">Verify OTP</button>
+                                <button type="button" class="btn custom-btn btn-verify-sign"
+                                    onclick="verifyOtpSign()">Verify OTP</button>
                             </div>
                             <div id="otpMessageSign"></div>
                         </form>
                         <p class="mb-0 text-center">Resend OTP
-                            <button type="button" class="Login_authSwitch btn-verify-resend-sign" onclick="resendOtpVerify()">Resend</button>
+                            <button type="button" class="Login_authSwitch btn-verify-resend-sign"
+                                onclick="resendOtpVerify()">Resend</button>
                         </p>
                     </div>
                 </div>
@@ -397,7 +451,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalToggleReset" aria-hidden="true" aria-labelledby="exampleModalToggleResetLabel" tabindex="-1">
+    <div class="modal fade" id="exampleModalToggleReset" aria-hidden="true"
+        aria-labelledby="exampleModalToggleResetLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -409,21 +464,26 @@
                         <form id="resetPasswordForm">
                             <input type="hidden" name="email" id="get_email">
                             <div class="mb-4 form-floating">
-                                <input placeholder="New Password" id="newPassword" class="form-control" type="password" name="password">
-                                <button type="button" class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
+                                <input placeholder="New Password" id="newPassword" class="form-control"
+                                    type="password" name="password">
+                                <button type="button"
+                                    class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
                                     <i class="fa fa-eye"></i>
                                 </button>
                                 <label for="newPassword">New Password</label>
                             </div>
                             <div class="mb-4 form-floating">
-                                <input placeholder="Confirm Password" id="confirmPassword" class="form-control" type="password" name="password_confirmation">
-                                <button type="button" class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
+                                <input placeholder="Confirm Password" id="confirmPassword" class="form-control"
+                                    type="password" name="password_confirmation">
+                                <button type="button"
+                                    class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
                                     <i class="fa fa-eye"></i>
                                 </button>
                                 <label for="confirmPassword">Confirm Password</label>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn btn-reset" onclick="resetPassword()">Reset Password</button>
+                                <button type="button" class="btn custom-btn btn-reset"
+                                    onclick="resetPassword()">Reset Password</button>
                             </div>
                             <div id="resetPasswordMessage"></div>
                         </form>

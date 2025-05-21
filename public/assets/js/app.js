@@ -1,36 +1,27 @@
 
 
-
-
 var swiper1 = new Swiper(".swiper-horizontal", {
-    // slidesPerView: 4,
+    cssMode: true,
+    slidesPerView: 4,
     spaceBetween: 30,
     navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
     },
     breakpoints: {
-        320: {
+        400: {
             slidesPerView: 1,
-            spaceBetween: 10,
         },
-        576: {
+        500: {
             slidesPerView: 2,
-            spaceBetween: 15,
         },
         768: {
+            slidesPerView: 2,
+        },
+        900: {
             slidesPerView: 3,
-            spaceBetween: 20,
         },
-        1024: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-        },
-        1400: {
-            slidesPerView: 4,
-            spaceBetween: 30,
-        },
-    },
+    }
 });
 
 // var swiper = new Swiper(".Images-frame-slider", {
@@ -64,24 +55,20 @@ var swiper2 = new Swiper(".AboutSlider", {
     slidesPerView: 4,
     // slidesPerView: 'auto',
     spaceBetween: 2,
-    // breakpoints: {
-    //     320: {
-    //         slidesPerView: 2,
-    //         spaceBetween: 10,
-    //     },
-    //     576: {
-    //         slidesPerView: 2,
-    //         spaceBetween: 15,
-    //     },
-    //     768: {
-    //         slidesPerView: 3,
-    //         spaceBetween: 20,
-    //     },
-    //     1024: {
-    //         slidesPerView: 4,
-    //         spaceBetween: 30,
-    //     }
-    // }
+    breakpoints: {
+        640: {
+            slidesPerView: 2,
+        },
+        768: {
+            slidesPerView: 4,
+        },
+        900: {
+            slidesPerView: 3,
+        },
+        1100: {
+            slidesPerView: 4,
+        },
+    }
 });
 
 //  <!-- Initialize Swiper -->
@@ -184,10 +171,10 @@ var swiper6 = new Swiper(".main-banner-slider", {
     spaceBetween: 55,
     grabCursor: true,
     slidesPerView: "auto",
-    autoplay: {
-        delay: 1200,
-        disableOnInteraction: false,
-    },
+    // autoplay: {
+    //     delay: 1200,
+    //     disableOnInteraction: false,
+    // },
     coverflowEffect: {
         rotate: 0,
         stretch: 0,
@@ -200,6 +187,27 @@ var swiper6 = new Swiper(".main-banner-slider", {
         // clickable: true,
         dynamicBullets: true, // Enables dynamic bullet pagination
     },
+    breakpoints: {
+        320: {
+            slidesPerView: 1,
+        },
+        576: {
+            slidesPerView: 1,
+        },
+        768: {
+            slidesPerView: 5,
+            spaceBetween: 35,
+        },
+        1024: {
+            slidesPerView: 5,
+            spaceBetween: 55,
+        },
+        1400: {
+            slidesPerView: 5,
+            spaceBetween: 55,
+        },
+    },
+
 });
 
 

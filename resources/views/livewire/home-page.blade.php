@@ -145,7 +145,6 @@
                 <div class="col-lg-12 col-md-12 col-12">
                     <div class="swiper swiper-horizontal">
                         <div class="swiper-wrapper">
-
                             @foreach ($products as $product)
                                 @php
                                     $discountAmount = ($product->price * $product->discount) / 100;
@@ -335,7 +334,7 @@
         </div>
     </section>
 
-    <section class="about-section py">
+    <section class="about-section py sofa-covered">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-7 col-md-7 col-12">
@@ -388,8 +387,10 @@
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5 col-12">
-                    <figure>
+                    <figure class="sofa-img-setting">
                         <img src="{{ asset('assets/images/home-company-img.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('assets/images/home-company-img-mob.webp') }}" class="img-fluid mobile-sofa-img-setting"
+                            alt="" style="display: none">
                     </figure>
                 </div>
             </div>
@@ -708,7 +709,11 @@
         </div>
     </section>
 
-    <section class="py-0 HomeEnquire_homeEnquireWrp scroll-fade">
+    <section class="py-0 HomeEnquire_homeEnquireWrp scroll-fade ">
+        <div class="mobile-back-img">
+            <img src="{{ asset('assets/images/home-enquire-bg-v2mob.jpg') }}" class="img-fluid" alt=""
+                style="display: none">
+        </div>
         <div class="container">
             <div class="text-center text-lg-start HomeEnquire_homeEnquireContent">
                 <h3 class="heading-4">Looking for Custom <span class="d-block">Sizing or Bulk Ordering?</span></h3>
