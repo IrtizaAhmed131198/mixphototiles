@@ -871,6 +871,24 @@ class MainController extends Controller
         $address->alternate_phone_number = $get_address['alternate_phone_number'];
         $address->save();
 
+        ShippingAddress::where('user_id', $user->id)->update(['default_address' => 0]);
+
+        $shippingAddress = ShippingAddress::updateOrCreate(
+            ['email' => $get_address['email']], // Search condition
+            [
+                'user_id' => $user->id,
+                'recipient_name' => $get_address['full_name'],
+                'phone' => $get_address['phone_number'],
+                'pin_code' => $get_address['pincode'],
+                'address_line1' => $get_address['address_line1'],
+                'address_line2' => $get_address['address_line2'],
+                'city' => $get_address['city'],
+                'state' => $get_address['state'],
+                'alt_phone' => $get_address['alternate_phone_number'],
+                'default_address' => 1,
+            ]
+        );
+
         // Store each cart item into order_items
         foreach ($cart as $productId => $product) {
             $orderItem = new OrderItems();

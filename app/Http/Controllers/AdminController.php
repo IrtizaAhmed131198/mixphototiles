@@ -43,12 +43,18 @@ class AdminController extends Controller
         }
 
         return DataTables::of($query)
-            ->addColumn('id', function ($row) {
+            ->editColumn('id', function ($row) {
+                return $row->id;
+            })
+            ->addColumn('id_label', function ($row) {
                 static $counter = 0;
                 $counter++;
                 return $counter;
             })
-            ->addColumn('status', function ($row) {
+            ->editColumn('status', function ($row) {
+                return $row->status;
+            })
+            ->addColumn('status_label', function ($row) {
                 return $row->status == 1 ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-secondary">Inactive</span>';
             })
             ->addColumn('login_as', function ($user) {
@@ -62,7 +68,7 @@ class AdminController extends Controller
                 return '<button class="btn btn-sm btn-brand-dark edit-user" data-id="'.$user->id.'">Edit</button>
                         <button class="btn btn-sm btn-brand-dark delete-user" data-id="'.$user->id.'">Delete</button>';
             })
-            ->rawColumns(['id', 'status', 'action', 'login_as']) // Include 'status' here to allow HTML badges
+            ->rawColumns(['id', 'status', 'action', 'login_as', 'status_label', 'id_label']) // Include 'status' here to allow HTML badges
             ->make(true);
     }
 

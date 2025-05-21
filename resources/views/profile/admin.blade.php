@@ -234,11 +234,11 @@
             serverSide: true,
             ajax: '{{ route("admin.get") }}',
             columns: [
-                { data: 'id', name: 'id' },
+                { data: 'id_label', name: 'id' },
                 { data: 'name', name: 'name' },
                 { data: 'email', name: 'email' },
                 { data: 'role', name: 'role' },
-                { data: 'status', name: 'status' },
+                { data: 'status_label', name: 'status' },
                 { data: 'login_as', name: 'login_as', orderable: false, searchable: false, visible: false },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]

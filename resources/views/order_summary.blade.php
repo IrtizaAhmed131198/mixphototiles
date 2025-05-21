@@ -234,15 +234,15 @@
                                 <div class="pt-3">
                                     <div class="pay_options">
                                         <label>
-                                            <input type="radio" value="razorpay" checked name="payment_method">
+                                            <input type="radio" value="razorpay" checked name="payment_method" checked>
                                             <img src="{{ asset('assets/images/razorpay.png') }}" alt="Razorpay"
                                                 class="img-fluid">
                                         </label>
-                                        <label>
+                                        {{-- <label>
                                             <input type="radio" value="paytm" name="payment_method">
                                             <img src="{{ asset('assets/images/paytm.png') }}" alt="Paytm"
                                                 class="img-fluid">
-                                        </label>
+                                        </label> --}}
                                     </div>
 
                                     <div class="form-check">
@@ -513,12 +513,7 @@
                         if (mainLoader) mainLoader.style.display = 'flex';
                         // Step 1: Create Razorpay Order
                         fetch("{{ route('razorpay.create_order') }}", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                },
-                                body: JSON.stringify({})
+                                method: 'GET',
                             })
                             .then(response => response.json())
                             .then(order => {
@@ -549,6 +544,7 @@
                                             .then(res => res.json())
                                             .then(data => {
                                                 if (data.success) {
+                                                    const method = data.method;
                                                     // Step 3: Place order in Laravel
                                                     fetch("{{ route('place_order') }}", {
                                                             method: 'POST',
@@ -557,9 +553,9 @@
                                                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
                                                             },
                                                             body: JSON.stringify({
-                                                                razorpay_payment_id: response
-                                                                    .razorpay_payment_id,
-                                                                payment_method: 'razorpay'
+                                                                razorpay_payment_id: response.razorpay_payment_id,
+                                                                payment_method: method, // <-- Send actual method here
+                                                                payment: data.payment    // Full payment details if you want to log it
                                                             })
                                                         })
                                                         .then(res => res.json())
@@ -582,6 +578,7 @@
                                                                     window.location.href = "{{ route('home') }}";
                                                                 });
                                                             } else {
+                                                                if (mainLoader) mainLoader.style.display = 'none';
                                                                 Swal.fire({
                                                                     icon: 'error',
                                                                     title: 'Error',
@@ -596,6 +593,7 @@
                                                             }
                                                         });
                                                 } else {
+                                                    if (mainLoader) mainLoader.style.display = 'none';
                                                     Swal.fire({
                                                         icon: 'error',
                                                         title: 'Error',
