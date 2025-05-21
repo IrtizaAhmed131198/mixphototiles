@@ -55,6 +55,33 @@
         </div>
     </section>
 
+    <!-- Refund Modal -->
+    <div class="modal fade" id="refundModal" tabindex="-1" aria-labelledby="refundModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="refundForm">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Process Refund</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="payment_id" id="refund_payment_id">
+                        <input type="hidden" name="order_id" id="refund_order_id">
+                        <div class="mb-3">
+                            <label for="refund_amount" class="form-label">Refund Amount (INR)</label>
+                            <input type="number" class="form-control" name="refund_amount" id="refund_amount" min="1" required>
+                        </div>
+                        <div id="refundError" class="text-danger d-none"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Confirm Refund</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
 @endsection
 
@@ -85,25 +112,6 @@ $(document).ready(function () {
     });
 });
 
-$(document).on('change', '.order-status-dropdown', function () {
-    var orderId = $(this).data('id');
-    var newStatus = $(this).val();
-
-    $.ajax({
-        url: "{{ url('/orders/update-status/') }}/" + orderId,
-        method: 'POST',
-        data: {
-            _token: '{{ csrf_token() }}',
-            status: newStatus
-        },
-        success: function(response) {
-            toastr.success('Order status updated!');
-        },
-        error: function() {
-            toastr.error('Failed to update order status.');
-        }
-    });
-});
 // Wait for the document to be ready
 $(document).ready(function () {
     // Add a click event listener to the delete button
@@ -132,6 +140,132 @@ $(document).ready(function () {
                 window.location.href = deleteUrl;
             }
         });
+    });
+});
+
+// $(document).on('change', '.order-status-dropdown', function () {
+//     var orderId = $(this).data('id');
+//     var newStatus = $(this).val();
+
+//     $.ajax({
+//         url: "{{ url('/orders/update-status/') }}/" + orderId,
+//         method: 'POST',
+//         data: {
+//             _token: '{{ csrf_token() }}',
+//             status: newStatus
+//         },
+//         success: function(response) {
+//             toastr.success('Order status updated!');
+//         },
+//         error: function() {
+//             toastr.error('Failed to update order status.');
+//         }
+//     });
+// });
+
+$(document).on('change', '.order-status-dropdown', function () {
+    let selectedStatus = $(this).val();
+    let orderId = $(this).data('id');
+
+    if (selectedStatus === 'refund') {
+        // Get payment ID via API or embed in DOM for demo
+        $.ajax({
+            url: "{{ url('orders/payment-info') }}/"+orderId, // Make this route
+            method: 'GET',
+            success: function (data) {
+                $('#refund_order_id').val(orderId);
+                $('#refund_payment_id').val(data.payment_id);
+                $('#refund_amount').val(data.amount); // Optional: default refund to full
+                $('#refundModal').modal('show');
+            },
+            error: function () {
+                alert('Failed to fetch payment details.');
+            }
+        });
+    } else {
+        // Auto update other statuses via AJAX
+
+        $.ajax({
+            url: "{{ url('/orders/update-status/') }}/" + orderId,
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                status: selectedStatus
+            },
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Order status updated!',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__slow'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut animate__faster'
+                    }
+                });
+            },
+            error: function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to update order status.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__slow'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut animate__faster'
+                    }
+                });
+            }
+        });
+    }
+});
+
+$('#refundForm').on('submit', function (e) {
+    e.preventDefault();
+
+    // Disable buttons
+    $('#refundForm button').attr('disabled', true);
+
+    let formData = {
+        _token: '{{ csrf_token() }}',
+        order_id: $('#refund_order_id').val(),
+        payment_id: $('#refund_payment_id').val(),
+        refund_amount: $('#refund_amount').val()
+    };
+
+    $.ajax({
+        url: "{{ url('orders/refund') }}",
+        method: 'POST',
+        data: formData,
+        success: function (res) {
+            if (res.success) {
+                $('#refundModal').modal('hide');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Refund processed successfully.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__slow'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut animate__faster'
+                    }
+                }).then((result) => {
+                    $('#example').DataTable().ajax.reload(); // reload table
+                });
+            } else {
+                $('#refundError').text(res.message || 'Refund failed.').removeClass('d-none');
+            }
+        },
+        error: function (err) {
+            $('#refundError').text('Something went wrong!').removeClass('d-none');
+        },
+        complete: function () {
+            // Re-enable buttons after success or error
+            $('#refundForm button').attr('disabled', false);
+        }
     });
 });
 

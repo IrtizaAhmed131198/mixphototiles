@@ -189,6 +189,9 @@ Route::get('/frame-defaults', [MainController::class, 'getFrameDefaults'])->name
 Route::get('/razorpay/create-order', [RazorpayController::class, 'createOrder'])->name('razorpay.create_order');
 Route::post('/razorpay/verify-payment', [RazorpayController::class, 'verifyPayment'])->name('razorpay.verify_payment');
 
+Route::get('/orders/payment-info/{id}', [ProfileController::class, 'getPaymentInfo']);
+Route::post('/orders/refund', [ProfileController::class, 'processRefund']);
+
 Route::get('/canvas', function () {
     return view('canvas');
 });
