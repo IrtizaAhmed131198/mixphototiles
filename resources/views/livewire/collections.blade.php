@@ -21,9 +21,8 @@
 
         <div class="row" id="productContainer">
             @include('partials.product_card', ['products' => $products])
-
-            <div id="loader" style="display: none;">Loading...</div>
         </div>
+        <div id="loader" style="display: none;">Loading...</div>
 
     </div>
 </section>
