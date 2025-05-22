@@ -7,6 +7,7 @@ use App\Livewire\DesignPage;
 use App\Livewire\Collections;
 use App\Livewire\CollectionDetail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CollectionsController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
@@ -27,7 +28,8 @@ use App\Http\Middleware\CustomAuthMiddleware;
 
 Route::get('/', HomePage::class)->name('home');
 Route::get('/design', DesignPage::class)->name('design');
-Route::get('/your-collection', Collections::class)->name('collections');
+Route::get('/your-collection', [CollectionsController::class, 'index'])->name('collections');
+Route::get('/your-collection/load', [CollectionsController::class, 'loadMoreProducts'])->name('collections.load');
 Route::get('/collection/{slug}', CollectionDetail::class)->name('collections_detail');
 
 Route::get('/privacy-policy', [PagesController::class, 'privacy'])->name('privacy');

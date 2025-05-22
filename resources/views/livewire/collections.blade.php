@@ -19,41 +19,10 @@
             </div>
         </div>
 
-        <div class="row">
-            @foreach($products as $product)
-                @php
-                $discountAmount = ($product->price * $product->discount) / 100;
-                $finalPrice = $product->price - $discountAmount;
-                $url = url('collection') . '/' . $product->slug;
-                @endphp
-                <div class="col-lg-3">
-                    <div class="ClusterCard">
-                        <a href="{{ $url }}">
-                            <div class="ImgFrame">
-                                <img alt="{{ $product->name }}" class="img-fluid" src="{{ asset($product->image) }}">
-                            </div>
-                            <div class="custom-card-body">
-                                <h3 class="card-title">{{ $product->name }}</h3>
-                                <div class="card-prize">
-                                    <h4 class="product-prize">
-                                        <span class="realPize">
-                                            ₹ {{ number_format($finalPrice, 2) }}
-                                        </span>
-                                        @if ($product->discount > 0)
-                                            <span class="cutPrize">
-                                                <del>₹ {{ number_format($product->price, 2) }}</del>
-                                            </span>
-                                            <span class="discountPercent">
-                                                {{ round($product->discount) }}% OFF
-                                            </span>
-                                        @endif
-                                    </h4>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endforeach
+        <div class="row" id="productContainer">
+            @include('partials.product_card', ['products' => $products])
+
+            <div id="loader" style="display: none;">Loading...</div>
         </div>
 
     </div>
@@ -61,5 +30,38 @@
 @endsection
 
 @push('scripts')
+<script>
+let page = 1;
+let loading = false;
 
+$(window).scroll(function() {
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100 && !loading) {
+        page++;
+        loadMore(page);
+    }
+});
+
+function loadMore(page) {
+    loading = true;
+    $('#loader').show();
+
+    $.ajax({
+        url: "{{ route('collections.load') }}?page=" + page,
+        type: "get",
+        success: function(data) {
+            if (data.trim().length == 0) {
+                $('#loader').text("No more collections");
+                return;
+            }
+            $('#loader').hide();
+            $('#productContainer').append(data);
+            loading = false;
+        },
+        error: function() {
+            $('#loader').text("Something went wrong!");
+            loading = false;
+        }
+    });
+}
+</script>
 @endpush
