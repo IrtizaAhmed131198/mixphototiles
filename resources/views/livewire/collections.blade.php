@@ -22,8 +22,9 @@
         <div class="row" id="productContainer">
             @include('partials.product_card', ['products' => $products])
         </div>
-        <div id="loader" style="display: none;">Loading...</div>
-
+        <div id="loader" style="text-align:center; padding:20px; display:none;">
+            <img src="{{ asset('assets/images/loader.gif') }}" width="50" alt="loading..." />
+        </div>
     </div>
 </section>
 @endsection
