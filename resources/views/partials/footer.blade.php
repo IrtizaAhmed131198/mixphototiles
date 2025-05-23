@@ -71,8 +71,8 @@
                 <div class="col-md">
                     <h5 class="mb-4 text-brand-dark fw-bold">Help</h5>
                     <div class="flex-column Footer_footerLinks nav nav-underline">
-                        <div><span class=" link">FAQs </span></div>
-                        <div><span class=" link">Contact Us </span></div>
+                        <div><a href="{{ route('contact') }}" class="link" style=" text-decoration: none; "><span
+                                    class=" link">Contact Us </span></div></a>
                     </div>
                 </div>
                 {{-- <div class="col-md">
@@ -104,7 +104,8 @@
                     <div class="nav-item"><a class="nav-link " href="{{ route('refund') }}">Refund Policy</a></div>
                     <div class="nav-item"><a class="nav-link " href="{{ route('terms') }}">Terms &amp; Conditions</a>
                     </div>
-                    <div class="nav-item"><a class="nav-link " href="{{ route('shipping') }}">Shipping Policy</a></div>
+                    <div class="nav-item"><a class="nav-link " href="{{ route('shipping') }}">Shipping Policy</a>
+                    </div>
                 </div>
                 <div
                     class="d-flex mx-auto me-xl-0 align-items-center flex-wrap text-center justify-content-center flex-column flex-sm-row gap-2">
