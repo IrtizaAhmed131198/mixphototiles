@@ -99,10 +99,34 @@
              <div class="ms-auto ContactForm_contactFormWrp__4NjEW">
                 <form class="contact-form" id="contactForm" method="post" action="{{ route('contact.submit') }}">
                     @csrf
-                    <div class="mb-4"><input placeholder="Full Name" id="NameInput" class="form-control" type="text" name="name"></div>
-                    <div class="mb-4"><input placeholder="Phone Number" maxlength="10" id="phoneInput" class="form-control" type="tel" name="phone"></div>
-                    <div class="mb-4"><input placeholder="Email" id="emailInput" class="form-control" type="email" name="email"></div>
-                    <div class="mb-4"><textarea placeholder="Message" maxlength="255" name="message" id="messageInput" class="form-control"></textarea></div>
+                    <div class="mb-4">
+                        <input placeholder="Full Name" id="NameInput" class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') }}">
+                        @error('name')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <input placeholder="Phone Number" maxlength="10" id="phoneInput" class="form-control @error('phone') is-invalid @enderror" type="tel" name="phone" value="{{ old('phone') }}">
+                        @error('phone')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <input placeholder="Email" id="emailInput" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}">
+                        @error('email')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <textarea placeholder="Message" maxlength="255" name="message" id="messageInput" class="form-control @error('message') is-invalid @enderror">{{ old('message') }}</textarea>
+                        @error('message')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="d-grid d-md-flex">
                         <button type="submit" class="btn custom-btn filled contact-btn">Send Message</button>
                     </div>
@@ -125,5 +149,16 @@
 @endsection
 
 @push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('contactForm');
+        const submitBtn = form.querySelector('button[type="submit"]');
 
+        form.addEventListener('submit', function () {
+            // Disable the button and change the text
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Sending...';
+        });
+    });
+</script>
 @endpush
