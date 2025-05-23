@@ -74,6 +74,10 @@
     .contact-info-2 a {
         font-size: 20px !important;
     }
+
+    .child-privacy {
+        width: 80%;
+    }
 }
 
 @media (max-width: 1199px) {
@@ -228,6 +232,46 @@
     .contact-form input,
     .contact-form textarea {
         padding: 0.9rem 1rem !important;
+    }
+
+    .child-privacy h1 {
+        font-size: 30px !important;
+    }
+
+    .child-privacy {
+        padding-top: 50px;
+        width: 80% !important;
+    }
+
+    .child-privacy h2 {
+        font-size: 28px !important;
+        margin: 15px 0 !important;
+    }
+
+    .child-privacy table tr td {
+        padding-bottom: 10px !important;
+        font-size: 15px;
+    }
+
+    .parentRightAccordiance {
+        padding-left: 10px;
+    }
+
+    .parentRightAccordiance h3 {
+        font-size: 25px;
+    }
+
+    .pricedetails {
+        margin-top: 0;
+    }
+
+    .pricedetails h5 {
+        font-size: 22px;
+    }
+
+    .addtocardbtn {
+        margin: 1rem 0;
+        height: 50px;
     }
 }
 
@@ -581,6 +625,40 @@
     .contact-form textarea {
         padding: 1rem 1rem !important;
     }
+
+    .child-privacy {
+        width: 100% !important;
+    }
+
+    .productDetailSection {
+        padding-bottom: 50px;
+    }
+
+    .noticeproductdetail {
+        margin-top: 1rem;
+    }
+
+    .accordingheader {
+        margin-top: 20px;
+    }
+
+    figure.frameBackground img {
+        height: 500px;
+    }
+
+    .parentaccording {
+        margin-top: 0;
+    }
+
+    .parentaccording .accordion-item {
+        padding: 5px 10px;
+    }
+
+    .addtocardbtn {
+        height: 35px;
+    }
+
+  
 }
 
 @media (max-width: 767px) {
@@ -738,6 +816,35 @@
         line-height: 0;
         margin: auto;
     }
+
+    .child-privacy h1 {
+        font-size: 20px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .child-privacy p {
+        font-size: 14px !important;
+    }
+
+    .child-privacy h2 {
+        font-size: 22px !important;
+    }
+
+    .child-privacy ul li ul li {
+        font-size: 13px;
+    }
+
+    .child-privacy table tr td {
+        font-size: 14px !important;
+    }
+
+    .child-privacy ul {
+        padding-left: 1rem !important;
+    }
+
+    .child-privacy h3 {
+        font-size: 20px;
+    }
 }
 
 @media (max-width: 575px) {
@@ -861,4 +968,36 @@
         margin: 0 !important;
     }
 
+    .child-privacy {
+        padding-top: 0;
+    }
+
+    .child-privacy h1 {
+        font-size: 16px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .child-privacy h2 {
+        font-size: 18px !important;
+    }
+
+    .child-privacy table tr th {
+        padding-bottom: 10px !important;
+    }
+
+    .child-privacy table tr td {
+        font-size: 13px !important;
+    }
+
+    .child-privacy ul li {
+        font-size: 13px !important;
+    }
+
+    .child-privacy h3 {
+        font-size: 16px;
+    }
+
+    .child-privacy p {
+        font-size: 13px !important;
+    }
 }

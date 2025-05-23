@@ -85,16 +85,26 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="child-refund">
+                    <div class="child-refund child-privacy">
                         <h1 class="text-center">Refunds & Returns Policy</h1>
 
-                        <p>Due to the fully customized nature of our products, we are unable to offer standard return or refund procedures typically applicable to non-customized items.</p>
+                        <p>Due to the fully customized nature of our products, we are unable to offer standard return or
+                            refund procedures typically applicable to non-customized items.</p>
 
-                        <p>As part of a comprehensive clarification regarding our policies on Returns, Refunds, Cancellations, and Exchanges outlined in our Terms of Use, the following practices adopted by <b>Magnetic Photo Frames</b> and accepted by customers upon making a purchase through <a href="http://www.magneticphotoframes.com">www.magneticphotoframes.com</a> are detailed below.</p>
+                        <p>As part of a comprehensive clarification regarding our policies on Returns, Refunds,
+                            Cancellations, and Exchanges outlined in our Terms of Use, the following practices adopted by
+                            <b>Magnetic Photo Frames</b> and accepted by customers upon making a purchase through <a
+                                href="http://www.magneticphotoframes.com">www.magneticphotoframes.com</a> are detailed below.
+                        </p>
 
                         <h2>Return Terms</h2>
-                        <p>If any defects in the product may be reported to our Customer Service team by email at <a href="mailto:support@magneticphotoframes.com">support@magneticphotoframes.com</a> or by WhatsApp.</p>
-                        <p>Customers are requested to provide clear images or videos of the defect to facilitate evaluation. Return of the item is not required unless specifically requested by our Customer Service team for further inspection. A full refund will be processed upon completion of the review and confirmation of the defect.</p>
+                        <p>If any defects in the product may be reported to our Customer Service team by email at <a
+                                href="mailto:support@magneticphotoframes.com">support@magneticphotoframes.com</a> or by
+                            WhatsApp.</p>
+                        <p>Customers are requested to provide clear images or videos of the defect to facilitate evaluation.
+                            Return of the item is not required unless specifically requested by our Customer Service team
+                            for further inspection. A full refund will be processed upon completion of the review and
+                            confirmation of the defect.</p>
 
                         <h2>Refund Process</h2>
                         <p>Refunds are issued only in cases involving:</p>
@@ -104,7 +114,8 @@
                             <li>If the order has not yet been dispatched</li>
                         </ul>
                         <p>Please contact our Customer Service team via email or WhatsApp to initiate a refund request.</p>
-                        <p>The amount will be refunded after our evaluation of the case. There is a right for <b>Magnetic Photo Frames</b> to decline a refund request if that case deserves.</p>
+                        <p>The amount will be refunded after our evaluation of the case. There is a right for <b>Magnetic
+                                Photo Frames</b> to decline a refund request if that case deserves.</p>
 
                     </div>
                 </div>

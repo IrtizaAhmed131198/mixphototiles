@@ -85,7 +85,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="child-shipping">
+                    <div class="child-shipping child-privacy">
                         <h1 class="text-center">Shipping Policy</h1>
 
                         <h2>Order Dispatch Guidelines</h2>

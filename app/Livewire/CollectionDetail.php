@@ -36,10 +36,10 @@ class CollectionDetail extends Component
         }
 
         $this->imageName = request()->query('image_name');
-        $data = SessionCollection::where('image_name', 'uploads/cart_images/'.$this->imageName)
+        $data = SessionCollection::where('image_name', 'uploads/cart_images/' . $this->imageName)
             ->where('product_id', $this->product->id)
             ->first();
-        if($data){
+        if ($data) {
             $this->config = json_decode($data->configuration);
             $this->price = $data->price;
             $this->collectionImages = CollectionImages::where('collection_id', $data->id)->get();
