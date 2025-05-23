@@ -180,6 +180,7 @@ var swiper6 = new Swiper(".main-banner-slider", {
         stretch: 0,
         depth: 45,
         modifier: 2,
+        slidesPerView: 5,
         slideShadows: true,
     },
     pagination: {
@@ -187,18 +188,44 @@ var swiper6 = new Swiper(".main-banner-slider", {
         // clickable: true,
         dynamicBullets: true, // Enables dynamic bullet pagination
     },
+    // breakpoints: {
+    //     320: {
+    //         slidesPerView: 1,
+    //     },
+    //     576: {
+    //         slidesPerView: 1,
+    //     },
+    //     576: {
+    //         slidesPerView: 1,
+    //     },
+    //     768: {
+    //         slidesPerView: 5,
+    //         spaceBetween: 35,
+    //     },
+    //     1024: {
+    //         slidesPerView: 5,
+    //         spaceBetween: 55,
+    //     },
+    //     1400: {
+    //         slidesPerView: 5,
+    //         spaceBetween: 55,
+    //     },
+    // },
     breakpoints: {
-        320: {
+
+        500: {
             slidesPerView: 1,
+            spaceBetween: 0,
         },
-        576: {
-            slidesPerView: 1,
+        650: {
+            slidesPerView: 4,
+            spaceBetween: 40,
         },
-        768: {
+        900: {
             slidesPerView: 5,
-            spaceBetween: 35,
+            spaceBetween: 45,
         },
-        1024: {
+        1100: {
             slidesPerView: 5,
             spaceBetween: 55,
         },
@@ -206,7 +233,7 @@ var swiper6 = new Swiper(".main-banner-slider", {
             slidesPerView: 5,
             spaceBetween: 55,
         },
-    },
+    }
 
 });
 

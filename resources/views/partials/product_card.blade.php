@@ -1,10 +1,10 @@
-@foreach($products as $product)
+@foreach ($products as $product)
     @php
         $discountAmount = ($product->price * $product->discount) / 100;
         $finalPrice = $product->price - $discountAmount;
         $url = url('collection') . '/' . $product->slug;
     @endphp
-    <div class="col-lg-3">
+    <div class="col-lg-3 col-md-4 col-6">
         <div class="ClusterCard">
             <a href="{{ $url }}">
                 <div class="ImgFrame">

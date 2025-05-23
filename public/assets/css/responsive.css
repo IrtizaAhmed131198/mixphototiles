@@ -58,6 +58,22 @@
         font-size: 15px;
     }
 
+    .ClusterCard .card-prize .product-prize {
+        gap: 10px;
+    }
+
+    span.realPize {
+        font-size: 14px;
+    }
+
+    section.contact-us-section .contact-title {
+        max-width: 90%;
+        font-size: 40px;
+    }
+
+    .contact-info-2 a {
+        font-size: 20px !important;
+    }
 }
 
 @media (max-width: 1199px) {
@@ -182,7 +198,36 @@
     }
 
     .custom-hero-slider-parent .swiper-slide {
-        width: 159px !important;
+        width: 151px !important;
+    }
+
+    div#productContainer span.realPize {
+        font-size: 14px;
+    }
+
+    div#productContainer span.cutPrize {
+        font-size: 13px;
+    }
+
+    div#productContainer span.discountPercent {
+        font-size: 10px;
+    }
+
+    .contact-info-2 h2 {
+        line-height: 0;
+    }
+
+    .contact-info-2 a {
+        margin-bottom: 10px !important;
+    }
+
+    section.contact-us-section .contact-title {
+        font-size: 35px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 0.9rem 1rem !important;
     }
 }
 
@@ -434,7 +479,7 @@
     }
 
     .custom-hero-slider-parent .swiper-slide {
-        width: 165px !important;
+        width: 144px !important;
     }
 
     .bannerFrame {
@@ -506,6 +551,36 @@
     .mobile-back-img img {
         display: block !important;
     }
+
+    div#productContainer .ClusterCard {
+        margin: 2rem 0;
+    }
+
+    div#productContainer .ClusterCard span.realPize {
+        font-size: 14px;
+    }
+
+    div#productContainer .ClusterCard span.discountPercent {
+        font-size: 12px;
+    }
+
+    div#productContainer .ClusterCard span.cutPrize {
+        font-size: 11px;
+    }
+
+    section.contact-us-section .contact-title {
+        max-width: 100%;
+        font-size: 25px;
+    }
+
+    .contact-info-2 a {
+        font-size: 18px !important;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 1rem 1rem !important;
+    }
 }
 
 @media (max-width: 767px) {
@@ -575,11 +650,100 @@
     .Footer_footer .Footer_footerLinksWrp img {
         width: 50%;
     }
+
+    .custom-hero-slider-parent .swiper-slide {
+        width: 100% !important;
+    }
+
+    .custom-hero-slider-section {
+        padding: 0;
+        padding-top: 20px;
+    }
+
+    .innerFrame img {
+        height: 100%;
+        min-height: 100vh;
+    }
+
+    .main-banner-slider .swiper-pagination {
+        display: none;
+    }
+
+    .bannerFrame {
+        display: none;
+    }
+
+    .fogeffect:after,
+    .fogeffect:before {
+        height: 100%;
+    }
+
+    .custom-hero-slider-section .container {
+        margin: 0;
+        max-width: 100%;
+    }
+
+    section.custom-hero-slider-section .col-lg-12.col-md-12.col-12 {
+        padding: 0;
+    }
+
+    .swiper.main-banner-slider {
+        padding: 0;
+    }
+
+    .main-banner-section {
+        margin-top: -30rem;
+        position: relative;
+        z-index: 5;
+        padding-bottom: 200px;
+    }
+
+    section.main-banner-section h1 span {
+        color: white !important;
+        font-size: 2.5rem;
+    }
+
+    .fogeffect:after,
+    .fogeffect:before {
+        height: 96%;
+    }
+
+    .clusters-section {
+        padding-top: 60px;
+        padding-bottom: 50px;
+    }
+
+    .heading-2 {
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    section.about-section.py {
+        padding-top: 30px;
+    }
+
+    .RightSliderChild .heading-3 {
+        font-size: 30px;
+        margin-bottom: 40px !important;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 15px 18px !important;
+        font-size: 13px;
+        line-height: 0 !important;
+    }
+
+    section.contact-us-section .custom-btn.filled {
+        line-height: 0;
+        margin: auto;
+    }
 }
 
 @media (max-width: 575px) {
     .main-banner-section {
         padding-bottom: 1rem;
+        margin-top: -20rem;
     }
 
     .heading-2 {
@@ -644,4 +808,57 @@
         padding: 0px 4px;
         font-size: 12px;
     }
+
+    .innerFrame img {
+        min-height: 70vh;
+    }
+
+    .fogeffect:after,
+    .fogeffect:before {
+        height: 92%;
+    }
+
+    .clusters-section {
+        padding-top: 100px;
+    }
+
+    div#productContainer .ClusterCard h4 {
+        display: block;
+    }
+
+    div#productContainer .ClusterCard span.realPize {
+        font-size: 15px;
+    }
+
+    div#productContainer .ClusterCard span.cutPrize {
+        font-size: 13px;
+    }
+
+    .inner-cluster .heading-2 {
+        margin-bottom: 20px;
+    }
+
+    .inner-cluster p {
+        font-size: 13px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 10px 10px !important;
+    }
+
+    .ContactInfo_contactInfoWrp__wBllg {
+        margin-top: 20px;
+    }
+
+
+    .contact-info-2 a {
+        font-size: 16px !important;
+    }
+
+    .contact-info-2 h2 {
+        font-size: 16px;
+        margin: 0 !important;
+    }
+
 }
