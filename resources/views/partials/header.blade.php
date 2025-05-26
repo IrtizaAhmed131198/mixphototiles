@@ -6,10 +6,10 @@
                     <div class="container-fluid">
                         <a class="main_logo" href="{{ route('home') }}">
                             @php
-                            $img = get_setting('site_logo');
+                                $img = get_setting('site_logo');
                             @endphp
-                            @if($img)
-                                <img src="{{ asset('storage/'.$img) }}" class="img-fluid" alt="Logo">
+                            @if ($img)
+                                <img src="{{ asset('storage/' . $img) }}" class="img-fluid" alt="Logo">
                             @else
                                 <img src="{{ asset('assets/images/logo.jpg') }}" class="img-fluid" alt="Logo">
                             @endif
@@ -41,7 +41,8 @@
                                     <a class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}" href="{{ route('faq') }}">FAQs</a>
                                 </li> --}}
                                 <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact Us</a>
+                                    <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}"
+                                        href="{{ route('contact') }}">Contact Us</a>
                                 </li>
                             </ul>
                             <span class="break-line"></span>
@@ -54,14 +55,14 @@
                                             </span>
                                             <span class="cart-count">
                                                 @php
-                                                 $cart = session()->get('cart', []);
+                                                    $cart = session()->get('cart', []);
                                                 @endphp
                                                 <p>{{ count($cart) ?? 0 }}</p>
                                                 Cart
                                             </span>
                                         </a>
                                     </li>
-                                    @if(!Auth::check())
+                                    @if (!Auth::check())
                                         <li>
                                             <a href="javascript:;" data-bs-target="#exampleModalToggle"
                                                 data-bs-toggle="modal" class="btn custom-btn">Login / Sign up</a>
@@ -69,12 +70,14 @@
                                     @else
                                         <li class="porfile-dropdown">
                                             <a href="javascript:;" class="btn custom-btn" type="button"
-                                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43"
                                                     viewBox="0 0 43 43" class="w-em h-em ttl-44 mb-0 me-2">
                                                     <g transform="translate(4.369 4.281)">
                                                         <circle cx="21.5" cy="21.5" r="21.5"
-                                                            transform="translate(-4.369 -4.282)" fill="#ffe2f8"></circle>
+                                                            transform="translate(-4.369 -4.282)" fill="#ffe2f8">
+                                                        </circle>
                                                         <path d="M23.21,22.605a8.605,8.605,0,1,0-17.21,0"
                                                             transform="translate(2.525 4.802)" fill="#9d0b78"></path>
                                                         <circle cx="5.443" cy="5.443" r="5.443"
@@ -84,7 +87,8 @@
                                                 My Profile
                                                 <span><i class="fa-solid fa-chevron-down"></i></span>
                                             </a>
-                                            <div class="profile-menu dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <div class="profile-menu dropdown-menu"
+                                                aria-labelledby="dropdownMenuButton1">
                                                 <ul>
                                                     <li>
                                                         <a href="{{ route('profile') }}">
@@ -94,7 +98,8 @@
                                                                     <g transform="translate(-17 -131)">
                                                                         <g transform="translate(-3539.758 221.032)">
                                                                             <g fill="none" stroke-width="1.3"
-                                                                                stroke="currentColor" stroke-linecap="round"
+                                                                                stroke="currentColor"
+                                                                                stroke-linecap="round"
                                                                                 stroke-linejoin="round"
                                                                                 transform="translate(3563.094 -87.644)">
                                                                                 <circle cx="4.605" cy="4.605"
@@ -126,20 +131,24 @@
                                                                                 fill="none" stroke="currentColor"
                                                                                 stroke-linecap="round"
                                                                                 stroke-linejoin="round"
-                                                                                stroke-miterlimit="10" stroke-width="1.3">
+                                                                                stroke-miterlimit="10"
+                                                                                stroke-width="1.3">
                                                                             </rect>
-                                                                            <path d="M.164,3.35,2.28.158H15.969l2.08,3.193"
+                                                                            <path
+                                                                                d="M.164,3.35,2.28.158H15.969l2.08,3.193"
                                                                                 transform="translate(-20208.102 484.889)"
                                                                                 fill="none" stroke="currentColor"
                                                                                 stroke-linecap="round"
                                                                                 stroke-linejoin="round"
-                                                                                stroke-miterlimit="10" stroke-width="1.3">
+                                                                                stroke-miterlimit="10"
+                                                                                stroke-width="1.3">
                                                                             </path>
                                                                             <line x2="1.886"
                                                                                 transform="translate(-20194.793 496.511)"
                                                                                 fill="none" stroke="currentColor"
                                                                                 stroke-linecap="round"
-                                                                                stroke-miterlimit="10" stroke-width="1.3">
+                                                                                stroke-miterlimit="10"
+                                                                                stroke-width="1.3">
                                                                             </line>
                                                                         </g>
                                                                     </g>
@@ -147,68 +156,76 @@
                                                             Orders</a>
                                                     </li>
                                                     <li>
-                                                        @if(in_array(Auth::user()->role, ['user']))
-                                                        <a href="{{ route('address') }}">
-                                                            <span><svg width="22" height="22" viewBox="0 0 22 22"
-                                                                    class="w-em h-em fs-18 me-2"
-                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                    <g transform="translate(20197 -555)">
-                                                                        <g transform="translate(0.978 -10.8)">
-                                                                            <path fill="none" stroke-width="1.5"
-                                                                                stroke-miterlimit="10"
-                                                                                stroke="currentColor"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                transform="translate(-20194.016 567.763)"
-                                                                                d="M6.673,17.855l.43.392.43-.392c.27-.244,6.635-6.025,6.635-10.752A7.065,7.065,0,0,0,.038,7.1c0,4.727,6.365,10.508,6.634,10.752Z">
-                                                                            </path>
-                                                                            <g fill="none" stroke-width="1.5"
-                                                                                stroke="currentColor"
-                                                                                transform="translate(-20190.488 571.316)">
-                                                                                <circle cx="3.574" cy="3.574"
-                                                                                    r="3.574" stroke="none"></circle>
-                                                                                <circle cx="3.574" cy="3.574"
-                                                                                    r="2.824" fill="none"></circle>
+                                                        @if (in_array(Auth::user()->role, ['user']))
+                                                            <a href="{{ route('address') }}">
+                                                                <span><svg width="22" height="22"
+                                                                        viewBox="0 0 22 22"
+                                                                        class="w-em h-em fs-18 me-2"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <g transform="translate(20197 -555)">
+                                                                            <g transform="translate(0.978 -10.8)">
+                                                                                <path fill="none"
+                                                                                    stroke-width="1.5"
+                                                                                    stroke-miterlimit="10"
+                                                                                    stroke="currentColor"
+                                                                                    stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    transform="translate(-20194.016 567.763)"
+                                                                                    d="M6.673,17.855l.43.392.43-.392c.27-.244,6.635-6.025,6.635-10.752A7.065,7.065,0,0,0,.038,7.1c0,4.727,6.365,10.508,6.634,10.752Z">
+                                                                                </path>
+                                                                                <g fill="none" stroke-width="1.5"
+                                                                                    stroke="currentColor"
+                                                                                    transform="translate(-20190.488 571.316)">
+                                                                                    <circle cx="3.574"
+                                                                                        cy="3.574" r="3.574"
+                                                                                        stroke="none"></circle>
+                                                                                    <circle cx="3.574"
+                                                                                        cy="3.574" r="2.824"
+                                                                                        fill="none"></circle>
+                                                                                </g>
                                                                             </g>
                                                                         </g>
-                                                                    </g>
-                                                                </svg></span>
-                                                            Addresses</a>
+                                                                    </svg></span>
+                                                                Addresses</a>
                                                         @else
-                                                        <a href="{{ route('addresses.index') }}">
-                                                            <span><svg width="22" height="22" viewBox="0 0 22 22"
-                                                                    class="w-em h-em fs-18 me-2"
-                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                    <g transform="translate(20197 -555)">
-                                                                        <g transform="translate(0.978 -10.8)">
-                                                                            <path fill="none" stroke-width="1.5"
-                                                                                stroke-miterlimit="10"
-                                                                                stroke="currentColor"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                transform="translate(-20194.016 567.763)"
-                                                                                d="M6.673,17.855l.43.392.43-.392c.27-.244,6.635-6.025,6.635-10.752A7.065,7.065,0,0,0,.038,7.1c0,4.727,6.365,10.508,6.634,10.752Z">
-                                                                            </path>
-                                                                            <g fill="none" stroke-width="1.5"
-                                                                                stroke="currentColor"
-                                                                                transform="translate(-20190.488 571.316)">
-                                                                                <circle cx="3.574" cy="3.574"
-                                                                                    r="3.574" stroke="none"></circle>
-                                                                                <circle cx="3.574" cy="3.574"
-                                                                                    r="2.824" fill="none"></circle>
+                                                            <a href="{{ route('addresses.index') }}">
+                                                                <span><svg width="22" height="22"
+                                                                        viewBox="0 0 22 22"
+                                                                        class="w-em h-em fs-18 me-2"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <g transform="translate(20197 -555)">
+                                                                            <g transform="translate(0.978 -10.8)">
+                                                                                <path fill="none"
+                                                                                    stroke-width="1.5"
+                                                                                    stroke-miterlimit="10"
+                                                                                    stroke="currentColor"
+                                                                                    stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    transform="translate(-20194.016 567.763)"
+                                                                                    d="M6.673,17.855l.43.392.43-.392c.27-.244,6.635-6.025,6.635-10.752A7.065,7.065,0,0,0,.038,7.1c0,4.727,6.365,10.508,6.634,10.752Z">
+                                                                                </path>
+                                                                                <g fill="none" stroke-width="1.5"
+                                                                                    stroke="currentColor"
+                                                                                    transform="translate(-20190.488 571.316)">
+                                                                                    <circle cx="3.574"
+                                                                                        cy="3.574" r="3.574"
+                                                                                        stroke="none"></circle>
+                                                                                    <circle cx="3.574"
+                                                                                        cy="3.574" r="2.824"
+                                                                                        fill="none"></circle>
+                                                                                </g>
                                                                             </g>
                                                                         </g>
-                                                                    </g>
-                                                                </svg></span>
-                                                            Addresses</a>
+                                                                    </svg></span>
+                                                                Addresses</a>
                                                         @endif
 
                                                     </li>
                                                     <li>
 
                                                         <a href="{{ route('resetpassword') }}">
-                                                            <span><svg width="22" height="22" viewBox="0 0 22 22"
-                                                                    class="w-em h-em fs-18 me-2"
+                                                            <span><svg width="22" height="22"
+                                                                    viewBox="0 0 22 22" class="w-em h-em fs-18 me-2"
                                                                     xmlns="http://www.w3.org/2000/svg">
                                                                     <g transform="translate(20197 -555)">
                                                                         <g transform="translate(-20210.467 157.19)">
@@ -216,7 +233,8 @@
                                                                                 stroke="currentColor"
                                                                                 transform="translate(16 406.233)">
                                                                                 <rect rx="3" stroke="none"
-                                                                                    width="15.598" height="11.438"></rect>
+                                                                                    width="15.598" height="11.438">
+                                                                                </rect>
                                                                                 <rect x="0.75" y="0.75" rx="2.25"
                                                                                     fill="none" width="14.098"
                                                                                     height="9.938"></rect>
@@ -235,7 +253,8 @@
                                                     <li>
 
                                                         <a href="{{ route('logout') }}">
-                                                            <span><svg width="22" height="22" viewBox="0 0 22 22"
+                                                            <span><svg width="22" height="22"
+                                                                    viewBox="0 0 22 22"
                                                                     class="w-em h-em ttl-22 mb-0 me-2"
                                                                     xmlns="http://www.w3.org/2000/svg">
                                                                     <g transform="translate(20193 -761)">
@@ -257,7 +276,8 @@
                                                                                 transform="translate(-20184.207 765.992)">
                                                                             </path>
                                                                             <line x1="10.257" fill="none"
-                                                                                stroke-width="1.5" stroke="currentColor"
+                                                                                stroke-width="1.5"
+                                                                                stroke="currentColor"
                                                                                 stroke-linecap="round"
                                                                                 stroke-miterlimit="10"
                                                                                 transform="translate(-20183.879 772.133)">

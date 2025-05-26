@@ -171,10 +171,10 @@ var swiper6 = new Swiper(".main-banner-slider", {
     spaceBetween: 55,
     grabCursor: true,
     slidesPerView: "auto",
-    // autoplay: {
-    //     delay: 1200,
-    //     disableOnInteraction: false,
-    // },
+    autoplay: {
+        delay: 1200,
+        disableOnInteraction: false,
+    },
     coverflowEffect: {
         rotate: 0,
         stretch: 0,

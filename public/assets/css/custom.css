@@ -39,11 +39,11 @@ p.para {
     object-fit: contain;
 } */
 
-.text-brand-dark{
+.text-brand-dark {
     color: #ff0168;
 }
 
-.btn-brand-dark{
+.btn-brand-dark {
     background-color: #ff0168 !important;
     color: #fff !important;
 }
@@ -942,6 +942,12 @@ ul.LeftSidebar_designTool button p {
     justify-content: space-between;
     flex-direction: column;
     width: 410px;
+}
+
+.grid-4 {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
 }
 
 .grid-2 {
@@ -3934,10 +3940,11 @@ input[type="radio"]:checked {
     align-items: center;
     justify-content: center;
     top: 0;
-    margin:auto;
+    margin: auto;
 }
+
 .loaderMain img {
     max-width: 350px;
-    margin:auto;
+    margin: auto;
     animation: circle 10s infinite linear
 }

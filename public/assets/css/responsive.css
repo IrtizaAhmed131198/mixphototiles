@@ -78,6 +78,22 @@
     .child-privacy {
         width: 80%;
     }
+
+    span.caption-crop {
+        margin-left: 6rem;
+    }
+
+    .Right-Sidebar-Cart-Parent .card-body {
+        padding: 10px 10px;
+    }
+
+    .Right-Sidebar-Cart-Parent .card-body .frame-detail .heading-4 {
+        font-size: 13px;
+    }
+
+    .grid-4 {
+        width: 93%;
+    }
 }
 
 @media (max-width: 1199px) {
@@ -272,6 +288,47 @@
     .addtocardbtn {
         margin: 1rem 0;
         height: 50px;
+    }
+
+    span.caption-crop {
+        font-size: 14px;
+        margin-left: 1rem;
+    }
+
+    .grid-4 {
+        width: 91%;
+    }
+
+    .paymentdetailsbody {
+        padding: 1rem;
+    }
+
+    form#addressForm input {
+        padding: 10px 10px;
+        font-size: 13px;
+    }
+
+    textarea#address1Input {
+        font-size: 13px;
+    }
+
+    select#stateDropdown {
+        padding: 10px 10px;
+        font-size: 13px;
+    }
+
+    select#cityDropdown {
+        padding: 10px 10px;
+        font-size: 13px;
+    }
+
+    textarea#address2Input {
+        padding: 10px 10px;
+        font-size: 13px;
+    }
+
+    figure.carditemimage img {
+        width: 100px;
     }
 }
 
@@ -658,7 +715,74 @@
         height: 35px;
     }
 
-  
+    .grid-parent {
+        flex-direction: column-reverse;
+    }
+
+    ul.LeftSidebar_designTool {
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .grid-2 {
+        width: 100%;
+        flex-direction: column-reverse;
+    }
+
+    span.caption-crop {
+        margin-bottom: 1rem;
+    }
+
+    .grid-4 {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .multi-upload-Main {
+        padding-top: 20px;
+    }
+
+    .Right-Sidebar-Cart-Parent {
+        width: 100%;
+    }
+
+    .Right-Sidebar-footer {
+        width: 93%;
+    }
+
+    .ApplyCoupon_couponApply p {
+        font-size: 12px;
+        margin: 0;
+    }
+
+    .ApplyCoupon_couponApply .custom-btn {
+        padding: 4px 10px;
+    }
+
+    .cartParent .pricedetails {
+        margin-top: 15px;
+    }
+
+    figure.carditemimage img {
+        width: 100px;
+    }
+
+    .cardlistdetail p {
+        font-size: 14px;
+    }
+
+    .cardlistaction {
+        gap: 15px;
+        width: 75%;
+    }
+
+    .listGroup {
+        grid-template-columns: 8% 60% 14%;
+    }
+
+    .listGroup figure {
+        width: 65px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -845,7 +969,34 @@
     .child-privacy h3 {
         font-size: 20px;
     }
+
+    ul.LeftSidebar_designTool {
+        gap: 0px;
+    }
+
+    ul.LeftSidebar_designTool button {
+        padding: 10px 10px;
+        width: 70px;
+    }
+
+    .Right-Sidebar-Cart-Parent {
+        padding: 15px;
+    }
+
+    .Right-Sidebar-footer {
+        width: 100%;
+    }
+
+    .listGroup {
+        display: block;
+        padding: 10px 0;
+    }
+
+    .cardlistdetail {
+        margin-top: 18px;
+    }
 }
+
 
 @media (max-width: 575px) {
     .main-banner-section {
@@ -999,5 +1150,19 @@
 
     .child-privacy p {
         font-size: 13px !important;
+    }
+
+    ul.LeftSidebar_designTool {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    li.designToolPropertiesChild {
+        list-style: none;
+    }
+
+    figure.carditemimage img {
+        height: 90px;
+        width: 90px;
     }
 }
