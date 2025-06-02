@@ -59,6 +59,12 @@
         .no-border-design {
             padding: 18px !important;
         }
+
+        @media(max-width:991) {
+            footer {
+                display: none;
+            }
+        }
     </style>
 @endpush
 
@@ -72,16 +78,16 @@
 
         /* Animation for image loading */
         /* @keyframes fadeIn {
-                                from {
-                                    opacity: 0;
-                                    transform: rotate(0deg);
-                                }
+                                                from {
+                                                    opacity: 0;
+                                                    transform: rotate(0deg);
+                                                }
 
-                                to {
-                                    opacity: 1;
-                                    transform: rotate(360deg);
-                                }
-                            } */
+                                                to {
+                                                    opacity: 1;
+                                                    transform: rotate(360deg);
+                                                }
+                                            } */
 
         .frameinner img {
             animation: fadeIn 0.5s ease-in-out;
@@ -453,19 +459,19 @@
 
                             <!-- partial:index.partial.html -->
                             <!-- <div class="container mt-4">
-                                                    <div class="row">
-                                                        <div class="col-12 text-center">
-                                                            <label class="cabinet">
-                                                                <figure>
-                                                                    <img src="" class="gambar img-fluid img-thumbnail"
-                                                                        id="item-img-output" />
-                                                                    <figcaption><i class="fa fa-camera"></i></figcaption>
-                                                                </figure>
-                                                                <input type="file" class="item-img file" name="file_photo" />
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
+                                                                    <div class="row">
+                                                                        <div class="col-12 text-center">
+                                                                            <label class="cabinet">
+                                                                                <figure>
+                                                                                    <img src="" class="gambar img-fluid img-thumbnail"
+                                                                                        id="item-img-output" />
+                                                                                    <figcaption><i class="fa fa-camera"></i></figcaption>
+                                                                                </figure>
+                                                                                <input type="file" class="item-img file" name="file_photo" />
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> -->
                             <!-- partial -->
 
 

@@ -783,6 +783,14 @@
     .listGroup figure {
         width: 65px;
     }
+
+    ul.designToolPropertiesLists {
+        transform: translate(0px, 80px) !important;
+    }
+
+    ul.designToolPropertiesLists.show {
+        transform: translate(0px, -300px) !important;
+    }
 }
 
 @media (max-width: 767px) {
@@ -1164,5 +1172,18 @@
     figure.carditemimage img {
         height: 90px;
         width: 90px;
+    }
+
+    ul.designToolPropertiesLists.show {
+        transform: translate(-30px, -310px) !important;
+    }
+
+    figure.PropertiesleftChild img {
+        height: 40px;
+        width: 40px;
+    }
+
+    ul.designToolPropertiesLists {
+        width: 282px;
     }
 }
