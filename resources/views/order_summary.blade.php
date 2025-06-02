@@ -616,6 +616,22 @@
                                                 }
                                             });
                                     },
+                                    "modal": {
+                                        "ondismiss": function () {
+                                            if (mainLoader) mainLoader.style.display = 'none';
+                                            Swal.fire({
+                                                icon: 'info',
+                                                title: 'Payment Cancelled',
+                                                text: 'You have cancelled the payment process.',
+                                                showClass: {
+                                                    popup: 'animate__animated animate__fadeIn animate__slow'
+                                                },
+                                                hideClass: {
+                                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                                }
+                                            });
+                                        }
+                                    },
                                     "prefill": {
                                         "name": order.customer_name ?? "",
                                         "email": order.customer_email ?? ""

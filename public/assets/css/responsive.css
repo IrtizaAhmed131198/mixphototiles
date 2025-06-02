@@ -1186,4 +1186,9 @@
     ul.designToolPropertiesLists {
         width: 282px;
     }
+
+    .main_logo {
+        width: 53%;
+        height: 30px;
+    }
 }
