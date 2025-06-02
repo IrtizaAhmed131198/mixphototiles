@@ -11,7 +11,7 @@
                     @else
                         <img src="{{ asset('assets/images/logo.jpg') }}" class="img-fluid footer-logo" alt="Logo">
                     @endif
-                    <div class="Footer_socialNav nav">
+                    <div class="Footer_socialNav nav" style=" align-items: end; ">
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
                                 href="{{ get_setting('facebook') ?? 'javascript:;' }}">
@@ -39,7 +39,7 @@
                                 </svg>
                             </a>
                         </div>
-                        <div class="nav-item">
+                        {{-- <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
                                 href="{{ get_setting('twitter') ?? 'javascript:;' }}">
                                 <svg width="22.019" height="22.019" class="w-em h-em d-block"
@@ -52,7 +52,7 @@
                                     </g>
                                 </svg>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-md">

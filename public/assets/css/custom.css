@@ -1123,7 +1123,7 @@ li.designToolPropertiesChild {
     width: 100%;
     padding: 24px 15px;
     min-width: 80px;
-    align-items: start;
+    align-items: center;
     justify-content: center;
     border: 1px solid rgba(0, 0, 0, 0.11);
 }
@@ -1699,6 +1699,7 @@ div#accordionFlushExample {
     color: #000000;
     border: none !important;
     text-decoration: none;
+    padding-bottom: 0;
 }
 
 .Footer_footerLinks {

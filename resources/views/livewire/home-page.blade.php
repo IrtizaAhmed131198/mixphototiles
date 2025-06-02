@@ -204,7 +204,7 @@
         </div>
     </section>
 
-    <section class="about-section py">
+    {{-- <section class="about-section py">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6 col-12">
@@ -254,7 +254,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <section class="custom-tabs-section py">
         <div class="container">
@@ -337,10 +337,10 @@
     <section class="about-section py sofa-covered">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-7 col-md-7 col-12">
-                    <div class="parentRightAbout">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="parentRightAbout text-center">
                         <div class="RightSliderChild">
-                            <h2 class="heading-3"><span class="sec-2-span">{{ get_setting('site_name') }}</span> have Got
+                            <h2 class="heading-3"><span class="sec-2-span d-block">{{ get_setting('site_name') }}</span> have Got
                                 You Covered</h2>
                         </div>
                         <div class="RightSliderChild">
@@ -348,9 +348,8 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="AboutSliderParent">
-                                            <h5><b>Fast Door Delivery</b></h5>
-                                            <p>No minimum order
-                                                required</p>
+                                            <h5><b>No Nails, No marks, Clean walls</b></h5>
+                                            <p>Change your mind? Move it, love it, leave no mark</p>
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
@@ -361,8 +360,8 @@
                                     </div>
                                     <div class="swiper-slide">
                                         <div class="AboutSliderParent">
-                                            <h5><b>Sleek & Sturdy</b></h5>
-                                            <p>Gracefully crafted. Strong. Durable, with reliable wooden back support</p>
+                                            <h5><b>Super light weight & Premium</b></h5>
+                                            <p>Even kids can carry it. No damage, when dropped</p>
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
@@ -386,13 +385,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5 col-md-5 col-12">
+                {{-- <div class="col-lg-5 col-md-5 col-12">
                     <figure class="sofa-img-setting">
                         <img src="{{ asset('assets/images/home-company-img.png') }}" class="img-fluid" alt="">
                         <img src="{{ asset('assets/images/home-company-img-mob.webp') }}" class="img-fluid mobile-sofa-img-setting"
                             alt="" style="display: none">
                     </figure>
-                </div>
+                </div> --}}
             </div>
     </section>
 
@@ -578,8 +577,8 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <figure>
-                        <img src="{{ asset('assets/images/why-choose-use-1.jpg') }}" class="img-fluid" alt=""
-                            style=" margin-left: 41px; ">
+                        <img src="{{ asset('assets/images/Needy-poor3.png') }}" class="img-fluid" alt=""
+                            style=" margin-left: 41px; height: 500px;">
                     </figure>
                 </div>
             </div>
@@ -716,9 +715,9 @@
         </div>
         <div class="container">
             <div class="text-center text-lg-start HomeEnquire_homeEnquireContent">
-                <h3 class="heading-4">Looking for Custom <span class="d-block">Sizing or Bulk Ordering?</span></h3>
+                <h3 class="heading-4">For Business Inquiries, <span class="d-block">Retails or Bulk Ordering,</span></h3>
 
-                <button type="button" class="btn custom-btn filled">
+                <button type="button" class="btn custom-btn filled" onclick="window.location.href='{{ route('contact') }}'">
                     Contact Us
                 </button>
 
