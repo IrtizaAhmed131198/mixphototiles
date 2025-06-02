@@ -761,6 +761,24 @@ class MainController extends Controller
             ->where('default_address', 1)
             ->first();
 
+        if ($shipping_address) {
+            $address = [
+                'full_name' => $shipping_address->recipient_name ?? '',
+                'phone_number' => $shipping_address->phone ?? '',
+                'email' => $shipping_address->email ?? '',
+                'pincode' => $shipping_address->pin_code ?? '',
+                'address_line1' => $shipping_address->address_line1 ?? '',
+                'address_line2' => $shipping_address->address_line2 ?? '',
+                'state' => $shipping_address->state ?? '',
+                'city' => $shipping_address->city ?? '',
+                'alternate_phone_number' => $shipping_address->alt_phone ?? '',
+            ];
+            Session::forget('user_address');
+
+            // Save to session (you can also save to database if needed)
+            Session::put('user_address', $address);
+        }
+
         // Example: Assume you set coupon data in session somewhere earlier
         $appliedCoupon = session()->get('applied_coupon', [
             'code' => null,
@@ -943,7 +961,7 @@ class MainController extends Controller
             if($existUser){
                 return response()->json([
                     'error' => true,
-                    'message' => 'Email is already exist'
+                    'message' => 'Email is already exist, please login'
                 ]);
             }
             $message = "Address and account saved successfully!";

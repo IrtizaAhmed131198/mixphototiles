@@ -68,21 +68,21 @@
                                                         <div label="Full Name">
                                                             <input placeholder="Full Name" id="nameInput"
                                                                 class="form-control" type="text" name="full_name"
-                                                                value="{{ Auth::user()->name ?? '' }}">
+                                                                value="{{ $shipping_address->recipient_name ?? '' }}">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div label="Mobile Number">
                                                             <input placeholder="Mobile number" maxlength="10"
                                                                 id="phoneInput" class="form-control" type="tel"
-                                                                name="phone_number" value="{{ Auth::user()->phone ?? '' }}">
+                                                                name="phone_number" value="{{ $shipping_address->phone ?? '' }}">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div label="Email">
                                                             <input placeholder="Email" id="emailInput" class="form-control"
                                                                 autocomplete="off" type="email" name="email"
-                                                                value="{{ Auth::user()->email ?? '' }}">
+                                                                value="{{ $shipping_address->email ?? '' }}">
                                                         </div>
                                                     </div>
 
@@ -139,10 +139,18 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
+                                                        @php
+                                                            $email = $shipping_address->email ?? '';
+                                                            $disabled = '';
+                                                            $css = '';
+                                                            if($email){
+                                                                $disabled = ($shipping_address->email == '') ? '' : 'disabled';
+                                                                $css = ($shipping_address->email == '') ? '' : 'opacity: .6 !important';
+                                                            }
+                                                        @endphp
                                                         <button type="button" id="saveAddressBtn"
-                                                            class="btn custom-btn filled">Save @if (!Auth::check())
-                                                                & Sign Up
-                                                            @endif
+                                                            class="btn custom-btn filled {{ $disabled }}" style="{{ $css }}"
+                                                            >Save @if (!Auth::check()) & Sign Up @endif
                                                         </button>
                                                     </div>
                                                 </div>
@@ -614,6 +622,10 @@
                                     },
                                     "theme": {
                                         "color": "#3399cc"
+                                    },
+                                    "method": {
+                                        "wallet": false,
+                                        "paylater": false
                                     }
                                 };
 
