@@ -261,37 +261,26 @@
             <div class="row align-items-center">
                 <div class="col-lg-5 col-md-5 col-12">
                     <div class="custom-tabs-content">
-                        <h2 class="heading-3">
-                            Two options for <span>hanging</span>
+                        <h2 class="heading-3" style=" font-size: 41px; ">
+                            No Nail - Magnetic <span>Hanging</span>
                         </h2>
                         <div class="d-flex align-items-start">
                             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
                                 <button class="active" id="v-pills-tap-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-tap" type="button" role="tab"
-                                    aria-controls="v-pills-tap" aria-selected="true">
-                                    Free re-stickable tape roll
-                                </button>
+                                    aria-controls="v-pills-tap" aria-selected="true"
+                                    data-start="0">Peel and stick</button>
+
                                 <button class="" id="v-pills-hooks-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-hooks" type="button" role="tab"
-                                    aria-controls="v-pills-hooks" aria-selected="true">
-                                    Free hanging hooks
-                                </button>
+                                    aria-controls="v-pills-hooks" aria-selected="true"
+                                    data-start="20">Adjust to position</button>
+
                                 <button class="" id="v-pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-home" type="button" role="tab"
-                                    aria-controls="v-pills-home" aria-selected="true">
-                                    Just peel and stick & Leave no marks Or
-                                </button>
-                                <button class="" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-profile" type="button" role="tab"
-                                    aria-controls="v-pills-profile" aria-selected="false">
-                                    Just screw the hooks & Hang
-                                </button>
-                                {{-- <button class="" id="v-pills-messages-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-messages" type="button" role="tab"
-                                    aria-controls="v-pills-messages" aria-selected="false">
-                                    Leaves no marks
-                                </button> --}}
+                                    aria-controls="v-pills-home" aria-selected="true"
+                                    data-start="40">Leaves no marks</button>
                             </div>
                         </div>
                     </div>
@@ -300,34 +289,25 @@
                     <div class="tab-content customTabsContent" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
                             aria-labelledby="v-pills-tap-tab" tabindex="0">
-                            <figure class="Tabframed">
-                                <img src="{{ asset('assets/images/frame11.jpg') }}" class="img-fluid" alt="">
-                            </figure>
+                            <video class="img-fluid" controls autoplay muted loop>
+                                <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
                             tabindex="0">
-                            <figure class="Tabframed">
-                                <img src="{{ asset('assets/images/frame1.webp') }}" class="img-fluid" alt="">
-                            </figure>
+                            <video class="img-fluid" controls autoplay muted loop>
+                                <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel"
                             aria-labelledby="v-pills-hooks-tab" tabindex="0">
-                            <figure class="Tabframed">
-                                <img src="{{ asset('assets/images/frame22.jpg') }}" class="img-fluid" alt="">
-                            </figure>
+                            <video class="img-fluid" controls autoplay muted loop>
+                                <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                            aria-labelledby="v-pills-profile-tab" tabindex="0">
-                            <figure class="Tabframed">
-                                <img src="{{ asset('assets/images/frame2.jpg') }}" class="img-fluid" alt="">
-                            </figure>
-                        </div>
-                        {{-- <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
-                            aria-labelledby="v-pills-messages-tab" tabindex="0">
-                            <figure class="Tabframed">
-                                <img src="assets/images/frame3.jpg" class="img-fluid" alt="">
-                            </figure>
-                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -621,16 +601,13 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                     aria-controls="flush-collapseTwo">
-                                    Is it simple to rearrange the tiles?
+                                    Can I move the frame tiles easily?
                                 </button>
                             </h2>
                             <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">It’s incredibly easy! Each frame comes with strong,
-                                    re-stickable adhesive stickers attached to the sides,
-                                    allowing you to reposition them effortlessly. Plus, Magnetic Photo Frames includes a
-                                    free roll of re-stickable tape, so you can move your
-                                    tiles around as often as you like—without leaving any marks or damage to your walls.
+                                <div class="accordion-body">Super easy! Designed to be repositioned again and again.Even kids can
+                                    arrange them. No wall marks, no damage, no stress.
                                 </div>
                             </div>
                         </div>
@@ -639,27 +616,14 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseThree" aria-expanded="false"
                                     aria-controls="flush-collapseThree">
-                                    What comes with my order?
+                                    They won't hurt my walls?
                                 </button>
                             </h2>
                             <div id="flush-collapseThree" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    Magnetic Photo Frames frames are crafted with a solid foundation, our frames exude
-                                    durability and elegance,
-                                    a difference you can feel from the rest. We understand your desire for flexibility,
-                                    which is why we go beyond the limited number of repositioning stickers.
-                                    Instead, Magnetic Photo Frames provide a generous roll of re-stickable tape,
-                                    allowing you to rearrange your frames effortlessly, as many times you like.
-                                    Our premium adhesive ensures no residue or marks, preserving the pristine beauty of your
-                                    walls.
-
-                                    Additionally, along with a roll of re-stickable tape, we also provide a set of elegant
-                                    hooks,
-                                    giving you the choice to hang your frames with nails if you prefer. We care deeply about
-                                    your
-                                    space, your budget, and your freedom to create luxury walls that truly reflect your
-                                    happiness.
+                                    Nope. No marks, no residues. Your walls remains
+                                    the same as it was before.
                                 </div>
                             </div>
                         </div>
@@ -674,15 +638,13 @@
                             <div id="flush-collapseFour" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    We offer premium-quality photo tiles at prices designed for everyone. Our mission is
-                                    simple — to make beautiful,
-                                    personalized wall décor accessible to all, regardless of class or background. We operate
-                                    on a minimal profit margin,
-                                    ensuring that affordability never compromises quality. More importantly, a part of every
-                                    purchase goes towards
-                                    providing meals for the homeless and those in need. With every frame you order, you're
-                                    not just creating a wall of memories;
-                                    you're sharing in a circle of hope and kindness.
+                                    Magnetic Photo Frames is the first ever shop to offer low-cost premium branded photo frames,
+                                    so every class of people could afford. Our mission is simple to make beautiful, personalized
+                                    wall décor accessible to all, regardless of class or background. We operate on a minimal profit
+                                    margin, ensuring that affordability never compromises quality. More importantly, a part of every
+                                    purchase goes towards providing meals for the homeless and those in need. With every frame you
+                                    order, you're not just creating a wall of memories; you're sharing in a circle of hope and kindness
+                                    and earn strong prayers.
                                 </div>
                             </div>
                         </div>
@@ -696,9 +658,8 @@
                             </h2>
                             <div id="flush-collapseFive" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">You can explore sizes from 8" x 8" to 28" x 36", with the
-                                    flexibility to customize according to your needs.
-                                    Available in a range of colours, styles, and elegant options like frameless and canvas
+                                <div class="accordion-body">We offer sizes ranges from 8"X 8" to 12" X 12", plus customized options until 27X36 based on pre-orders.
+                                    Available in various frame colours, including frameless option.
                                 </div>
                             </div>
                         </div>
@@ -725,3 +686,31 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('shown.bs.tab', function (e) {
+                    const targetId = e.target.getAttribute('data-bs-target');
+                    const startTime = parseFloat(e.target.getAttribute('data-start')) || 0;
+
+                    // Pause and reset all videos
+                    document.querySelectorAll('video').forEach(video => {
+                        video.pause();
+                        video.currentTime = 0;
+                    });
+
+                    const targetPane = document.querySelector(targetId);
+                    const video = targetPane.querySelector('video');
+
+                    if (video) {
+                        video.currentTime = startTime;
+                        video.play();
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
