@@ -192,7 +192,12 @@
     }
 
     .HomeEnquire_homeEnquireContent {
-        padding: 65px 35px 65px;
+        padding: 65px 35px 0px;
+        padding-right: 0;
+    }
+
+    .newframe-sideimg img {
+        height: 281px;
     }
 
     .HomeEnquire_homeEnquireWrp {
@@ -634,8 +639,8 @@
     section.py-0.HomeEnquire_homeEnquireWrp.scroll-fade {
         position: relative;
         z-index: 0;
-        padding-bottom: 250px !important;
-        background-size: 300px;
+        padding-bottom: 0px !important;
+        background-size: 0;
         background-repeat: no-repeat;
         background-position: center bottom -1px;
         margin-bottom: 0;
@@ -795,6 +800,25 @@
     ul.designToolPropertiesLists.show {
         transform: translate(0px, -300px) !important;
     }
+
+    .HomeEnquire_homeEnquireContent {
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 50px;
+        padding-bottom: 0;
+    }
+
+    .newframeimg {
+        width: 100%;
+    }
+
+    .newframe-sideimg {
+        width: 100%;
+    }
+
+    .newframe-sideimg img {
+        width: 60%;
+    }
 }
 
 @media (max-width: 767px) {
@@ -858,7 +882,7 @@
     }
 
     section.py-0.HomeEnquire_homeEnquireWrp.scroll-fade {
-        padding-bottom: 180px !important;
+        padding-bottom: 0px !important;
     }
 
     .Footer_footer .Footer_footerLinksWrp img {
@@ -1006,6 +1030,10 @@
 
     .cardlistdetail {
         margin-top: 18px;
+    }
+
+    .newframe-sideimg img {
+        width: 90%;
     }
 }
 
@@ -1194,5 +1222,9 @@
     .main_logo {
         width: 53%;
         height: 30px;
+    }
+
+    .newframe-sideimg img {
+        height: 230px;
     }
 }
