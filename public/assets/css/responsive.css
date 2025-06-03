@@ -26,7 +26,7 @@
     }
 
     .HomeEnquire_homeEnquireContent .heading-4 {
-        width: 50%;
+        width: 100%;
     }
 
     .navbar-nav li a {
@@ -93,6 +93,10 @@
 
     .grid-4 {
         width: 93%;
+    }
+
+    .newframe-sideimg img {
+        height: 336px;
     }
 }
 

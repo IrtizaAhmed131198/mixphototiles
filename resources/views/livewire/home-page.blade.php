@@ -269,18 +269,18 @@
                                 aria-orientation="vertical">
                                 <button class="active" id="v-pills-tap-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-tap" type="button" role="tab"
-                                    aria-controls="v-pills-tap" aria-selected="true"
-                                    data-start="0">Peel and stick</button>
+                                    aria-controls="v-pills-tap" aria-selected="true" data-start="0">Peel and
+                                    stick</button>
 
                                 <button class="" id="v-pills-hooks-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-hooks" type="button" role="tab"
-                                    aria-controls="v-pills-hooks" aria-selected="true"
-                                    data-start="20">Adjust to position</button>
+                                    aria-controls="v-pills-hooks" aria-selected="true" data-start="20">Adjust to
+                                    position</button>
 
                                 <button class="" id="v-pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-home" type="button" role="tab"
-                                    aria-controls="v-pills-home" aria-selected="true"
-                                    data-start="40">Leaves no marks</button>
+                                    aria-controls="v-pills-home" aria-selected="true" data-start="40">Leaves no
+                                    marks</button>
                             </div>
                         </div>
                     </div>
@@ -320,7 +320,8 @@
                 <div class="col-lg-12 col-md-12 col-12">
                     <div class="parentRightAbout text-center">
                         <div class="RightSliderChild">
-                            <h2 class="heading-3"><span class="sec-2-span d-block">{{ get_setting('site_name') }}</span> have Got
+                            <h2 class="heading-3"><span class="sec-2-span d-block">{{ get_setting('site_name') }}</span>
+                                have Got
                                 You Covered</h2>
                         </div>
                         <div class="RightSliderChild">
@@ -606,7 +607,8 @@
                             </h2>
                             <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">Super easy! Designed to be repositioned again and again.Even kids can
+                                <div class="accordion-body">Super easy! Designed to be repositioned again and again.Even
+                                    kids can
                                     arrange them. No wall marks, no damage, no stress.
                                 </div>
                             </div>
@@ -638,12 +640,18 @@
                             <div id="flush-collapseFour" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    Magnetic Photo Frames is the first ever shop to offer low-cost premium branded photo frames,
-                                    so every class of people could afford. Our mission is simple to make beautiful, personalized
-                                    wall décor accessible to all, regardless of class or background. We operate on a minimal profit
-                                    margin, ensuring that affordability never compromises quality. More importantly, a part of every
-                                    purchase goes towards providing meals for the homeless and those in need. With every frame you
-                                    order, you're not just creating a wall of memories; you're sharing in a circle of hope and kindness
+                                    Magnetic Photo Frames is the first ever shop to offer low-cost premium branded photo
+                                    frames,
+                                    so every class of people could afford. Our mission is simple to make beautiful,
+                                    personalized
+                                    wall décor accessible to all, regardless of class or background. We operate on a minimal
+                                    profit
+                                    margin, ensuring that affordability never compromises quality. More importantly, a part
+                                    of every
+                                    purchase goes towards providing meals for the homeless and those in need. With every
+                                    frame you
+                                    order, you're not just creating a wall of memories; you're sharing in a circle of hope
+                                    and kindness
                                     and earn strong prayers.
                                 </div>
                             </div>
@@ -658,7 +666,8 @@
                             </h2>
                             <div id="flush-collapseFive" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">We offer sizes ranges from 8"X 8" to 12" X 12", plus customized options until 27X36 based on pre-orders.
+                                <div class="accordion-body">We offer sizes ranges from 8"X 8" to 12" X 12", plus customized
+                                    options until 27X36 based on pre-orders.
                                     Available in various frame colours, including frameless option.
                                 </div>
                             </div>
@@ -676,23 +685,28 @@
         </div>
         <div class="container">
             <div class="text-center text-lg-start HomeEnquire_homeEnquireContent">
-                <h3 class="heading-4">For Business Inquiries, <span class="d-block">Retails or Bulk Ordering,</span></h3>
-
-                <button type="button" class="btn custom-btn filled" onclick="window.location.href='{{ route('contact') }}'">
-                    Contact Us
-                </button>
-
+                <div class="newframeimg">
+                    <h3 class="heading-4">For Business Inquiries, <span class="d-block">Retails or Bulk Ordering,</span>
+                    </h3>
+                    <button type="button" class="btn custom-btn filled"
+                        onclick="window.location.href='{{ route('contact') }}'">
+                        Contact Us
+                    </button>
+                </div>
+                <div class="newframe-sideimg">
+                    <img src="{{asset('assets/images/bulkOrder-5.png')}}" class="img-fluid" alt="">
+                </div>
             </div>
         </div>
     </section>
 @endsection
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
 
             tabButtons.forEach(button => {
-                button.addEventListener('shown.bs.tab', function (e) {
+                button.addEventListener('shown.bs.tab', function(e) {
                     const targetId = e.target.getAttribute('data-bs-target');
                     const startTime = parseFloat(e.target.getAttribute('data-start')) || 0;
 

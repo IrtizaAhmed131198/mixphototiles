@@ -1120,7 +1120,7 @@ li.designToolPropertiesChild {
     background: white;
     height: 100%;
     max-width: 100%;
-    width: 100%;
+    width: 75%;
     padding: 24px 15px;
     min-width: 80px;
     align-items: center;
@@ -1129,7 +1129,7 @@ li.designToolPropertiesChild {
 }
 
 .AboutSliderParent h5 {
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .AboutSliderParent p {
@@ -1615,11 +1615,15 @@ div#accordionFlushExample {
 }
 
 .HomeEnquire_homeEnquireContent {
-    padding: 104px 84px 112px;
+    padding: 100px 45px 0px;
     background-repeat: no-repeat;
     background-position: center bottom -1px;
     background-image: url("../images/home-enquire-bg-v2.jpg");
-    background-size: cover;
+    background-size: contain;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 0;
 }
 
 .heading-4 {
@@ -1628,7 +1632,7 @@ div#accordionFlushExample {
 }
 
 .HomeEnquire_homeEnquireContent .heading-4 {
-    width: 44%;
+    width: 85%;
     margin-bottom: 2rem;
 }
 
@@ -3948,4 +3952,18 @@ input[type="radio"]:checked {
     max-width: 350px;
     margin: auto;
     animation: circle 10s infinite linear
+}
+
+.newframe-sideimg img {
+    width: 100%;
+    height: 390px;
+}
+
+.newframeimg {
+    width: 50%;
+}
+
+.newframe-sideimg {
+    width: 50%;
+    text-align: center;
 }
