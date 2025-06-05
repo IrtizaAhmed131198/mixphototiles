@@ -1618,7 +1618,7 @@ div#accordionFlushExample {
     padding: 100px 45px 0px;
     background-repeat: no-repeat;
     background-position: center bottom -1px;
-    background-image: url("../images/home-enquire-bg-v2.jpg");
+    /* background-image: url("../images/home-enquire-bg-v2.jpg"); */
     background-size: contain;
     display: flex;
     align-items: center;
