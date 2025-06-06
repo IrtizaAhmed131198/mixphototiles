@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <section class="custom-hero-slider-section">
+    {{-- <section class="custom-hero-slider-section">
         <div class="container">
             <div class="fogeffect">
                 <div class="row">
@@ -92,6 +92,21 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+    </section> --}}
+
+
+    <section class="custom-hero-slider-section">
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12 p-0">
+                    <div class="banner-video">
+                        <video width="100%" height="100%" autoplay="" muted="">
+                            <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                            <source src="movie.ogg" type="video/ogg">
+                        </video>
                     </div>
                 </div>
             </div>
@@ -269,8 +284,8 @@
                             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
                                 <button class="active" id="v-pills-tap-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-tap" type="button" role="tab"
-                                    aria-controls="v-pills-tap" aria-selected="true" data-start="0">Peel and
+                                    data-bs-target="#v-pills-tap" type="button" role="tab" aria-controls="v-pills-tap"
+                                    aria-selected="true" data-start="0">Peel and
                                     stick</button>
 
                                 <button class="" id="v-pills-hooks-tab" data-bs-toggle="pill"

@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ContactAdminMail;
-use App\Mail\ContactUserMail;
 use App\Models\Contact;
+use App\Models\Product;
+use Illuminate\Http\Request;
+use App\Mail\ContactUserMail;
+use App\Mail\ContactAdminMail;
+use Illuminate\Support\Facades\Mail;
 
 class PagesController extends Controller
 {
+    public function index()
+    {
+        $products = Product::where('type', 'collections')
+            ->where('status', 1)
+            ->where('coordinates', '!=', null)
+            ->get();
+        return view('welcome', compact('products'));
+    }
+
     public function privacy()
     {
         return view('privacy');

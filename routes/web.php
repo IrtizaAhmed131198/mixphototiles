@@ -26,7 +26,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\RazorpayController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
-Route::get('/', HomePage::class)->name('home');
+Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/design', DesignPage::class)->name('design');
 Route::get('/your-collection', [CollectionsController::class, 'index'])->name('collections');
 Route::get('/your-collection/load', [CollectionsController::class, 'loadMoreProducts'])->name('collections.load');
@@ -202,4 +202,4 @@ Route::get('/check-user-address', function () {
     return response()->json(['hasAddress' => session()->has('user_address') && !empty(session('user_address'))]);
 })->name('check_user_address');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

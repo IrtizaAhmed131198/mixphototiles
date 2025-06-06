@@ -339,6 +339,36 @@
     figure.carditemimage img {
         width: 100px;
     }
+
+    .profilesidebar ul li {
+        padding: 0px 10px;
+    }
+
+    .profilesidebar ul li a {
+        padding: 15px 0px;
+        font-size: 13px;
+    }
+
+    .profilesidebar ul li a svg {
+        font-size: 16px;
+    }
+
+    .account-information {
+        padding-left: 15px;
+    }
+
+    .blockquote {
+        font-size: 15px;
+    }
+
+    .account-information h1 {
+        margin-bottom: 30px;
+    }
+
+    .account-information .form-group input {
+        font-size: 12px;
+        height: 45px;
+    }
 }
 
 @media (max-width: 991px) {
@@ -819,6 +849,16 @@
     .newframe-sideimg img {
         width: 60%;
     }
+
+    .account-information {
+        overflow-y: scroll;
+    }
+
+    .account-information .btn-brand-dark {
+        padding: 2px;
+        font-size: 12px;
+        margin: 2px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -1034,6 +1074,18 @@
 
     .newframe-sideimg img {
         width: 90%;
+    }
+
+    .profilesidebar .sidedata {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .profilesidebar ul li:last-child {
+        margin-top: 10px;
     }
 }
 

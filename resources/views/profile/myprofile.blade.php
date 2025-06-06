@@ -7,10 +7,10 @@
     <section class="profile-section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-3 col-md-3">
                     @include('partials/profilesidebar')
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-9 col-md-9 col-12">
                     <div class="account-information">
                         <h1>Account Information</h1>
                         <form action="{{ route('profile.update') }}" method="POST">
@@ -18,25 +18,29 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" required>
+                                        <input type="text" class="form-control" name="email"
+                                            value="{{ Auth::user()->email }}" required>
                                         <label>Email</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="text" class="form-control" name="phone" value="{{ Auth::user()->phone }}" required>
+                                        <input type="text" class="form-control" name="phone"
+                                            value="{{ Auth::user()->phone }}" required>
                                         <label>Phone Number</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}" required>
+                                        <input type="text" class="form-control" name="name"
+                                            value="{{ Auth::user()->name }}" required>
                                         <label>Full Name</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group birth-label">
-                                        <input type="date" class="form-control" name="dob" value="{{ Auth::user()->dob }}" required>
+                                        <input type="date" class="form-control" name="dob"
+                                            value="{{ Auth::user()->dob }}" required>
                                         <label>Date of Birth</label>
                                     </div>
                                 </div>
@@ -44,15 +48,18 @@
                                     <div class="gender-label">
                                         <p>Gender:</p>
                                         <div class="input-toggle-click">
-                                            <input type="radio" class="form-check-input" name="gender" value="male" {{ Auth::user()->gender == 'male' ? 'checked' : '' }}>
+                                            <input type="radio" class="form-check-input" name="gender" value="male"
+                                                {{ Auth::user()->gender == 'male' ? 'checked' : '' }}>
                                             <label for="male" class="focusimg">Male</label>
                                         </div>
                                         <div class="input-toggle-click">
-                                            <input type="radio" class="form-check-input" name="gender" value="female" {{ Auth::user()->gender == 'female' ? 'checked' : '' }}>
+                                            <input type="radio" class="form-check-input" name="gender" value="female"
+                                                {{ Auth::user()->gender == 'female' ? 'checked' : '' }}>
                                             <label for="female" class="focusimg">Female</label>
                                         </div>
                                         <div class="input-toggle-click">
-                                            <input type="radio" class="form-check-input" name="gender" value="other" {{ Auth::user()->gender == 'other' ? 'checked' : '' }}>
+                                            <input type="radio" class="form-check-input" name="gender" value="other"
+                                                {{ Auth::user()->gender == 'other' ? 'checked' : '' }}>
                                             <label for="other" class="focusimg">Other</label>
                                         </div>
                                     </div>
