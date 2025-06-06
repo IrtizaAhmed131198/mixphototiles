@@ -112,6 +112,25 @@
             </div>
     </section>
 
+    <section class="premium-material">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="usa-pic">
+                        <img src="{{ asset('assets/images/USA.jpg') }}" class="img-fluid" alt="">
+                        <h6>Made in India with Premium U.S Materials</h6>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-md-6 col-12">
+                    <div class="usa-pic">
+                        <img src="{{ asset('assets/images/Indian-Made.png') }}" class="img-fluid" alt="">
+                        <h6>The First-Ever Low-Cost Premium Frames</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="main-banner-section">
         <div class="container">
             <div class="row">

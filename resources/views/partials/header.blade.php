@@ -1,6 +1,30 @@
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-    aria-controls="offcanvasExample">
-    Button with data-bs-target
+<header class="scrollheader">
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-lg-12 p-0">
+                <div class="topmenu-logo">
+                    <div class="sidehammenu" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                        aria-controls="offcanvasExample">
+                        <img src="{{ asset('assets/images/menubar.png') }}" class="img-fluid" alt="">
+                    </div>
+                    <a class="main_logo" href="{{ route('home') }}">
+                        @php
+                            $img = get_setting('site_logo');
+                        @endphp
+                        @if ($img)
+                            <img src="{{ asset('storage/' . $img) }}" class="img-fluid" alt="Logo">
+                        @else
+                            <img src="{{ asset('assets/images/logo.jpg') }}" class="img-fluid" alt="Logo">
+                        @endif
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<button class="hammenubtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+    <img src="{{ asset('assets/images/menubar.png') }}" class="img-fluid" alt="">
 </button>
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -42,8 +66,9 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" aria-current="page"
-                        href="{{ route('home') }}"><img src="{{ asset('assets/images/home-pg.png') }}" class="img-fluid"
-                            alt="" style="width: 18px; height: 18px; margin-right: 10px; margin-left: 8px;'">
+                        href="{{ route('home') }}"><img src="{{ asset('assets/images/home-pg.png') }}"
+                            class="img-fluid" alt=""
+                            style="width: 18px; height: 18px; margin-right: 10px; margin-left: 8px;'">
                         Home</a>
                 </li>
                 <li class="nav-item">
@@ -293,9 +318,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 
 {{-- <header>

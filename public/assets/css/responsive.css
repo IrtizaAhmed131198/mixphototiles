@@ -34,7 +34,7 @@
     }
 
     .main_logo {
-        width: 14%;
+        /* width: 14%; */
         height: 27px;
     }
 
@@ -98,16 +98,32 @@
     .newframe-sideimg img {
         height: 336px;
     }
+
+    header.scrollheader {
+        padding: 20px 0;
+    }
+
+    .topmenu-logo a img {
+        width: 18%;
+    }
 }
 
 @media (max-width: 1199px) {
     .main_logo {
-        width: 17%;
-        height: 27px;
+        /* width: 17%; */
+        /* height: 27px; */
     }
 
     .custom-hero-slider-section {
-        padding-bottom: 5rem;
+        /* padding-bottom: 5rem; */
+    }
+
+    .usa-pic h6 {
+        font-size: 16px;
+    }
+
+    .premium-material {
+        padding: 30px 0;
     }
 
     .heading-2 {
@@ -859,6 +875,18 @@
         font-size: 12px;
         margin: 2px;
     }
+
+    .usa-pic h6 {
+        font-size: 14px;
+    }
+
+    .premium-material {
+        padding: 20px 0;
+    }
+
+    .banner-video video {
+        height: 75vh;
+    }
 }
 
 @media (max-width: 767px) {
@@ -935,7 +963,7 @@
 
     .custom-hero-slider-section {
         padding: 0;
-        padding-top: 20px;
+        /* padding-top: 20px; */
     }
 
     .innerFrame img {
@@ -970,14 +998,29 @@
     }
 
     .main-banner-section {
-        margin-top: -30rem;
-        position: relative;
-        z-index: 5;
-        padding-bottom: 200px;
+        /* margin-top: -30rem; */
+        /* position: relative; */
+        /* z-index: 5; */
+        /* padding-bottom: 200px; */
+    }
+
+    .usa-pic {
+        display: block;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .usa-pic h6 {
+        margin-top: 12px;
+        font-size: 20px;
+    }
+
+    .usa-pic img {
+        width: 25%;
     }
 
     section.main-banner-section h1 span {
-        color: white !important;
+        /* color: white !important; */
         font-size: 2.5rem;
     }
 
@@ -1087,13 +1130,30 @@
     .profilesidebar ul li:last-child {
         margin-top: 10px;
     }
+
+    .banner-video video {
+        height: 60vh;
+    }
+
+    .topmenu-logo a img {
+        width: 40%;
+        margin-top: -6px;
+    }
 }
 
 
 @media (max-width: 575px) {
     .main-banner-section {
-        padding-bottom: 1rem;
-        margin-top: -20rem;
+        /* padding-bottom: 1rem; */
+        /* margin-top: -20rem; */
+    }
+
+    .banner-video video {
+        height: 40vh;
+    }
+
+    .usa-pic h6 {
+        font-size: 19px;
     }
 
     .heading-2 {
@@ -1278,5 +1338,10 @@
 
     .newframe-sideimg img {
         height: 230px;
+    }
+
+    .topmenu-logo a img {
+        width: 100%;
+        margin-top: 0;
     }
 }

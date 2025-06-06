@@ -372,8 +372,8 @@ header {
 }
 
 .custom-hero-slider-section {
-    padding-top: 5.75rem;
-    padding-bottom: 8.25rem;
+    padding-top: 0;
+    padding-bottom: 0;
     position: relative;
     z-index: 0;
 }
@@ -513,7 +513,7 @@ header {
 
 .main-banner-section {
     padding-bottom: 5rem;
-    margin-top: -5rem;
+    /* margin-top: -5rem; */
 }
 
 .heading-2 {
@@ -3997,4 +3997,81 @@ button.btn-close.text-reset {
     margin-top: -40px;
 }
 
+
+.topmenu-logo {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 0px 30px;
+}
+
+.sidehammenu img {
+    width: 30px;
+    height: 30px;
+}
+
+.topmenu-logo a img {
+    width: 14%;
+}
+
+header.scrollheader {
+    padding: 10px 0;
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    right: 0;
+    top: -60px;
+    transition: all ease 0.5s;
+    background: white;
+}
+
+header.scrollheader.is-sticky {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    transition: all ease 0.5s;
+}
+
+button.hammenubtn {
+    position: absolute;
+    z-index: 5;
+    top: 20px;
+    left: 20px;
+}
+
+button.hammenubtn img {
+    width: 30px;
+    height: 30px;
+}
+
+button.hammenubtn {
+    border: none;
+    background: none;
+}
+
+.banner-video video {
+    height: 100vh;
+    width: 100%;
+    object-fit: cover;
+}
+
+.premium-material {
+    padding: 50px 0;
+}
+
+.usa-pic {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.usa-pic img {
+    width: 22%;
+}
+
+.usa-pic h6 {
+    font-weight: 600;
+    font-size: 20px;
+    color: black;
+}
 /* new css end */
