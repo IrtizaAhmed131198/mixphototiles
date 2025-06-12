@@ -273,7 +273,7 @@
 
                         <div class="noticeproductdetail">
                             <p>
-                                Our Magnetic Photo Frames are custom-made to order. Once your order is placed, please allow
+                                Our Magentick Photo Frames are custom-made to order. Once your order is placed, please allow
                                 2–3 business days for production.
                                 After that, your frames will be shipped. Delivery times may vary depending on holidays,
                                 weather conditions, or courier delays.
@@ -529,7 +529,7 @@
                                     "key": "{{ env('RAZORPAY_KEY') }}", // Or use config('services.razorpay.key')
                                     "amount": order.amount,
                                     "currency": "INR",
-                                    "name": "Magnetic Photo Frames",
+                                    "name": "Magentick Photo Frames",
                                     "description": "Order Payment",
                                     "order_id": order.id,
                                     "handler": function(response) {

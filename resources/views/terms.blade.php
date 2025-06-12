@@ -86,10 +86,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="child-terms child-privacy">
-                        <h1 class="text-center">MagneticPhotoFrames Terms of Service</h1>
+                        <h1 class="text-center">MagentickPhotoFrames Terms of Service</h1>
 
                         <p><span><span><span>We encourage you to read our full Terms of Service below, as they govern
-                                        your use of MagneticPhotoFrames. But if you&#39;re looking for key takeaways, here
+                                        your use of MagentickPhotoFrames. But if you&#39;re looking for key takeaways, here
                                         are the most important
                                         points:</span></span></span></p>
 
@@ -101,7 +101,7 @@
                             <li><span><span><span><span><b>Data Deletion: </b>If you&rsquo;d like
                                                 us to delete your photos and personal data from our system, simply email us
                                                 at
-                                                support@MagneticPhotoFrames.com using the same email address you used for
+                                                support@MagentickPhotoFrames.com using the same email address you used for
                                                 your
                                                 order.</span></span></span></span></li>
                             <li><span><span><span><span><b>Content Restrictions: </b>You may only
@@ -112,7 +112,7 @@
                                                 costs.</span></span></span></span></li>
                             <li><span><span><span><span><b>Customer Support: </b>If you experience
                                                 any issues with your order, contact us via email at
-                                                support@MagneticPhotoFrames.com
+                                                support@MagentickPhotoFrames.com
                                             </span></span></span></span></li>
                         </ul>
 
@@ -122,14 +122,14 @@
                         <p><span><span><span><u>The&nbsp;Actual Terms of Service</u></span></span></span></p>
 
                         <ul>
-                            <li><span><span><span><span>MagneticPhotoFrames (&quot;we,&quot;
+                            <li><span><span><span><span>MagentickPhotoFrames (&quot;we,&quot;
                                                 &quot;us,&quot; or &quot;our&quot;) provides users with the ability to
                                                 upload images (&quot;Images&quot;)
                                                 via our website (&quot;Site&quot;) </span></span></span></span></li>
                             <li><span><span><span><span>Print these Images on wall tiles
                                                 (&quot;Tiles&quot;), or</span></span></span></span></li>
                             <li><span><span><span><span>Purchase our &ldquo;Moments by
-                                                MagneticPhotoFrames&rdquo; product offering
+                                                MagentickPhotoFrames&rdquo; product offering
                                                 (&quot;Moments&quot;).</span></span></span></span></li>
                             <li><span><span><span><span>Together, these are referred to as the
                                                 <b>&quot;Products.&quot;</b></span></span></span></span></li>
@@ -160,7 +160,7 @@
 
                         <ol>
                             <li><span><span><span><span>Send a <b>written Notice of Claim</b> via
-                                                email to <b>support@MagneticPhotoFrames.com</b> with the subject line
+                                                email to <b>support@MagentickPhotoFrames.com</b> with the subject line
                                                 <b>&ldquo;LEGAL
                                                     NOTICE.&rdquo;</b></span></span></span></span></li>
                             <li><span><span><span><span>The Notice must include:
@@ -184,7 +184,7 @@
 
                         <p><span><span><span><b>Class Action Waiver</b></span></span></span></p>
 
-                        <p><span><span><span><b>You and MagneticPhotoFrames agree that claims may only be brought in an
+                        <p><span><span><span><b>You and MagentickPhotoFrames agree that claims may only be brought in an
                                             individual capacity, not as part of any class, collective, or representative
                                             action.</b> The arbitrator
                                         <b>cannot</b> consolidate claims or preside over class/representative
@@ -196,7 +196,7 @@
 
                         <p><span><span><span><b>Eligibility &amp; Compliance</b></span></span></span></p>
 
-                        <p><span><span><span>By using the MagneticPhotoFrames and Services, you confirm
+                        <p><span><span><span>By using the MagentickPhotoFrames and Services, you confirm
                                         that:</span></span></span></p>
 
                         <ul>
@@ -233,7 +233,7 @@
                         <p><span><span><span><b>App Functionality &amp; Changes</b></span></span></span></p>
 
                         <ul>
-                            <li><span><span><span><span>MagneticPhotoFrames may update, modify, or
+                            <li><span><span><span><span>MagentickPhotoFrames may update, modify, or
                                                 discontinue parts of the Services <b>without affecting existing
                                                     orders</b>.</span></span></span></span></li>
                             <li><span><span><span><span>You may <b>link third-party accounts</b>
@@ -248,14 +248,14 @@
                             <li><span><span><span><span>You are fully responsible for <b>securing
                                                     your devices</b> and ensuring proper use of the
                                                 App.</span></span></span></span></li>
-                            <li><span><span><span><span>MagneticPhotoFrames <b>cannot monitor or
+                            <li><span><span><span><span>MagentickPhotoFrames <b>cannot monitor or
                                                     prevent</b> inappropriate use of the App.</span></span></span></span>
                             </li>
                         </ul>
 
                         <p><span><span><span><b>Service Refusal &amp; Account Termination</b></span></span></span></p>
 
-                        <p><span><span><span>MagneticPhotoFrames <b>reserves the right</b> to suspend or terminate
+                        <p><span><span><span>MagentickPhotoFrames <b>reserves the right</b> to suspend or terminate
                                         access to the App/Services <b>without prior notice</b> if:</span></span></span></p>
 
                         <p><span><span><span>You violate these <b>Terms</b>.</span></span></span></p>
@@ -264,16 +264,16 @@
                             <li><span><span><span><span>You engage in <b>fraudulent, harassing, or
                                                     illegal activity</b>.</span></span></span></span></li>
                             <li><span><span><span><span>Your behavior is harmful to <b>other
-                                                    users, third parties, or MagneticPhotoFrames&rsquo;
+                                                    users, third parties, or MagentickPhotoFrames&rsquo;
                                                     business</b>.</span></span></span></span></li>
                             <li><span><span><span><span>You <b>dispute or chargeback payments</b>
-                                                made to MagneticPhotoFrames.</span></span></span></span></li>
+                                                made to MagentickPhotoFrames.</span></span></span></span></li>
                         </ul>
 
                         <p><span><span><span><b>Legal Compliance &amp; Enforcement</b></span></span></span></p>
 
                         <ul>
-                            <li><span><span><span><span>MagneticPhotoFrames may <b>take corrective
+                            <li><span><span><span><span>MagentickPhotoFrames may <b>take corrective
                                                     action</b> against violations, including cooperating with <b>law
                                                     enforcement</b> or legal
                                                 authorities.</span></span></span></span></li>
@@ -326,7 +326,7 @@
                             <li><span><span><span><span>You <b>cannot</b> use another
                                                 person&rsquo;s Account without their permission.</span></span></span></span>
                             </li>
-                            <li><span><span><span><span>Notify MagneticPhotoFrames
+                            <li><span><span><span><span>Notify MagentickPhotoFrames
                                                 <b>immediately</b> in case of: </span></span></span></span>
                                 <ul>
                                     <li><span><span><span><span><b>Security
@@ -349,7 +349,7 @@
                             <li><span><span><span><span>You are <b>solely responsible</b> for
                                                 ensuring the accuracy and <b>up-to-date</b> nature of your User
                                                 Content.</span></span></span></span></li>
-                            <li><span><span><span><span>MagneticPhotoFrames handles your data in
+                            <li><span><span><span><span>MagentickPhotoFrames handles your data in
                                                 accordance with its <b>Privacy Policy</b>.</span></span></span></span></li>
                         </ul>
 
@@ -377,7 +377,7 @@
                             <li><span><span><span><span>You <b>may receive</b> promotional emails,
                                                 offers, and surveys.</span></span></span></span></li>
                             <li><span><span><span><span>You can <b>unsubscribe</b> from
-                                                MagneticPhotoFrames&#39; commercial emails anytime by <b>emailing
+                                                MagentickPhotoFrames&#39; commercial emails anytime by <b>emailing
                                                     us.</b></span></span></span></span></li>
                         </ul>
 
@@ -411,10 +411,10 @@
                                                 explicit consent from the
                                                 individual, parent, or guardian).</span></span></span></span></li>
                             <li><span><span><span><span><b>You warrant that you have all required
-                                                    rights</b> to provide MagneticPhotoFrames with any Sensitive Data <b>for
+                                                    rights</b> to provide MagentickPhotoFrames with any Sensitive Data <b>for
                                                     processing under these Terms and
                                                     the Privacy Notice</b>.</span></span></span></span></li>
-                            <li><span><span><span><span><b>MagneticPhotoFrames&rsquo; Rights &amp;
+                            <li><span><span><span><span><b>MagentickPhotoFrames&rsquo; Rights &amp;
                                                     Limitations</b></span></span></span></span></li>
                             <li><span><span><span><span><b>No obligation</b> to accept requests
                                                 for <b>printing</b> or <b>storing</b> User
@@ -422,16 +422,16 @@
                             <li><span><span><span><span><b>Right to remove and delete</b> User
                                                 Content <b>without notice</b> for any reason.</span></span></span></span>
                             </li>
-                            <li><span><span><span><span>MagneticPhotoFrames <b>does not
+                            <li><span><span><span><span>MagentickPhotoFrames <b>does not
                                                     endorse</b> any User Content, opinions, or
                                                 recommendations.</span></span></span></span></li>
                             <li><span><span><span><span><b>Liability disclaimer</b>:
-                                                MagneticPhotoFrames <b>is not responsible</b> for actions by other users
+                                                MagentickPhotoFrames <b>is not responsible</b> for actions by other users
                                                 unless due to its own gross
                                                 negligence or willful misconduct.</span></span></span></span></li>
                             <li><span><span><span><span><b>User Content Retention &amp;
                                                     Deletion</b></span></span></span></span></li>
-                            <li><span><span><span><span>MagneticPhotoFrames <b>may retain your
+                            <li><span><span><span><span>MagentickPhotoFrames <b>may retain your
                                                     User Content</b> (including images) in your <b>order history</b> as long
                                                 as your Account is
                                                 active.</span></span></span></span></li>
@@ -484,7 +484,7 @@
 
                         <ul>
                             <li><span><span><span><span>Impose an <b>unreasonable or excessive
-                                                    burden</b> on MagneticPhotoFrames&rsquo;
+                                                    burden</b> on MagentickPhotoFrames&rsquo;
                                                 infrastructure.</span></span></span></span></li>
                         </ul>
 
@@ -511,7 +511,7 @@
                                                 or violations of the law.</span></span></span></span></li>
                         </ul>
 
-                        <p><span><span><span>MagneticPhotoFrames reserves the right to <b>remove any content that
+                        <p><span><span><span>MagentickPhotoFrames reserves the right to <b>remove any content that
                                             violates these guidelines</b> without notice.</span></span></span></p>
 
                         <p><span><span><span><u>Use Restrictions</u></span></span></span></p>
@@ -579,7 +579,7 @@
                         <ul>
                             <li><span><span><span><span><b>Ownership of the App &amp;
                                                     Services</b></span></span></span></span></li>
-                            <li><span><span><span><span><b>MagneticPhotoFrames</b>, its
+                            <li><span><span><span><span><b>MagentickPhotoFrames</b>, its
                                                 <b>affiliates</b>, and <b>licensors</b> <b>own all rights</b> to the App,
                                                 Services, trademarks, logos, and
                                                 related intellectual property.</span></span></span></span></li>
@@ -587,7 +587,7 @@
                                                     transmit</b> any part of the App or Services <b>without explicit
                                                     permission</b>.</span></span></span></span></li>
                             <li><span><span><span><span><b>No rights are granted</b> to use
-                                                MagneticPhotoFrames&#39; trademarks, service marks, or
+                                                MagentickPhotoFrames&#39; trademarks, service marks, or
                                                 logos.</span></span></span></span></li>
                         </ul>
 
@@ -596,16 +596,16 @@
                         <ul>
                             <li><span><span><span><span><b>You retain full ownership</b> of any
                                                 Images or content you upload.</span></span></span></span></li>
-                            <li><span><span><span><span><b>MagneticPhotoFrames will only use your
+                            <li><span><span><span><span><b>MagentickPhotoFrames will only use your
                                                     Images</b> to provide the Services and fulfill your product
                                                 orders.</span></span></span></span></li>
                         </ul>
 
-                        <p><span><span><span><b>3. License Granted to MagneticPhotoFrames</b></span></span></span></p>
+                        <p><span><span><span><b>3. License Granted to MagentickPhotoFrames</b></span></span></span></p>
 
                         <ul>
                             <li><span><span><span><span>By uploading User Content, you grant
-                                                MagneticPhotoFrames to <b>use, copy, and print</b> your Images <b>only</b>
+                                                MagentickPhotoFrames to <b>use, copy, and print</b> your Images <b>only</b>
                                                 for producing your ordered
                                                 products.</span></span></span></span></li>
                         </ul>
@@ -615,20 +615,20 @@
                         <p><span><span><span><u>Copyright</u></span></span></span></p>
 
                         <ul>
-                            <li><span><span><span><span>The policy of MagneticPhotoFrames is not
+                            <li><span><span><span><span>The policy of MagentickPhotoFrames is not
                                                 to infringe upon or violate the intellectual property rights or other rights
                                                 of any third party, and
-                                                MagneticPhotoFrames will refuse to use and remove any User Content in
+                                                MagentickPhotoFrames will refuse to use and remove any User Content in
                                                 connection with the App that infringes
                                                 the rights of any third party. Under the Digital Millennium Copyright Act of
                                                 1998
-                                                (the&nbsp;<b>&quot;DMCA&quot;</b>), MagneticPhotoFrames will remove any
+                                                (the&nbsp;<b>&quot;DMCA&quot;</b>), MagentickPhotoFrames will remove any
                                                 Content (including without
                                                 limitation any User Content) if properly notified of that such material
                                                 infringes third party rights, and
                                                 may do so at its sole discretion, without prior notice to users at any time.
                                                 The policy of
-                                                MagneticPhotoFrames is to terminate the Accounts of repeat infringers in
+                                                MagentickPhotoFrames is to terminate the Accounts of repeat infringers in
                                                 appropriate
                                                 circumstances.</span></span></span></span></li>
                             <li><span><span><span><span>You are in the best position to judge
@@ -648,7 +648,7 @@
                                                 aware that there can be substantial
                                                 penalties for false claims. Send notices and counter-notices to us by
                                                 contacting&nbsp;<a
-                                                    href="mailto:hi@mixtiles.com">support@MagneticPhotoFrames.com</a>.</span></span></span></span>
+                                                    href="mailto:hi@mixtiles.com">support@MagentickPhotoFrames.com</a>.</span></span></span></span>
                             </li>
                         </ul>
 
@@ -662,7 +662,7 @@
                                                     information</b>.</span></span></span></span>
                             </li>
                             <li><span><span><span><span>Payments are processed either <b>directly
-                                                    by MagneticPhotoFrames</b> or via a <b>third-party payment processor</b>
+                                                    by MagentickPhotoFrames</b> or via a <b>third-party payment processor</b>
                                                 (&quot;Payment
                                                 Processor&quot;).</span></span></span></span></li>
                             <li><span><span><span><span>You must <b>update payment details</b>
@@ -681,7 +681,7 @@
                                                 process.</span></span></span></span></li>
                             <li><span><span><span><span>Your <b>order is confirmed only after
                                                     payment is successfully processed</b>.</span></span></span></span></li>
-                            <li><span><span><span><span>MagneticPhotoFrames is <b>not liable for
+                            <li><span><span><span><span>MagentickPhotoFrames is <b>not liable for
                                                     any banking fees</b> incurred due to
                                                 payments.</span></span></span></span></li>
                             <li><span><span><span><span>If your payment method fails, you <b>must
@@ -698,7 +698,7 @@
                                                     third-party services</b>, and you must <b>review their terms and privacy
                                                     policies</b> before using
                                                 them.</span></span></span></span></li>
-                            <li><span><span><span><span>MagneticPhotoFrames <b>is not
+                            <li><span><span><span><span>MagentickPhotoFrames <b>is not
                                                     responsible</b> for errors made by Payment Processors but reserves the
                                                 right to <b>correct any
                                                     mistakes</b>.</span></span></span></span></li>
@@ -721,11 +721,11 @@
                                                     provider</b> following their cancellation
                                                 policies.</span></span></span></span></li>
                             <li><span><span><span><span>If you <b>purchased through the
-                                                    MagneticPhotoFrames site</b>, you can cancel your <b>monthly or annual
+                                                    MagentickPhotoFrames site</b>, you can cancel your <b>monthly or annual
                                                     subscription</b> at any time by:
                                             </span></span></span></span></li>
                             <li><span><span><span><span><b>Emailing</b>:
-                                                support@MagneticPhotoFrames.com</span></span></span></span></li>
+                                                support@MagentickPhotoFrames.com</span></span></span></span></li>
                             <li><span><span><span><span><b>No refunds</b> are provided for the
                                                 current subscription period, but you will continue receiving services until
                                                 the end of your paid
@@ -734,7 +734,7 @@
 
                         <p><span><span><span><b>2. Suspension &amp; Termination</b></span></span></span></p>
 
-                        <p><span><span><span>MagneticPhotoFrames <b>reserves the right to suspend or terminate</b> your
+                        <p><span><span><span>MagentickPhotoFrames <b>reserves the right to suspend or terminate</b> your
                                         access to Products &amp; Services <b>without notice</b> if: </span></span></span>
                         </p>
 
@@ -744,7 +744,7 @@
                             <li><span><span><span><span>You <b>breach any obligation</b> under
                                                 these Terms.</span></span></span></span></li>
                             <li><span><span><span><span>You <b>attempt to copy, resell, or
-                                                    distribute</b> MagneticPhotoFrames Products without
+                                                    distribute</b> MagentickPhotoFrames Products without
                                                 authorization.</span></span></span></span></li>
                         </ul>
 
@@ -758,7 +758,7 @@
                         <p><span><span><span><b>Eligibility for a Refund</b></span></span></span></p>
 
                         <ul>
-                            <li><span><span><span><span><b>If MagneticPhotoFrames made a
+                            <li><span><span><span><span><b>If MagentickPhotoFrames made a
                                                     mistake</b> in preparing your order or your Product(s) <b>arrived
                                                     damaged</b>, we will <b>gladly issue a
                                                     refund</b>.</span></span></span></span></li>
@@ -774,7 +774,7 @@
 
                         <ul>
                             <li><span><span><span><span><b>Email</b>:
-                                                support@MagneticPhotoFrames.com</span></span></span></span></li>
+                                                support@MagentickPhotoFrames.com</span></span></span></span></li>
                         </ul>
 
                         <p><span><span><span>For orders with <b>printing errors or damage</b>, please include a
@@ -787,7 +787,7 @@
 
                         <p><span><span><span><u>Third Party Applications and Services</u></span></span></span></p>
 
-                        <p><span><span><span>Some portions of the <b>MagneticPhotoFrames App and Services</b> may
+                        <p><span><span><span>Some portions of the <b>MagentickPhotoFrames App and Services</b> may
                                         include links to <b>third-party websites or mobile applications</b>. These links may
                                         direct you to
                                         <b>third-party vendors</b> for various services, including reviews or
@@ -796,7 +796,7 @@
                         <p><span><span><span><b>Important Considerations</b></span></span></span></p>
 
                         <ul>
-                            <li><span><span><span><span><b>MagneticPhotoFrames has no control</b>
+                            <li><span><span><span><span><b>MagentickPhotoFrames has no control</b>
                                                 over third-party websites, apps, or services.</span></span></span></span>
                             </li>
                             <li><span><span><span><span><b>Use of third-party sites is at your own
@@ -816,7 +816,7 @@
 
                         <p><span><span><span><b>Disclaimer</b></span></span></span></p>
 
-                        <p><span><span><span>MagneticPhotoFrames <b>does not endorse</b> or take responsibility for any
+                        <p><span><span><span>MagentickPhotoFrames <b>does not endorse</b> or take responsibility for any
                                         <b>third-party products or services</b>. We encourage users to <b>exercise
                                             caution</b> when interacting with
                                         external websites or applications.</span></span></span></p>
@@ -827,7 +827,7 @@
 
                         <p><span><span><span><u>Disclaimers and Disclaimer of Warranty</u></span></span></span></p>
 
-                        <p><span><span><span>Your use of the <b>MagneticPhotoFrames App, Services, and Products</b> is
+                        <p><span><span><span>Your use of the <b>MagentickPhotoFrames App, Services, and Products</b> is
                                         entirely <b>at your own risk</b>. The App, its content (including User Content),
                                         Services, and Products are
                                         provided <b>&quot;AS IS&quot; and &quot;AS AVAILABLE&quot;</b> without any
@@ -860,7 +860,7 @@
 
                         <p><span><span><span><b>Disclaimer of All Warranties</b></span></span></span></p>
 
-                        <p><span><span><span>To the fullest extent permitted by law, <b>MagneticPhotoFrames expressly
+                        <p><span><span><span>To the fullest extent permitted by law, <b>MagentickPhotoFrames expressly
                                             disclaims</b> all warranties, including but not limited to:</span></span></span>
                         </p>
 
@@ -879,7 +879,7 @@
 
                         <p><span><span><span><b>Limitation of Liability</b></span></span></span></p>
 
-                        <p><span><span><span>MagneticPhotoFrames <b>is not responsible</b> for:</span></span></span></p>
+                        <p><span><span><span>MagentickPhotoFrames <b>is not responsible</b> for:</span></span></span></p>
 
                         <ul>
                             <li><span><span><span><span>Any <b>physical damage</b> caused by the
@@ -906,7 +906,7 @@
                                                     Liability</u></span></span></span></span></li>
                         </ul>
 
-                        <p><span><span><span>MagneticPhotoFrames <b>assumes no responsibility</b> for any technical
+                        <p><span><span><span>MagentickPhotoFrames <b>assumes no responsibility</b> for any technical
                                         issues, errors, or malfunctions, including but not limited to:</span></span></span>
                         </p>
 
@@ -934,7 +934,7 @@
 
                         <p><span><span><span><b>No Responsibility for Loss or Damage</b></span></span></span></p>
 
-                        <p><span><span><span>MagneticPhotoFrames <b>is not responsible</b> for:</span></span></span></p>
+                        <p><span><span><span>MagentickPhotoFrames <b>is not responsible</b> for:</span></span></span></p>
 
                         <ul>
                             <li><span><span><span><span><b>Personal injury or death</b> resulting
@@ -947,7 +947,7 @@
 
                         <p><span><span><span><b>Exclusion of Damages</b></span></span></span></p>
 
-                        <p><span><span><span>To the <b>fullest extent permitted by law</b>, MagneticPhotoFrames,
+                        <p><span><span><span>To the <b>fullest extent permitted by law</b>, MagentickPhotoFrames,
                                         including its <b>officers, directors, employees, assignees, and agents</b>, <b>shall
                                             not be liable</b> for
                                         any:</span></span></span></p>
@@ -969,7 +969,7 @@
                         <p><span><span><span><u>Indemnification</u></span></span></span></p>
 
                         <p><span><span><span>You <b>agree to indemnify, defend, and hold harmless</b>
-                                        MagneticPhotoFrames and its <b>employees, directors, officers, subcontractors, and
+                                        MagentickPhotoFrames and its <b>employees, directors, officers, subcontractors, and
                                             agents</b> from <b>any and
                                             all claims, damages, costs, or expenses</b> (including court costs and
                                         attorneys&rsquo; fees) arising directly
@@ -999,7 +999,7 @@
                         </ol>
 
                         <p><span><span><span>By agreeing to these Terms, you take <b>full responsibility</b> for any
-                                        legal consequences arising from your use of MagneticPhotoFrames&#39; <b>App,
+                                        legal consequences arising from your use of MagentickPhotoFrames&#39; <b>App,
                                             Services, or
                                             Products</b>.</span></span></span></p>
 
@@ -1010,7 +1010,7 @@
                         <p><span><span><span><u>Applicable Law; Miscellaneous</u></span></span></span></p>
 
                         <ul>
-                            <li><span><span><span><span>MagneticPhotoFrames <b>does not
+                            <li><span><span><span><span>MagentickPhotoFrames <b>does not
                                                     guarantee</b> that its <b>Site, App, Services, or Products</b> are
                                                 appropriate or legally accessible in
                                                 all regions.</span></span></span></span></li>
@@ -1041,19 +1041,19 @@
                                                 original intent.</span></span></span></span></li>
                             <li><span><span><span><span>These Terms <b>do not</b> create any
                                                 <b>agency, employment, joint venture, or partnership</b> between you and
-                                                MagneticPhotoFrames.</span></span></span></span></li>
+                                                MagentickPhotoFrames.</span></span></span></span></li>
                             <li><span><span><span><span>These Terms <b>represent the entire
-                                                    agreement</b> between you and MagneticPhotoFrames and <b>override any
+                                                    agreement</b> between you and MagentickPhotoFrames and <b>override any
                                                     prior
                                                     agreements</b>.</span></span></span></span></li>
-                            <li><span><span><span><span>MagneticPhotoFrames <b>may assign its
+                            <li><span><span><span><span>MagentickPhotoFrames <b>may assign its
                                                     rights</b> under these Terms <b>without notice</b>, but <b>you may not
                                                     assign your rights</b> without
                                                 approval.</span></span></span></span></li>
-                            <li><span><span><span><span>If MagneticPhotoFrames <b>does not enforce
+                            <li><span><span><span><span>If MagentickPhotoFrames <b>does not enforce
                                                     a provision</b>, it does <b>not waive</b> the right to enforce it in the
                                                 future.</span></span></span></span></li>
-                            <li><span><span><span><span>Notices from MagneticPhotoFrames will be
+                            <li><span><span><span><span>Notices from MagentickPhotoFrames will be
                                                 sent to the <b>contact information</b> you provided during
                                                 registration.</span></span></span></span></li>
                         </ul>

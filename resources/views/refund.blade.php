@@ -93,13 +93,13 @@
 
                         <p>As part of a comprehensive clarification regarding our policies on Returns, Refunds,
                             Cancellations, and Exchanges outlined in our Terms of Use, the following practices adopted by
-                            <b>Magnetic Photo Frames</b> and accepted by customers upon making a purchase through <a
-                                href="http://www.magneticphotoframes.com">www.magneticphotoframes.com</a> are detailed below.
+                            <b>Magentick Photo Frames</b> and accepted by customers upon making a purchase through <a
+                                href="http://www.magentickphotoframes.com">www.magentickphotoframes.com</a> are detailed below.
                         </p>
 
                         <h2>Return Terms</h2>
                         <p>If any defects in the product may be reported to our Customer Service team by email at <a
-                                href="mailto:support@magneticphotoframes.com">support@magneticphotoframes.com</a> or by
+                                href="mailto:support@magentickphotoframes.com">support@magentickphotoframes.com</a> or by
                             WhatsApp.</p>
                         <p>Customers are requested to provide clear images or videos of the defect to facilitate evaluation.
                             Return of the item is not required unless specifically requested by our Customer Service team
@@ -114,7 +114,7 @@
                             <li>If the order has not yet been dispatched</li>
                         </ul>
                         <p>Please contact our Customer Service team via email or WhatsApp to initiate a refund request.</p>
-                        <p>The amount will be refunded after our evaluation of the case. There is a right for <b>Magnetic
+                        <p>The amount will be refunded after our evaluation of the case. There is a right for <b>Magentick
                                 Photo Frames</b> to decline a refund request if that case deserves.</p>
 
                     </div>

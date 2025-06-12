@@ -93,8 +93,8 @@
                             <a href="tel:+91 9342874392"
                                 class="ttl-28 text-decoration-none text-primary mb-4 d-inline-block">+91 9342874392</a>
                             <h2 class="ttl-18 pt-3">Email ID:</h2>
-                            <a href="mailto:support@magneticphotoframes.com"
-                                class="ttl-28 text-decoration-none text-primary d-inline-block mb-0">support@magneticphotoframes.com</a>
+                            <a href="mailto:support@magentickphotoframes.com"
+                                class="ttl-28 text-decoration-none text-primary d-inline-block mb-0">support@magentickphotoframes.com</a>
                         </div>
                     </div>
                 </div>

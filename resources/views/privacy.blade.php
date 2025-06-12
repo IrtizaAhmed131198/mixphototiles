@@ -86,12 +86,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="child-privacy">
-                        <h1 class="text-center">Magnetic Photo Frames Privacy Policy</h1>
+                        <h1 class="text-center">Magentick Photo Frames Privacy Policy</h1>
                         <p>This Privacy Policy applies to <a
-                                href="https://www.magneticphotoframes.com">www.magneticphotoframes.com</a> (collectively,
-                            "Magnetic Photo Frames," "we," "our," or "us").</p>
+                                href="https://www.magentickphotoframes.com">www.magentickphotoframes.com</a> (collectively,
+                            "Magentick Photo Frames," "we," "our," or "us").</p>
 
-                        <p>At Magnetic Photo Frames, we are committed to protecting your personal data and ensuring it is
+                        <p>At Magentick Photo Frames, we are committed to protecting your personal data and ensuring it is
                             used responsibly. We aim to be transparent about our data practices for all users of our website
                             and mobile app, including:</p>
 
@@ -111,7 +111,7 @@
                                 <ul>
                                     <li>Mobile app ("App")</li>
                                     <li>Websites including <a
-                                            href="https://www.magneticphotoframes.com/">https://www.MagneticPhotoFrames.com/</a>
+                                            href="https://www.magentickphotoframes.com/">https://www.MagentickPhotoFrames.com/</a>
                                     </li>
                                     <li>Blogs, online advertisements, surveys, emails, and other communications managed by
                                         us</li>
@@ -170,7 +170,7 @@
                         <ul>
                             <li><strong>From you:</strong>When you engage with our Services, make purchases, seek
                                 information, or reach out to us (via email, chat, etc.), we may collect relevant data. If
-                                you connect your MagneticPhotoFrames account to a third-party platform like Facebook or
+                                you connect your MagentickPhotoFrames account to a third-party platform like Facebook or
                                 Google, we may access select details and images from those accounts with your consent.
                                 Upon installing our App, you have the option to grant access to specific photos or your
                                 entire gallery.
@@ -265,7 +265,7 @@
                             <li>Unprinted images (not selected for tiles) are automatically deleted 30 days after
                                 upload.</li>
                             <li>You may request the deletion of your images or personal data by contacting us at <a
-                                    href="mailto:support@MagneticPhotoFrames.com">support@MagneticPhotoFrames.com</a>.</li>
+                                    href="mailto:support@MagentickPhotoFrames.com">support@MagentickPhotoFrames.com</a>.</li>
                         </ul>
 
                         <h3>Payment Information</h3>
@@ -285,7 +285,7 @@
                         <ul>
                             <li>Fulfill legal obligations.</li>
                             <li>Investigate or prevent fraud, illegal activities, or security threats.</li>
-                            <li>Protect MagneticPhotoFrames' rights, services, and the safety of users.
+                            <li>Protect MagentickPhotoFrames' rights, services, and the safety of users.
                             </li>
                         </ul>
 
@@ -302,16 +302,16 @@
 
                         <h2>3. Public Feedback & Reviews</h2>
                         <p>If you submit a public review or testimonial, we may display it on our platform. To request
-                            removal, contact <a href="mailto:support@MagneticPhotoFrames.com"
-                                class="contact-link">support@MagneticPhotoFrames.com</a>.</p>
+                            removal, contact <a href="mailto:support@MagentickPhotoFrames.com"
+                                class="contact-link">support@MagentickPhotoFrames.com</a>.</p>
 
                         <h2>4. Protecting Rights & Safety</h2>
-                        <p>We may share your data if we believe it is necessary to safeguard MagneticPhotoFrames, our users,
+                        <p>We may share your data if we believe it is necessary to safeguard MagentickPhotoFrames, our users,
                             or the public from harm.</p>
 
                         <p>For any inquiries regarding data sharing, contact <a
-                                href="mailto:support@MagneticPhotoFrames.com"
-                                class="contact-link">support@MagneticPhotoFrames.com</a>.</p>
+                                href="mailto:support@MagentickPhotoFrames.com"
+                                class="contact-link">support@MagentickPhotoFrames.com</a>.</p>
 
                         <h2>5. Communication Preferences</h2>
                         <p>We may contact you for various reasons:</p>
@@ -333,8 +333,8 @@
                         <p>You can opt out of promotional messages by:</p>
                         <ul>
                             <li>Clicking "unsubscribe" in an email.</li>
-                            <li>Contacting us at <a href="mailto:support@MagneticPhotoFrames.com"
-                                    class="contact-link">support@MagneticPhotoFrames.com</a>.</li>
+                            <li>Contacting us at <a href="mailto:support@MagentickPhotoFrames.com"
+                                    class="contact-link">support@MagentickPhotoFrames.com</a>.</li>
                         </ul>
 
                         <h2>6. How We Protect Your Data</h2>
@@ -379,14 +379,14 @@
                             <li>Restrict access</li>
                             <li>Delete any collected personal data</li>
                         </ul>
-                        <p>If you suspect we hold such data, contact <a href="mailto:support@MagneticPhotoFrames.com"
-                                class="contact-link">support@MagneticPhotoFrames.com</a>.</p>
+                        <p>If you suspect we hold such data, contact <a href="mailto:support@MagentickPhotoFrames.com"
+                                class="contact-link">support@MagentickPhotoFrames.com</a>.</p>
 
                         <h2>Questions, Concerns, or Complaints</h2>
                         <p>For any questions, concerns, or complaints regarding this Privacy Policy or how
-                            MagneticPhotoFrames processes your data, contact us at <a
-                                href="mailto:support@MagneticPhotoFrames.com"
-                                class="contact-link">support@MagneticPhotoFrames.com</a>.</p>
+                            MagentickPhotoFrames processes your data, contact us at <a
+                                href="mailto:support@MagentickPhotoFrames.com"
+                                class="contact-link">support@MagentickPhotoFrames.com</a>.</p>
 
                         <div>📅 Last updated: MAY 2025</div>
 

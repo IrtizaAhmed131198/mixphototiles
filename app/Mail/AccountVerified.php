@@ -27,7 +27,7 @@ class AccountVerified extends Mailable
 
     public function build()
     {
-        return $this->from('help@magneticphotoframes.com', 'MagneticPhotoFrames')
+        return $this->from('help@magentickphotoframes.com', 'MagentickPhotoFrames')
                     ->subject('Account Verified')
                     ->view('emails.account_verified')
                     ->with([

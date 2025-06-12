@@ -263,7 +263,7 @@
                 <div class="col-lg-5 col-md-5 col-12">
                     <div class="custom-tabs-content">
                         <h2 class="heading-3" style=" font-size: 41px; ">
-                            No Nail - Magnetic <span>Hanging</span>
+                            No Nail - Magentick <span>Hanging</span>
                         </h2>
                         <div class="d-flex align-items-start">
                             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
@@ -586,13 +586,13 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseOne" aria-expanded="false"
                                     aria-controls="flush-collapseOne">
-                                    What does Magnetic Photo Frames have to offer?
+                                    What does Magentick Photo Frames have to offer?
                                 </button>
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    Magnetic Photo Frames offers you to create your own masterpiece with our customizable
+                                    Magentick Photo Frames offers you to create your own masterpiece with our customizable
                                     photo frames.
                                     Simply upload your images. We’ll print, frame, and deliver them right to your doorstep.
                                 </div>
@@ -641,7 +641,7 @@
                             <div id="flush-collapseFour" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    Magnetic Photo Frames is the first ever shop to offer low-cost premium branded photo
+                                    Magentick Photo Frames is the first ever shop to offer low-cost premium branded photo
                                     frames,
                                     so every class of people could afford. Our mission is simple to make beautiful,
                                     personalized

@@ -62,6 +62,47 @@
                     </li>
 
                 </ul>
+                <ul class="navbar-nav pt-0 login-nav">
+
+                    @if (!Auth::check())
+                        <li>
+                            <a href="javascript:;" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                                class="btn custom-btn filled mt-3">Login / Sign up</a>
+                        </li>
+                        <li style="margin-top: 18px;"><span><b>Sign up</b></span><span> to save your progress &amp; track orders</span></li>
+                    @else
+                    <li class="porfile-dropdown">
+                        <div class="profile-menu" aria-labelledby="dropdownMenuButton1">
+                            <ul>
+                                <li>
+                                    <a href="{{ route('profile') }}">
+                                        <span><svg width="22" height="22" viewBox="0 0 22 22"
+                                                class="w-em h-em fs-18 me-2" xmlns="http://www.w3.org/2000/svg">
+                                                <g transform="translate(-17 -131)">
+                                                    <g transform="translate(-3539.758 221.032)">
+                                                        <g fill="none" stroke-width="1.3" stroke="currentColor"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            transform="translate(3563.094 -87.644)">
+                                                            <circle cx="4.605" cy="4.605" r="4.605"
+                                                                stroke="none"></circle>
+                                                            <circle cx="4.605" cy="4.605" r="3.955"
+                                                                fill="none"></circle>
+                                                        </g>
+                                                        <path fill="none" stroke-width="1.3" stroke="currentColor"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            transform="translate(3559 -70.964) rotate(-90)"
+                                                            d="M0,0C4.125,0,7.469,3.921,7.469,8.758S4.125,17.516,0,17.516">
+                                                        </path>
+                                                    </g>
+                                                </g>
+                                            </svg></span>
+                                        My Profile</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+            </ul>
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -112,13 +153,12 @@
                             style="width: 18px; height: 18px; margin-right: 10px; margin-left: 8px;'"> Contact Us</a>
                 </li>
             </ul>
+            @if (Auth::check())
             <ul class="navbar-nav pt-0">
-                @if (!Auth::check())
-                    <li>
+                    {{-- <li>
                         <a href="javascript:;" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
                             class="btn custom-btn filled mt-3">Login / Sign up</a>
-                    </li>
-                @else
+                    </li> --}}
                     <li class="porfile-dropdown">
                         {{-- <a href="javascript:;" class="btn custom-btn" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -299,8 +339,8 @@
                             </ul>
                         </div>
                     </li>
-                @endif
             </ul>
+            @endif
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link " href="{{ route('privacy') }}">Privacy Policy</a>

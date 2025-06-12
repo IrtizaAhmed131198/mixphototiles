@@ -78,8 +78,8 @@
                 {{-- <div class="col-md">
                     <h5 class="mb-4 text-brand-dark fw-bold">Not sure how to do?</h5>
                     <p class="mb-2 Footer_footerContact">Call:<a class="text-decoration-none ps-1" href="javascript:;">+917975339182</a></p>
-                    <p class="mb-2 Footer_footerContact"><a class="text-decoration-none ps-1" href="mailto:{{ get_setting('contact_email', 'help@magneticphotoframes.com') }}">
-                        {{ get_setting('contact_email', 'help@magneticphotoframes.com') }}</a></p>
+                    <p class="mb-2 Footer_footerContact"><a class="text-decoration-none ps-1" href="mailto:{{ get_setting('contact_email', 'help@magentickphotoframes.com') }}">
+                        {{ get_setting('contact_email', 'help@magentickphotoframes.com') }}</a></p>
                 </div> --}}
                 <div class="col-md">
                     <h5 class="mb-4 text-brand-dark fw-bold">Not sure how to do?</h5>

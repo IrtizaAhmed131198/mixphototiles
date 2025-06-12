@@ -4050,13 +4050,13 @@ button.hammenubtn {
 }
 
 .banner-video video {
-    height: 100vh;
+    height: 70vh;
     width: 100%;
     object-fit: cover;
 }
 
 .premium-material {
-    padding: 50px 0;
+    padding: 22px 0;
 }
 
 .usa-pic {
@@ -4073,5 +4073,9 @@ button.hammenubtn {
     font-weight: 600;
     font-size: 20px;
     color: black;
+}
+
+.login-nav {
+    gap: 2px !important;
 }
 /* new css end */

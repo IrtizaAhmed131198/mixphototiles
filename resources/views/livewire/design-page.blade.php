@@ -824,7 +824,7 @@
                                                     </svg>
                                                     <div class="frame-detail">
                                                         <p class="para">Hang</p>
-                                                        <h6 class="heading-4" id="hang1-show">Free magnetic reusable
+                                                        <h6 class="heading-4" id="hang1-show">Free magentick reusable
                                                             stickers
                                                         </h6>
                                                     </div>

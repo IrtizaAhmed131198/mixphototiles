@@ -132,13 +132,13 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapseOne" aria-expanded="false"
                                         aria-controls="flush-collapseOne">
-                                        What does Magnetic Photo Frames have to offer?
+                                        What does Magentick Photo Frames have to offer?
                                     </button>
                                 </h2>
                                 <div id="flush-collapseOne" class="accordion-collapse collapse"
                                     aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
-                                        Magnetic Photo Frames offers you to create your own masterpiece with our
+                                        Magentick Photo Frames offers you to create your own masterpiece with our
                                         customizable photo frames.
                                         Simply upload your images. We’ll print, frame, and deliver them right to your
                                         doorstep.
@@ -172,7 +172,7 @@
                                 <div id="flush-collapseThree" class="accordion-collapse collapse"
                                     aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
-                                        Magnetic Photo Frames frames are crafted with a solid foundation, our frames exude
+                                        Magentick Photo Frames frames are crafted with a solid foundation, our frames exude
                                         durability and elegance...
                                     </div>
                                 </div>
