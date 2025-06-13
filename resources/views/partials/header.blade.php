@@ -23,7 +23,8 @@
     </div>
 </header>
 
-<button class="hammenubtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+<button class="hammenubtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+    aria-controls="offcanvasExample">
     <img src="{{ asset('assets/images/menubar.png') }}" class="img-fluid" alt="">
 </button>
 
@@ -45,64 +46,48 @@
     <div class="offcanvas-body">
         <div class="mixphototilessidemenu">
             <div class="right-navbar">
-                <ul>
-                    <li>
-                        <a href="{{ route('cart') }}" class="nav-link">
-                            <span>
-                                <img src="{{ asset('assets/images/bag.svg') }}" alt="">
-                            </span>
-                            <span class="cart-count">
-                                @php
-                                    $cart = session()->get('cart', []);
-                                @endphp
-                                <p>{{ count($cart) ?? 0 }}</p>
-                                Cart
-                            </span>
-                        </a>
-                    </li>
-
-                </ul>
                 <ul class="navbar-nav pt-0 login-nav">
-
                     @if (!Auth::check())
                         <li>
                             <a href="javascript:;" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
                                 class="btn custom-btn filled mt-3">Login / Sign up</a>
                         </li>
-                        <li style="margin-top: 18px;"><span><b>Sign up</b></span><span> to save your progress &amp; track orders</span></li>
+                        <li style="margin-top: 18px;"><span><b>Sign up</b></span><span> to save your progress &amp;
+                                track orders</span></li>
                     @else
-                    <li class="porfile-dropdown">
-                        <div class="profile-menu" aria-labelledby="dropdownMenuButton1">
-                            <ul>
-                                <li>
-                                    <a href="{{ route('profile') }}">
-                                        <span><svg width="22" height="22" viewBox="0 0 22 22"
-                                                class="w-em h-em fs-18 me-2" xmlns="http://www.w3.org/2000/svg">
-                                                <g transform="translate(-17 -131)">
-                                                    <g transform="translate(-3539.758 221.032)">
-                                                        <g fill="none" stroke-width="1.3" stroke="currentColor"
-                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                            transform="translate(3563.094 -87.644)">
-                                                            <circle cx="4.605" cy="4.605" r="4.605"
-                                                                stroke="none"></circle>
-                                                            <circle cx="4.605" cy="4.605" r="3.955"
-                                                                fill="none"></circle>
+                        <li class="porfile-dropdown">
+                            <div class="profile-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul>
+                                    <li>
+                                        <a href="{{ route('profile') }}">
+                                            <span><svg width="22" height="22" viewBox="0 0 22 22"
+                                                    class="w-em h-em fs-18 me-2" xmlns="http://www.w3.org/2000/svg">
+                                                    <g transform="translate(-17 -131)">
+                                                        <g transform="translate(-3539.758 221.032)">
+                                                            <g fill="none" stroke-width="1.3" stroke="currentColor"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                transform="translate(3563.094 -87.644)">
+                                                                <circle cx="4.605" cy="4.605" r="4.605"
+                                                                    stroke="none"></circle>
+                                                                <circle cx="4.605" cy="4.605" r="3.955"
+                                                                    fill="none"></circle>
+                                                            </g>
+                                                            <path fill="none" stroke-width="1.3"
+                                                                stroke="currentColor" stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                transform="translate(3559 -70.964) rotate(-90)"
+                                                                d="M0,0C4.125,0,7.469,3.921,7.469,8.758S4.125,17.516,0,17.516">
+                                                            </path>
                                                         </g>
-                                                        <path fill="none" stroke-width="1.3" stroke="currentColor"
-                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                            transform="translate(3559 -70.964) rotate(-90)"
-                                                            d="M0,0C4.125,0,7.469,3.921,7.469,8.758S4.125,17.516,0,17.516">
-                                                        </path>
                                                     </g>
-                                                </g>
-                                            </svg></span>
-                                        My Profile</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                @endif
-            </ul>
+                                                </svg></span>
+                                            My Profile</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
+                </ul>
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -133,10 +118,11 @@
                     <a class="nav-link {{ request()->routeIs('collections') ? 'active' : '' }}"
                         href="{{ route('collections') }}"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 32 32" style="width: 32px; height: 32px; color: rgb(43, 5, 20);">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11.57 17.99 9 23h14.36l-1.29-2.53M19.47 15.41 16.18 9l-2 3.91">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M11.57 17.99 9 23h14.36l-1.29-2.53M19.47 15.41 16.18 9l-2 3.91">
                             </path>
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
                                 d="M15.32 13.01H8V18h7.32zM21.5 20a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"></path>
                         </svg> Your Collections</a>
                 </li>
@@ -152,9 +138,27 @@
                             class="img-fluid" alt=""
                             style="width: 18px; height: 18px; margin-right: 10px; margin-left: 8px;'"> Contact Us</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('cart') }}" class="nav-link">
+                        <span>
+                            <img src="{{ asset('assets/images/bag.svg') }}" alt=""
+                                style="width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    margin-left: 8px;">
+                        </span>
+                        <span class="cart-count">
+                            @php
+                                $cart = session()->get('cart', []);
+                            @endphp
+                            <p>{{ count($cart) ?? 0 }}</p>
+                            Cart
+                        </span>
+                    </a>
+                </li>
             </ul>
             @if (Auth::check())
-            <ul class="navbar-nav pt-0">
+                <ul class="navbar-nav pt-0">
                     {{-- <li>
                         <a href="javascript:;" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
                             class="btn custom-btn filled mt-3">Login / Sign up</a>
@@ -339,7 +343,7 @@
                             </ul>
                         </div>
                     </li>
-            </ul>
+                </ul>
             @endif
             <ul class="navbar-nav">
                 <li class="nav-item">

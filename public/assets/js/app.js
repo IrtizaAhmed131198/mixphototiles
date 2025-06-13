@@ -54,13 +54,16 @@ var swiper1 = new Swiper(".swiper-horizontal", {
 //     }
 // });
 
-var swiper2 = new Swiper(".AboutSlider", {
+var swiper2 = new Swiper(".AboutSliderwel", {
     slidesPerView: 4,
     // slidesPerView: 'auto',
     spaceBetween: 2,
     breakpoints: {
-        640: {
+        300: {
             slidesPerView: 2,
+        },
+        550: {
+            slidesPerView: 3,
         },
         768: {
             slidesPerView: 4,

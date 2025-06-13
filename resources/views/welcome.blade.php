@@ -116,9 +116,13 @@
                             <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
                             <source src="movie.ogg" type="video/ogg">
                         </video>
+                        <div class="shopvideobtn">
+                            <a href="#" class="btn custom-btn filled">Shop Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 
     <section class="premium-material">
@@ -335,22 +339,56 @@
                             aria-labelledby="v-pills-tap-tab" tabindex="0">
                             <video class="img-fluid" controls autoplay muted loop>
                                 <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
-                                Your browser does not support the video tag.
+
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
                             tabindex="0">
                             <video class="img-fluid" controls autoplay muted loop>
                                 <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
-                                Your browser does not support the video tag.
+
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel"
                             aria-labelledby="v-pills-hooks-tab" tabindex="0">
                             <video class="img-fluid" controls autoplay muted loop>
                                 <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
-                                Your browser does not support the video tag.
+
                             </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="custom-tabs-section py mobile_view_tabs" style="display: none">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="mobile-tabs-video">
+                        <h2 class="heading-3" style=" font-size: 41px; ">
+                            No Nail - Magentick <span>Hanging</span>
+                        </h2>
+                        <div class="custom-tabs-content">
+                            <div class="peel_stick">
+                                <h4>Peel and stick</h4>
+                                <video class="img-fluid" controls autoplay muted loop>
+                                    <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="peel_stick">
+                                <h4>Adjust to position</h4>
+                                <video class="img-fluid" controls autoplay muted loop>
+                                    <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="peel_stick">
+                                <h4>Leaves no marks</h4>
+                                <video class="img-fluid" controls autoplay muted loop>
+                                    <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -369,7 +407,7 @@
                                 You Covered</h2>
                         </div>
                         <div class="RightSliderChild">
-                            <div class="swiper AboutSlider">
+                            <div class="swiper AboutSliderwel">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="AboutSliderParent">

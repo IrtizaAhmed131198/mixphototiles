@@ -98,7 +98,7 @@
     </div>
     <div class="text-white text-opacity-35  fs-15 Footer_footerBottomWrp">
         <div class="container">
-            <div class="d-flex flex-wrap justify-content-center align-items-center flex-column flex-xl-row gap-3">
+            <div class="d-flex flex-wrap justify-content-center align-items-center flex-column flex-xl-row gap-3 down-footer">
                 <div class="Footer_footerBottomNav nav">
                     <div class="nav-item"><a class="nav-link " href="{{ route('privacy') }}">Privacy Policy</a></div>
                     <div class="nav-item"><a class="nav-link " href="{{ route('refund') }}">Refund Policy</a></div>
@@ -117,6 +117,13 @@
         </div>
     </div>
 </footer>
+
+
+<div class="shopbtnmobile">
+    <div class="shopvideobtn">
+        <a href="#" class="btn custom-btn filled">Shop Now</a>
+    </div>
+</div>
 
 <!-- custom modal html  -->
 <div class="custom-modal">
