@@ -22,3 +22,4 @@ composer.lock
 .env.example
 *.rar
 *.zip
+/public/assets/video
