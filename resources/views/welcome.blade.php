@@ -4,11 +4,6 @@
 
 
 @push('css')
-    <style>
-        .mixphototilessidemenu .nav-link:hover {
-            border-bottom: none !important;
-        }
-    </style>
 @endpush
 
 @section('content')
@@ -138,6 +133,72 @@
                     <div class="usa-pic">
                         <img src="{{ asset('assets/images/Indian-Made.png') }}" class="img-fluid" alt="">
                         <h6>The First-Ever Low-Cost Premium Frames</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="custom-tabs-section py">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="custom-tabs-content">
+                        <h2 class="heading-3" style=" font-size: 41px; ">
+                            No Nail - Magentick <span>Hanging</span>
+                        </h2>
+                        <div class="d-flex align-items-start">
+                            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                                aria-orientation="vertical">
+                                <button class="active" id="v-pills-tap-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-tap" type="button" role="tab" aria-controls="v-pills-tap"
+                                    aria-selected="true" data-start="0">Peel and
+                                    stick</button>
+
+                                <button class="" id="v-pills-hooks-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-hooks" type="button" role="tab"
+                                    aria-controls="v-pills-hooks" aria-selected="true" data-start="20">Adjust to
+                                    position</button>
+
+                                <button class="" id="v-pills-home-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-home" type="button" role="tab"
+                                    aria-controls="v-pills-home" aria-selected="true" data-start="40">Leaves no
+                                    marks</button>
+
+                                <button class="" id="v-pills-again-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-again" type="button" role="tab"
+                                    aria-controls="v-pills-again" aria-selected="true" data-start="40">Move, Again and
+                                    Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-7 col-12">
+                    <div class="tab-content customTabsContent" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
+                            aria-labelledby="v-pills-tap-tab" tabindex="0">
+                            <video class="img-fluid" controls autoplay muted loop>
+                                <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
+                            tabindex="0">
+                            <video class="img-fluid" controls autoplay muted loop>
+                                <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel"
+                            aria-labelledby="v-pills-hooks-tab" tabindex="0">
+                            <video class="img-fluid" controls autoplay muted loop>
+                                <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-again" role="tabpanel"
+                            aria-labelledby="v-pills-again-tab" tabindex="0">
+                            <video class="img-fluid" controls autoplay muted loop>
+                                <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
+                            </video>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -303,64 +364,6 @@
             </div>
         </div>
     </section> --}}
-
-    <section class="custom-tabs-section py">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-5 col-md-5 col-12">
-                    <div class="custom-tabs-content">
-                        <h2 class="heading-3" style=" font-size: 41px; ">
-                            No Nail - Magentick <span>Hanging</span>
-                        </h2>
-                        <div class="d-flex align-items-start">
-                            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
-                                aria-orientation="vertical">
-                                <button class="active" id="v-pills-tap-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-tap" type="button" role="tab" aria-controls="v-pills-tap"
-                                    aria-selected="true" data-start="0">Peel and
-                                    stick</button>
-
-                                <button class="" id="v-pills-hooks-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-hooks" type="button" role="tab"
-                                    aria-controls="v-pills-hooks" aria-selected="true" data-start="20">Adjust to
-                                    position</button>
-
-                                <button class="" id="v-pills-home-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-home" type="button" role="tab"
-                                    aria-controls="v-pills-home" aria-selected="true" data-start="40">Leaves no
-                                    marks</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-7 col-md-7 col-12">
-                    <div class="tab-content customTabsContent" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
-                            aria-labelledby="v-pills-tap-tab" tabindex="0">
-                            <video class="img-fluid" controls autoplay muted loop>
-                                <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
-
-                            </video>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
-                            tabindex="0">
-                            <video class="img-fluid" controls autoplay muted loop>
-                                <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
-
-                            </video>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel"
-                            aria-labelledby="v-pills-hooks-tab" tabindex="0">
-                            <video class="img-fluid" controls autoplay muted loop>
-                                <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
-
-                            </video>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section class="custom-tabs-section py mobile_view_tabs" style="display: none">
         <div class="container">
@@ -784,29 +787,29 @@
 @endsection
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
 
-            tabButtons.forEach(button => {
-                button.addEventListener('shown.bs.tab', function(e) {
-                    const targetId = e.target.getAttribute('data-bs-target');
-                    const startTime = parseFloat(e.target.getAttribute('data-start')) || 0;
+        //     tabButtons.forEach(button => {
+        //         button.addEventListener('shown.bs.tab', function(e) {
+        //             const targetId = e.target.getAttribute('data-bs-target');
+        //             const startTime = parseFloat(e.target.getAttribute('data-start')) || 0;
 
-                    // Pause and reset all videos
-                    document.querySelectorAll('video').forEach(video => {
-                        video.pause();
-                        video.currentTime = 0;
-                    });
+        //             // Pause and reset all videos
+        //             document.querySelectorAll('video').forEach(video => {
+        //                 video.pause();
+        //                 video.currentTime = 0;
+        //             });
 
-                    const targetPane = document.querySelector(targetId);
-                    const video = targetPane.querySelector('video');
+        //             const targetPane = document.querySelector(targetId);
+        //             const video = targetPane.querySelector('video');
 
-                    if (video) {
-                        video.currentTime = startTime;
-                        video.play();
-                    }
-                });
-            });
-        });
+        //             if (video) {
+        //                 video.currentTime = startTime;
+        //                 video.play();
+        //             }
+        //         });
+        //     });
+        // });
     </script>
 @endpush

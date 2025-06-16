@@ -297,7 +297,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        let resetPasswordButton = document.querySelector(".custom-btn");
+        let resetPasswordButton = document.querySelector(".btn-reset");
         resetPasswordButton.disabled = true;
 
         document.getElementById("newPassword").addEventListener("input", validatePasswords);
@@ -307,7 +307,7 @@
     function validatePasswords() {
         let newPassword = document.getElementById("newPassword").value;
         let confirmPassword = document.getElementById("confirmPassword").value;
-        let resetPasswordButton = document.querySelector(".custom-btn");
+        let resetPasswordButton = document.querySelector(".btn-reset");
 
         if (newPassword.length >= 6 && confirmPassword.length >= 6 && newPassword === confirmPassword) {
             resetPasswordButton.disabled = false;

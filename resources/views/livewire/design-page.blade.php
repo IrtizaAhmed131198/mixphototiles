@@ -100,7 +100,7 @@
             </div>
         </div>
     </div>
-    <main>
+    <main style=" margin-top: 56px; ">
         <section class="file-uploadSection" style="display: {{ count($images) > 0 ? 'none' : 'flex' }};">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-12">

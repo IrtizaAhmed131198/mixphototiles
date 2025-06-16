@@ -46,48 +46,16 @@
     <div class="offcanvas-body">
         <div class="mixphototilessidemenu">
             <div class="right-navbar">
+                @if (!Auth::check())
                 <ul class="navbar-nav pt-0 login-nav">
-                    @if (!Auth::check())
                         <li>
                             <a href="javascript:;" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
                                 class="btn custom-btn filled mt-3">Login / Sign up</a>
                         </li>
                         <li style="margin-top: 18px;"><span><b>Sign up</b></span><span> to save your progress &amp;
                                 track orders</span></li>
-                    @else
-                        <li class="porfile-dropdown">
-                            <div class="profile-menu" aria-labelledby="dropdownMenuButton1">
-                                <ul>
-                                    <li>
-                                        <a href="{{ route('profile') }}">
-                                            <span><svg width="22" height="22" viewBox="0 0 22 22"
-                                                    class="w-em h-em fs-18 me-2" xmlns="http://www.w3.org/2000/svg">
-                                                    <g transform="translate(-17 -131)">
-                                                        <g transform="translate(-3539.758 221.032)">
-                                                            <g fill="none" stroke-width="1.3" stroke="currentColor"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                transform="translate(3563.094 -87.644)">
-                                                                <circle cx="4.605" cy="4.605" r="4.605"
-                                                                    stroke="none"></circle>
-                                                                <circle cx="4.605" cy="4.605" r="3.955"
-                                                                    fill="none"></circle>
-                                                            </g>
-                                                            <path fill="none" stroke-width="1.3"
-                                                                stroke="currentColor" stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                                transform="translate(3559 -70.964) rotate(-90)"
-                                                                d="M0,0C4.125,0,7.469,3.921,7.469,8.758S4.125,17.516,0,17.516">
-                                                            </path>
-                                                        </g>
-                                                    </g>
-                                                </svg></span>
-                                            My Profile</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    @endif
                 </ul>
+                @endif
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -126,12 +94,6 @@
                                 d="M15.32 13.01H8V18h7.32zM21.5 20a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"></path>
                         </svg> Your Collections</a>
                 </li>
-                {{-- <li class="nav-item">
-                                    <a class="nav-link" href="javascript:;">Installation & Care</a>
-                                </li> --}}
-                {{-- <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}" href="{{ route('faq') }}">FAQs</a>
-                                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}"
                         href="{{ route('contact') }}"><img src="{{ asset('assets/images/contact-pg.png') }}"
@@ -142,10 +104,7 @@
                     <a href="{{ route('cart') }}" class="nav-link">
                         <span>
                             <img src="{{ asset('assets/images/bag.svg') }}" alt=""
-                                style="width: 18px;
-    height: 18px;
-    margin-right: 10px;
-    margin-left: 8px;">
+                                style="width: 18px; height: 18px; margin-right: 10px; margin-left: 8px;">
                         </span>
                         <span class="cart-count">
                             @php
@@ -156,32 +115,104 @@
                         </span>
                     </a>
                 </li>
-            </ul>
-            @if (Auth::check())
-                <ul class="navbar-nav pt-0">
-                    {{-- <li>
-                        <a href="javascript:;" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
-                            class="btn custom-btn filled mt-3">Login / Sign up</a>
-                    </li> --}}
-                    <li class="porfile-dropdown">
-                        {{-- <a href="javascript:;" class="btn custom-btn" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43"
-                                class="w-em h-em ttl-44 mb-0 me-2">
-                                <g transform="translate(4.369 4.281)">
-                                    <circle cx="21.5" cy="21.5" r="21.5" transform="translate(-4.369 -4.282)"
-                                        fill="#ffe2f8">
-                                    </circle>
-                                    <path d="M23.21,22.605a8.605,8.605,0,1,0-17.21,0" transform="translate(2.525 4.802)"
-                                        fill="#9d0b78"></path>
-                                    <circle cx="5.443" cy="5.443" r="5.443"
-                                        transform="translate(11.688 7.031)" fill="#f860d2">
-                                    </circle>
+                @if (Auth::check())
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('profile') ? 'active' : '' }}"
+                            href="{{ route('profile') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 32 32" style="width: 32px; height: 32px; color: rgb(43, 5, 20); margin-left: 5px;">
+                                <g transform="translate(-17 -131)">
+                                    <g transform="translate(-3539.758 221.032)">
+                                        <g fill="none" stroke-width="1.3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3563.094 -87.644)">
+                                            <circle cx="4.605" cy="4.605" r="4.605" stroke="none"></circle>
+                                            <circle cx="4.605" cy="4.605" r="3.955" fill="none"></circle>
+                                        </g>
+                                        <path fill="none" stroke-width="1.3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3559 -70.964) rotate(-90)" d="M0,0C4.125,0,7.469,3.921,7.469,8.758S4.125,17.516,0,17.516">
+                                        </path>
+                                    </g>
                                 </g>
-                            </svg>
-                            My Profile
-                            <span><i class="fa-solid fa-chevron-down"></i></span>
-                        </a> --}}
+                            </svg> My Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('orders') ? 'active' : '' }}"
+                            href="{{ route('orders') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 32 32" style="width: 32px; height: 32px; color: rgb(43, 5, 20); margin-left: 5px;">
+                                <g transform="translate(20210 -482)">
+                                    <g transform="translate(-0.05 0.953)">
+                                        <rect width="17.896" height="11.609"
+                                            transform="translate(-20207.949 488.24)" fill="none"
+                                            stroke="currentColor" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-miterlimit="10"
+                                            stroke-width="1.3">
+                                        </rect>
+                                        <path d="M.164,3.35,2.28.158H15.969l2.08,3.193"
+                                            transform="translate(-20208.102 484.889)" fill="none"
+                                            stroke="currentColor" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-miterlimit="10"
+                                            stroke-width="1.3">
+                                        </path>
+                                        <line x2="1.886" transform="translate(-20194.793 496.511)"
+                                            fill="none" stroke="currentColor"
+                                            stroke-linecap="round" stroke-miterlimit="10"
+                                            stroke-width="1.3">
+                                        </line>
+                                    </g>
+                                </g>
+                            </svg> Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @if (in_array(Auth::user()->role, ['user']))
+                            <a class="nav-link {{ request()->routeIs('address') ? 'active' : '' }}"
+                                href="{{ route('address') }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 32 32" style="width: 29px;height: 32px;color: rgb(43, 5, 20);margin-left: 2px;margin-right: 4px;">
+                                    <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        d="M16 18c4-4 6-8 6-10a6 6 0 0 0-12 0c0 2 2 6 6 10z" ></path>
+                                    <circle cx="16" cy="8" r="2" fill="currentColor" ></circle>
+                                    <path d="M16 18v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" ></path>
+                                </svg> Addresses
+                            </a>
+                        @else
+                            <a class="nav-link {{ request()->routeIs('addresses.index') ? 'active' : '' }}"
+                                href="{{ route('addresses.index') }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 32 32" style="width: 29px;height: 32px;color: rgb(43, 5, 20);margin-left: 2px;margin-right: 4px;">
+                                    <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        d="M16 18c4-4 6-8 6-10a6 6 0 0 0-12 0c0 2 2 6 6 10z" ></path>
+                                    <circle cx="16" cy="8" r="2" fill="currentColor" ></circle>
+                                    <path d="M16 18v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" ></path>
+                                </svg> Addresses
+                            </a>
+                        @endif
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('resetpassword') ? 'active' : '' }}"
+                            href="{{ route('resetpassword') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 32 32" style="width: 32px; height: 32px; color: rgb(43, 5, 20);">
+                                <rect x="10" y="14" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2" fill="none" ></rect>
+                                <path d="M16 14v-4a4 4 0 0 0-8 0v4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" ></path>
+                            </svg> Reset Password
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 32 32" style="width: 26px;height: 32px;color: rgb(43, 5, 20);margin-left: 5px;margin-right: 2px;">
+                                <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 16h12M18 10l6 6-6 6M12 26H8a4 4 0 0 1-4-4V10a4 4 0 0 1 4-4h4">
+                                </path>
+                            </svg> Logout
+                        </a>
+                    </li>
+                @endif
+            </ul>
+            {{-- @if (Auth::check())
+                <ul class="navbar-nav pt-0">
+                    <li class="porfile-dropdown">
                         <div class="profile-menu" aria-labelledby="dropdownMenuButton1">
                             <ul>
                                 <li>
@@ -344,7 +375,7 @@
                         </div>
                     </li>
                 </ul>
-            @endif
+            @endif --}}
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link " href="{{ route('privacy') }}">Privacy Policy</a>

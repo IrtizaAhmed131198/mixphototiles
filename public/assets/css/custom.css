@@ -4126,4 +4126,8 @@ button.hammenubtn {
     display: none;
 }
 
+.mixphototilessidemenu .nav-link:hover {
+    border-bottom: none !important;
+}
+
 /* new css end */
