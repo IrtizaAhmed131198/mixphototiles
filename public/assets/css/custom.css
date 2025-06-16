@@ -1119,15 +1119,16 @@ li.designToolPropertiesChild {
 .AboutSliderParent {
     display: flex;
     flex-direction: column;
-    background: white;
+    background: rgb(251, 246, 246);
     height: 100%;
     max-width: 100%;
-    width: 75%;
-    padding: 24px 15px;
+    width: 90%;
+    padding: 50px 15px;
     min-width: 80px;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.11);
+    /* border: 1px solid rgba(0, 0, 0, 0.11); */
+    border-radius: 15px;
 }
 
 .AboutSliderParent h5 {

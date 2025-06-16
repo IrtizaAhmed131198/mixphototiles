@@ -406,8 +406,7 @@
                     <div class="parentRightAbout text-center">
                         <div class="RightSliderChild">
                             <h2 class="heading-3"><span class="sec-2-span d-block">{{ get_setting('site_name') }}</span>
-                                have Got
-                                You Covered</h2>
+                                Have Got You Covered</h2>
                         </div>
                         <div class="RightSliderChild">
                             <div class="swiper AboutSliderwel">
