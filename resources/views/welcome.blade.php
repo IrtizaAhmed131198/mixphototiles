@@ -112,7 +112,7 @@
                             <source src="movie.ogg" type="video/ogg">
                         </video>
                         <div class="shopvideobtn">
-                            <a href="#" class="btn custom-btn filled">Shop Now</a>
+                            <a href="{{ route('design') }}" class="btn custom-btn filled">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -140,9 +140,9 @@
     </section>
 
     <section class="custom-tabs-section py">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row align-items-center">
-                <div class="col-lg-5 col-md-5 col-12">
+                <div class="col-lg-3 col-md-3 col-12">
                     <div class="custom-tabs-content">
                         <h2 class="heading-3" style=" font-size: 41px; ">
                             No Nail - Magentick <span>Hanging</span>
@@ -173,29 +173,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-7 col-md-7 col-12">
+                <div class="col-lg-9 col-md-9 col-12">
                     <div class="tab-content customTabsContent" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
                             aria-labelledby="v-pills-tap-tab" tabindex="0">
-                            <video class="img-fluid" controls autoplay muted loop>
+                            <video class="img-fluid" autoplay muted loop playsinline disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen" style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
                             tabindex="0">
-                            <video class="img-fluid" controls autoplay muted loop>
+                            <video class="img-fluid" autoplay muted loop playsinline disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen" style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel"
                             aria-labelledby="v-pills-hooks-tab" tabindex="0">
-                            <video class="img-fluid" controls autoplay muted loop>
+                            <video class="img-fluid" autoplay muted loop playsinline disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen" style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-again" role="tabpanel"
                             aria-labelledby="v-pills-again-tab" tabindex="0">
-                            <video class="img-fluid" controls autoplay muted loop>
+                            <video class="img-fluid" autoplay muted loop playsinline disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen" style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>

@@ -2051,13 +2051,14 @@ figure.Tabframed img {
 
 .customTabsContent {
     overflow: hidden;
-    width: 100%;
-    height: 350px;
+    width: 91%;
+    height: 658px;
     border-radius: 12px;
     margin: 0;
     box-shadow: 0 0 120px #c3c3c3;
     border: 2px solid white;
     background: #fff;
+    margin-left: auto;
 }
 
 figure.Tabframed {
@@ -4118,6 +4119,11 @@ button.hammenubtn {
     background: #00000073;
 }
 
+.shopvideobtn a.btn.custom-btn.filled{
+    background: rgba(231, 216, 225, 0.7) !important;
+    color: rgb(215, 42, 110) !important;
+}
+
 .shopvideobtn a.btn.custom-btn.filled:hover {
     background: rgba(231, 216, 225, 0.7) !important;
     color: rgb(215, 42, 110) !important;
@@ -4129,6 +4135,10 @@ button.hammenubtn {
 
 .mixphototilessidemenu .nav-link:hover {
     border-bottom: none !important;
+}
+
+section.custom-tabs-section.py {
+    padding-left: 169px;
 }
 
 /* new css end */
