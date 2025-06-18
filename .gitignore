@@ -24,3 +24,4 @@ composer.lock
 *.zip
 /public/assets/video
 public/assets/banner-video/Banner-video.mp4
+defualt.php
