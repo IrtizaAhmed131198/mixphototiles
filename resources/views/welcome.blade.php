@@ -108,7 +108,7 @@
                 <div class="col-lg-12 col-md-12 col-12 p-0">
                     <div class="banner-video">
                         <video width="100%" height="100%" autoplay muted loop>
-                            <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                            <source src="{{ asset('assets/banner-video/Banner-video.mp4') }}" type="video/mp4">
                             <source src="movie.ogg" type="video/ogg">
                         </video>
                         <div class="shopvideobtn">
