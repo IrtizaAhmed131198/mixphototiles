@@ -160,7 +160,7 @@
                                     </svg>
                                     <p class="para">Frame</p>
                                 </button>
-                                <ul class="designToolPropertiesLists dropdown-menu">
+                                <ul class="designToolPropertiesLists dropdown-menu frame-tab">
                                     <!-- Dropdown menu links -->
                                     <div class="menuParent">
                                         <p class="propertyTitle">
@@ -518,7 +518,7 @@
                             <!-- 8 dropdown -->
 
                             <!-- 9 dropdown -->
-                            <li class="designToolPropertiesChild btn-group dropend">
+                            {{-- <li class="designToolPropertiesChild btn-group dropend">
                                 <button class="d-sm-none">
                                     <svg class="LeftSidebar_designIcon__AcLPk" xmlns="http://www.w3.org/2000/svg"
                                         width="20" height="20" viewBox="0 0 20 20">
@@ -551,7 +551,7 @@
                                     </svg>
                                     <p class="para">More</p>
                                 </button>
-                            </li>
+                            </li> --}}
                             <!-- 9 dropdown -->
                         </ul>
                     </div>

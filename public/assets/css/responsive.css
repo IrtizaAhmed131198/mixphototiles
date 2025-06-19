@@ -106,6 +106,22 @@
     .topmenu-logo a img {
         width: 18%;
     }
+
+    .customTabsContent {
+        height: 423px;
+    }
+
+    .custom-tabs-content .heading-3 {
+        font-size: 35px;
+    }
+
+    section.custom-tabs-section.py {
+        padding-left: 135px;
+    }
+
+    .nails-tabs button {
+        font-size: 19px;
+    }
 }
 
 @media (max-width: 1199px) {
@@ -388,6 +404,22 @@
 
     .shopvideobtn {
         left: 43%;
+    }
+
+    .customTabsContent {
+        height: 317px;
+    }
+
+    .custom-tabs-content .heading-3 {
+        font-size: 27px;
+    }
+
+    section.custom-tabs-section.py {
+        padding-left: 120px;
+    }
+
+    .nails-tabs button {
+        font-size: 16px;
     }
 }
 
@@ -952,6 +984,7 @@
     .shopbtnmobile .shopvideobtn a.btn.custom-btn.filled {
         background: #ff0168 !important;
         width: 100%;
+        color: #ffff !important;
     }
 
     footer.text-white.Footer_footer {
@@ -977,8 +1010,12 @@
         width: 65%;
     }
     .AboutSliderwel {
-    margin-bottom: 20px;
-}
+        margin-bottom: 20px;
+    }
+
+    section.custom-tabs-section.py {
+        padding-left: 18px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -1427,8 +1464,14 @@
         width: 40px;
     }
 
+    ul.designToolPropertiesLists.dropdown-menu.frame-tab {
+
+    }
+
     ul.designToolPropertiesLists {
         width: 282px;
+        left: unset !important;
+        right: 0 !important;
     }
 
     .main_logo {

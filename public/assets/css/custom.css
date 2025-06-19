@@ -907,7 +907,7 @@ ul.LeftSidebar_designTool button p {
 .summary-card-footer .prizing {
     font-size: 18px;
     font-weight: 600;
-    color: rgb(142, 14, 109);
+    color: rgb(255 1 104);
 }
 
 .Right-Sidebar-footer {
@@ -4139,6 +4139,10 @@ button.hammenubtn {
 
 section.custom-tabs-section.py {
     padding-left: 169px;
+}
+
+.custom-tabs-content .heading-3 {
+    font-size: 41px;
 }
 
 /* new css end */

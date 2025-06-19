@@ -112,7 +112,7 @@
                             <source src="movie.ogg" type="video/ogg">
                         </video>
                         <div class="shopvideobtn">
-                            <a href="{{ route('design') }}" class="btn custom-btn filled">Shop Now</a>
+                            <a href="{{ route('design') }}" class="btn custom-btn filled">Orders Yours</a>
                         </div>
                     </div>
                 </div>
@@ -144,10 +144,10 @@
             <div class="row align-items-center">
                 <div class="col-lg-3 col-md-3 col-12">
                     <div class="custom-tabs-content">
-                        <h2 class="heading-3" style=" font-size: 41px; ">
+                        <h2 class="heading-3">
                             No Nail - Magentick <span>Hanging</span>
                         </h2>
-                        <div class="d-flex align-items-start">
+                        <div class="d-flex align-items-start nails-tabs">
                             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
                                 <button class="active" id="v-pills-tap-tab" data-bs-toggle="pill"
@@ -177,25 +177,33 @@
                     <div class="tab-content customTabsContent" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
                             aria-labelledby="v-pills-tap-tab" tabindex="0">
-                            <video class="img-fluid" autoplay muted loop playsinline disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen" style="pointer-events: none;">
+                            <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
+                                controls controlslist="nodownload noplaybackrate nofullscreen"
+                                style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
                             tabindex="0">
-                            <video class="img-fluid" autoplay muted loop playsinline disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen" style="pointer-events: none;">
+                            <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
+                                controls controlslist="nodownload noplaybackrate nofullscreen"
+                                style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel"
-                            aria-labelledby="v-pills-hooks-tab" tabindex="0">
-                            <video class="img-fluid" autoplay muted loop playsinline disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen" style="pointer-events: none;">
+                        <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel" aria-labelledby="v-pills-hooks-tab"
+                            tabindex="0">
+                            <video class="img-fluid" autoplay muted loop playsinline preload="auto"
+                                disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen"
+                                style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-again" role="tabpanel"
                             aria-labelledby="v-pills-again-tab" tabindex="0">
-                            <video class="img-fluid" autoplay muted loop playsinline disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen" style="pointer-events: none;">
+                            <video class="img-fluid" autoplay muted loop playsinline preload="auto"
+                                disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen"
+                                style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
@@ -376,20 +384,30 @@
                         <div class="custom-tabs-content">
                             <div class="peel_stick">
                                 <h4>Peel and stick</h4>
-                                <video class="img-fluid" controls autoplay muted loop>
-                                    <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                                <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
+                                controls controlslist="nodownload noplaybackrate nofullscreen">
+                                    <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
                                 <h4>Adjust to position</h4>
-                                <video class="img-fluid" controls autoplay muted loop>
-                                    <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                                <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
+                                controls controlslist="nodownload noplaybackrate nofullscreen">
+                                    <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
                                 <h4>Leaves no marks</h4>
-                                <video class="img-fluid" controls autoplay muted loop>
-                                    <source src="{{ asset('assets/video/Banner-Video.mp4') }}" type="video/mp4">
+                                <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
+                                controls controlslist="nodownload noplaybackrate nofullscreen">
+                                    <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="peel_stick">
+                                <h4>Move, Again and Again</h4>
+                                <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
+                                controls controlslist="nodownload noplaybackrate nofullscreen">
+                                    <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                         </div>
@@ -786,29 +804,18 @@
 @endsection
 @push('scripts')
     <script>
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
-
-        //     tabButtons.forEach(button => {
-        //         button.addEventListener('shown.bs.tab', function(e) {
-        //             const targetId = e.target.getAttribute('data-bs-target');
-        //             const startTime = parseFloat(e.target.getAttribute('data-start')) || 0;
-
-        //             // Pause and reset all videos
-        //             document.querySelectorAll('video').forEach(video => {
-        //                 video.pause();
-        //                 video.currentTime = 0;
-        //             });
-
-        //             const targetPane = document.querySelector(targetId);
-        //             const video = targetPane.querySelector('video');
-
-        //             if (video) {
-        //                 video.currentTime = startTime;
-        //                 video.play();
-        //             }
-        //         });
-        //     });
-        // });
+        document.addEventListener("DOMContentLoaded", function() {
+            const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
+            tabButtons.forEach(button => {
+                button.addEventListener("shown.bs.tab", function(e) {
+                    const targetSelector = e.target.getAttribute("data-bs-target");
+                    const video = document.querySelector(`${targetSelector} video`);
+                    if (video) {
+                        video.currentTime = 0;
+                        video.play();
+                    }
+                });
+            });
+        });
     </script>
 @endpush

@@ -118,13 +118,13 @@
     </div>
 </footer>
 
-
-<div class="shopbtnmobile">
-    <div class="shopvideobtn">
-        <a href="#" class="btn custom-btn filled">Shop Now</a>
+@if(Route::currentRouteName() !== 'design')
+    <div class="shopbtnmobile">
+        <div class="shopvideobtn">
+            <a href="{{ route('design') }}" class="btn custom-btn filled">Orders Yours</a>
+        </div>
     </div>
-</div>
-
+@endif
 <!-- custom modal html  -->
 <div class="custom-modal">
 
