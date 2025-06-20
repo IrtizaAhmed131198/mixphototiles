@@ -883,7 +883,7 @@
     }
 
     ul.designToolPropertiesLists {
-        transform: translate(0px, 80px) !important;
+        transform: translate(-18px, 80px) !important;
     }
 
     ul.designToolPropertiesLists.show {
@@ -1009,6 +1009,7 @@
         margin: auto;
         width: 65%;
     }
+
     .AboutSliderwel {
         margin-bottom: 20px;
     }
@@ -1464,10 +1465,6 @@
         width: 40px;
     }
 
-    ul.designToolPropertiesLists.dropdown-menu.frame-tab {
-
-    }
-
     ul.designToolPropertiesLists {
         width: 282px;
         left: unset !important;
@@ -1488,7 +1485,39 @@
         width: 100%;
         margin-top: 0;
     }
+
     .banner-video {
         height: 60vh;
     }
+
+    .designToolPropertiesLists.design_1 {
+        left: 100% !important;
+        right: unset !important;
+        top: 60% !important;
+    }
+
+    .designToolPropertiesLists.design_2 {
+        left: 15% !important;
+        right: unset !important;
+        top: 10% !important;
+    }
+
+    .designToolPropertiesLists.design_3 {
+        left: unset !important;
+        right: -140px !important;
+        top: -10px !important;
+    }
+
+    .designToolPropertiesLists.design_4 {
+        left: -140px !important;
+        right: unset !important;
+        top: 70% !important;
+    }
+
+    .designToolPropertiesLists.design_5 {
+        left: -200px !important;
+        right: unset !important;
+        top: 70% !important;
+    }
+
 }

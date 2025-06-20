@@ -160,7 +160,7 @@
                                     </svg>
                                     <p class="para">Frame</p>
                                 </button>
-                                <ul class="designToolPropertiesLists dropdown-menu frame-tab">
+                                <ul class="designToolPropertiesLists dropdown-menu frame-tab design_1">
                                     <!-- Dropdown menu links -->
                                     <div class="menuParent">
                                         <p class="propertyTitle">
@@ -233,7 +233,7 @@
                                     </svg>
                                     <p class="para">Color</p>
                                 </button>
-                                <ul class="designToolPropertiesLists dropdown-menu">
+                                <ul class="designToolPropertiesLists dropdown-menu design_2">
                                     <!-- Dropdown menu links -->
                                     <div class="menuParent">
                                         <p class="propertyTitle">
@@ -255,7 +255,7 @@
                                             src="{{ asset('assets/images/led.svg') }}" alt="">
                                         <p class="para">LED</p>
                                     </button>
-                                    <ul class="designToolPropertiesLists dropdown-menu">
+                                    <ul class="designToolPropertiesLists dropdown-menu design_3">
                                         <!-- Dropdown menu links -->
                                         <div class="menuParent">
                                             <p class="propertyTitle">
@@ -307,7 +307,7 @@
                                     </svg>
                                     <p class="para">Size</p>
                                 </button>
-                                <ul class="designToolPropertiesLists dropdown-menu">
+                                <ul class="designToolPropertiesLists dropdown-menu design_4">
                                     <!-- Dropdown menu links -->
                                     <div class="menuParent">
                                         <p class="propertyTitle">
@@ -348,7 +348,7 @@
                                         </svg>
                                         <p class="para">Finish</p>
                                     </button>
-                                    <ul class="designToolPropertiesLists dropdown-menu">
+                                    <ul class="designToolPropertiesLists dropdown-menu design_5">
                                         <!-- Dropdown menu links -->
                                         <div class="menuParent">
                                             <p class="propertyTitle">
