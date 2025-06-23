@@ -17,8 +17,12 @@ use App\Mail\AccountVerified;
 
 class AuthController extends Controller
 {
-    public function redirectToGoogle()
+    public function redirectToGoogle(Request $request)
     {
+        if ($request->has('redirect_to')) {
+            session(['google_redirect_to' => $request->input('redirect_to')]);
+        }
+
         return Socialite::driver('google')
             ->with(['prompt' => 'select_account'])
             ->redirect();
@@ -29,23 +33,27 @@ class AuthController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
 
-            // Find or create user in the database
             $user = User::updateOrCreate([
                 'email' => $googleUser->getEmail(),
             ], [
                 'name' => $googleUser->getName(),
                 'google_id' => $googleUser->getId(),
                 'role' => 'user',
-                'password' => bcrypt(str()->random(16)), // Random password as it's social login
+                'password' => bcrypt(str()->random(16)),
                 'status' => 1
             ]);
 
-            // Store user in session
             Session::put('google_user', $user);
 
             Auth::login($user);
 
-            return redirect()->route('profile')->with('success', 'Google login successful!');
+            // Get intended URL or default to profile
+            $redirectUrl = session('google_redirect_to', route('profile'));
+
+            // Clear the session variable to avoid using it again accidentally
+            session()->forget('google_redirect_to');
+
+            return redirect($redirectUrl)->with('success', 'Google login successful!');
         } catch (\Exception $e) {
             return redirect()->route('home')->with('error', 'Failed to login with Google.');
         }
@@ -83,10 +91,13 @@ class AuthController extends Controller
                 ], 403);
             }
 
+            // Use provided redirect URL or fallback to profile
+            $redirectUrl = $request->input('redirect_to') ?? route('profile');
+
             return response()->json([
                 'success' => true,
                 'message' => 'Login successful',
-                'url' => route('profile')
+                'url' => $redirectUrl
             ]);
         }
 

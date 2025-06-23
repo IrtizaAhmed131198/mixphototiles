@@ -18,7 +18,7 @@
             /* Optional - adjust font size */
         }
 
-        @keyframes circle {
+        /* @keyframes circle {
             0% {
                 transform: rotate(0deg);
             }
@@ -27,7 +27,7 @@
                 transform: rotate(360deg);
 
             }
-        }
+        } */
 
         .progress-bar-container {
             width: 100%;
@@ -93,14 +93,14 @@
             animation: fadeIn 0.5s ease-in-out;
         }
     </style>
-    <div class="loadermain">
+    {{-- <div class="loadermain">
         <div class="loader-container">
             <div class="loaderMain">
                 <img src="{{ asset('assets/images/loader.png') }}" class="img-fluid" alt="">
             </div>
         </div>
-    </div>
-    <main style=" margin-top: 56px; ">
+    </div> --}}
+    <main class="main-design-blade" style=" margin-top: 56px; ">
         <section class="file-uploadSection" style="display: {{ count($images) > 0 ? 'none' : 'flex' }};">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-12">
@@ -793,7 +793,7 @@
                                             @endif
 
                                             <li class="col-6">
-                                                <div class="d-flex align-items-center">
+                                                <div class="d-flex align-items-center hang-icon">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                         style="font-size: 28px;margin-top: -60px;margin-left: 3px;"
                                                         width="18" height="24.413" viewBox="0 0 18 24.413"
@@ -910,10 +910,10 @@
 @push('scripts')
     <script src="{{ asset('assets/js/design.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            setTimeout(function() {
-                $('.loadermain').fadeOut();
-            }, 3000);
-        })
+        // $(document).ready(function() {
+        //     setTimeout(function() {
+        //         $('.loadermain').fadeOut();
+        //     }, 3000);
+        // })
     </script>
 @endpush

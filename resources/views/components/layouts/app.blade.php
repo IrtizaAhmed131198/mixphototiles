@@ -48,9 +48,28 @@
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
     @stack('css')
     @livewireStyles
+    <style>
+        @keyframes circle {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="loadermain">
+        <div class="loader-container">
+            <div class="loaderMain">
+                <img src="{{ asset('assets/images/loader.png') }}" class="img-fluid" alt="">
+            </div>
+        </div>
+    </div>
     <div>
         @include('partials.header')
 
@@ -91,6 +110,14 @@
     @include('ajax')
 
     @stack('scripts')
+
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('.loadermain').fadeOut();
+            }, 3000);
+        })
+    </script>
 
     @if (session('success'))
         <script>

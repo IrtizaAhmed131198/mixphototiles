@@ -30,7 +30,7 @@
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
-        <a class="main_logo" href="{{ route('home') }}">
+        <a class="main_logo offcanvas-logo" href="{{ route('home') }}">
             @php
                 $img = get_setting('site_logo');
             @endphp

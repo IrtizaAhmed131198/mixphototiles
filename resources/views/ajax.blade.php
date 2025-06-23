@@ -8,6 +8,8 @@
     function submitLogin() {
         let formData = new FormData($('.loginForm')[0]);  // Get form element using jQuery and pass to FormData
 
+        formData.append('redirect_to', window.location.href);
+
         $.ajax({
             url: "{{ route('login') }}",
             type: "POST",
@@ -19,7 +21,7 @@
             },
             success: function(response) {
                 if (response.success) {
-                    window.location.href = "{{ route('profile') }}"; // Redirect to profile route
+                    window.location.href = response.url; // Redirect to profile route
                 } else {
                     $('#loginMessage').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }

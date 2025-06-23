@@ -4,6 +4,18 @@
 
 
 @push('css')
+<style>
+    /* @keyframes circle {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+
+        }
+    } */
+</style>
 @endpush
 
 @section('content')
@@ -112,7 +124,7 @@
                             <source src="movie.ogg" type="video/ogg">
                         </video>
                         <div class="shopvideobtn">
-                            <a href="{{ route('design') }}" class="btn custom-btn filled">Orders Yours</a>
+                            <a href="{{ route('design') }}" class="btn custom-btn filled">Order Yours</a>
                         </div>
                     </div>
                 </div>
@@ -376,7 +388,7 @@
     <section class="custom-tabs-section py mobile_view_tabs" style="display: none">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-12 col-md-12 col-12">
+                <div class="col-lg-12 col-md-12 col-12 main-video">
                     <div class="mobile-tabs-video">
                         <h2 class="heading-3" style=" font-size: 41px; ">
                             No Nail - Magentick <span>Hanging</span>
@@ -384,29 +396,25 @@
                         <div class="custom-tabs-content">
                             <div class="peel_stick">
                                 <h4>Peel and stick</h4>
-                                <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
-                                controls controlslist="nodownload noplaybackrate nofullscreen">
+                                <video class="img-fluid" autoplay muted>
                                     <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
                                 <h4>Adjust to position</h4>
-                                <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
-                                controls controlslist="nodownload noplaybackrate nofullscreen">
+                                <video class="img-fluid" autoplay muted>
                                     <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
                                 <h4>Leaves no marks</h4>
-                                <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
-                                controls controlslist="nodownload noplaybackrate nofullscreen">
+                                <video class="img-fluid" autoplay muted>
                                     <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
                                 <h4>Move, Again and Again</h4>
-                                <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
-                                controls controlslist="nodownload noplaybackrate nofullscreen">
+                                <video class="img-fluid" autoplay muted>
                                     <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
@@ -817,5 +825,7 @@
                 });
             });
         });
+
+
     </script>
 @endpush

@@ -21,7 +21,7 @@
             margin: 10px 0;
         }
 
-        @keyframes circle {
+        /* @keyframes circle {
             0% {
                 transform: rotate(0deg);
             }
@@ -30,18 +30,18 @@
                 transform: rotate(360deg);
 
             }
-        }
+        } */
     </style>
 @endpush
 
 @section('content')
-<div class="loadermain">
+{{-- <div class="loadermain">
     <div class="loader-container">
         <div class="loaderMain">
             <img src="{{ asset('assets/images/loader.png') }}" class="img-fluid" alt="">
         </div>
     </div>
-</div>
+</div> --}}
 
     <section class="myinformatinfoamsection">
         <div class="container">

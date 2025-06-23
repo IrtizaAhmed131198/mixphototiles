@@ -1234,6 +1234,7 @@
 
     .Right-Sidebar-footer {
         width: 100%;
+        margin-top: 26px;
     }
 
     .listGroup {
@@ -1268,6 +1269,7 @@
     .topmenu-logo a img {
         width: 40%;
         margin-top: -6px;
+        height: 32px;
     }
 
     .mobile-tabs-video h2 {
@@ -1457,7 +1459,7 @@
     }
 
     ul.designToolPropertiesLists.show {
-        transform: translate(-30px, -310px) !important;
+        transform: translate(-31px, -341px) !important;
     }
 
     figure.PropertiesleftChild img {
@@ -1475,6 +1477,14 @@
         width: 50%;
         height: 30px;
         margin-left: 35px;
+    }
+
+    .offcanvas-logo {
+        width: 73% !important;
+    }
+
+    .offcanvas-logo img {
+       height: 42px !important;
     }
 
     .newframe-sideimg img {
@@ -1518,6 +1528,56 @@
         left: -200px !important;
         right: unset !important;
         top: 70% !important;
+    }
+
+    .peel_stick video {
+        width: 100%;
+    }
+
+    section.custom-tabs-section.py {
+        padding-left: 0 !important;
+    }
+
+    .main-video {
+        padding: 0 !important;
+    }
+
+    .about-section img {
+        height: 283px !important;
+    }
+
+    .Right-Sidebar-footer {
+        margin-top: 26px;
+    }
+
+    .box {
+        padding: 0 !important;
+    }
+
+    .hang-icon svg {
+        margin-top: -19px !important;
+        font-size: 20px !important;
+    }
+
+    .main-design-blade {
+        margin-top: 21px !important;
+    }
+
+    .multi-upload-Main .MiniUploadBtn.card {
+        width: 85%;
+        padding: 3px 11px;
+    }
+
+    span.MiniUploadBtn_sign {
+        padding: 1px 1px;
+    }
+
+    h6.instruction {
+        font-size: 13px;
+    }
+
+    .grid-2 {
+        gap: 73px;
     }
 
 }

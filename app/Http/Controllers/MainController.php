@@ -485,6 +485,7 @@ class MainController extends Controller
 
     public function add_to_cart_collection(Request $request)
     {
+        // dd($request->all());
         $image_name = asset('uploads/cart_images/'.$request->input('exist_image'));
         $getCart = session()->get('cart'); // Get the current cart session
 
@@ -539,21 +540,34 @@ class MainController extends Controller
 
         $exist_prod = Product::find($request->input('product_id'));
 
-        $product = Product::create([
-            'name' => $request->input('name') . ' ' . time(). ' '.$request->input('product_id'),
-            'slug' => $slug,
-            'description' => 'Custom frame product', // You can adjust
-            'price' => $request->input('price'), // Assuming price is in frame_configuration
-            'discount' => 0,
-            'stock' => 1,
-            'image' => $exist_prod->image,
-            'no_coordinates_image' => $exist_prod->no_coordinates_image,
-            'coordinates_image' => $exist_prod->coordinates_image,
-            'coordinates' => $exist_prod->coordinates,
-            'frame_config' => $request->input('configuration') ?? '',
-            'status' => 1,
-            'type' => 'manual_collection',
-        ]);
+        if($request->input('temp_id') != null){
+            $product = Product::find($request->input('temp_id'));
+            $product->update([
+                'price' => $request->input('price'),
+                'image' => $exist_prod->image,
+                'no_coordinates_image' => $exist_prod->no_coordinates_image,
+                'coordinates_image' => $exist_prod->coordinates_image,
+                'coordinates' => $exist_prod->coordinates,
+                'frame_config' => $request->input('configuration') ?? '',
+            ]);
+        }else{
+            $product = Product::create([
+                'name' => $request->input('name') . ' ' . time(). ' '.$request->input('product_id'),
+                'slug' => $slug,
+                'description' => 'Custom frame product', // You can adjust
+                'price' => $request->input('price'), // Assuming price is in frame_configuration
+                'discount' => 0,
+                'stock' => 1,
+                'image' => $exist_prod->image,
+                'no_coordinates_image' => $exist_prod->no_coordinates_image,
+                'coordinates_image' => $exist_prod->coordinates_image,
+                'coordinates' => $exist_prod->coordinates,
+                'frame_config' => $request->input('configuration') ?? '',
+                'status' => 1,
+                'type' => 'manual_collection',
+            ]);
+        }
+
 
         // Add product to session cart
         $sessionCart[] = [

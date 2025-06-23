@@ -24,11 +24,18 @@ class CollectionDetail extends Component
     public $custom_color;
     public $finish;
     public $led;
+    public $temp_id;
 
     public function mount($slug)
     {
+        $this->temp_id = null;
         $this->slug = $slug;
-        $this->product = Product::where('slug', $slug)->with('additionalImages')->first();
+        $this->temp_slug = request()->query('temp_slug');
+        if($this->temp_slug){
+            $this->product = Product::where('slug', $this->temp_slug)->with('additionalImages')->first();
+        }else{
+            $this->product = Product::where('slug', $slug)->with('additionalImages')->first();
+        }
         $this->cluster_images = ClusterImage::where('created_at', '>=', Carbon::now()->subDay())->get();
 
         if (!$this->product) {
@@ -43,6 +50,7 @@ class CollectionDetail extends Component
             $this->config = json_decode($data->configuration);
             $this->price = $data->price;
             $this->collectionImages = CollectionImages::where('collection_id', $data->id)->get();
+            $this->temp_id = $data->product_id;
         }
 
         $this->custom_color = CustomColor::where('status', 1)->get();
@@ -65,6 +73,7 @@ class CollectionDetail extends Component
             'custom_color' => $this->custom_color,
             'finish' => $this->finish,
             'led' => $this->led,
+            'temp_id' => $this->temp_id,
         ]);
     }
 }

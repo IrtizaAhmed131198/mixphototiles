@@ -1766,6 +1766,7 @@
 
         function continueToCart() {
             let isValid = true;
+            let temp_id = "{{ $temp_id }}";
             const clusters = @json($clusters); // Pass the clusters data to JavaScript
             let currentUrl = window.location.href;
             let colImageArr = [];
@@ -1834,6 +1835,7 @@
                     formData.append("colImageArr", JSON.stringify(colImageArr));
                     formData.append("colImageOrignalArr", JSON.stringify(colImageOrignalArr));
                     formData.append("configuration", JSON.stringify(selectedConfig));
+                    formData.append("temp_id", temp_id);
 
                     // Send AJAX request to save image and add to cart
                     $.ajax({

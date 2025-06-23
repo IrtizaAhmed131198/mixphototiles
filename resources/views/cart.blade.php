@@ -4,7 +4,7 @@
 
 @push('css')
     <style>
-        @keyframes circle {
+        /* @keyframes circle {
             0% {
                 transform: rotate(0deg);
             }
@@ -13,7 +13,7 @@
                 transform: rotate(360deg);
 
             }
-        }
+        } */
     </style>
 @endpush
 
@@ -23,13 +23,13 @@
         $shipping = get_setting('shipping_price') ?? 0;
     @endphp
 
-    <div class="loadermain">
+    {{-- <div class="loadermain">
         <div class="loader-container">
             <div class="loaderMain">
                 <img src="{{ asset('assets/images/loader.png') }}" class="img-fluid" alt="">
             </div>
         </div>
-    </div>
+    </div> --}}
 
     @if (!empty($cartItems))
 
@@ -91,7 +91,7 @@
                                             <button type="button" class="CartListItem_action edit-item"
                                                 data-product-id="{{ $item['product_id'] }}"
                                                 data-image-name="{{ $item['image'] }}" data-type="{{ $item['type'] }}"
-                                                data-slug="{{ $item['slug'] }}">
+                                                data-slug="{{ $item['slug'] }}" data-temp-slug="{{ $product['slug'] }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="15.615" height="14.926"
                                                     viewBox="0 0 15.615 14.926" class="w-em h-em pe-1 fs-16">
                                                     <g transform="translate(-2.25 -2.129)">
@@ -845,19 +845,19 @@
             button.addEventListener('click', function() {
                 const imageType = button.getAttribute('data-type');
                 const imageSlug = button.getAttribute('data-slug');
+                const imageTempSlug = button.getAttribute('data-temp-slug');
                 const imageName = button.getAttribute(
                     'data-image-name'); // Get image name from data attribute\
                 let filePath = imageName.split('/').pop();
-                console.log(filePath);
 
                 if (imageType === "manual") {
                     // Case: User uploaded a manual image
-                    const designUrl = `{{ route('design') }}?image_name=${encodeURIComponent(imageName)}`;
+                    const designUrl = `{{ route('design') }}?image_name=${encodeURIComponent(imageName)}&temp_slug=${encodeURIComponent(imageTempSlug)}`;
                     window.location.href = designUrl; // Redirect to design page
                 } else if (imageType === "collection") {
                     // Case: Image generated from collection
                     const editUrl =
-                        `{{ url('collection') }}/${imageSlug}?image_name=${encodeURIComponent(filePath)}`;
+                        `{{ url('collection') }}/${imageSlug}?image_name=${encodeURIComponent(filePath)}&temp_slug=${encodeURIComponent(imageTempSlug)}`;
                     window.location.href = editUrl; // Redirect to edit collection product
                 } else {
                     alert("Editing is not supported for this item.");

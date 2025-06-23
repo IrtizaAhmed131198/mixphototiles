@@ -3,14 +3,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md">
-                    @php
+                    {{-- @php
                         $img = get_setting('site_logo');
                     @endphp
-                    @if ($img)
-                        <img src="{{ asset('storage/' . $img) }}" class="img-fluid footer-logo" alt="Logo">
-                    @else
-                        <img src="{{ asset('assets/images/logo.jpg') }}" class="img-fluid footer-logo" alt="Logo">
-                    @endif
+                    @if ($img) --}}
+                        {{-- <img src="{{ asset('storage/' . $img) }}" class="img-fluid footer-logo" alt="Logo"> --}}
+                    {{-- @else --}}
+                        <img src="{{ asset('assets/images/logo_footer.png') }}" class="img-fluid footer-logo" alt="Logo">
+                    {{-- @endif --}}
                     <div class="Footer_socialNav nav" style=" align-items: end; ">
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
@@ -86,7 +86,7 @@
                     <p class="mb-2 Footer_footerContact">
                         <a class="text-decoration-none d-flex align-items-center" href="https://wa.me/919342874392"
                             target="_blank">
-                            <img src="{{ asset('assets/images/whatsapp.png') }}" alt="WhatsApp"
+                            <img src="{{ asset('assets/images/whatsapp.png') }}" alt="WhatsApp" class="whatsapp-icon"
                                 style="width: 50px;height: 51px;vertical-align: middle;margin-left: -5px;">
                             <span class="ps-1" style=" font-size: 14px; font-weight: 400; line-height: 20px; ">Send
                                 your picture to our way and we'll frame it.</span>
@@ -118,10 +118,10 @@
     </div>
 </footer>
 
-@if(Route::currentRouteName() !== 'design')
+@if(!in_array(Route::currentRouteName(), ['design', 'cart', 'order_summary']))
     <div class="shopbtnmobile">
         <div class="shopvideobtn">
-            <a href="{{ route('design') }}" class="btn custom-btn filled">Orders Yours</a>
+            <a href="{{ route('design') }}" class="btn custom-btn filled">Order Yours</a>
         </div>
     </div>
 @endif
@@ -141,9 +141,13 @@
                         <h4 class="heading-6">Login</h4>
                         <p class="text-center">Select method to login</p>
                         <div class="btnParentlogin">
+                            @php
+                                $currentRoute = Route::currentRouteName();
+                                $allowedRoutes = ['cart', 'order_summary'];
+                            @endphp
                             <button class="btn google-btn">
                                 @if (session()->has('google_user'))
-                                    <a href="{{ route('google.login') }}" class="btn google-btn">
+                                    <a href="{{ route('google.login', ['redirect_to' => in_array($currentRoute, $allowedRoutes) ? $currentRoute : null]) }}" class="btn google-btn">
                                         <span class="googleimg">
                                             <img src="{{ session('google_user')->avatar }}" alt="Google Avatar"
                                                 style="width: 24px; height: 24px; border-radius: 50%;">
@@ -151,7 +155,7 @@
                                         <span class="btntext">Signed in as {{ session('google_user')->name }}</span>
                                     </a>
                                 @else
-                                    <a href="{{ route('google.login') }}" class="btn google-btn">
+                                    <a href="{{ route('google.login', ['redirect_to' => in_array($currentRoute, $allowedRoutes) ? $currentRoute : null]) }}" class="btn google-btn">
                                         <span class="googleimg">
                                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 48 48" class="LgbsSe-Bz112c">
