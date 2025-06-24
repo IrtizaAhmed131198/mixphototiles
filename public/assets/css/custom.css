@@ -4135,8 +4135,8 @@ button.hammenubtn {
 }
 
 .shopvideobtn a.btn.custom-btn.filled{
-    background: rgba(231, 216, 225, 0.7) !important;
-    color: rgb(215, 42, 110) !important;
+    background: rgb(170 166 166) !important;
+    color: rgb(255 255 255) !important;
 }
 
 .shopvideobtn a.btn.custom-btn.filled:hover {
