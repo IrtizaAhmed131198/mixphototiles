@@ -35,7 +35,7 @@
 
     .main_logo {
         /* width: 14%; */
-        height: 27px;
+        height: 9px;
     }
 
     .innerFrame img {
@@ -121,6 +121,12 @@
 
     .nails-tabs button {
         font-size: 19px;
+    }
+}
+
+@media (max-width: 1232px) {
+    .customTabsContent {
+        height: 404px;
     }
 }
 
@@ -952,7 +958,7 @@
 
     .main_logo {
         text-align: center;
-        height: 100%;
+        height: 46%;
     }
 
     .topmenu-logo a img {

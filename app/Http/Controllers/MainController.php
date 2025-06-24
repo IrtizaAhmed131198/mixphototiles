@@ -552,7 +552,7 @@ class MainController extends Controller
             ]);
         }else{
             $product = Product::create([
-                'name' => $request->input('name') . ' ' . time(). ' '.$request->input('product_id'),
+                'name' => $request->input('name'),
                 'slug' => $slug,
                 'description' => 'Custom frame product', // You can adjust
                 'price' => $request->input('price'), // Assuming price is in frame_configuration

@@ -1122,7 +1122,7 @@ li.designToolPropertiesChild {
     background: rgb(251, 246, 246);
     height: 100%;
     max-width: 100%;
-    width: 90%;
+    width: 56%;
     padding: 50px 15px;
     min-width: 80px;
     align-items: center;
@@ -4008,7 +4008,7 @@ input[type="radio"]:checked {
 }
 
 button.btn-close.text-reset {
-    margin-top: -40px;
+    margin-top: 5px;
 }
 
 
@@ -4079,8 +4079,12 @@ button.hammenubtn {
     gap: 20px;
 }
 
-.usa-pic img {
-    width: 20%;
+.usa-logo img {
+    width: 14%;
+}
+
+.indian-logo img {
+    width: 23%;
 }
 
 .usa-pic h6 {
@@ -4127,7 +4131,7 @@ button.hammenubtn {
     top: 0;
     width: 100%;
     height: 100%;
-    background: #0000008f;
+    /* background: #0000008f; */
 }
 
 .shopvideobtn a.btn.custom-btn.filled{
