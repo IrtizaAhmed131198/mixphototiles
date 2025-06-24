@@ -1028,6 +1028,17 @@
 
 @media (max-width: 767px) {
 
+    .Footer_footer .Footer_footerLinksWrp img {
+        width: 59%;
+        height: 56px;
+    }
+
+    .Footer_socialNav.nav {
+        justify-content: center;
+        margin: 0px 0 15px;
+        padding-left: 0;
+    }
+
     .RightSliderChild .heading-3 {
         text-align: center;
         margin-bottom: 10px !important;
@@ -1088,10 +1099,6 @@
 
     section.py-0.HomeEnquire_homeEnquireWrp.scroll-fade {
         padding-bottom: 0px !important;
-    }
-
-    .Footer_footer .Footer_footerLinksWrp img {
-        width: 50%;
     }
 
     .custom-hero-slider-parent .swiper-slide {
@@ -1303,6 +1310,17 @@
 
 
 @media (max-width: 575px) {
+    .Footer_footer .Footer_footerLinksWrp img {
+        width: 59%;
+        height: 56px;
+    }
+
+    .Footer_socialNav.nav {
+        justify-content: center;
+        margin: 0px 0 15px;
+        padding-left: 0;
+    }
+
     .main-banner-section {
         /* padding-bottom: 1rem; */
         /* margin-top: -20rem; */
