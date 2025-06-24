@@ -119,7 +119,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-12 p-0">
                     <div class="banner-video">
-                        <video width="100%" height="100%" autoplay muted loop>
+                        <video width="100%" height="100%" autoplay muted loop playsinline>
                             <source src="{{ asset('assets/banner-video/Banner-video.mp4') }}" type="video/mp4">
                             <source src="movie.ogg" type="video/ogg">
                         </video>
@@ -189,32 +189,28 @@
                     <div class="tab-content customTabsContent" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
                             aria-labelledby="v-pills-tap-tab" tabindex="0">
-                            <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
-                                controls controlslist="nodownload noplaybackrate nofullscreen"
+                            <video class="img-fluid" autoplay muted loop
                                 style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
                             tabindex="0">
-                            <video class="img-fluid" autoplay muted loop playsinline preload="auto" disablePictureInPicture
-                                controls controlslist="nodownload noplaybackrate nofullscreen"
+                            <video class="img-fluid" autoplay muted loop
                                 style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel" aria-labelledby="v-pills-hooks-tab"
                             tabindex="0">
-                            <video class="img-fluid" autoplay muted loop playsinline preload="auto"
-                                disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen"
+                            <video class="img-fluid" autoplay muted loop
                                 style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-again" role="tabpanel"
                             aria-labelledby="v-pills-again-tab" tabindex="0">
-                            <video class="img-fluid" autoplay muted loop playsinline preload="auto"
-                                disablePictureInPicture controls controlslist="nodownload noplaybackrate nofullscreen"
+                            <video class="img-fluid" autoplay muted loop
                                 style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
                             </video>
@@ -396,25 +392,25 @@
                         <div class="custom-tabs-content">
                             <div class="peel_stick">
                                 <h4>Peel and stick</h4>
-                                <video class="img-fluid" autoplay muted>
+                                <video class="img-fluid" autoplay muted loop>
                                     <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
                                 <h4>Adjust to position</h4>
-                                <video class="img-fluid" autoplay muted>
+                                <video class="img-fluid" autoplay muted loop>
                                     <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
                                 <h4>Leaves no marks</h4>
-                                <video class="img-fluid" autoplay muted>
+                                <video class="img-fluid" autoplay muted loop>
                                     <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
                                 <h4>Move, Again and Again</h4>
-                                <video class="img-fluid" autoplay muted>
+                                <video class="img-fluid" autoplay muted loop>
                                     <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
