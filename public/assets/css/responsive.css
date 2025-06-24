@@ -52,6 +52,7 @@
 
     .AboutSliderParent {
         padding: 24px 10px;
+        width: 70%;
     }
 
     .AboutSliderParent h5 {
@@ -478,10 +479,16 @@
     .AboutSliderParent {
         padding: 4px;
         text-align: center;
+        width: 43%;
     }
 
     .AboutSliderParent h5 {
-        font-size: 12px;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .AboutSliderParent p {
+        text-align: center;
     }
 
     .whychoose .RightSliderChild.whyChooseUs p {
@@ -576,7 +583,7 @@
 
     .heading-3 {
         font-size: 25px;
-        text-align: start;
+        /* text-align: start; */
     }
 
     .custom-tabs-content {
@@ -614,12 +621,6 @@
         width: 100% !important;
         padding: 10px 0;
         text-align: center !important;
-    }
-
-    .AboutSliderParent {
-        padding: 10px 10px;
-        text-align: start;
-        width: 90%;
     }
 
     .HomeFrameSlider_framesSliderWrp {
@@ -702,9 +703,9 @@
         margin-bottom: 30px;
     }
 
-    section.about-section.py.sofa-covered .row {
+    /* section.about-section.py.sofa-covered .row {
         flex-direction: column-reverse;
-    }
+    } */
 
     section.about-section.py.sofa-covered img {
         width: 100%;
@@ -1285,6 +1286,19 @@
     .peel_stick video {
         width: 80%;
     }
+
+    .AboutSliderParent {
+        text-align: center;
+        width: 35%;
+    }
+
+    .AboutSliderParent h5 {
+        font-size: 15px;
+    }
+
+    .AboutSliderParent p {
+        font-size: 13px;
+    }
 }
 
 
@@ -1584,6 +1598,11 @@
 
     .grid-2 {
         gap: 73px;
+    }
+
+    .AboutSliderParent {
+        text-align: center;
+        width: 44%;
     }
 
 }

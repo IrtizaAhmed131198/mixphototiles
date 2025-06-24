@@ -4,18 +4,18 @@
 
 
 @push('css')
-<style>
-    /* @keyframes circle {
-        0% {
-            transform: rotate(0deg);
-        }
+    <style>
+        /* @keyframes circle {
+            0% {
+                transform: rotate(0deg);
+            }
 
-        100% {
-            transform: rotate(360deg);
+            100% {
+                transform: rotate(360deg);
 
-        }
-    } */
-</style>
+            }
+        } */
+    </style>
 @endpush
 
 @section('content')
@@ -429,61 +429,53 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-12 col-md-12 col-12">
-                    <div class="parentRightAbout text-center">
-                        <div class="RightSliderChild">
-                            <h2 class="heading-3"><span class="sec-2-span d-block">{{ get_setting('site_name') }}</span>
-                                Have Got You Covered</h2>
-                        </div>
-                        <div class="RightSliderChild">
-                            <div class="swiper AboutSliderwel">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <div class="AboutSliderParent">
-                                            <h5><b>No Nails, No marks, Clean walls</b></h5>
-                                            <p>Change your mind? Move it, love it, leave no mark</p>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="AboutSliderParent">
-                                            <h5><b>Luxury walls for everyone</b></h5>
-                                            <p>Thoughtfully priced for every class, every home</p>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="AboutSliderParent">
-                                            <h5><b>Super light weight & Premium</b></h5>
-                                            <p>Even kids can carry it. No damage, when dropped</p>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="AboutSliderParent">
-                                            <h5><b>Happiness Guaranteed</b></h5>
-                                            <p>We measure our success by the joy we bring to your heart</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="button" class="btn custom-btn filled mt-5"
-                                onclick="window.location.href='{{ route('design') }}';">
-                                <svg width="20" height="20" viewBox="0 0 20 20"
-                                    class="w-em h-em me-1 ttl-20 mb-0" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="currentColor" transform="translate(-2 -2)"
-                                        d="M10,16.5,16,12,10,7.5ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z">
-                                    </path>
-                                </svg>
-                                Design your frame
-                            </button>
-                        </div>
+                    <div class="parentRightAbout text-center mb-5">
+                        <h2 class="heading-3">
+                            <span class="sec-2-span d-block">{{ get_setting('site_name') }}</span>
+                            Have Got You Covered
+                        </h2>
                     </div>
                 </div>
-                {{-- <div class="col-lg-5 col-md-5 col-12">
-                    <figure class="sofa-img-setting">
-                        <img src="{{ asset('assets/images/home-company-img.png') }}" class="img-fluid" alt="">
-                        <img src="{{ asset('assets/images/home-company-img-mob.webp') }}" class="img-fluid mobile-sofa-img-setting"
-                            alt="" style="display: none">
-                    </figure>
-                </div> --}}
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="AboutSliderParent p-3 h-100">
+                        <h5><b>No Nails, No marks, Clean walls</b></h5>
+                        <p>Change your mind? Move it, love it, leave no mark</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="AboutSliderParent p-3 h-100">
+                        <h5><b>Luxury walls for everyone</b></h5>
+                        <p>Thoughtfully priced for every class, every home</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="AboutSliderParent p-3 h-100">
+                        <h5><b>Super light weight & Premium</b></h5>
+                        <p>Even kids can carry it. No damage, when dropped</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="AboutSliderParent p-3 h-100">
+                        <h5><b>Happiness Guaranteed</b></h5>
+                        <p>We measure our success by the joy we bring to your heart</p>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="text-center mt-5">
+                        <button type="button" class="btn custom-btn filled"
+                            onclick="window.location.href='{{ route('design') }}';">
+                            <svg width="20" height="20" viewBox="0 0 20 20" class="w-em h-em me-1 ttl-20 mb-0"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill="currentColor" transform="translate(-2 -2)"
+                                    d="M10,16.5,16,12,10,7.5ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z">
+                                </path>
+                            </svg>
+                            Design your frame
+                        </button>
+                    </div>
+                </div>
             </div>
+        </div>
     </section>
 
     <section class="text-center text-white HomeFrameSlider_framesSliderWrp position-relative  scroll-fade py">
@@ -825,7 +817,5 @@
                 });
             });
         });
-
-
     </script>
 @endpush
