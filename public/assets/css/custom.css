@@ -4008,9 +4008,8 @@ input[type="radio"]:checked {
 }
 
 button.btn-close.text-reset {
-    margin-top: 5px;
+    margin-top: -37px;
 }
-
 
 .topmenu-logo {
     display: flex;
@@ -4162,6 +4161,10 @@ section.custom-tabs-section.py {
 
 .view-grand-total-1 {
     display: none;
+}
+
+.offcanvas-header {
+    padding-bottom: 1px !important;
 }
 
 /* new css end */

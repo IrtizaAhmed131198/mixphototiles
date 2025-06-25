@@ -1382,6 +1382,10 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+
+    .offcanvas-header {
+        padding-bottom: 11px !important;
+    }
 }
 
 
@@ -1720,6 +1724,10 @@
 
     ul.LeftSidebar_designTool button p {
         font-size: 9px;
+    }
+
+    .offcanvas-header {
+        padding-bottom: 11px !important;
     }
 
 }
