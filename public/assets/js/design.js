@@ -434,7 +434,8 @@ function updateGrandTotal() {
                 });
 
                 // Update the grand total in UI
-                document.getElementById('grand-total').textContent = '₹' + grandTotal;
+                document.getElementById('grand-total-1').textContent = '₹' + grandTotal;
+                document.getElementById('grand-total-2').textContent = '₹' + grandTotal;
             } else {
                 console.error('Failed to fetch frame configurations');
             }

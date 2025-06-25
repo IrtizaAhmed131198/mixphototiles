@@ -135,235 +135,196 @@
         <section class="FrameDesignSection" style="display: {{ count($images) > 0 ? 'block' : 'none' }};">
             <div class="wrapper">
                 <div class="grid-parent">
-                    <div class="grid-1">
-                        <ul class="LeftSidebar_designTool">
-                            <!-- 1 dropdown -->
-                            <li class="designToolPropertiesChild btn-group dropend">
-
-                                <button type="button" class="" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                        viewBox="0 0 22 22" class="w-em h-em LeftSidebar_designIcon__3UjGH">
-                                        <g transform="translate(1 1)">
-                                            <line x1="20" transform="translate(0 4)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></line>
-                                            <line x1="20" transform="translate(0 16)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></line>
-                                            <line y2="20" transform="translate(4)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></line>
-                                            <line y2="20" transform="translate(16)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></line>
-                                        </g>
-                                    </svg>
-                                    <p class="para">Frame</p>
-                                </button>
-                                <ul class="designToolPropertiesLists dropdown-menu frame-tab design_1">
-                                    <!-- Dropdown menu links -->
-                                    <div class="menuParent">
-                                        <p class="propertyTitle">
-                                            Select Frame
-                                        </p>
-                                    </div>
-
-                                    <li type="button" class="parentProperties frame-change dropdown-item li-border-color "
-                                        data-design="classic-card-design" data-price="0" data-text="Border">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704186592728.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Border</p>
-                                            <p class="propertyPrize" style="display: none">$0</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties frame-change dropdown-item"
-                                        data-design="bold-card-design" data-price="0" data-text="NoBorder">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704186603683.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">No Border</p>
-                                            <p class="propertyPrize" style="display: none">$0</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties frame-change dropdown-item"
-                                        data-design="frameless-card-design" data-price="0" data-text="Frameless">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1704186603681.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Frameless</p>
-                                            <p class="propertyPrize" style="display: none">$0</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- 1 dropdown -->
-
-                            <!-- 2 dropdown -->
-                            <li class="designToolPropertiesChild btn-group dropend">
-                                <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="21.992" height="22"
-                                        viewBox="0 0 21.992 22" class="w-em h-em LeftSidebar_designIcon__3UjGH">
-                                        <g transform="translate(1 1)">
-                                            <circle cx="0.5" cy="0.5" r="0.5" transform="translate(11 4)"
-                                                fill="none" stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2"></circle>
-                                            <circle cx="0.5" cy="0.5" r="0.5" transform="translate(15 8)"
-                                                fill="none" stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2"></circle>
-                                            <circle cx="0.5" cy="0.5" r="0.5" transform="translate(6 5)"
-                                                fill="none" stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2"></circle>
-                                            <circle cx="0.5" cy="0.5" r="0.5" transform="translate(4 10)"
-                                                fill="none" stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2"></circle>
-                                            <path
-                                                d="M12,2a10,10,0,0,0,0,20,1.652,1.652,0,0,0,1.648-1.688,1.712,1.712,0,0,0-.437-1.125,1.5,1.5,0,0,1-.438-1.125,1.64,1.64,0,0,1,1.668-1.668h2a5.576,5.576,0,0,0,5.555-5.554C21.965,6.012,17.461,2,12,2Z"
-                                                transform="translate(-2 -2)" fill="none" stroke="currentColor"
-                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                                        </g>
-                                    </svg>
-                                    <p class="para">Color</p>
-                                </button>
-                                <ul class="designToolPropertiesLists dropdown-menu design_2">
-                                    <!-- Dropdown menu links -->
-                                    <div class="menuParent">
-                                        <p class="propertyTitle">
-                                            Select Color
-                                        </p>
-                                    </div>
-
-                                    @include('partials.custom-css')
-
-                                </ul>
-                            </li>
-                            <!-- 2 dropdown -->
-
-                            <!-- 5 dropdown -->
-                            @if (get_setting('led') == 1)
+                    <div class="mobile-toolbar-container">
+                        <div class="grid-1">
+                            <ul class="LeftSidebar_designTool">
+                                <!-- 1 dropdown -->
                                 <li class="designToolPropertiesChild btn-group dropend">
-                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img width="20.414" height="20.414" class="LeftSidebar img-fluid"
-                                            src="{{ asset('assets/images/led.svg') }}" alt="">
-                                        <p class="para">LED</p>
+
+                                    <button type="button" class="" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                            viewBox="0 0 22 22" class="w-em h-em LeftSidebar_designIcon__3UjGH">
+                                            <g transform="translate(1 1)">
+                                                <line x1="20" transform="translate(0 4)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></line>
+                                                <line x1="20" transform="translate(0 16)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></line>
+                                                <line y2="20" transform="translate(4)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></line>
+                                                <line y2="20" transform="translate(16)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></line>
+                                            </g>
+                                        </svg>
+                                        <p class="para">Frame</p>
                                     </button>
-                                    <ul class="designToolPropertiesLists dropdown-menu design_3">
+                                    <ul class="designToolPropertiesLists dropdown-menu frame-tab design_1">
                                         <!-- Dropdown menu links -->
                                         <div class="menuParent">
                                             <p class="propertyTitle">
-                                                Select LED
+                                                Select Frame
                                             </p>
                                         </div>
 
-                                        @foreach ($led as $key => $val)
-                                            @php
-                                                $name = strtolower(str_replace(' ', '-', $val->name));
-                                            @endphp
-                                            <li type="button"
-                                                class="parentProperties dropdown-item frame-led {{ $key == 0 ? 'li-border-color' : '' }}"
-                                                data-price="{{ $val->price }}" data-val="{{ $name }}">
-                                                <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72"
-                                                        class="LeftSidebar" src="{{ asset($val->image) }}">
-                                                </figure>
-                                                <div class="PropertiesRightChild">
-                                                    <p class="propertyName">{{ $val->name }}</p>
-                                                    {{-- <p class="propertyPrize">Rs.{{ $val->price }}</p> --}}
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endif
-                            <!-- 5 dropdown -->
-
-                            <!-- 3 dropdown -->
-                            <li class="designToolPropertiesChild btn-group dropend">
-                                <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20.414" height="20.414"
-                                        viewBox="0 0 20.414 20.414" class="w-em h-em LeftSidebar_designIcon__3UjGH">
-                                        <g transform="translate(1 1.414)">
-                                            <path d="M21,3,9,15" transform="translate(-3 -3)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></path>
-                                            <path d="M12,3H3V21H21V12" transform="translate(-3 -3)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></path>
-                                            <path d="M16,3h5V8" transform="translate(-3 -3)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></path>
-                                            <path d="M14,15H9V10" transform="translate(-3 -3)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></path>
-                                        </g>
-                                    </svg>
-                                    <p class="para">Size</p>
-                                </button>
-                                <ul class="designToolPropertiesLists dropdown-menu design_4">
-                                    <!-- Dropdown menu links -->
-                                    <div class="menuParent">
-                                        <p class="propertyTitle">
-                                            Select Size (Inches)
-                                        </p>
-                                    </div>
-
-                                    @foreach ($sizes as $key => $val)
-                                        <li type="button"
-                                            class="parentProperties dropdown-item frame-size {{ $key == 0 ? 'li-border-color' : '' }}"
-                                            data-height="{{ $val->height }}px" data-width="{{ $val->width }}px"
-                                            data-max-width="500px" data-price="{{ $val->price }}"
-                                            data-val='{{ $val->label }}'>
+                                        <li type="button" class="parentProperties frame-change dropdown-item li-border-color "
+                                            data-design="classic-card-design" data-price="0" data-text="Border">
                                             <figure class="PropertiesleftChild">
                                                 <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                    src="{{ asset($val->image) }}">
+                                                    src="{{ asset('assets/images/1704186592728.png') }}">
                                             </figure>
                                             <div class="PropertiesRightChild">
-                                                <p class="propertyName">{{ $val->label }}</p>
-                                                <p class="propertyPrize">Rs.{{ $val->price }}</p>
+                                                <p class="propertyName">Border</p>
+                                                <p class="propertyPrize" style="display: none">$0</p>
                                             </div>
                                         </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                            <!-- 3 dropdown -->
 
-                            <!-- 4 dropdown -->
-                            @if (get_setting('finish') == 1)
-                                <li class="designToolPropertiesChild btn-group dropend" id="frame-finish-li">
+                                        <li type="button" class="parentProperties frame-change dropdown-item"
+                                            data-design="bold-card-design" data-price="0" data-text="NoBorder">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset('assets/images/1704186603683.png') }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <p class="propertyName">No Border</p>
+                                                <p class="propertyPrize" style="display: none">$0</p>
+                                            </div>
+                                        </li>
+
+                                        <li type="button" class="parentProperties frame-change dropdown-item"
+                                            data-design="frameless-card-design" data-price="0" data-text="Frameless">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset('assets/images/1704186603681.png') }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <p class="propertyName">Frameless</p>
+                                                <p class="propertyPrize" style="display: none">$0</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- 1 dropdown -->
+
+                                <!-- 2 dropdown -->
+                                <li class="designToolPropertiesChild btn-group dropend">
                                     <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 20 20" class="w-em h-em LeftSidebar_designIcon__3UjGH">
-                                            <path
-                                                d="M12,3,10.1,8.8a2,2,0,0,1-1.287,1.288L3,12l5.8,1.9a2,2,0,0,1,1.288,1.287L12,21l1.9-5.8a2,2,0,0,1,1.287-1.288L21,12l-5.8-1.9a2,2,0,0,1-1.288-1.287Z"
-                                                transform="translate(-2 -2)" fill="none" stroke="currentColor"
-                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="21.992" height="22"
+                                            viewBox="0 0 21.992 22" class="w-em h-em LeftSidebar_designIcon__3UjGH">
+                                            <g transform="translate(1 1)">
+                                                <circle cx="0.5" cy="0.5" r="0.5" transform="translate(11 4)"
+                                                    fill="none" stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"></circle>
+                                                <circle cx="0.5" cy="0.5" r="0.5" transform="translate(15 8)"
+                                                    fill="none" stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"></circle>
+                                                <circle cx="0.5" cy="0.5" r="0.5" transform="translate(6 5)"
+                                                    fill="none" stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"></circle>
+                                                <circle cx="0.5" cy="0.5" r="0.5" transform="translate(4 10)"
+                                                    fill="none" stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"></circle>
+                                                <path
+                                                    d="M12,2a10,10,0,0,0,0,20,1.652,1.652,0,0,0,1.648-1.688,1.712,1.712,0,0,0-.437-1.125,1.5,1.5,0,0,1-.438-1.125,1.64,1.64,0,0,1,1.668-1.668h2a5.576,5.576,0,0,0,5.555-5.554C21.965,6.012,17.461,2,12,2Z"
+                                                    transform="translate(-2 -2)" fill="none" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                            </g>
                                         </svg>
-                                        <p class="para">Finish</p>
+                                        <p class="para">Color</p>
                                     </button>
-                                    <ul class="designToolPropertiesLists dropdown-menu design_5">
+                                    <ul class="designToolPropertiesLists dropdown-menu design_2">
                                         <!-- Dropdown menu links -->
                                         <div class="menuParent">
                                             <p class="propertyTitle">
-                                                Select Finish
+                                                Select Color
                                             </p>
                                         </div>
 
-                                        @foreach ($finish as $key => $val)
+                                        @include('partials.custom-css')
+
+                                    </ul>
+                                </li>
+                                <!-- 2 dropdown -->
+
+                                <!-- 5 dropdown -->
+                                @if (get_setting('led') == 1)
+                                    <li class="designToolPropertiesChild btn-group dropend">
+                                        <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img width="20.414" height="20.414" class="LeftSidebar img-fluid"
+                                                src="{{ asset('assets/images/led.svg') }}" alt="">
+                                            <p class="para">LED</p>
+                                        </button>
+                                        <ul class="designToolPropertiesLists dropdown-menu design_3">
+                                            <!-- Dropdown menu links -->
+                                            <div class="menuParent">
+                                                <p class="propertyTitle">
+                                                    Select LED
+                                                </p>
+                                            </div>
+
+                                            @foreach ($led as $key => $val)
+                                                @php
+                                                    $name = strtolower(str_replace(' ', '-', $val->name));
+                                                @endphp
+                                                <li type="button"
+                                                    class="parentProperties dropdown-item frame-led {{ $key == 0 ? 'li-border-color' : '' }}"
+                                                    data-price="{{ $val->price }}" data-val="{{ $name }}">
+                                                    <figure class="PropertiesleftChild">
+                                                        <img alt="drawer" width="72" height="72"
+                                                            class="LeftSidebar" src="{{ asset($val->image) }}">
+                                                    </figure>
+                                                    <div class="PropertiesRightChild">
+                                                        <p class="propertyName">{{ $val->name }}</p>
+                                                        {{-- <p class="propertyPrize">Rs.{{ $val->price }}</p> --}}
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endif
+                                <!-- 5 dropdown -->
+
+                                <!-- 3 dropdown -->
+                                <li class="designToolPropertiesChild btn-group dropend">
+                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20.414" height="20.414"
+                                            viewBox="0 0 20.414 20.414" class="w-em h-em LeftSidebar_designIcon__3UjGH">
+                                            <g transform="translate(1 1.414)">
+                                                <path d="M21,3,9,15" transform="translate(-3 -3)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></path>
+                                                <path d="M12,3H3V21H21V12" transform="translate(-3 -3)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></path>
+                                                <path d="M16,3h5V8" transform="translate(-3 -3)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></path>
+                                                <path d="M14,15H9V10" transform="translate(-3 -3)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"></path>
+                                            </g>
+                                        </svg>
+                                        <p class="para">Size</p>
+                                    </button>
+                                    <ul class="designToolPropertiesLists dropdown-menu design_4">
+                                        <!-- Dropdown menu links -->
+                                        <div class="menuParent">
+                                            <p class="propertyTitle">
+                                                Select Size (Inches)
+                                            </p>
+                                        </div>
+
+                                        @foreach ($sizes as $key => $val)
                                             <li type="button"
-                                                class="parentProperties dropdown-item frame-finish {{ $key == 0 ? 'li-border-color' : '' }}"
-                                                data-price="{{ $val->price }}" data-val="{{ $val->label }}">
+                                                class="parentProperties dropdown-item frame-size {{ $key == 0 ? 'li-border-color' : '' }}"
+                                                data-height="{{ $val->height }}px" data-width="{{ $val->width }}px"
+                                                data-max-width="500px" data-price="{{ $val->price }}"
+                                                data-val='{{ $val->label }}'>
                                                 <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72"
-                                                        class="LeftSidebar"
-                                                        src="{{ asset('assets/images/1701851447650.png') }}">
+                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                        src="{{ asset($val->image) }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
                                                     <p class="propertyName">{{ $val->label }}</p>
@@ -371,108 +332,148 @@
                                                 </div>
                                             </li>
                                         @endforeach
-
-                                        {{-- <li type="button" class="parentProperties dropdown-item frame-finish li-border-color"
-                                        data-price="399" data-val="Normal">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1701851447650.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Normal</p>
-                                            <p class="propertyPrize">$399</p>
-                                        </div>
-                                    </li>
-
-                                    <li type="button" class="parentProperties dropdown-item frame-finish"
-                                        data-price="453" data-val="Matte">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1701851447650.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Matte</p>
-                                            <p class="propertyPrize">$453</p>
-                                        </div>
-                                    </li>
-                                    <li type="button" class="parentProperties dropdown-item frame-finish"
-                                        data-price="492" data-val="Gloss">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1701851447650.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Gloss</p>
-                                            <p class="propertyPrize">$492</p>
-                                        </div>
-                                    </li>
-                                    <li type="button" class="parentProperties dropdown-item frame-finish"
-                                        data-price="537" data-val="Canvas">
-                                        <figure class="PropertiesleftChild">
-                                            <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                src="{{ asset('assets/images/1701851447650.png') }}">
-                                        </figure>
-                                        <div class="PropertiesRightChild">
-                                            <p class="propertyName">Canvas</p>
-                                            <p class="propertyPrize">$537</p>
-                                        </div>
-                                    </li> --}}
                                     </ul>
                                 </li>
-                            @endif
-                            <!-- 4 dropdown -->
+                                <!-- 3 dropdown -->
 
-                            <!-- 6 dropdown -->
-                            <li class="designToolPropertiesChild">
-                                <button type="button" id="openCropModal">
-                                    <label class="cabinet">
-                                        <svg id="item-img-output" xmlns="http://www.w3.org/2000/svg" width="22"
-                                            height="22" viewBox="0 0 22 22"
-                                            class="w-em h-em LeftSidebar_designIcon__3UjGH">
-                                            <g transform="translate(1 1)">
-                                                <path d="M6,2V16a2,2,0,0,0,2,2H22" transform="translate(-2 -2)"
-                                                    fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2"></path>
-                                                <path d="M18,22V8a2,2,0,0,0-2-2H2" transform="translate(-2 -2)"
-                                                    fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2"></path>
-                                            </g>
-                                        </svg>
-                                        <p class="para">Crop</p>
-                                    </label>
-                                </button>
-                            </li>
+                                <!-- 4 dropdown -->
+                                @if (get_setting('finish') == 1)
+                                    <li class="designToolPropertiesChild btn-group dropend" id="frame-finish-li">
+                                        <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 20 20" class="w-em h-em LeftSidebar_designIcon__3UjGH">
+                                                <path
+                                                    d="M12,3,10.1,8.8a2,2,0,0,1-1.287,1.288L3,12l5.8,1.9a2,2,0,0,1,1.288,1.287L12,21l1.9-5.8a2,2,0,0,1,1.287-1.288L21,12l-5.8-1.9a2,2,0,0,1-1.288-1.287Z"
+                                                    transform="translate(-2 -2)" fill="none" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                            </svg>
+                                            <p class="para">Finish</p>
+                                        </button>
+                                        <ul class="designToolPropertiesLists dropdown-menu design_5">
+                                            <!-- Dropdown menu links -->
+                                            <div class="menuParent">
+                                                <p class="propertyTitle">
+                                                    Select Finish
+                                                </p>
+                                            </div>
 
-                            <li class="designToolPropertiesChild">
-                                <button type="button" id="reset-image">
-                                    <label class="cabinet">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                            viewBox="0 0 24 24" class="w-em h-em LeftSidebar_designIcon__3UjGH">
-                                            <path fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                d="M1 4v6h6M3.51 9a9 9 0 1 0 .49-2" />
-                                        </svg>
-                                        <p class="para" title="Reset to original">Reset</p>
-                                    </label>
-                                </button>
-                            </li>
+                                            @foreach ($finish as $key => $val)
+                                                <li type="button"
+                                                    class="parentProperties dropdown-item frame-finish {{ $key == 0 ? 'li-border-color' : '' }}"
+                                                    data-price="{{ $val->price }}" data-val="{{ $val->label }}">
+                                                    <figure class="PropertiesleftChild">
+                                                        <img alt="drawer" width="72" height="72"
+                                                            class="LeftSidebar"
+                                                            src="{{ asset('assets/images/1701851447650.png') }}">
+                                                    </figure>
+                                                    <div class="PropertiesRightChild">
+                                                        <p class="propertyName">{{ $val->label }}</p>
+                                                        <p class="propertyPrize">Rs.{{ $val->price }}</p>
+                                                    </div>
+                                                </li>
+                                            @endforeach
 
-                            <!-- partial:index.partial.html -->
-                            <!-- <div class="container mt-4">
-                                                                    <div class="row">
-                                                                        <div class="col-12 text-center">
-                                                                            <label class="cabinet">
-                                                                                <figure>
-                                                                                    <img src="" class="gambar img-fluid img-thumbnail"
-                                                                                        id="item-img-output" />
-                                                                                    <figcaption><i class="fa fa-camera"></i></figcaption>
-                                                                                </figure>
-                                                                                <input type="file" class="item-img file" name="file_photo" />
-                                                                            </label>
+                                            {{-- <li type="button" class="parentProperties dropdown-item frame-finish li-border-color"
+                                            data-price="399" data-val="Normal">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset('assets/images/1701851447650.png') }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <p class="propertyName">Normal</p>
+                                                <p class="propertyPrize">$399</p>
+                                            </div>
+                                        </li>
+
+                                        <li type="button" class="parentProperties dropdown-item frame-finish"
+                                            data-price="453" data-val="Matte">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset('assets/images/1701851447650.png') }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <p class="propertyName">Matte</p>
+                                                <p class="propertyPrize">$453</p>
+                                            </div>
+                                        </li>
+                                        <li type="button" class="parentProperties dropdown-item frame-finish"
+                                            data-price="492" data-val="Gloss">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset('assets/images/1701851447650.png') }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <p class="propertyName">Gloss</p>
+                                                <p class="propertyPrize">$492</p>
+                                            </div>
+                                        </li>
+                                        <li type="button" class="parentProperties dropdown-item frame-finish"
+                                            data-price="537" data-val="Canvas">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="drawer" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset('assets/images/1701851447650.png') }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <p class="propertyName">Canvas</p>
+                                                <p class="propertyPrize">$537</p>
+                                            </div>
+                                        </li> --}}
+                                        </ul>
+                                    </li>
+                                @endif
+                                <!-- 4 dropdown -->
+
+                                <!-- 6 dropdown -->
+                                <li class="designToolPropertiesChild">
+                                    <button type="button" id="openCropModal">
+                                        <label class="cabinet">
+                                            <svg id="item-img-output" xmlns="http://www.w3.org/2000/svg" width="22"
+                                                height="22" viewBox="0 0 22 22"
+                                                class="w-em h-em LeftSidebar_designIcon__3UjGH">
+                                                <g transform="translate(1 1)">
+                                                    <path d="M6,2V16a2,2,0,0,0,2,2H22" transform="translate(-2 -2)"
+                                                        fill="none" stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"></path>
+                                                    <path d="M18,22V8a2,2,0,0,0-2-2H2" transform="translate(-2 -2)"
+                                                        fill="none" stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"></path>
+                                                </g>
+                                            </svg>
+                                            <p class="para">Crop</p>
+                                        </label>
+                                    </button>
+                                </li>
+
+                                <li class="designToolPropertiesChild">
+                                    <button type="button" id="reset-image">
+                                        <label class="cabinet">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                viewBox="0 0 24 24" class="w-em h-em LeftSidebar_designIcon__3UjGH">
+                                                <path fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M1 4v6h6M3.51 9a9 9 0 1 0 .49-2" />
+                                            </svg>
+                                            <p class="para" title="Reset to original">Reset</p>
+                                        </label>
+                                    </button>
+                                </li>
+
+                                <!-- partial:index.partial.html -->
+                                <!-- <div class="container mt-4">
+                                                                        <div class="row">
+                                                                            <div class="col-12 text-center">
+                                                                                <label class="cabinet">
+                                                                                    <figure>
+                                                                                        <img src="" class="gambar img-fluid img-thumbnail"
+                                                                                            id="item-img-output" />
+                                                                                        <figcaption><i class="fa fa-camera"></i></figcaption>
+                                                                                    </figure>
+                                                                                    <input type="file" class="item-img file" name="file_photo" />
+                                                                                </label>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div> -->
-                            <!-- partial -->
+                                                                    </div> -->
+                                <!-- partial -->
 
 
 
@@ -483,77 +484,78 @@
 
 
 
-                            <!-- 7 dropdown -->
+                                <!-- 7 dropdown -->
 
-                            <!-- 8 dropdown -->
-                            <li class="designToolPropertiesChild btn-group dropend">
-                                <button type="button" id="remove-image">
-                                    <svg width="15.9" height="17.5" class="w-em h-em LeftSidebar_designIcon__3UjGH"
-                                        viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
-                                        <g transform="translate(-2.25 -1.25)">
-                                            <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="1.5"></path>
-                                            <path d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6"
-                                                transform="translate(-0.4 -0.8)" fill="none" stroke="currentColor"
-                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-                                            </path>
-                                            <path d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2"
-                                                transform="translate(-1)" fill="none" stroke="currentColor"
-                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-                                            </path>
-                                            <line y2="5" transform="translate(8.2 9)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="1.5">
-                                            </line>
-                                            <line y2="5" transform="translate(12.2 9)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="1.5">
-                                            </line>
-                                        </g>
-                                    </svg>
-                                    <p class="para">Remove</p>
-                                </button>
-                            </li>
-                            <!-- 8 dropdown -->
-
-                            <!-- 9 dropdown -->
-                            {{-- <li class="designToolPropertiesChild btn-group dropend">
-                                <button class="d-sm-none">
-                                    <svg class="LeftSidebar_designIcon__AcLPk" xmlns="http://www.w3.org/2000/svg"
-                                        width="20" height="20" viewBox="0 0 20 20">
-                                        <g id="Group_2" data-name="Group 2" transform="translate(-762 -1646)">
-                                            <g id="Rectangle_1" data-name="Rectangle 1" transform="translate(762 1646)"
-                                                fill="none" stroke="currentColor" stroke-width="2">
-                                                <rect width="9" height="9" rx="1" stroke="none">
-                                                </rect>
-                                                <rect x="1" y="1" width="7" height="7" fill="none"></rect>
+                                <!-- 8 dropdown -->
+                                <li class="designToolPropertiesChild btn-group dropend">
+                                    <button type="button" id="remove-image">
+                                        <svg width="15.9" height="17.5" class="w-em h-em LeftSidebar_designIcon__3UjGH"
+                                            viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
+                                            <g transform="translate(-2.25 -1.25)">
+                                                <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="1.5"></path>
+                                                <path d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6"
+                                                    transform="translate(-0.4 -0.8)" fill="none" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                                                </path>
+                                                <path d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2"
+                                                    transform="translate(-1)" fill="none" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                                                </path>
+                                                <line y2="5" transform="translate(8.2 9)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="1.5">
+                                                </line>
+                                                <line y2="5" transform="translate(12.2 9)" fill="none"
+                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="1.5">
+                                                </line>
                                             </g>
-                                            <g id="Rectangle_3" data-name="Rectangle 3" transform="translate(762 1657)"
-                                                fill="none" stroke="currentColor" stroke-width="2">
-                                                <rect width="9" height="9" rx="1" stroke="none">
-                                                </rect>
-                                                <rect x="1" y="1" width="7" height="7" fill="none"></rect>
+                                        </svg>
+                                        <p class="para">Remove</p>
+                                    </button>
+                                </li>
+                                <!-- 8 dropdown -->
+
+                                <!-- 9 dropdown -->
+                                {{-- <li class="designToolPropertiesChild btn-group dropend">
+                                    <button class="d-sm-none">
+                                        <svg class="LeftSidebar_designIcon__AcLPk" xmlns="http://www.w3.org/2000/svg"
+                                            width="20" height="20" viewBox="0 0 20 20">
+                                            <g id="Group_2" data-name="Group 2" transform="translate(-762 -1646)">
+                                                <g id="Rectangle_1" data-name="Rectangle 1" transform="translate(762 1646)"
+                                                    fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect width="9" height="9" rx="1" stroke="none">
+                                                    </rect>
+                                                    <rect x="1" y="1" width="7" height="7" fill="none"></rect>
+                                                </g>
+                                                <g id="Rectangle_3" data-name="Rectangle 3" transform="translate(762 1657)"
+                                                    fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect width="9" height="9" rx="1" stroke="none">
+                                                    </rect>
+                                                    <rect x="1" y="1" width="7" height="7" fill="none"></rect>
+                                                </g>
+                                                <g id="Rectangle_2" data-name="Rectangle 2" transform="translate(773 1646)"
+                                                    fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect width="9" height="9" rx="1" stroke="none">
+                                                    </rect>
+                                                    <rect x="1" y="1" width="7" height="7" fill="none"></rect>
+                                                </g>
+                                                <g id="Rectangle_4" data-name="Rectangle 4" transform="translate(773 1657)"
+                                                    fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect width="9" height="9" rx="1" stroke="none">
+                                                    </rect>
+                                                    <rect x="1" y="1" width="7" height="7" fill="none"></rect>
+                                                </g>
                                             </g>
-                                            <g id="Rectangle_2" data-name="Rectangle 2" transform="translate(773 1646)"
-                                                fill="none" stroke="currentColor" stroke-width="2">
-                                                <rect width="9" height="9" rx="1" stroke="none">
-                                                </rect>
-                                                <rect x="1" y="1" width="7" height="7" fill="none"></rect>
-                                            </g>
-                                            <g id="Rectangle_4" data-name="Rectangle 4" transform="translate(773 1657)"
-                                                fill="none" stroke="currentColor" stroke-width="2">
-                                                <rect width="9" height="9" rx="1" stroke="none">
-                                                </rect>
-                                                <rect x="1" y="1" width="7" height="7" fill="none"></rect>
-                                            </g>
-                                        </g>
-                                    </svg>
-                                    <p class="para">More</p>
-                                </button>
-                            </li> --}}
-                            <!-- 9 dropdown -->
-                        </ul>
+                                        </svg>
+                                        <p class="para">More</p>
+                                    </button>
+                                </li> --}}
+                                <!-- 9 dropdown -->
+                            </ul>
+                        </div>
                     </div>
                     <div class="modal fade customcroppopup" id="cropImagePop" tabindex="-1"
                         aria-labelledby="myModalLabel" aria-hidden="true">
@@ -578,6 +580,34 @@
                         </div>
                     </div>
                     <div class="grid-4">
+                        <div class="Right-Sidebar-footer view-grand-total-1">
+                            <div class="GrandTotal">
+                                <p class="">Grand Total</p>
+                                <h6 class="" id="grand-total-1" data-val="399">₹399</h6>
+                            </div>
+                            <button type="button" class="btn custom-btn filled" id="add-to-cart"> Add to Cart
+                                <svg width="21" height="21" viewBox="0 0 21 21"
+                                    class="w-em h-em RightSidebar_addtocart_btn_icon__nIKa3"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g transform="translate(-1336 -29)">
+                                        <g transform="translate(1335.75 28.891)">
+                                            <path
+                                                d="M5.583,2,3,5.444V19.219c.744-.008.771,0,1.722,0H18.5c0-1.634,0-.771,0-1.722V5.444L15.914,2Z"
+                                                transform="translate(0)" fill="none" stroke="currentColor"
+                                                stroke-width="2"></path>
+                                            <line x2="15" transform="translate(3 6)" fill="none"
+                                                stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="2"></line>
+                                            <path d="M14.888,10A3.444,3.444,0,1,1,8,10"
+                                                transform="translate(-0.695 -1.112)" fill="none"
+                                                stroke="#9d0b78" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2">
+                                            </path>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
 
                         <div class="grid-2">
                             <span class="caption-crop">If needed, use the Crop button to adjust your pictures</span>
@@ -837,10 +867,10 @@
                                         <h6 class="prizing" id="price-show" data-val="399">₹399</h6>
                                     </div>
                                 </div>
-                                <div class="Right-Sidebar-footer">
+                                <div class="Right-Sidebar-footer view-grand-total-2">
                                     <div class="GrandTotal">
                                         <p class="">Grand Total</p>
-                                        <h6 class="" id="grand-total" data-val="399">₹399</h6>
+                                        <h6 class="" id="grand-total-2" data-val="399">₹399</h6>
                                     </div>
                                     <button type="button" class="btn custom-btn filled" id="add-to-cart"> Add to Cart
                                         <svg width="21" height="21" viewBox="0 0 21 21"

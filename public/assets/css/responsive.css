@@ -123,15 +123,27 @@
     .nails-tabs button {
         font-size: 19px;
     }
+
+    .view-grand-total-1 {
+        display: none;
+    }
 }
 
 @media (max-width: 1232px) {
     .customTabsContent {
         height: 404px;
     }
+
+    .view-grand-total-1 {
+        display: none;
+    }
 }
 
 @media (max-width: 1199px) {
+    .view-grand-total-1 {
+        display: none;
+    }
+
     .main_logo {
         /* width: 17%; */
         /* height: 27px; */
@@ -855,6 +867,10 @@
         width: 93%;
     }
 
+    .view-grand-total-1 {
+        display: none;
+    }
+
     .ApplyCoupon_couponApply p {
         font-size: 12px;
         margin: 0;
@@ -1027,6 +1043,25 @@
 }
 
 @media (max-width: 767px) {
+
+    .mobile-toolbar-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        z-index: 1000;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        padding: 5px 0;
+    }
+
+    .grid-1 {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 10px;
+    }
 
     .Footer_footer .Footer_footerLinksWrp img {
         width: 59%;
@@ -1234,12 +1269,34 @@
     }
 
     ul.LeftSidebar_designTool {
-        gap: 0px;
+        display: inline-flex;
+        flex-direction: row;
+        gap: 8px;
+        padding: 5px 0;
+        height: auto;
+        width: max-content;
+    }
+
+    li.designToolPropertiesChild {
+        display: inline-block;
+        float: none;
     }
 
     ul.LeftSidebar_designTool button {
-        padding: 10px 10px;
-        width: 70px;
+        width: 60px;
+        padding: 8px 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    ul.LeftSidebar_designTool button svg {
+        margin-bottom: 0;
+    }
+
+    ul.LeftSidebar_designTool button p {
+        font-size: 10px;
+        padding-top: 2px;
     }
 
     .Right-Sidebar-Cart-Parent {
@@ -1249,6 +1306,15 @@
     .Right-Sidebar-footer {
         width: 100%;
         margin-top: 26px;
+        justify-content: space-around;
+    }
+
+    .view-grand-total-2 {
+        display: none;
+    }
+
+    .view-grand-total-1 {
+        display: flex;
     }
 
     .listGroup {
@@ -1305,6 +1371,16 @@
 
     .AboutSliderParent p {
         font-size: 13px;
+    }
+
+    /* Hide scrollbar but keep functionality */
+    .grid-1::-webkit-scrollbar {
+        display: none;
+    }
+
+    .grid-1 {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 }
 
@@ -1586,6 +1662,15 @@
 
     .Right-Sidebar-footer {
         margin-top: 26px;
+        justify-content: space-around;
+    }
+
+    .view-grand-total-2 {
+        display: none;
+    }
+
+    .view-grand-total-1 {
+        display: flex;
     }
 
     .box {
@@ -1621,6 +1706,20 @@
     .AboutSliderParent {
         text-align: center;
         width: 44%;
+    }
+
+    ul.LeftSidebar_designTool button {
+        width: 55px;
+        padding: 6px 3px;
+    }
+
+    ul.LeftSidebar_designTool button svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    ul.LeftSidebar_designTool button p {
+        font-size: 9px;
     }
 
 }
