@@ -533,7 +533,17 @@ async function processAndUploadImages(files, mainLoader) {
 
     for (const file of files) {
         if (!file.type.startsWith('image/')) {
-            await Swal.fire({ title: 'Invalid File', text: 'Only image files are allowed!', icon: 'error' });
+            await Swal.fire({
+                title: 'Invalid File',
+                text: 'Only image files are allowed!',
+                icon: 'error',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__slow'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
+            });
             continue;
         }
 
@@ -541,7 +551,10 @@ async function processAndUploadImages(files, mainLoader) {
         const img = new Image();
         img.src = objectURL;
 
-        await new Promise((resolve, reject) => { img.onload = resolve; img.onerror = reject; });
+        await new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+        });
 
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
@@ -549,50 +562,26 @@ async function processAndUploadImages(files, mainLoader) {
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0, img.width, img.height);
 
-        let skipImage = false;
-
-        // Check Image DPI using EXIF
-        await new Promise((resolve) => {
-            EXIF.getData(file, async function () {
-                const dpiX = EXIF.getTag(this, 'XResolution') || 0;
-                const dpiY = EXIF.getTag(this, 'YResolution') || 0;
-                console.log(`Image DPI: ${dpiX}x${dpiY}`);
-
-                if (dpiX < 200 || dpiY < 200) {
-                    if (mainLoader) mainLoader.style.display = 'none';
-
-                    const result = await Swal.fire({
-                        title: 'Low DPI Image',
-                        text: `Image DPI is ${dpiX}x${dpiY}. Recommended DPI is 200+. Do you want to keep it anyway?`,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Keep Anyway',
-                        cancelButtonText: 'Remove'
-                    });
-
-                    if (!result.isConfirmed) {
-                        uploadInput.disabled = false;
-                        skipImage = true;
-                    }
-                }
-
-                resolve();
-            });
-        });
-
-        if (skipImage) continue;
-
-        // Check Resolution and Blurriness
-        if (img.width < 1500 || img.height < 1500 || isImageBlurred(canvas)) {
+        if (img.width < 700 || img.height < 700 || isImageBlurred(canvas)) {
             if (mainLoader) mainLoader.style.display = 'none';
 
             const result = await Swal.fire({
                 title: 'Low Quality Image',
-                text: 'Your image resolution is low and may result in blurry frames. Do you want to keep it anyway?',
+                text: 'Your image is pretty small and may make blurry frames. Do you want to keep it anyway?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Keep Anyway',
-                cancelButtonText: 'Remove'
+                cancelButtonText: 'Remove',
+                customClass: {
+                    confirmButton: 'swal-image-confirm-button',
+                    cancelButton: 'swal-image-cancel-button'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__slow'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             });
 
             if (!result.isConfirmed) {
@@ -631,7 +620,13 @@ async function processAndUploadImages(files, mainLoader) {
             await Swal.fire({
                 title: 'Upload Successful',
                 text: 'Your images have been uploaded successfully!',
-                icon: 'success'
+                icon: 'success',
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__slow'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                }
             });
         }
     } catch (err) {
@@ -639,7 +634,13 @@ async function processAndUploadImages(files, mainLoader) {
         await Swal.fire({
             title: 'Upload Failed',
             text: 'There was a problem uploading images',
-            icon: 'error'
+            icon: 'error',
+            showClass: {
+                popup: 'animate__animated animate__fadeIn animate__slow'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOut animate__faster'
+            }
         });
         progressBarContainer.style.display = 'none';
         uploadInput.disabled = false;
