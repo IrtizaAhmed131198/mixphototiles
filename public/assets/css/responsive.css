@@ -1404,7 +1404,7 @@
 
     ul.designToolPropertiesLists.design_2 {
         transform: translate(-80px, 0px) !important;
-        width: 61vh;
+        width: 60vh;
     }
 
     ul.designToolPropertiesLists.design_3 {
@@ -1423,11 +1423,11 @@
     }
 
     ul.designToolPropertiesLists.design_1.show {
-        transform: translate(-10px, -128px) !important;
+        transform: translate(-20px, -128px) !important;
     }
 
     ul.designToolPropertiesLists.design_2.show {
-        transform: translate(-78px, -90px) !important;
+        transform: translate(-98px, -122px) !important;
     }
 
     ul.designToolPropertiesLists.design_3.show {
@@ -1435,11 +1435,11 @@
     }
 
     ul.designToolPropertiesLists.design_4.show {
-        transform: translate(-215px, -92px) !important;
+        transform: translate(-180px, -126px) !important;
     }
 
     ul.designToolPropertiesLists.design_5.show {
-        transform: translate(-282px, -128px) !important;
+        transform: translate(-258px, -128px) !important;
     }
 
 }
