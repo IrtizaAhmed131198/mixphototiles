@@ -1387,17 +1387,58 @@
         padding-bottom: 11px !important;
     }
 
-    ul.designToolPropertiesLists.design_1 {
-      transform: translate(-10px, -120px) !important;
-        padding: 1rem 1rem;
-    }
-
     ul.designToolPropertiesLists {
         display: flex !important;
         align-items: center;
         gap: 10px;
-        width: 100vh;
+        padding: 1rem 1rem;
     }
+
+    ul.designToolPropertiesLists.design_1 {
+        transform: translate(0px, 0px) !important;
+        width: 60vh;
+    }
+
+    ul.designToolPropertiesLists.design_2 {
+        transform: translate(-80px, 0px) !important;
+        width: 61vh;
+    }
+
+    ul.designToolPropertiesLists.design_3 {
+        transform: translate(-145px, 0px) !important;
+        width: 60vh;
+    }
+
+    ul.designToolPropertiesLists.design_4 {
+        transform: translate(-214px, 0px) !important;
+        width: 61vh;
+    }
+
+    ul.designToolPropertiesLists.design_5 {
+        transform: translate(-280px, 0px) !important;
+        width: 61vh;
+    }
+
+    ul.designToolPropertiesLists.design_1.show {
+        transform: translate(-10px, -128px) !important;
+    }
+
+    ul.designToolPropertiesLists.design_2.show {
+        transform: translate(-78px, -90px) !important;
+    }
+
+    ul.designToolPropertiesLists.design_3.show {
+        transform: translate(-146px, -128px) !important;
+    }
+
+    ul.designToolPropertiesLists.design_4.show {
+        transform: translate(-215px, -92px) !important;
+    }
+
+    ul.designToolPropertiesLists.design_5.show {
+        transform: translate(-282px, -128px) !important;
+    }
+
 }
 
 
@@ -1411,11 +1452,6 @@
         justify-content: center;
         margin: 0px 0 15px;
         padding-left: 0;
-    }
-
-    .main-banner-section {
-        /* padding-bottom: 1rem; */
-        /* margin-top: -20rem; */
     }
 
     .banner-video video {
@@ -1577,6 +1613,7 @@
     ul.LeftSidebar_designTool {
         flex-wrap: wrap;
         justify-content: center;
+        gap: 0;
     }
 
     li.designToolPropertiesChild {
@@ -1588,19 +1625,9 @@
         width: 90px;
     }
 
-    ul.designToolPropertiesLists.show {
-        transform: translate(-31px, -341px) !important;
-    }
-
     figure.PropertiesleftChild img {
         height: 40px;
         width: 40px;
-    }
-
-    ul.designToolPropertiesLists {
-        width: 282px;
-        left: unset !important;
-        right: 0 !important;
     }
 
     .main_logo {
@@ -1628,36 +1655,6 @@
 
     .banner-video {
         height: 60vh;
-    }
-
-    .designToolPropertiesLists.design_1 {
-        left: 100% !important;
-        right: unset !important;
-        top: 60% !important;
-    }
-
-    .designToolPropertiesLists.design_2 {
-        left: 15% !important;
-        right: unset !important;
-        top: 10% !important;
-    }
-
-    .designToolPropertiesLists.design_3 {
-        left: unset !important;
-        right: -140px !important;
-        top: -10px !important;
-    }
-
-    .designToolPropertiesLists.design_4 {
-        left: -140px !important;
-        right: unset !important;
-        top: 70% !important;
-    }
-
-    .designToolPropertiesLists.design_5 {
-        left: -200px !important;
-        right: unset !important;
-        top: 70% !important;
     }
 
     .peel_stick video {
@@ -1725,8 +1722,8 @@
     }
 
     ul.LeftSidebar_designTool button {
-        width: 55px;
-        padding: 6px 3px;
+        width: 50px;
+        padding: 6px 2px;
     }
 
     ul.LeftSidebar_designTool button svg {
@@ -1742,4 +1739,32 @@
         padding-bottom: 11px !important;
     }
 
+    ul.designToolPropertiesLists {
+        width: 55vh;
+    }
+
+    ul.designToolPropertiesLists.design_1.show {
+        transform: translate(-10px, -100px) !important;
+        width: 43vh;
+    }
+
+    ul.designToolPropertiesLists.design_2.show {
+        width: 44vh;
+        transform: translate(-60px, -90px) !important;
+    }
+
+    ul.designToolPropertiesLists.design_3.show {
+        transform: translate(-110px, -100px) !important;
+        width: 44vh;
+    }
+
+    ul.designToolPropertiesLists.design_4.show {
+        transform: translate(-160px, -92px) !important;
+        width: 44vh;
+    }
+
+    ul.designToolPropertiesLists.design_5.show {
+        transform: translate(-210px, -106px) !important;
+        width: 44vh;
+    }
 }
