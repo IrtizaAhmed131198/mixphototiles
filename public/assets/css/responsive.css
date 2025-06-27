@@ -1763,12 +1763,12 @@
     }
 
     ul.designToolPropertiesLists.design_4.show {
-        transform: translate(-160px, -105px) !important;
+        transform: translate(-128px, -105px) !important;
         width: 420px;
     }
 
     ul.designToolPropertiesLists.design_5.show {
-        transform: translate(-210px, -106px) !important;
+        transform: translate(-182px, -106px) !important;
         width: 420px;
     }
 }
