@@ -1056,8 +1056,8 @@
     }
 
     .grid-1 {
-        overflow-x: auto;
-        overflow-y: hidden;
+        /* overflow-x: auto;
+        overflow-y: hidden; */
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
         padding: 0 10px;
@@ -1386,6 +1386,18 @@
     .offcanvas-header {
         padding-bottom: 11px !important;
     }
+
+    ul.designToolPropertiesLists.design_1 {
+      transform: translate(-10px, -120px) !important;
+        padding: 1rem 1rem;
+    }
+
+    ul.designToolPropertiesLists {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+        width: 100vh;
+    }
 }
 
 
@@ -1602,7 +1614,7 @@
     }
 
     .offcanvas-logo img {
-       height: 42px !important;
+        height: 42px !important;
     }
 
     .newframe-sideimg img {

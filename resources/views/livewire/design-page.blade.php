@@ -19,15 +19,15 @@
         }
 
         /* @keyframes circle {
-            0% {
-                transform: rotate(0deg);
-            }
+                            0% {
+                                transform: rotate(0deg);
+                            }
 
-            100% {
-                transform: rotate(360deg);
+                            100% {
+                                transform: rotate(360deg);
 
-            }
-        } */
+                            }
+                        } */
 
         .progress-bar-container {
             width: 100%;
@@ -78,16 +78,16 @@
 
         /* Animation for image loading */
         /* @keyframes fadeIn {
-                                                from {
-                                                    opacity: 0;
-                                                    transform: rotate(0deg);
-                                                }
+                                                                from {
+                                                                    opacity: 0;
+                                                                    transform: rotate(0deg);
+                                                                }
 
-                                                to {
-                                                    opacity: 1;
-                                                    transform: rotate(360deg);
-                                                }
-                                            } */
+                                                                to {
+                                                                    opacity: 1;
+                                                                    transform: rotate(360deg);
+                                                                }
+                                                            } */
 
         .frameinner img {
             animation: fadeIn 0.5s ease-in-out;
@@ -162,6 +162,7 @@
                                         <p class="para">Frame</p>
                                     </button>
                                     <ul class="designToolPropertiesLists dropdown-menu frame-tab design_1">
+
                                         <!-- Dropdown menu links -->
                                         <div class="menuParent">
                                             <p class="propertyTitle">
@@ -169,7 +170,8 @@
                                             </p>
                                         </div>
 
-                                        <li type="button" class="parentProperties frame-change dropdown-item li-border-color "
+                                        <li type="button"
+                                            class="parentProperties frame-change dropdown-item li-border-color "
                                             data-design="classic-card-design" data-price="0" data-text="Border">
                                             <figure class="PropertiesleftChild">
                                                 <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -229,7 +231,8 @@
                                                 <path
                                                     d="M12,2a10,10,0,0,0,0,20,1.652,1.652,0,0,0,1.648-1.688,1.712,1.712,0,0,0-.437-1.125,1.5,1.5,0,0,1-.438-1.125,1.64,1.64,0,0,1,1.668-1.668h2a5.576,5.576,0,0,0,5.555-5.554C21.965,6.012,17.461,2,12,2Z"
                                                     transform="translate(-2 -2)" fill="none" stroke="currentColor"
-                                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                                </path>
                                             </g>
                                         </svg>
                                         <p class="para">Color</p>
@@ -323,8 +326,8 @@
                                                 data-max-width="500px" data-price="{{ $val->price }}"
                                                 data-val='{{ $val->label }}'>
                                                 <figure class="PropertiesleftChild">
-                                                    <img alt="drawer" width="72" height="72" class="LeftSidebar"
-                                                        src="{{ asset($val->image) }}">
+                                                    <img alt="drawer" width="72" height="72"
+                                                        class="LeftSidebar" src="{{ asset($val->image) }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
                                                     <p class="propertyName">{{ $val->label }}</p>
@@ -345,7 +348,8 @@
                                                 <path
                                                     d="M12,3,10.1,8.8a2,2,0,0,1-1.287,1.288L3,12l5.8,1.9a2,2,0,0,1,1.288,1.287L12,21l1.9-5.8a2,2,0,0,1,1.287-1.288L21,12l-5.8-1.9a2,2,0,0,1-1.288-1.287Z"
                                                     transform="translate(-2 -2)" fill="none" stroke="currentColor"
-                                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                                </path>
                                             </svg>
                                             <p class="para">Finish</p>
                                         </button>
@@ -460,19 +464,19 @@
 
                                 <!-- partial:index.partial.html -->
                                 <!-- <div class="container mt-4">
-                                                                        <div class="row">
-                                                                            <div class="col-12 text-center">
-                                                                                <label class="cabinet">
-                                                                                    <figure>
-                                                                                        <img src="" class="gambar img-fluid img-thumbnail"
-                                                                                            id="item-img-output" />
-                                                                                        <figcaption><i class="fa fa-camera"></i></figcaption>
-                                                                                    </figure>
-                                                                                    <input type="file" class="item-img file" name="file_photo" />
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> -->
+                                                                                        <div class="row">
+                                                                                            <div class="col-12 text-center">
+                                                                                                <label class="cabinet">
+                                                                                                    <figure>
+                                                                                                        <img src="" class="gambar img-fluid img-thumbnail"
+                                                                                                            id="item-img-output" />
+                                                                                                        <figcaption><i class="fa fa-camera"></i></figcaption>
+                                                                                                    </figure>
+                                                                                                    <input type="file" class="item-img file" name="file_photo" />
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div> -->
                                 <!-- partial -->
 
 
@@ -489,17 +493,20 @@
                                 <!-- 8 dropdown -->
                                 <li class="designToolPropertiesChild btn-group dropend">
                                     <button type="button" id="remove-image">
-                                        <svg width="15.9" height="17.5" class="w-em h-em LeftSidebar_designIcon__3UjGH"
-                                            viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
+                                        <svg width="15.9" height="17.5"
+                                            class="w-em h-em LeftSidebar_designIcon__3UjGH" viewBox="0 0 15.9 17.5"
+                                            xmlns="http://www.w3.org/2000/svg">
                                             <g transform="translate(-2.25 -1.25)">
                                                 <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none"
                                                     stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                                     stroke-width="1.5"></path>
-                                                <path d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6"
+                                                <path
+                                                    d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6"
                                                     transform="translate(-0.4 -0.8)" fill="none" stroke="currentColor"
                                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
                                                 </path>
-                                                <path d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2"
+                                                <path
+                                                    d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2"
                                                     transform="translate(-1)" fill="none" stroke="currentColor"
                                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
                                                 </path>
@@ -596,12 +603,11 @@
                                                 transform="translate(0)" fill="none" stroke="currentColor"
                                                 stroke-width="2"></path>
                                             <line x2="15" transform="translate(3 6)" fill="none"
-                                                stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2"></line>
+                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2"></line>
                                             <path d="M14.888,10A3.444,3.444,0,1,1,8,10"
-                                                transform="translate(-0.695 -1.112)" fill="none"
-                                                stroke="#9d0b78" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2">
+                                                transform="translate(-0.695 -1.112)" fill="none" stroke="#9d0b78"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                                             </path>
                                         </g>
                                     </g>

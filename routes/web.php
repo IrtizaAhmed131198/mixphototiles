@@ -29,7 +29,7 @@ use App\Http\Controllers\RazorpayController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
 Route::get('/', [PagesController::class, 'index'])->name('home');
-Route::get('/design', DesignPage::class)->name('design');
+// Route::get('/design', DesignPage::class)->name('design');
 Route::get('/design', [DesignController::class, 'show'])->name('design');
 Route::get('/your-collection', [CollectionsController::class, 'index'])->name('collections');
 Route::get('/your-collection/load', [CollectionsController::class, 'loadMoreProducts'])->name('collections.load');
