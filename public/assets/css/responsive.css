@@ -1399,27 +1399,27 @@
 
     ul.designToolPropertiesLists.design_1 {
         transform: translate(0px, 0px) !important;
-        width: 60vh;
+        width: 580px;
     }
 
     ul.designToolPropertiesLists.design_2 {
         transform: translate(-80px, 0px) !important;
-        width: 60vh;
+        width: 580px;
     }
 
     ul.designToolPropertiesLists.design_3 {
         transform: translate(-145px, 0px) !important;
-        width: 60vh;
+        width: 580px;
     }
 
     ul.designToolPropertiesLists.design_4 {
         transform: translate(-214px, 0px) !important;
-        width: 61vh;
+        width: 580px;
     }
 
     ul.designToolPropertiesLists.design_5 {
         transform: translate(-280px, 0px) !important;
-        width: 61vh;
+        width: 580px;
     }
 
     ul.designToolPropertiesLists.design_1.show {
@@ -1435,11 +1435,11 @@
     }
 
     ul.designToolPropertiesLists.design_4.show {
-        transform: translate(-180px, -126px) !important;
+        transform: translate(-223px, -126px) !important;
     }
 
     ul.designToolPropertiesLists.design_5.show {
-        transform: translate(-258px, -128px) !important;
+        transform: translate(-294px, -128px) !important;
     }
 
 }
@@ -1749,26 +1749,26 @@
 
     ul.designToolPropertiesLists.design_1.show {
         transform: translate(-10px, -100px) !important;
-        width: 43vh;
+        width: 420px;
     }
 
     ul.designToolPropertiesLists.design_2.show {
-        width: 44vh;
+        width: 420px;
         transform: translate(-69px, -100px) !important;
     }
 
     ul.designToolPropertiesLists.design_3.show {
         transform: translate(-110px, -100px) !important;
-        width: 44vh;
+        width: 420px;
     }
 
     ul.designToolPropertiesLists.design_4.show {
-        transform: translate(-126px, -105px) !important;
-        width: 44vh;
+        transform: translate(-160px, -105px) !important;
+        width: 420px;
     }
 
     ul.designToolPropertiesLists.design_5.show {
-        transform: translate(-183px, -106px) !important;
-        width: 44vh;
+        transform: translate(-210px, -106px) !important;
+        width: 420px;
     }
 }
