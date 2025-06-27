@@ -25,6 +25,7 @@ use App\Http\Controllers\LedController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\StatesController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RazorpayController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
@@ -130,6 +131,9 @@ Route::get('/admin/login-as/{id}', [AdminController::class, 'loginAsUser'])->nam
 
 Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 Route::post('/settings/update', [SettingController::class, 'update'])->name('settings.update');
+
+Route::get('/contact-user', [ContactController::class, 'index'])->name('contact.index');
+Route::get('/contact-user/get', [ContactController::class, 'get'])->name('contact.get');
 
 Route::get('/color', [CustomColorController::class, 'index'])->name('color.index');
 Route::get('/color/get', [CustomColorController::class, 'getData'])->name('color.get');
