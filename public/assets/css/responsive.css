@@ -1611,9 +1611,10 @@
     }
 
     ul.LeftSidebar_designTool {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0;
+        flex-wrap: unset;
+        justify-content: space-around;
+        gap: unset;
+        width: 100%;
     }
 
     li.designToolPropertiesChild {
