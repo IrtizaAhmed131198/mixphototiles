@@ -1751,7 +1751,7 @@
 
     ul.designToolPropertiesLists.design_2.show {
         width: 44vh;
-        transform: translate(-60px, -90px) !important;
+        transform: translate(-69px, -100px) !important;
     }
 
     ul.designToolPropertiesLists.design_3.show {
@@ -1760,12 +1760,12 @@
     }
 
     ul.designToolPropertiesLists.design_4.show {
-        transform: translate(-160px, -92px) !important;
+        transform: translate(-126px, -105px) !important;
         width: 44vh;
     }
 
     ul.designToolPropertiesLists.design_5.show {
-        transform: translate(-210px, -106px) !important;
+        transform: translate(-183px, -106px) !important;
         width: 44vh;
     }
 }
