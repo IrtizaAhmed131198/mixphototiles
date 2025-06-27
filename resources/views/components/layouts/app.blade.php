@@ -42,10 +42,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+    <!-- CSS Files with Cache Busting -->
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}?v={{ time() }}">
     @stack('css')
     @livewireStyles
     <style>
