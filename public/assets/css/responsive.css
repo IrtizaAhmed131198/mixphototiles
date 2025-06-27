@@ -1271,11 +1271,14 @@
     ul.LeftSidebar_designTool {
         display: inline-flex;
         flex-direction: row;
-        gap: 8px;
+        justify-content: space-around;
+        gap: unset;
         padding: 5px 0;
         height: auto;
-        width: max-content;
+        width: 100%;
+        flex-wrap: unset;
     }
+
 
     li.designToolPropertiesChild {
         display: inline-block;
