@@ -6,15 +6,15 @@
 @push('css')
     <style>
         /* @keyframes circle {
-            0% {
-                transform: rotate(0deg);
-            }
+                    0% {
+                        transform: rotate(0deg);
+                    }
 
-            100% {
-                transform: rotate(360deg);
+                    100% {
+                        transform: rotate(360deg);
 
-            }
-        } */
+                    }
+                } */
     </style>
 @endpush
 
@@ -189,29 +189,25 @@
                     <div class="tab-content customTabsContent" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
                             aria-labelledby="v-pills-tap-tab" tabindex="0">
-                            <video class="img-fluid" autoplay muted loop
-                                style="pointer-events: none;">
+                            <video class="img-fluid" autoplay muted loop style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
-                            tabindex="0">
-                            <video class="img-fluid" autoplay muted loop
-                                style="pointer-events: none;">
-                                <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel" aria-labelledby="v-pills-hooks-tab"
                             tabindex="0">
-                            <video class="img-fluid" autoplay muted loop
-                                style="pointer-events: none;">
+                            <video class="img-fluid" autoplay muted loop style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
+                            tabindex="0">
+                            <video class="img-fluid" autoplay muted loop style="pointer-events: none;">
+                                <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-again" role="tabpanel"
                             aria-labelledby="v-pills-again-tab" tabindex="0">
-                            <video class="img-fluid" autoplay muted loop
-                                style="pointer-events: none;">
+                            <video class="img-fluid" autoplay muted loop style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
@@ -397,15 +393,15 @@
                                 </video>
                             </div>
                             <div class="peel_stick">
-                                <h4>Adjust to position</h4>
-                                <video class="img-fluid" autoplay muted loop playsinline>
-                                    <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
-                                </video>
-                            </div>
-                            <div class="peel_stick">
                                 <h4>Leaves no marks</h4>
                                 <video class="img-fluid" autoplay muted loop playsinline>
                                     <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="peel_stick">
+                                <h4>Adjust to position</h4>
+                                <video class="img-fluid" autoplay muted loop playsinline>
+                                    <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
