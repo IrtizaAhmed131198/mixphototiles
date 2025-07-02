@@ -29,7 +29,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:products,slug',
+            'slug' => 'required|string',
             'price' => 'required|numeric',
             'discount' => 'required|numeric',
             'main_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -38,10 +38,19 @@ class ProductController extends Controller
             'status' => 'required|boolean',
         ]);
 
+        // Ensure unique slug
+        $slug = $request->slug;
+        $originalSlug = $slug;
+        $counter = 1;
+
+        while (Product::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
         // Directory to store images
         $uploadPath = public_path('uploads/frames');
 
-        // Ensure directory exists
         if (!file_exists($uploadPath)) {
             mkdir($uploadPath, 0777, true);
         }
@@ -55,7 +64,7 @@ class ProductController extends Controller
             $mainImagePath = 'uploads/frames/' . $mainImageName;
         }
 
-        // Handle main image upload
+        // Handle no coordinates image upload
         $noCordImagePath = null;
         if ($request->hasFile('no_coordinates_image')) {
             $noCordImage = $request->file('no_coordinates_image');
@@ -64,7 +73,7 @@ class ProductController extends Controller
             $noCordImagePath = 'uploads/frames/' . $noCordImageName;
         }
 
-        // Handle main image upload
+        // Handle coordinates image upload
         $cordImagePath = null;
         if ($request->hasFile('coordinates_image')) {
             $cordImage = $request->file('coordinates_image');
@@ -76,7 +85,7 @@ class ProductController extends Controller
         // Save product to database
         $product = Product::create([
             'name' => $request->name,
-            'slug' => $request->slug,
+            'slug' => $slug,
             'description' => $request->description,
             'price' => $request->price,
             'discount' => $request->discount ?? 0,
@@ -86,18 +95,6 @@ class ProductController extends Controller
             'status' => $request->status,
             'type' => 'collections',
         ]);
-
-        // if ($request->hasFile('additional_images')) {
-        //     foreach ($request->file('additional_images') as $image) {
-        //         $imageName = uniqid('additional_') . '.' . $image->getClientOriginalExtension();
-        //         $image->move($uploadPath, $imageName);
-
-        //         ProductImage::create([
-        //             'product_id' => $product->id,
-        //             'image_path' => 'uploads/frames/' . $imageName,
-        //         ]);
-        //     }
-        // }
 
         return redirect()->back()->with('success', 'Product created successfully!');
     }
@@ -162,7 +159,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:products,slug,' . $id,
+            'slug' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'discount' => 'nullable|numeric|min:0',
@@ -174,11 +171,22 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
+        // Ensure unique slug
+        $slug = $request->slug;
+        $originalSlug = $slug;
+        $counter = 1;
+
+        // Check for duplicate slug excluding current product
+        while (Product::where('slug', $slug)->where('id', '!=', $id)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
         $product->name = $request->name;
-        $product->slug = $request->slug;
+        $product->slug = $slug;
         $product->description = $request->description;
         $product->price = $request->price;
-        $product->discount = $request->discount;
+        $product->discount = $request->discount ?? 0;
         $product->status = $request->status;
 
         $uploadPath = public_path('uploads/frames');
@@ -203,19 +211,6 @@ class ProductController extends Controller
             $cordImage->move($uploadPath, $cordImageName);
             $product->coordinates_image = 'uploads/frames/' . $cordImageName;
         }
-
-        // // Handle Additional Images
-        // if ($request->hasFile('additional_images')) {
-        //     foreach ($request->file('additional_images') as $image) {
-        //         $imageName = uniqid('additional_') . '.' . $image->getClientOriginalExtension();
-        //         $image->move($uploadPath, $imageName);
-
-        //         ProductImage::create([
-        //             'product_id' => $product->id,
-        //             'image_path' => 'uploads/frames/' . $imageName,
-        //         ]);
-        //     }
-        // }
 
         $product->save();
 
