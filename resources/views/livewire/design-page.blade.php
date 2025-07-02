@@ -592,7 +592,7 @@
                                 <p class="">Grand Total</p>
                                 <h6 class="" id="grand-total-1" data-val="399">₹399</h6>
                             </div>
-                            <button type="button" class="btn custom-btn filled" id="add-to-cart"> Add to Cart
+                            <button type="button" class="btn custom-btn filled" id="add-to-cart-1"> Add to Cart
                                 <svg width="21" height="21" viewBox="0 0 21 21"
                                     class="w-em h-em RightSidebar_addtocart_btn_icon__nIKa3"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -878,7 +878,7 @@
                                         <p class="">Grand Total</p>
                                         <h6 class="" id="grand-total-2" data-val="399">₹399</h6>
                                     </div>
-                                    <button type="button" class="btn custom-btn filled" id="add-to-cart"> Add to Cart
+                                    <button type="button" class="btn custom-btn filled" id="add-to-cart-2"> Add to Cart
                                         <svg width="21" height="21" viewBox="0 0 21 21"
                                             class="w-em h-em RightSidebar_addtocart_btn_icon__nIKa3"
                                             xmlns="http://www.w3.org/2000/svg">
