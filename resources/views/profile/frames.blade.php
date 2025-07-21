@@ -439,10 +439,10 @@
 
             // Validate Slug (Only alphanumeric and dashes)
             let slugPattern = /^[a-zA-Z0-9-]+$/;
-            if (!slugPattern.test($('[name="slug"]').val())) {
-                isValid = false;
-                $('[name="slug"]').after('<span class="error-message text-danger">Invalid slug format</span>');
-            }
+            // if (!slugPattern.test($('[name="slug"]').val())) {
+            //     isValid = false;
+            //     $('[name="slug"]').after('<span class="error-message text-danger">Invalid slug format</span>');
+            // }
 
             // Validate Price (Positive number)
             let price = parseFloat($('[name="price"]').val());

@@ -196,13 +196,13 @@
                         <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel" aria-labelledby="v-pills-hooks-tab"
                             tabindex="0">
                             <video class="img-fluid" autoplay muted loop style="pointer-events: none;">
-                                <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
+                                <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
                             tabindex="0">
                             <video class="img-fluid" autoplay muted loop style="pointer-events: none;">
-                                <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
+                                <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-again" role="tabpanel"
@@ -395,13 +395,13 @@
                             <div class="peel_stick">
                                 <h4>Leaves no marks</h4>
                                 <video class="img-fluid" autoplay muted loop playsinline>
-                                    <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
+                                    <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
                                 <h4>Adjust to position</h4>
                                 <video class="img-fluid" autoplay muted loop playsinline>
-                                    <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
+                                    <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">

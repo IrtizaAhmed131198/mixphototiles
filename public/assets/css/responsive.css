@@ -57,7 +57,7 @@
     }
 
     .AboutSliderParent {
-        padding: 24px 10px;
+        padding: 24px 10px !important;
         width: 70%;
     }
 
@@ -495,7 +495,7 @@
     }
 
     .AboutSliderParent {
-        padding: 4px;
+        padding: 4px !important;
         text-align: center;
         width: 43%;
     }
@@ -1727,6 +1727,7 @@
     }
 
     .AboutSliderParent {
+        padding: 1.5rem !important;
         text-align: center;
         width: 44%;
     }
