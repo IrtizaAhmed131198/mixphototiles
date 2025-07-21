@@ -4,6 +4,12 @@
     }
 }
 
+@media (min-width: 1400px) {
+    .grid-parent .grid-4 {
+        width: 91% !important;
+    }
+}
+
 @media (max-width: 1440px) {
     .heading-3 {
         font-size: 50px;
