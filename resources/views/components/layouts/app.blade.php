@@ -7,13 +7,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ get_setting('site_name') ?? env('APP_NAME') }} - @yield('title')</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicon/apple-touch-icon.png') }}">
+    {{-- <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('assets/favicon/site.webmanifest') }}">
-    <link rel="icon" type="image/png" sizes="512x512"
-        href="{{ asset('assets/favicon/android-chrome-512x512.png') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/favicon/favicon.ico') }}">
+    <link rel="manifest" href="{{ asset('assets/favicon/site.webmanifest') }}"> --}}
+    {{-- <link rel="icon" type="image/png" sizes="512x512"
+        href="{{ asset('assets/favicon/android-chrome-512x512.png') }}"> --}}
+    <link rel="shortcut icon" href="{{ asset('assets/favicon/favicon.png') }}">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">

@@ -1376,6 +1376,7 @@
     }
 
     .AboutSliderParent {
+        padding: 2rem !important;
         text-align: center;
         width: 35%;
     }
@@ -1733,7 +1734,7 @@
     }
 
     .AboutSliderParent {
-        padding: 1.5rem !important;
+        padding: 2rem !important;
         text-align: center;
         width: 44%;
     }
