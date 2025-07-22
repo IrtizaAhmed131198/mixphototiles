@@ -2273,15 +2273,18 @@ button.Login_authSwitch {
     height: 100%;
 }
 
-figure.frameBackground img {
-    object-fit: cover;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+figure.frameBackground {
+    width: 100%;
     max-width: 744px;
-    height: 744px;
-    width: 744px;
+    margin: 0 auto;
+    position: relative;
+}
+
+figure.frameBackground img {
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* Or 'cover' if you want cropping */
+    display: block;
 }
 
 

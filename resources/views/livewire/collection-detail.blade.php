@@ -196,10 +196,10 @@
                                                 <div class="clusterFrameWrp {{ $colorClass }} {{ $frameClass }}"
                                                     id="cluster-block-{{ $cluster->id }}"
                                                     style="position: absolute;
-                                                    top: {{ $cluster->y }}px;
-                                                    left: {{ $cluster->x }}px;
-                                                    width: {{ $cluster->width }}px;
-                                                    height: {{ $cluster->height }}px;"
+                                                    top: {{ $cluster->y }}%;
+                                                    left: {{ $cluster->x }}%;
+                                                    width: {{ $cluster->width }}%;
+                                                    height: {{ $cluster->height }}%;"
                                                     data-bs-toggle="modal" data-bs-target="#editphotolayoutmodal"
                                                     data-cluster-id="{{ $cluster->id }}" onclick="">
 
@@ -229,10 +229,10 @@
                                                 <div class="clusterFrameWrp black-frame"
                                                     id="cluster-block-{{ $cluster->id }}"
                                                     style="position: absolute;
-                                                    top: {{ $cluster->y }}px;
-                                                    left: {{ $cluster->x }}px;
-                                                    width: {{ $cluster->width }}px;
-                                                    height: {{ $cluster->height }}px;"
+                                                    top: {{ $cluster->y }}%;
+                                                    left: {{ $cluster->x }}%;
+                                                    width: {{ $cluster->width }}%;
+                                                    height: {{ $cluster->height }}%;"
                                                     data-bs-toggle="modal" data-bs-target="#photolayoutmodal"
                                                     data-cluster-id="{{ $cluster->id }}" onclick="">
 
@@ -1881,5 +1881,34 @@
 
             return true;
         }
+
+        function applyClusterStyles() {
+            const img = document.getElementById("zoomImage");
+            const imgRect = img.getBoundingClientRect(); // actual rendered size
+
+            const clusters = document.querySelectorAll(".clusterFrameWrp");
+
+            clusters.forEach(cluster => {
+                const xPercent = parseFloat(cluster.dataset.x);
+                const yPercent = parseFloat(cluster.dataset.y);
+                const widthPercent = parseFloat(cluster.dataset.width);
+                const heightPercent = parseFloat(cluster.dataset.height);
+
+                const xPx = (imgRect.width * xPercent) / 100;
+                const yPx = (imgRect.height * yPercent) / 100;
+                const widthPx = (imgRect.width * widthPercent) / 100;
+                const heightPx = (imgRect.height * heightPercent) / 100;
+
+                cluster.style.position = "absolute";
+                cluster.style.top = yPx + "px";
+                cluster.style.left = xPx + "px";
+                cluster.style.width = widthPx + "px";
+                cluster.style.height = heightPx + "px";
+            });
+        }
+
+        window.addEventListener("load", applyClusterStyles);
+        window.addEventListener("resize", applyClusterStyles);
+
     </script>
 @endpush

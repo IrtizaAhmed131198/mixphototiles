@@ -639,7 +639,6 @@
         let productId;
 
         // Load image when modal opens
-        // Load image when modal opens
         $(document).on("click", ".set-coordinates", function () {
             productId = $(this).data("id");
             rectangles = [];
@@ -790,7 +789,17 @@
                 return;
             }
 
-            console.log("Selected Coordinates:", selectedRects); // Debugging
+            // ✅ Convert pixels to % relative to canvas size
+            const convertedRects = selectedRects.map(r => ({
+                id: r.id,
+                x: (r.x / canvas.width) * 100,
+                y: (r.y / canvas.height) * 100,
+                width: (r.width / canvas.width) * 100,
+                height: (r.height / canvas.height) * 100
+            }));
+
+
+            console.log("Selected Coordinates:", convertedRects); // Debugging
 
             // Send selected rectangles to the backend
             $.ajax({
@@ -798,7 +807,7 @@
                 type: "GET",
                 data: {
                     id: productId,
-                    coordinates: JSON.stringify(selectedRects), // Convert to JSON
+                    coordinates: JSON.stringify(convertedRects), // Convert to JSON
                     _token: "{{ csrf_token() }}" // Laravel CSRF token for security
                 },
                 success: function (response) {
