@@ -1052,6 +1052,10 @@
     section.custom-tabs-section.py {
         padding-left: 18px;
     }
+
+    .frameinner {
+        padding: 9px !important;
+    }
 }
 
 @media (max-width: 767px) {
