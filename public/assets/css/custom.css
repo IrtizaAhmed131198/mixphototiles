@@ -2293,15 +2293,18 @@ figure.frameBackground img {
 }
 
 .clusterAddBtn__Rreup {
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     background: #FF0168;
     color: white;
-    width: 28px;
-    height: 28px;
+    width: 60%; /* relative to container */
+    height: 60%; /* maintains ratio */
+    max-width: 28px; /* optional: upper limit */
+    max-height: 28px;
     border-radius: 50%;
     border: none;
     opacity: 1;
-    padding: 6px;
+    padding: 0; /* remove padding for tight fit */
+    box-sizing: border-box;
 }
 
 .clusterAddBtn__Rreup:hover {

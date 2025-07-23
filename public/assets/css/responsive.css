@@ -1785,4 +1785,8 @@
         transform: translate(-182px, -106px) !important;
         width: 420px;
     }
+
+    .frameinner {
+        padding: 9px !important;
+    }
 }

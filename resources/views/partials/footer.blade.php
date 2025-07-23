@@ -118,7 +118,7 @@
     </div>
 </footer>
 
-@if(!in_array(Route::currentRouteName(), ['design', 'cart', 'order_summary']))
+@if(!in_array(Route::currentRouteName(), ['design', 'cart', 'order_summary', 'collections_detail']))
     <div class="shopbtnmobile">
         <div class="shopvideobtn">
             <a href="{{ route('design') }}" class="btn custom-btn filled">Order Yours</a>
