@@ -1455,6 +1455,10 @@
         transform: translate(-257px, -128px) !important;
     }
 
+    .frameinner {
+        padding: 9px !important;
+    }
+
 }
 
 
