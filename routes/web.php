@@ -1,11 +1,34 @@
 <?php
 
-use Livewire\Volt\Volt;
-use Livewire\Livewire;
-use App\Livewire\HomePage;
-use App\Livewire\DesignPage;
-use App\Livewire\Collections;
-use App\Livewire\CollectionDetail;
+/*
+|--------------------------------------------------------------------------
+| HOW TO FIND BLADE FILES FOR HTML CHANGES
+|--------------------------------------------------------------------------
+|
+| To modify HTML/CSS/JS for any page:
+| 1. Look at the route definition below to find the controller method
+| 2. Check the corresponding controller (in app/Http/Controllers/)
+| 3. The controller method will typically return a view() call
+| 4. The view files are located in resources/views/
+|    - Views are organized in subdirectories matching their purpose
+|    - For example:
+|      - Home page: resources/views/home.blade.php or similar
+|      - Admin pages: resources/views/admin/ directory
+|      - User profile: resources/views/profile/ directory
+| 5. Files ending with .blade.php contain the HTML structure
+| 6. CSS/JS files are typically in public/css/ and public/js/
+|
+| Example: Route::get('/contact', [PagesController::class, 'contact'])
+|          - Controller: app/Http/Controllers/PagesController.php
+|          - Method: contact() likely returns view('contact')
+|          - View file: resources/views/contact.blade.php
+|
+|--------------------------------------------------------------------------
+| Public Routes (No Authentication Required)
+|--------------------------------------------------------------------------
+| These routes are accessible to all users including guests
+*/
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CollectionsController;
 use App\Http\Controllers\CollectionDetailController;
@@ -29,13 +52,21 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RazorpayController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes (No Authentication Required)
+|--------------------------------------------------------------------------
+| These routes are accessible to all users including guests
+*/
+
+// Basic pages routes
 Route::get('/', [PagesController::class, 'index'])->name('home');
-// Route::get('/design', DesignPage::class)->name('design');
 Route::get('/design', [DesignController::class, 'show'])->name('design');
 Route::get('/your-collection', [CollectionsController::class, 'index'])->name('collections');
 Route::get('/your-collection/load', [CollectionsController::class, 'loadMoreProducts'])->name('collections.load');
 Route::get('/collection/{slug}', [CollectionDetailController::class, 'show'])->name('collections_detail');
 
+// Policy and information pages
 Route::get('/privacy-policy', [PagesController::class, 'privacy'])->name('privacy');
 Route::get('/refund-policy', [PagesController::class, 'refund'])->name('refund');
 Route::get('/shipping-policy', [PagesController::class, 'shipping'])->name('shipping');
@@ -44,6 +75,7 @@ Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::post('/contact-form', [PagesController::class, 'submit'])->name('contact.submit');
 
+// Frame design and cart functionality
 Route::post('/update-frame-config', [MainController::class, 'update_config'])->name('update.frame.config');
 Route::get('/get-uploaded-images', [MainController::class, 'get_images'])->name('get.uploaded.images');
 Route::post('/delete-frame-config', [MainController::class, 'destroy'])->name('delete.frame.config');
@@ -60,18 +92,23 @@ Route::get('/get-grand-total', [MainController::class, 'get_grand_total'])->name
 Route::get('/get-all-images', [MainController::class, 'get_all_images'])->name('get_all_images');
 Route::post('/add-to-cart', [MainController::class, 'add_to_cart'])->name('add_to_cart');
 
+// Coupon related routes
 Route::post('/save-coupon', [MainController::class, 'save_coupon'])->name('save_coupon');
 Route::post('/remove-coupon', [MainController::class, 'remove_coupon'])->name('remove_coupon');
 Route::get('/get-applied-coupon', [MainController::class, 'get_applied_coupon'])->name('get_applied_coupon');
+
+// Cart management routes
 Route::post('/remove-from-cart', [MainController::class, 'remove_from_cart'])->name('remove_from_cart');
 Route::post('/update-cart-grand-total', [MainController::class, 'update_cart_grand_total'])->name('update_cart_grand_total');
 Route::post('/place-order', [MainController::class, 'place_order'])->name('place_order');
 Route::post('/add-address', [MainController::class, 'add_address'])->name('add_address');
 
+// Image handling routes
 Route::post('/upload-images', [MainController::class, 'upload_images'])->name('upload_images');
 Route::post('/delete-image', [MainController::class, 'delete_images'])->name('delete_images');
 Route::get('/fetch-images', [MainController::class, 'fetch_images'])->name('fetch_images');
 
+// Gift card session route
 Route::post('/update-gift-session', function (\Illuminate\Http\Request $request) {
     if ($request->gift_card_applied) {
         session(['gift_card_applied' => true]);
@@ -81,8 +118,16 @@ Route::post('/update-gift-session', function (\Illuminate\Http\Request $request)
     return response()->json(['status' => 'success']);
 });
 
+// Location based routes
 Route::get('/state', [MainController::class, 'states'])->name('states');
 Route::get('/cities/{state_id}', [MainController::class, 'getCities'])->name('get.cities');
+
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+| Routes for user authentication and password management
+*/
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
@@ -94,7 +139,14 @@ Route::post('/password/send-otp', [AuthController::class, 'sendOtp'])->name('pas
 Route::post('/password/verify-otp', [AuthController::class, 'verifyOtp'])->name('password.verifyOtp');
 Route::post('/password/reset', [AuthController::class, 'reset'])->name('password.resetPassword');
 
-// Profile-related routes
+/*
+|--------------------------------------------------------------------------
+| Authenticated User Routes
+|--------------------------------------------------------------------------
+| Routes that require user to be authenticated
+*/
+
+// Profile management routes
 Route::get('/myprofile', [ProfileController::class, 'profile'])->name('profile');
 Route::post('/update-myprofile', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
@@ -110,7 +162,12 @@ Route::post('/address/set-default', [ProfileController::class, 'setDefault'])->n
 Route::get('/resetpassword', [ProfileController::class, 'resetpassword'])->name('resetpassword');
 Route::post('/profile/reset-password', [ProfileController::class, 'resetPasswordPost'])->name('profile.reset-password');
 
-// Product-related routes
+/*
+|--------------------------------------------------------------------------
+| Product Management Routes
+|--------------------------------------------------------------------------
+| CRUD routes for product/frame management
+*/
 Route::get('/frames', [ProductController::class, 'index'])->name('frames.index');
 Route::get('/frames/data', [ProductController::class, 'getData'])->name('frames.data');
 Route::post('/frames/store', [ProductController::class, 'store'])->name('frames.store');
@@ -121,6 +178,12 @@ Route::delete('/frames/{id}/delete-image', [ProductController::class, 'deleteAdd
 Route::get('/frames/get-image-url', [ProductController::class, 'getProductImage'])->name('frames.getProductImage');
 Route::get('/frames/coordinates', [ProductController::class, 'post_coordinates'])->name('frames.post_coordinates');
 
+/*
+|--------------------------------------------------------------------------
+| Admin Management Routes
+|--------------------------------------------------------------------------
+| Routes for admin user management
+*/
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/get', [AdminController::class, 'getData'])->name('admin.get');
 Route::post('/admin/store', [AdminController::class, 'store'])->name('admin.store');
@@ -129,12 +192,30 @@ Route::post('/admin/update/{id}', [AdminController::class, 'update'])->name('adm
 Route::delete('/admin/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 Route::get('/admin/login-as/{id}', [AdminController::class, 'loginAsUser'])->name('admin.login.as');
 
+/*
+|--------------------------------------------------------------------------
+| System Settings Routes
+|--------------------------------------------------------------------------
+*/
 Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 Route::post('/settings/update', [SettingController::class, 'update'])->name('settings.update');
 
+/*
+|--------------------------------------------------------------------------
+| Contact Form Submissions Routes
+|--------------------------------------------------------------------------
+*/
 Route::get('/contact-user', [ContactController::class, 'index'])->name('contact.index');
 Route::get('/contact-user/get', [ContactController::class, 'get'])->name('contact.get');
 
+/*
+|--------------------------------------------------------------------------
+| Customization Options Routes
+|--------------------------------------------------------------------------
+| Routes for managing product customization options
+*/
+
+// Color options
 Route::get('/color', [CustomColorController::class, 'index'])->name('color.index');
 Route::get('/color/get', [CustomColorController::class, 'getData'])->name('color.get');
 Route::post('/color/store', [CustomColorController::class, 'store'])->name('color.store');
@@ -142,6 +223,7 @@ Route::get('/color/edit/{id}', [CustomColorController::class, 'edit'])->name('co
 Route::post('/color/update/{id}', [CustomColorController::class, 'update'])->name('color.update');
 Route::delete('/color/delete/{id}', [CustomColorController::class, 'destroy'])->name('color.destroy');
 
+// Size options
 Route::get('/size', [SizesController::class, 'index'])->name('size.index');
 Route::get('/size/get', [SizesController::class, 'getData'])->name('size.get');
 Route::post('/size/store', [SizesController::class, 'store'])->name('size.store');
@@ -149,6 +231,7 @@ Route::get('/size/edit/{id}', [SizesController::class, 'edit'])->name('size.edit
 Route::post('/size/update/{id}', [SizesController::class, 'update'])->name('size.update');
 Route::delete('/size/delete/{id}', [SizesController::class, 'destroy'])->name('size.destroy');
 
+// Finish options
 Route::get('/finish', [FinishController::class, 'index'])->name('finish.index');
 Route::get('/finish/get', [FinishController::class, 'getData'])->name('finish.get');
 Route::post('/finish/store', [FinishController::class, 'store'])->name('finish.store');
@@ -156,6 +239,7 @@ Route::get('/finish/edit/{id}', [FinishController::class, 'edit'])->name('finish
 Route::post('/finish/update/{id}', [FinishController::class, 'update'])->name('finish.update');
 Route::delete('/finish/delete/{id}', [FinishController::class, 'destroy'])->name('finish.destroy');
 
+// Coupon management
 Route::get('/coupon', [CouponController::class, 'index'])->name('coupon.index');
 Route::get('/coupon/get', [CouponController::class, 'getData'])->name('coupon.get');
 Route::post('/coupon/store', [CouponController::class, 'store'])->name('coupon.store');
@@ -163,6 +247,7 @@ Route::get('/coupon/edit/{id}', [CouponController::class, 'edit'])->name('coupon
 Route::post('/coupon/update/{id}', [CouponController::class, 'update'])->name('coupon.update');
 Route::delete('/coupon/delete/{id}', [CouponController::class, 'destroy'])->name('coupon.destroy');
 
+// LED options
 Route::get('/led', [LedController::class, 'index'])->name('led.index');
 Route::get('/led/get', [LedController::class, 'getData'])->name('led.get');
 Route::post('/led/store', [LedController::class, 'store'])->name('led.store');
@@ -170,7 +255,7 @@ Route::get('/led/edit/{id}', [LedController::class, 'edit'])->name('led.edit');
 Route::post('/led/update/{id}', [LedController::class, 'update'])->name('led.update');
 Route::delete('/led/delete/{id}', [LedController::class, 'destroy'])->name('led.destroy');
 
-
+// Address management
 Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');
 Route::get('/addresses/get', [AddressController::class, 'getData'])->name('addresses.get');
 Route::post('/addresses/store', [AddressController::class, 'store'])->name('addresses.store');
@@ -178,6 +263,7 @@ Route::get('/addresses/edit/{id}', [AddressController::class, 'edit'])->name('ad
 Route::post('/addresses/update/{id}', [AddressController::class, 'update'])->name('addresses.update');
 Route::delete('/addresses/delete/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
 
+// Location management
 Route::get('/states', [StatesController::class, 'index'])->name('states.index');
 Route::get('/states/get', [StatesController::class, 'getData'])->name('states.get');
 Route::post('/states/store', [StatesController::class, 'store'])->name('states.store');
@@ -185,6 +271,7 @@ Route::get('/states/edit/{id}', [StatesController::class, 'edit'])->name('states
 Route::post('/states/update/{id}', [StatesController::class, 'update'])->name('states.update');
 Route::delete('/states/delete/{id}', [StatesController::class, 'destroy'])->name('states.destroy');
 
+// City management
 Route::get('/city', [CityController::class, 'index'])->name('city.index');
 Route::get('/city/get', [CityController::class, 'getData'])->name('city.get');
 Route::post('/city/store', [CityController::class, 'store'])->name('city.store');
@@ -192,21 +279,29 @@ Route::get('/city/edit/{id}', [CityController::class, 'edit'])->name('city.edit'
 Route::post('/city/update/{id}', [CityController::class, 'update'])->name('city.update');
 Route::delete('/city/delete/{id}', [CityController::class, 'destroy'])->name('city.destroy');
 
+/*
+|--------------------------------------------------------------------------
+| Additional Functionality Routes
+|--------------------------------------------------------------------------
+*/
+
+// Collection cart functionality
 Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_collection'])->name('add_to_cart_collection');
 Route::get('/frame-defaults', [MainController::class, 'getFrameDefaults'])->name('getFrameDefaults');
 
+// Payment processing routes
 Route::get('/razorpay/create-order', [RazorpayController::class, 'createOrder'])->name('razorpay.create_order');
 Route::post('/razorpay/verify-payment', [RazorpayController::class, 'verifyPayment'])->name('razorpay.verify_payment');
 
+// Order payment and refund routes
 Route::get('/orders/payment-info/{id}', [ProfileController::class, 'getPaymentInfo']);
 Route::post('/orders/refund', [ProfileController::class, 'processRefund']);
 
-Route::get('/canvas', function () {
-    return view('canvas');
-});
-
+// Address check route
 Route::get('/check-user-address', function () {
     return response()->json(['hasAddress' => session()->has('user_address') && !empty(session('user_address'))]);
 })->name('check_user_address');
 
+
+// Laravel auth routes
 require __DIR__ . '/auth.php';
