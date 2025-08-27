@@ -769,7 +769,7 @@ class MainController extends Controller
         $cartGrandTotal = session()->get('cart_grand_total', 0); // Total price
         $giftCard = 0; // Gift card (optional)
         // $giftCard = session()->get('gift_card_applied', 0); // Gift card (optional)
-        // $shipping = session()->get('shipping', 0); // Gift card (optional)
+        $shipping = get_setting('shipping_price') ?? 0; // Gift card (optional)
 
         $shipping_address = ShippingAddress::where('user_id', Auth::user()->id ?? null)
             ->where('default_address', 1)
@@ -799,7 +799,7 @@ class MainController extends Controller
             'discount' => 0
         ]);
 
-        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon', 'shipping_address'));
+        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon', 'shipping_address', 'shipping'));
     }
 
     public function place_order(Request $request)

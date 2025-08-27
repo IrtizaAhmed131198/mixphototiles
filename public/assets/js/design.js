@@ -16,6 +16,9 @@ let add_to_cart = $("#add_to_cart").val();
 let cart_page = $("#cart_page").val();
 let reset_cropped_image = $("#reset_cropped_image").val();
 let getFrameDefaults = $("#getFrameDefaults").val();
+let delivery_cost = parseFloat($("#delivery_cost").val()) || 0;
+let average_cost  = parseFloat($("#average_cost").val())  || 0;
+let base_margin   = parseFloat($("#base_margin").val())   || 0;
 
 let allFrameConfigurations = {}; // This should be populated on each frame load
 
@@ -427,7 +430,7 @@ function updateGrandTotal() {
             if (data.success) {
                 let grandTotal = 0;
 
-                data.data.forEach((sessionImage) => {
+                data.data.forEach((sessionImage, index) => {
                     const frameConfig = sessionImage.frame_configuration;
 
                     const designPrice = 0; //parseFloat(frameConfig?.design?.design_price) || 0;
@@ -447,7 +450,7 @@ function updateGrandTotal() {
                         finishPrice === 0 &&
                         ledPrice === 0
                     ) {
-                        total = 399; // Default price when all options are free
+                        total = average_cost; // Default price when all options are free
                     } else {
                         total =
                             designPrice +
@@ -457,7 +460,10 @@ function updateGrandTotal() {
                             ledPrice;
                     }
 
-                    grandTotal += total;
+                    // ✅ calculate final selling price with profit margin
+                    let quantity = index + 1;
+                    let sellingPrice = calculateFrameCost(quantity, total);
+                    grandTotal += sellingPrice;
                 });
 
                 // Update the grand total in UI
@@ -472,6 +478,38 @@ function updateGrandTotal() {
         .catch((error) => {
             console.error("Error fetching data:", error);
         });
+}
+
+function calculateFrameCost(quantity = 1, total = 0) {
+    // step 1: cost calculations
+    let frame_cost = quantity * total;
+    let total_cost = frame_cost + delivery_cost;
+
+    // step 2: profit margin calculation
+    // base_margin assumed to be entered in % (e.g. 20 for 20%)
+    let profit_margin = (base_margin / Math.pow(quantity, 0.2)) / 100;
+
+    // step 3: profit per sale
+    let profit_per_sale = Math.floor(total_cost * profit_margin);
+
+    // step 4: selling price
+    let selling_price = Math.floor(total_cost + profit_per_sale);
+
+    // nicely structured console output
+    console.log("=== Frame Cost Calculation Quantity "+quantity+" ===");
+    console.log("Delivery Cost   :", delivery_cost);
+    console.log("Average Cost    :", average_cost);
+    console.log("Base Margin (%) :", base_margin);
+    console.log("Quantity        :", quantity);
+    console.log("-------------------------------");
+    console.log("Frame Cost      :", frame_cost);
+    console.log("Total Cost      :", total_cost);
+    console.log("Selling Price   :", selling_price);
+    console.log("Profit per Sale :", profit_per_sale);
+    console.log("Profit Margin   :", profit_margin);
+    console.log("===============================\n");
+
+    return selling_price;
 }
 
 function updateFramePrice(frameConfig) {
@@ -494,7 +532,7 @@ function updateFramePrice(frameConfig) {
         finishPrice === 0 &&
         ledPrice === 0
     ) {
-        total = 399; // Default price when all options are free
+        total = average_cost; // Default price when all options are free
     } else {
         total = designPrice + colorPrice + sizePrice + finishPrice + ledPrice;
     }

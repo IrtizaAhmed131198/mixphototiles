@@ -226,11 +226,17 @@
 
                                         <li>
                                             <p class="customTilename">Shipping</p>
-                                            <span class="shipping_total">₹0.00</span>
+                                            <span class="shipping_total">
+                                                @if($shipping == 0)
+                                                    Free
+                                                @else
+                                                    ₹{{ number_format($shipping, 2) }}
+                                                @endif
+                                            </span>
                                         </li>
 
                                         @php
-                                            $finalTotal = $cartGrandTotal + $giftCard - $appliedCoupon['discount'];
+                                            $finalTotal = $cartGrandTotal + $shipping + $giftCard - $appliedCoupon['discount'];
                                         @endphp
                                         <li class="grandTotal">
                                             <p class="customTilename">Grand Total</p>
@@ -302,7 +308,7 @@
         const selectedStateId = "{{ $shipping_address->state ?? '' }}";
         const selectedCityId = "{{ $shipping_address->city ?? '' }}";
 
-        let shippingPrice = 0;
+        let shippingPrice = {{ $shipping ?? 0 }};
         let cartGrandTotal = {{ $cartGrandTotal }};
         let giftCard = {{ $giftCard }};
         let discount = {{ $appliedCoupon['discount'] ?? 0 }};
@@ -369,7 +375,11 @@
                 shippingPrice = parseFloat(selectedOption.getAttribute('data-shipping')) || 0;
 
                 // Update UI
-                document.querySelector('.shipping_total').textContent = `₹${shippingPrice.toFixed(2)}`;
+                if(shippingPrice === 0){
+                    document.querySelector('.shipping_total').textContent = 'Free';
+                } else {
+                    document.querySelector('.shipping_total').textContent = `₹${shippingPrice.toFixed(2)}`;
+                }
                 document.querySelector('#shippingInput').value = `${shippingPrice.toFixed(2)}`;
 
                 const newGrandTotal = (cartGrandTotal + giftCard + shippingPrice) - discount;

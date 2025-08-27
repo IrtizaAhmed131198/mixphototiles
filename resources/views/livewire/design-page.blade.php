@@ -378,14 +378,14 @@
                                             @endforeach
 
                                             {{-- <li type="button" class="parentProperties dropdown-item frame-finish li-border-color"
-                                            data-price="399" data-val="Normal">
+                                            data-price="{{ get_setting('average_cost') ?? 0 }}" data-val="Normal">
                                             <figure class="PropertiesleftChild">
                                                 <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                     src="{{ asset('assets/images/1701851447650.png') }}">
                                             </figure>
                                             <div class="PropertiesRightChild">
                                                 <p class="propertyName">Normal</p>
-                                                <p class="propertyPrize">$399</p>
+                                                <p class="propertyPrize">${{ get_setting('average_cost') ?? 0 }}</p>
                                             </div>
                                         </li>
 
@@ -590,7 +590,7 @@
                         <div class="Right-Sidebar-footer view-grand-total-1">
                             <div class="GrandTotal">
                                 <p class="">Grand Total</p>
-                                <h6 class="" id="grand-total-1" data-val="399">₹399</h6>
+                                <h6 class="" id="grand-total-1" data-val="{{ get_setting('average_cost') ?? 0 }}">₹{{ get_setting('average_cost') ?? 0 }}</h6>
                             </div>
                             <button type="button" class="btn custom-btn filled" id="add-to-cart-1"> Add to Cart
                                 <svg width="21" height="21" viewBox="0 0 21 21"
@@ -870,13 +870,13 @@
                                     </div>
                                     <div class="summary-card-footer">
                                         <p class="para">Item Price</p>
-                                        <h6 class="prizing" id="price-show" data-val="399">₹399</h6>
+                                        <h6 class="prizing" id="price-show" data-val="{{ get_setting('average_cost') ?? 0 }}">₹{{ get_setting('average_cost') ?? 0 }}</h6>
                                     </div>
                                 </div>
                                 <div class="Right-Sidebar-footer view-grand-total-2">
                                     <div class="GrandTotal">
                                         <p class="">Grand Total</p>
-                                        <h6 class="" id="grand-total-2" data-val="399">₹399</h6>
+                                        <h6 class="" id="grand-total-2" data-val="{{ get_setting('average_cost') ?? 0 }}">₹{{ get_setting('average_cost') ?? 0 }}</h6>
                                     </div>
                                     <button type="button" class="btn custom-btn filled" id="add-to-cart-2"> Add to Cart
                                         <svg width="21" height="21" viewBox="0 0 21 21"
@@ -933,6 +933,12 @@
                                     value="{{ route('reset_cropped_image') }}">
                                 <input type="hidden" name="getFrameDefaults" id="getFrameDefaults"
                                     value="{{ route('getFrameDefaults') }}">
+                                <input type="hidden" name="delivery_cost" id="delivery_cost"
+                                    value="{{ get_setting('delivery_cost') ?? 0 }}">
+                                <input type="hidden" name="average_cost" id="average_cost"
+                                    value="{{ get_setting('average_cost') ?? 0 }}">
+                                <input type="hidden" name="base_margin" id="base_margin"
+                                    value="{{ get_setting('base_margin') ?? 0 }}">
 
                             </div>
                         </div>
