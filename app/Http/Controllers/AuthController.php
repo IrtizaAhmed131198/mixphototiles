@@ -14,6 +14,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Carbon\Carbon;
 use App\Mail\OtpMail;
 use App\Mail\AccountVerified;
+use App\Jobs\SendOtpEmailJob;
 
 class AuthController extends Controller
 {
@@ -171,11 +172,15 @@ class AuthController extends Controller
         $user->otp_expires_at = Carbon::now()->addMinutes(10);
         $user->save();
 
+        // Dispatch job to queue instead of sending immediately
+        dispatch(new SendOtpEmailJob($otp, $user->email, $user->name));
+
         // Send OTP via email
         // Mail::raw("Your OTP code is: $otp", function ($message) use ($user) {
         //     $message->to($user->email)->subject('Password Reset OTP');
         // });
-        Mail::to($user->email)->send(new OtpMail($otp, $user->name));
+        // Mail::to($user->email)->send(new OtpMail($otp, $user->name));
+
 
         return response()->json(['status' => 'success', 'message' => 'OTP sent to your email.']);
     }
