@@ -479,6 +479,9 @@ function updateGrandTotal() {
                         document.getElementById("quantity").value = quantity;
                         price_of_item = sellingPrice / quantity;
                         price_of_item = parseFloat(price_of_item.toFixed(2));
+                        // Update the price on the UI
+                        document.getElementById("price-show").textContent = "₹" + price_of_item;
+                        document.getElementById("price-show").setAttribute("data-val", price_of_item);
 
                     }else{
                         sellingPrice = total;
@@ -486,11 +489,6 @@ function updateGrandTotal() {
                     // console.log(sellingPrice);
                     grandTotal = sellingPrice;
                 });
-                console.log(price_of_item);
-
-                // Update the price on the UI
-                document.getElementById("price-show").textContent = "₹" + price_of_item;
-                document.getElementById("price-show").setAttribute("data-val", price_of_item);
 
                 // Update the grand total in UI
                 document.getElementById("grand-total-1").textContent =

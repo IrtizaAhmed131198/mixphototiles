@@ -877,7 +877,7 @@
                                 <div class="Right-Sidebar-footer view-grand-total-2">
                                     <div class="GrandTotal">
                                         <p class="">Grand Total</p>
-                                        <h6 class="" id="grand-total-2" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
+                                        <h6 class="" id="grand-total-2" data-val="0">₹0</h6>
                                     </div>
                                     <button type="button" class="btn custom-btn filled" id="add-to-cart-2"> Add to Cart
                                         <svg width="21" height="21" viewBox="0 0 21 21"
