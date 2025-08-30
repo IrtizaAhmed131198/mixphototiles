@@ -435,7 +435,7 @@ class MainController extends Controller
                 (float) ($frameConfig['finish']['finish_price'] ?? 0);
 
             if ($price == 0) {
-                $price = 399;
+                $price = get_setting('average_cost');
             }
 
             // Create product in `products` table
