@@ -536,6 +536,7 @@ function updateFramePrice(frameConfig) {
     } else {
         total = designPrice + colorPrice + sizePrice + finishPrice + ledPrice;
     }
+    console.log('abc'+ total);
 
     // Update the price on the UI
     document.getElementById("price-show").textContent = "₹" + total;
