@@ -25,6 +25,11 @@ class DesignController extends Controller
                     ->orderBy('created_at', 'asc')
                     ->get();
 
+        $item_price = calculateFrameCost(1);
+        if(!isset($item_price) && empty($item_price)){
+            $item_price = floatval(get_setting('average_cost') ?? 0);
+        }
+
         return view('livewire.design-page', [
             'imageName' => $imageName,
             'images' => $images,
@@ -32,6 +37,7 @@ class DesignController extends Controller
             'sizes' => $sizes,
             'finish' => $finish,
             'led' => $led,
+            'item_price' => $item_price
         ]);
     }
 }

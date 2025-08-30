@@ -1,5 +1,4 @@
-let item_price = $("#price-show").attr("data-val");
-item_price = parseFloat(item_price);
+let item_price = parseFloat($("#item_price").val()) || 0;
 
 let config_url = $("#url").val();
 let upload_images_url = $("#upload_images").val();
@@ -429,6 +428,7 @@ function updateGrandTotal() {
         .then((data) => {
             if (data.success) {
                 let grandTotal = 0;
+                let price_of_item = item_price;
 
                 data.data.forEach((sessionImage, index) => {
                     const frameConfig = sessionImage.frame_configuration;
@@ -450,7 +450,7 @@ function updateGrandTotal() {
                         finishPrice === 0 &&
                         ledPrice === 0
                     ) {
-                        total = average_cost; // Default price when all options are free
+                        total = item_price; // Default price when all options are free
                     } else {
                         total =
                             designPrice +
@@ -460,17 +460,45 @@ function updateGrandTotal() {
                             ledPrice;
                     }
 
+                    // let quantity_of_item = parseFloat($('#quantity').val()) || 1;
+                    // console.log(quantity_of_item);
+
+                    // if (quantity_of_item !== 1) {
+                    //     let grandTotal = document.getElementById("grand-total-1").dataset.val;
+                    //     console.log(grandTotal);
+                    //     total = grandTotal / quantity_of_item;
+                    //     total = parseFloat(total.toFixed(2));
+                    // }
+
                     // ✅ calculate final selling price with profit margin
                     let quantity = index + 1;
-                    let sellingPrice = calculateFrameCost(quantity, total);
-                    grandTotal += sellingPrice;
+                    let sellingPrice = 0;
+
+                    if(quantity != 1){
+                        sellingPrice = calculateFrameCost(quantity);
+                        document.getElementById("quantity").value = quantity;
+                        price_of_item = sellingPrice / quantity;
+                        price_of_item = parseFloat(price_of_item.toFixed(2));
+
+                    }else{
+                        sellingPrice = total;
+                    }
+                    // console.log(sellingPrice);
+                    grandTotal = sellingPrice;
                 });
+                console.log(price_of_item);
+
+                // Update the price on the UI
+                document.getElementById("price-show").textContent = "₹" + price_of_item;
+                document.getElementById("price-show").setAttribute("data-val", price_of_item);
 
                 // Update the grand total in UI
                 document.getElementById("grand-total-1").textContent =
                     "₹" + grandTotal;
                 document.getElementById("grand-total-2").textContent =
                     "₹" + grandTotal;
+                document.getElementById("grand-total-1").setAttribute("data-val", grandTotal);
+                document.getElementById("grand-total-2").setAttribute("data-val", grandTotal);
             } else {
                 console.error("Failed to fetch frame configurations");
             }
@@ -480,9 +508,9 @@ function updateGrandTotal() {
         });
 }
 
-function calculateFrameCost(quantity = 1, total = 0) {
+function calculateFrameCost(quantity = 1) {
     // step 1: cost calculations
-    let frame_cost = quantity * total;
+    let frame_cost = quantity * average_cost;
     let total_cost = frame_cost + delivery_cost;
 
     // step 2: profit margin calculation
@@ -496,18 +524,18 @@ function calculateFrameCost(quantity = 1, total = 0) {
     let selling_price = Math.floor(total_cost + profit_per_sale);
 
     // nicely structured console output
-    console.log("=== Frame Cost Calculation Quantity "+quantity+" ===");
-    console.log("Delivery Cost   :", delivery_cost);
-    console.log("Average Cost    :", average_cost);
-    console.log("Base Margin (%) :", base_margin);
-    console.log("Quantity        :", quantity);
-    console.log("-------------------------------");
-    console.log("Frame Cost      :", frame_cost);
-    console.log("Total Cost      :", total_cost);
-    console.log("Selling Price   :", selling_price);
-    console.log("Profit per Sale :", profit_per_sale);
-    console.log("Profit Margin   :", profit_margin);
-    console.log("===============================\n");
+    // console.log("=== Frame Cost Calculation Quantity "+quantity+" ===");
+    // console.log("Delivery Cost   :", delivery_cost);
+    // console.log("Average Cost    :", average_cost);
+    // console.log("Base Margin (%) :", base_margin);
+    // console.log("Quantity        :", quantity);
+    // console.log("-------------------------------");
+    // console.log("Frame Cost      :", frame_cost);
+    // console.log("Total Cost      :", total_cost);
+    // console.log("Selling Price   :", selling_price);
+    // console.log("Profit per Sale :", profit_per_sale);
+    // console.log("Profit Margin   :", profit_margin);
+    // console.log("===============================\n");
 
     return selling_price;
 }
@@ -532,14 +560,14 @@ function updateFramePrice(frameConfig) {
         finishPrice === 0 &&
         ledPrice === 0
     ) {
-        total = average_cost; // Default price when all options are free
+        total = item_price; // Default price when all options are free
     } else {
         total = designPrice + colorPrice + sizePrice + finishPrice + ledPrice;
     }
-    console.log('abc'+ total);
 
     // Update the price on the UI
     document.getElementById("price-show").textContent = "₹" + total;
+    document.getElementById("price-show").setAttribute("data-val", total);
 
     // Optionally update the grand total if you are tracking all frames (for multiple frames setup)
     updateGrandTotal();

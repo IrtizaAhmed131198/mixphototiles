@@ -590,7 +590,7 @@
                         <div class="Right-Sidebar-footer view-grand-total-1">
                             <div class="GrandTotal">
                                 <p class="">Grand Total</p>
-                                <h6 class="" id="grand-total-1" data-val="{{ get_setting('average_cost') ?? 0 }}">₹{{ get_setting('average_cost') ?? 0 }}</h6>
+                                <h6 class="" id="grand-total-1" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
                             </div>
                             <button type="button" class="btn custom-btn filled" id="add-to-cart-1"> Add to Cart
                                 <svg width="21" height="21" viewBox="0 0 21 21"
@@ -870,13 +870,14 @@
                                     </div>
                                     <div class="summary-card-footer">
                                         <p class="para">Item Price</p>
-                                        <h6 class="prizing" id="price-show" data-val="{{ get_setting('average_cost') ?? 0 }}">₹{{ get_setting('average_cost') ?? 0 }}</h6>
+                                        <h6 class="prizing" id="price-show" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
+                                        <input type="hidden" name="quantity" id="quantity" value="1">
                                     </div>
                                 </div>
                                 <div class="Right-Sidebar-footer view-grand-total-2">
                                     <div class="GrandTotal">
                                         <p class="">Grand Total</p>
-                                        <h6 class="" id="grand-total-2" data-val="{{ get_setting('average_cost') ?? 0 }}">₹{{ get_setting('average_cost') ?? 0 }}</h6>
+                                        <h6 class="" id="grand-total-2" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
                                     </div>
                                     <button type="button" class="btn custom-btn filled" id="add-to-cart-2"> Add to Cart
                                         <svg width="21" height="21" viewBox="0 0 21 21"
@@ -939,6 +940,8 @@
                                     value="{{ get_setting('average_cost') ?? 0 }}">
                                 <input type="hidden" name="base_margin" id="base_margin"
                                     value="{{ get_setting('base_margin') ?? 0 }}">
+                                <input type="hidden" name="item_price" id="item_price"
+                                    value="{{ $item_price ?? 0 }}">
 
                             </div>
                         </div>
