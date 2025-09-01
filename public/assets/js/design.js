@@ -435,10 +435,8 @@ function updateGrandTotal() {
 
                     const designPrice = 0; //parseFloat(frameConfig?.design?.design_price) || 0;
                     const colorPrice = 0; //parseFloat(frameConfig?.color?.color_price) || 0;
-                    const sizePrice =
-                        parseFloat(frameConfig?.size?.frame_price) || 0;
-                    const finishPrice =
-                        parseFloat(frameConfig?.finish?.finish_price) || 0;
+                    const sizePrice = 0; //parseFloat(frameConfig?.size?.frame_price) || 0;
+                    const finishPrice = 0; //parseFloat(frameConfig?.finish?.finish_price) || 0;
                     const ledPrice = 0; //parseFloat(frameConfig?.led?.price) || 0;
 
                     let total = 0;
@@ -545,8 +543,8 @@ function updateFramePrice(frameConfig) {
     // Get prices directly from the frame configuration
     const designPrice = 0; //parseFloat(frame_config.design?.design_price) || 0;
     const colorPrice = 0; //parseFloat(frame_config.color?.color_price) || 0;
-    const sizePrice = parseFloat(frame_config.size?.frame_price) || 0;
-    const finishPrice = parseFloat(frame_config.finish?.finish_price) || 0;
+    const sizePrice = 0; //parseFloat(frame_config.size?.frame_price) || 0;
+    const finishPrice = 0; //parseFloat(frame_config.finish?.finish_price) || 0;
     const ledPrice = 0; //parseFloat(frame_config.led?.price) || 0;
 
     let total = 0;
@@ -562,7 +560,7 @@ function updateFramePrice(frameConfig) {
     } else {
         total = designPrice + colorPrice + sizePrice + finishPrice + ledPrice;
     }
-
+    total = parseFloat(total.toFixed(2));
     // Update the price on the UI
     document.getElementById("price-show").textContent = "₹" + total;
     document.getElementById("price-show").setAttribute("data-val", total);

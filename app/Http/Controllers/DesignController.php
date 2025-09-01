@@ -25,7 +25,16 @@ class DesignController extends Controller
                     ->orderBy('created_at', 'asc')
                     ->get();
 
-        $item_price = calculateFrameCost(1);
+        $quantity = session()->get('image_quantity', 0);
+        if($quantity == 0){
+            $quantity = 1;
+        }
+
+        $item_price = calculateFrameCost($quantity);
+        if($quantity != 1){
+            $item_price = $item_price / $quantity;
+            $item_price = (float)$item_price;
+        }
         if(!isset($item_price) && empty($item_price)){
             $item_price = floatval(get_setting('average_cost') ?? 0);
         }

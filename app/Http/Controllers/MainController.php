@@ -177,6 +177,11 @@ class MainController extends Controller
             $session_images->frame_configuration = $frameConfiguration;
             $session_images->save();
 
+            //quantity session
+            $quantity = session()->get('image_quantity', 0);
+            session()->put('image_quantity', $quantity + 1);
+
+
             return response()->json([
                 'success' => true,
                 'file_url' => 'uploads/' . $processedFileName,
@@ -218,6 +223,9 @@ class MainController extends Controller
         $deleted = $sessionImage->delete();
 
         if ($deleted) {
+            $quantity = session()->get('image_quantity', 0);
+            session()->put('image_quantity', max(0, $quantity - 1));
+
             $filePath = public_path($imageSrc);
             if (file_exists($filePath)) {
                 unlink($filePath);
