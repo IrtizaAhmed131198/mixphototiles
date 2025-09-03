@@ -2095,6 +2095,8 @@ $(document).ready(function () {
                 }
 
                 // Call add_to_cart_product after getting all images
+                let quantity_of_item = parseFloat($('#quantity').val()) || 1;
+
                 fetch(add_to_cart, {
                     method: "POST",
                     headers: {
@@ -2103,7 +2105,7 @@ $(document).ready(function () {
                             'meta[name="csrf-token"]'
                         ).content,
                     },
-                    body: JSON.stringify({}),
+                    body: JSON.stringify({quantity: quantity_of_item}),
                 })
                     .then((response) => response.json())
                     .then((responseData) => {

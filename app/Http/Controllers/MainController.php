@@ -404,6 +404,7 @@ class MainController extends Controller
     {
         session()->forget('cart');
 
+        $quantity = $request->input('quantity', 1);
         $sessionId = session()->getId();
         $sessionImages = SessionImage::where('session_id', $sessionId)->get();
 
@@ -443,7 +444,9 @@ class MainController extends Controller
                 (float) ($frameConfig['finish']['finish_price'] ?? 0);
 
             if ($price == 0) {
-                $price = get_setting('average_cost');
+                $sellingPrice = calculateFrameCost($quantity);
+                $price = $sellingPrice / $quantity;
+                $price = round($price, 2);
             }
 
             // Create product in `products` table
