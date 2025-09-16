@@ -102,6 +102,7 @@ Route::post('/remove-from-cart', [MainController::class, 'remove_from_cart'])->n
 Route::post('/update-cart-grand-total', [MainController::class, 'update_cart_grand_total'])->name('update_cart_grand_total');
 Route::post('/place-order', [MainController::class, 'place_order'])->name('place_order');
 Route::post('/add-address', [MainController::class, 'add_address'])->name('add_address');
+Route::post('/cart/clear', [MainController::class, 'clear_cart'])->name('cart.clear');
 
 // Image handling routes
 Route::post('/upload-images', [MainController::class, 'upload_images'])->name('upload_images');

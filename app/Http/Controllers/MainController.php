@@ -443,11 +443,13 @@ class MainController extends Controller
                 (float) ($frameConfig['design']['design_price'] ?? 0) +
                 (float) ($frameConfig['finish']['finish_price'] ?? 0);
 
+                // dd($frameConfig);
             if ($price == 0) {
                 $sellingPrice = calculateFrameCost($quantity);
                 $price = $sellingPrice / $quantity;
                 $price = round($price, 2);
             }
+            // dd($price);
 
             // Create product in `products` table
             $product = Product::create([
@@ -719,14 +721,48 @@ class MainController extends Controller
         $productId = $request->input('product_id');
         $imageName = $request->input('image_name'); // Receive image name from AJAX
 
-        // 1. Remove product from session cart
         $sessionCart = session()->get('cart', []);
 
+        // Step 1: find the removed item(s)
+        $removedItems = array_filter($sessionCart, function ($item) use ($productId) {
+            return $item['product_id'] == $productId;
+        });
+        // dd($sessionCart);
+
+        // Step 2: delete removed product(s) from DB
+        foreach ($removedItems as $removed) {
+            $product = Product::find($removed['product_id']);
+            if ($product) {
+                $product->delete(); // permanently delete
+                // OR $product->update(['status' => 0]); // soft remove if you prefer
+            }
+        }
+
+        // Step 3: keep only the remaining items in cart
         $updatedCart = array_filter($sessionCart, function ($item) use ($productId) {
             return $item['product_id'] != $productId;
         });
 
-        session()->put('cart', array_values($updatedCart)); // Reindex and update cart
+        // Step 4: recalc prices for remaining items
+        foreach ($updatedCart as &$item) {
+            $sellingPrice = calculateFrameCost(count($updatedCart));
+            $price = $sellingPrice / count($updatedCart);
+            $price = round($price, 2);
+
+            $item['price'] = $price;
+            $item['total'] = $price;
+
+            $product = Product::find($item['product_id']);
+            if ($product) {
+                $product->price = $price;
+                $product->save();
+            }
+        }
+
+        // Save updated cart back to session
+        session()->put('cart', array_values($updatedCart));
+
+        // dd($updatedCart, $removedItems);
 
         // 2. Delete image from SessionImage table and public folder
         // $deleted = SessionImage::where('filename', $imageName)->delete();
@@ -742,6 +778,14 @@ class MainController extends Controller
             'success' => true,
             'message' => 'Product removed from cart successfully.'
         ]);
+    }
+
+    public function clear_cart()
+    {
+        // Remove all cart items
+        session()->forget('cart');
+
+        return redirect()->back()->with('success', 'All items removed from cart.');
     }
 
     public function update_cart_grand_total(Request $request)

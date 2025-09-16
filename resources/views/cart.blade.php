@@ -41,6 +41,12 @@
                             <h4 class="">
                                 Your Cart
                                 <span class="itemsCount">({{ count($cartItems) ?? 0 }} Items)</span>
+                                <form action="{{ route('cart.clear') }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn custom-btn filled">
+                                        Remove All
+                                    </button>
+                                </form>
                             </h4>
                         </div>
 

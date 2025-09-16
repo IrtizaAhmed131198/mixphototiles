@@ -433,11 +433,11 @@ function updateGrandTotal() {
                 data.data.forEach((sessionImage, index) => {
                     const frameConfig = sessionImage.frame_configuration;
 
-                    const designPrice = 0; //parseFloat(frameConfig?.design?.design_price) || 0;
-                    const colorPrice = 0; //parseFloat(frameConfig?.color?.color_price) || 0;
-                    const sizePrice = 0; //parseFloat(frameConfig?.size?.frame_price) || 0;
-                    const finishPrice = 0; //parseFloat(frameConfig?.finish?.finish_price) || 0;
-                    const ledPrice = 0; //parseFloat(frameConfig?.led?.price) || 0;
+                    const designPrice = parseFloat(frameConfig?.design?.design_price) || 0;
+                    const colorPrice = parseFloat(frameConfig?.color?.color_price) || 0;
+                    const sizePrice = parseFloat(frameConfig?.size?.frame_price) || 0;
+                    const finishPrice = parseFloat(frameConfig?.finish?.finish_price) || 0;
+                    const ledPrice = parseFloat(frameConfig?.led?.price) || 0;
 
                     let total = 0;
 
@@ -541,11 +541,11 @@ function updateFramePrice(frameConfig) {
     let frame_config = JSON.parse(frameConfig.frame_configuration);
 
     // Get prices directly from the frame configuration
-    const designPrice = 0; //parseFloat(frame_config.design?.design_price) || 0;
-    const colorPrice = 0; //parseFloat(frame_config.color?.color_price) || 0;
-    const sizePrice = 0; //parseFloat(frame_config.size?.frame_price) || 0;
-    const finishPrice = 0; //parseFloat(frame_config.finish?.finish_price) || 0;
-    const ledPrice = 0; //parseFloat(frame_config.led?.price) || 0;
+    const designPrice = parseFloat(frame_config.design?.design_price) || 0;
+    const colorPrice = parseFloat(frame_config.color?.color_price) || 0;
+    const sizePrice = parseFloat(frame_config.size?.frame_price) || 0;
+    const finishPrice = parseFloat(frame_config.finish?.finish_price) || 0;
+    const ledPrice = parseFloat(frame_config.led?.price) || 0;
 
     let total = 0;
 
@@ -661,7 +661,7 @@ async function processAndUploadImages(files, mainLoader) {
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0, img.width, img.height);
 
-        if (img.width < 700 || img.height < 700 || isImageBlurred(canvas)) {
+        if (img.width < 500 || img.height < 500 || isImageBlurred(canvas)) {
             if (mainLoader) mainLoader.style.display = "none";
 
             const result = await Swal.fire({
