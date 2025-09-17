@@ -4069,8 +4069,7 @@ button.hammenubtn {
 }
 
 .banner-video video {
-    height: 70vh;
-    width: 100%;
+    height: 700px;
     object-fit: cover;
 }
 
@@ -4105,7 +4104,7 @@ button.hammenubtn {
 .banner-video {
     position: relative;
     z-index: 0;
-    height: 70vh;
+    /* height: 70vh; */
 }
 
 .shopvideobtn {
