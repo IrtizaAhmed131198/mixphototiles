@@ -34,7 +34,7 @@
         height: 530px !important;
         justify-self: unset;
         flex-wrap: wrap;
-        flex-direction: column
+        flex-direction: column;
     }
 
     .HomeEnquire_homeEnquireContent .heading-4 {
@@ -451,6 +451,9 @@
 
     .nails-tabs button {
         font-size: 16px;
+    }
+    .banner-video video {
+        height: 600px;
     }
 }
 
@@ -963,7 +966,7 @@
     }
 
     .banner-video video {
-        height: 70vh;
+        height: 400px;
         object-fit: fill;
     }
 
@@ -1059,7 +1062,6 @@
 }
 
 @media (max-width: 767px) {
-
     .mobile-toolbar-container {
         position: fixed;
         bottom: 0;
@@ -1099,7 +1101,6 @@
         text-align: center;
         font-size: 16px !important;
     }
-
 
     .custom-tabs-content h2 {
         text-align: center;
@@ -1295,7 +1296,6 @@
         flex-wrap: unset;
     }
 
-
     li.designToolPropertiesChild {
         display: inline-block;
         float: none;
@@ -1362,7 +1362,7 @@
     }
 
     .banner-video video {
-        height: 70vh;
+        height: 350px;
     }
 
     .topmenu-logo a img {
@@ -1462,9 +1462,7 @@
     .frameinner {
         padding: 9px !important;
     }
-
 }
-
 
 @media (max-width: 575px) {
     .Footer_footer .Footer_footerLinksWrp img {
@@ -1479,7 +1477,7 @@
     }
 
     .banner-video video {
-        height: 60vh;
+        height: 300px;
     }
 
     .usa-pic h6 {
@@ -1590,7 +1588,6 @@
     .ContactInfo_contactInfoWrp__wBllg {
         margin-top: 20px;
     }
-
 
     .contact-info-2 a {
         font-size: 16px !important;
