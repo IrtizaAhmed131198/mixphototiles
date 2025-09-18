@@ -18,11 +18,12 @@ body {
 
 p.para {
     font-size: 18px;
+    margin-bottom: -1rem;
 }
 
 .py {
-    padding-top: 52px;
-    padding-bottom: 82px;
+    padding-top: 25px;
+    padding-bottom: 45px;
 }
 
 /* custom css  */
@@ -512,7 +513,7 @@ header {
 }
 
 .main-banner-section {
-    padding-bottom: 5rem;
+    padding-bottom: 2.5rem;
     /* margin-top: -5rem; */
 }
 
@@ -535,7 +536,7 @@ header {
 }
 
 .main-title {
-    margin: 1rem 0 3rem;
+    margin: 1rem 0 2rem;
 }
 
 .main-title span.heading-1 {
@@ -588,7 +589,7 @@ span.realPize {
 }
 
 .clusters-section {
-    padding: 100px 115px;
+    padding: 26px 115px;
     background: linear-gradient(180deg,
             hsla(0, 0%, 87%, 0.2),
             hsla(0, 0%, 100%, 0));
@@ -1105,6 +1106,7 @@ li.designToolPropertiesChild {
     background: linear-gradient(180deg,
             hsla(0, 0%, 87%, 0.2),
             hsla(0, 0%, 100%, 0));
+    margin-top: 1rem;
 }
 
 .about-section .heading-3 {
@@ -1212,6 +1214,7 @@ li.designToolPropertiesChild {
 
 .HomeFrameSlider_framesContent {
     position: static;
+    margin-bottom:-7rem;
 }
 
 @media (max-width: 767.98px) {
@@ -4110,8 +4113,8 @@ button.hammenubtn {
 .shopvideobtn {
     position: absolute;
     z-index: 0;
-    bottom: 13%;
-    left: 45%;
+    bottom: 57%;
+    left: 46%;
 }
 
 .shopvideobtn a.btn.custom-btn.filled {
@@ -4139,8 +4142,8 @@ button.hammenubtn {
 }
 
 .shopvideobtn a.btn.custom-btn.filled{
-    background: rgb(170 166 166) !important;
-    color: rgb(255 255 255) !important;
+    background: rgb(219 209 209 / 60%) !important;
+    color: rgb(255, 255, 255) !important;
 }
 
 .shopvideobtn a.btn.custom-btn.filled:hover {
