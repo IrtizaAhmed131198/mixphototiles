@@ -119,7 +119,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-12 p-0">
                     <div class="banner-video">
-                        <video width="100%" height="100%" autoplay loop playsinline>
+                        <video width="100%" height="100%" autoplay muted loop playsinline>
                             <source src="{{ asset('assets/banner-video/Banner-video.mp4') }}" type="video/mp4">
                             <source src="movie.ogg" type="video/ogg">
                         </video>
