@@ -1328,6 +1328,7 @@ designOptions.forEach((option) => {
         if (designClass === "frameless-card-design") {
             sizeOptionsTemp.forEach((sizeOption) => {
                 const sizeText = sizeOption.querySelector(".propertyName").textContent.trim();
+                console.log(sizeText);
                 if (sizeText === '8" X 8"') {
                     sizeOption.style.display = "flex";
                 } else {
