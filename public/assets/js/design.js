@@ -866,7 +866,7 @@ document
                         uploadInput.disabled = false;
 
                         if (totalSlides === 1) {
-                            window.history.replaceState({}, document.title, window.location.origin + window.location.pathname);
+                            location.reload();
                         }
                     }, 500);
                 }

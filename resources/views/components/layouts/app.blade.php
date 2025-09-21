@@ -156,7 +156,7 @@
     @endif
 
     <script>
-        console.clear();
+        // console.clear();
     </script>
 
 </body>
