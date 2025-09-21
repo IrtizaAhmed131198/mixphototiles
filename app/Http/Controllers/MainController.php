@@ -123,6 +123,7 @@ class MainController extends Controller
     {
         $cartItems = session()->get('cart', []);
         $discount = get_setting('discount') ?? 0;
+        $shipping_price = get_setting('shipping_price') ?? 0;
         $gift = 30;
         $today = Carbon::today()->format('Y-m-d');
         $coupons = DB::table('coupon')
@@ -137,7 +138,7 @@ class MainController extends Controller
             ->map(function ($amount) {
                 return (float) $amount;
             });
-        return view('cart', compact('cartItems', 'discount', 'gift', 'coupons', 'couponsSelect'));
+        return view('cart', compact('cartItems', 'discount', 'gift', 'coupons', 'couponsSelect', 'shipping_price'));
     }
 
     public function upload_image(Request $request)

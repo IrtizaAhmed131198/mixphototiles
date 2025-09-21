@@ -492,7 +492,7 @@
 
                                 <!-- 8 dropdown -->
                                 <li class="designToolPropertiesChild btn-group dropend">
-                                    <button type="button" id="remove-image">
+                                    <button type="button" id="remove-image" data-redirect="{{ route('design') }}">
                                         <svg width="15.9" height="17.5"
                                             class="w-em h-em LeftSidebar_designIcon__3UjGH" viewBox="0 0 15.9 17.5"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -713,7 +713,7 @@
                                                         </g>
                                                     </svg>
                                                     <div class="frame-detail">
-                                                        <p class="para">Frame </p>
+                                                        <p class="para frame">Frame </p>
                                                         <h6 class="heading-4" id="frame-show">Border</h6>
                                                     </div>
                                                 </div>
@@ -747,7 +747,7 @@
                                                         </g>
                                                     </svg>
                                                     <div class="frame-detail">
-                                                        <p class="para">Color </p>
+                                                        <p class="para frame">Color </p>
                                                         <h6 class="heading-4" id="color-show">Black</h6>
                                                     </div>
                                                 </div>
@@ -776,7 +776,7 @@
                                                         </g>
                                                     </svg>
                                                     <div class="frame-detail">
-                                                        <p class="para">Size </p>
+                                                        <p class="para frame">Size </p>
                                                         <h6 class="heading-4" id="size-show">8" X 8"</h6>
                                                     </div>
                                                 </div>
@@ -796,7 +796,7 @@
                                                             </path>
                                                         </svg>
                                                         <div class="frame-detail">
-                                                            <p class="para">Finish </p>
+                                                            <p class="para frame">Finish </p>
                                                             <h6 class="heading-4" id="finish-show">
                                                                 {{ $finish[0]->label }}
                                                             </h6>
@@ -821,7 +821,7 @@
                                                             </g>
                                                         </svg>
                                                         <div class="frame-detail">
-                                                            <p class="para">LED Frame</p>
+                                                            <p class="para frame">LED Frame</p>
                                                             <h6 class="heading-4" id="led-show">No</h6>
                                                         </div>
                                                     </div>
@@ -831,7 +831,6 @@
                                             <li class="col-6">
                                                 <div class="d-flex align-items-center hang-icon">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
-                                                        style="font-size: 28px;margin-top: -60px;margin-left: 3px;"
                                                         width="18" height="24.413" viewBox="0 0 18 24.413"
                                                         class="w-em h-em ttl-24 mb-0">
                                                         <g transform="translate(2638 17326.398)">
@@ -859,7 +858,7 @@
                                                         </g>
                                                     </svg>
                                                     <div class="frame-detail">
-                                                        <p class="para">Hang</p>
+                                                        <p class="para frame">Hang</p>
                                                         <h6 class="heading-4" id="hang1-show">Free magentick reusable
                                                             stickers
                                                         </h6>

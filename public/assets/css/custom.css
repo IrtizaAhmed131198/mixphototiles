@@ -21,6 +21,11 @@ p.para {
     margin-bottom: -1rem;
 }
 
+p.para.frame {
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
 .py {
     padding-top: 25px;
     padding-bottom: 45px;
@@ -4176,3 +4181,9 @@ section.custom-tabs-section.py {
 }
 
 /* new css end */
+
+.hang-icon svg {
+    font-size: 28px;
+    margin-top: -24px;
+    margin-left: 3px;
+}
