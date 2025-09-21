@@ -155,6 +155,10 @@
         </script>
     @endif
 
+    <script>
+        console.clear();
+    </script>
+
 </body>
 
 </html>
