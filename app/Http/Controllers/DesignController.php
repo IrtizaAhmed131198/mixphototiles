@@ -39,6 +39,8 @@ class DesignController extends Controller
             $item_price = floatval(get_setting('average_cost') ?? 0);
         }
 
+        $shipping = get_setting('shipping_price') ?? 0;
+
         return view('livewire.design-page', [
             'imageName' => $imageName,
             'images' => $images,
@@ -46,7 +48,8 @@ class DesignController extends Controller
             'sizes' => $sizes,
             'finish' => $finish,
             'led' => $led,
-            'item_price' => $item_price
+            'item_price' => $item_price,
+            'shipping' => $shipping,
         ]);
     }
 }

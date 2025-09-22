@@ -865,6 +865,30 @@
                                                     </div>
                                                 </div>
                                             </li>
+                                            <li class="col-6">
+                                                <div class="d-flex align-items-center">
+                                                    {{-- Truck / Shipping Icon --}}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="w-em h-em ttl-22 mb-0">
+                                                        <rect x="1" y="3" width="15" height="13"></rect>
+                                                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                                    </svg>
+                                                    <div class="frame-detail">
+                                                        <p class="para frame">Shipping</p>
+                                                        <h6 class="heading-4" id="shipping-show">
+                                                            @if($shipping == 0)
+                                                                Free Delivery
+                                                            @else
+                                                                ₹{{ number_format($shipping, 2) }}
+                                                            @endif
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="summary-card-footer">
