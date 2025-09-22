@@ -199,6 +199,22 @@ function applyInitialFrameDesign(imageObj) {
             colorOption.style.display = "flex"; // or 'block'
         });
     }
+
+    const sizeOptionsTemp = document.querySelectorAll(".frame-size");
+    if (initialDesignClass === "frameless-card-design") {
+        sizeOptionsTemp.forEach((sizeOption) => {
+            const sizeText = sizeOption.querySelector(".propertyName").textContent.trim();
+            if (sizeText === '8" X 8"') {
+                sizeOption.style.display = "flex";
+            } else {
+                sizeOption.style.display = "none";
+            }
+        });
+    } else {
+        sizeOptionsTemp.forEach((sizeOption) => {
+            sizeOption.style.display = "flex";
+        });
+    }
 }
 
 function applyInitialFrameColor(imageObj) {
@@ -804,6 +820,7 @@ document
 
         if (activeSlide) {
             const imgElement = activeSlide.querySelector("img");
+            const redirectUrl = document.getElementById("remove-image").getAttribute("data-redirect");
             if (imgElement) {
                 const imageSrc = imgElement.getAttribute("src");
                 const imageNameWithExt = imageSrc.split("/").pop();
@@ -1304,6 +1321,23 @@ designOptions.forEach((option) => {
         } else {
             colorOptionsTemp.forEach((colorOption) => {
                 colorOption.style.display = "flex"; // or 'block'
+            });
+        }
+
+        const sizeOptionsTemp = document.querySelectorAll(".frame-size");
+        if (designClass === "frameless-card-design") {
+            sizeOptionsTemp.forEach((sizeOption) => {
+                const sizeText = sizeOption.querySelector(".propertyName").textContent.trim();
+                console.log(sizeText);
+                if (sizeText === '8" X 8"') {
+                    sizeOption.style.display = "flex";
+                } else {
+                    sizeOption.style.display = "none";
+                }
+            });
+        } else {
+            sizeOptionsTemp.forEach((sizeOption) => {
+                sizeOption.style.display = "flex";
             });
         }
 

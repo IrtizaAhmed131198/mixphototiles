@@ -266,15 +266,20 @@
                                                 <span id="gift" data-val="{{ $gift }}">
                                                     ₹{{ number_format($gift, 2) }} </span>
                                             </li>
-                                            {{-- <li>
-                                        <p class="customTilename">Shipping
-                                        </p>
-                                        <span id="shipping" data-val="{{ $shipping }}"> ₹{{ number_format($shipping, 2) }} </span>
-                                    </li> --}}
+                                            <li>
+                                                <p class="customTilename">Shipping</p>
+                                                <span id="shipping" data-val="{{ $shipping_price }}">
+                                                    @if($shipping_price == 0)
+                                                        Free
+                                                    @else
+                                                        ₹{{ number_format($shipping_price, 2) }}
+                                                    @endif
+                                                </span>
+                                            </li>
                                             <li class="grandTotal">
                                                 <p class="customTilename">Grand Total
                                                 </p>
-                                                <span id="grand_total" data-val="{{ $subtotal + $discount }}">
+                                                <span id="grand_total" data-val="{{ $subtotal + $discount + $shipping_price }}">
                                                     ₹{{ number_format($subtotal + $discount, 2) }} </span>
                                             </li>
                                         </ul>

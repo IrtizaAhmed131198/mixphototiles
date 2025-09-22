@@ -117,18 +117,21 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
-                                                        <select class="form-select form-control"
-                                                            aria-label="Default select example" id="stateDropdown"
-                                                            name="state">
-                                                            <option value="">---SelectlState---</option>
+                                                        <select class="form-select form-control" id="stateDropdown" name="state">
+                                                            <option value="">---Select State---</option>
+                                                            <option value="other">Other</option> <!-- Added Other -->
                                                         </select>
+                                                        <input type="text" id="stateInput" name="state_name" class="form-control mt-2 d-none" placeholder="Enter State">
                                                     </div>
+
                                                     <div class="col-lg-6">
-                                                        <select class="form-select form-control" id="cityDropdown"
-                                                            name="city">
+                                                        <select class="form-select form-control" id="cityDropdown" name="city">
                                                             <option value="">---Select City---</option>
+                                                            <option value="other">Other</option> <!-- Added Other -->
                                                         </select>
+                                                        <input type="text" id="cityInput" name="city_name" class="form-control mt-2 d-none" placeholder="Enter City">
                                                     </div>
+
                                                     <input type="hidden" name="shipping" id="shippingInput" value="0">
                                                     <div class="col-lg-6">
                                                         <div label="Alternative Phone Number">
@@ -316,6 +319,31 @@
         document.addEventListener('DOMContentLoaded', function() {
             const stateDropdown = document.getElementById('stateDropdown');
             const cityDropdown = document.getElementById('cityDropdown');
+            const stateInput = document.getElementById('stateInput');
+            const cityInput = document.getElementById('cityInput');
+
+            // State change
+            stateDropdown.addEventListener('change', function () {
+                if (this.value === 'other') {
+                    stateInput.classList.remove('d-none');
+
+                    // Reset city dropdown and show Other option
+                    cityDropdown.innerHTML = '<option value="other">Other</option>';
+                    cityInput.classList.remove('d-none'); // user can type city directly
+                } else {
+                    stateInput.classList.add('d-none');
+                    cityInput.classList.add('d-none');
+                }
+            });
+
+            // City change
+            cityDropdown.addEventListener('change', function () {
+                if (this.value === 'other') {
+                    cityInput.classList.remove('d-none');
+                } else {
+                    cityInput.classList.add('d-none');
+                }
+            });
 
             // Load states
             fetch("{{ route('states') }}")
@@ -332,7 +360,13 @@
                         stateDropdown.appendChild(option);
                     });
 
-                    // Trigger change to load cities for selected state
+                    // Always add "Other"
+                    const otherOption = document.createElement('option');
+                    otherOption.value = "other";
+                    otherOption.textContent = "Other";
+                    stateDropdown.appendChild(otherOption);
+
+                    // Trigger change to load cities if pre-selected
                     if (selectedStateId) {
                         stateDropdown.dispatchEvent(new Event('change'));
                     }
@@ -342,9 +376,9 @@
             // When state changes, load cities
             stateDropdown.addEventListener('change', function() {
                 const stateId = this.value;
-                cityDropdown.innerHTML = '<option value="">---Select City---</option>'; // reset
+                cityDropdown.innerHTML = '<option value="">---Select City---</option>';
 
-                if (stateId) {
+                if (stateId && stateId !== 'other') {
                     fetch("{{ url('cities') }}/" + stateId)
                         .then(response => response.json())
                         .then(result => {
@@ -360,22 +394,31 @@
                                 cityDropdown.appendChild(option);
                             });
 
-                            // Trigger change to update shipping if city was preselected
+                            // Always add "Other"
+                            const otherOption = document.createElement('option');
+                            otherOption.value = "other";
+                            otherOption.textContent = "Other";
+                            cityDropdown.appendChild(otherOption);
+
+                            // Trigger change if city was preselected
                             if (selectedCityId) {
                                 cityDropdown.dispatchEvent(new Event('change'));
                             }
                         })
                         .catch(error => console.error('Error fetching cities:', error));
+                } else if (stateId === 'other') {
+                    // Show only "Other" in city dropdown
+                    cityDropdown.innerHTML = '<option value="other">Other</option>';
                 }
             });
 
-            // When a city is selected, update shipping and grand total
+            // City shipping calculation
             cityDropdown.addEventListener('change', function() {
                 const selectedOption = this.options[this.selectedIndex];
-                shippingPrice = parseFloat(selectedOption.getAttribute('data-shipping')) || 0;
+                const shippingPrice = parseFloat(selectedOption.getAttribute('data-shipping')) || 0;
 
                 // Update UI
-                if(shippingPrice === 0){
+                if (shippingPrice === 0) {
                     document.querySelector('.shipping_total').textContent = 'Free';
                 } else {
                     document.querySelector('.shipping_total').textContent = `₹${shippingPrice.toFixed(2)}`;
@@ -386,7 +429,6 @@
                 document.querySelector('.grandTotal span').textContent = `₹${newGrandTotal.toFixed(2)}`;
             });
         });
-
 
         $('#saveAddressBtn').on('click', function() {
             let formData = $('#addressForm').serialize();

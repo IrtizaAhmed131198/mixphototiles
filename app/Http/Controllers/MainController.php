@@ -123,6 +123,7 @@ class MainController extends Controller
     {
         $cartItems = session()->get('cart', []);
         $discount = get_setting('discount') ?? 0;
+        $shipping_price = get_setting('shipping_price') ?? 0;
         $gift = 30;
         $today = Carbon::today()->format('Y-m-d');
         $coupons = DB::table('coupon')
@@ -137,7 +138,7 @@ class MainController extends Controller
             ->map(function ($amount) {
                 return (float) $amount;
             });
-        return view('cart', compact('cartItems', 'discount', 'gift', 'coupons', 'couponsSelect'));
+        return view('cart', compact('cartItems', 'discount', 'gift', 'coupons', 'couponsSelect', 'shipping_price'));
     }
 
     public function upload_image(Request $request)
@@ -1013,7 +1014,7 @@ class MainController extends Controller
 
         $validated = $request->validate([
             'full_name' => 'required|string|max:255',
-            'phone_number' => 'required',
+            'phone_number' => ['required', 'regex:/^\+?[0-9]{10,15}$/'],
             'email' => 'required|email',
             'password' => $passwordRule,
             'pincode' => 'required|digits:6',
@@ -1021,8 +1022,42 @@ class MainController extends Controller
             'address_line2' => 'nullable|string|max:500',
             'state' => 'required',
             'city' => 'required',
-            'alternate_phone_number' => 'nullable',
+            'state_name' => 'nullable|string|max:255', // added
+            'city_name' => 'nullable|string|max:255',  // added
+            'alternate_phone_number' => ['nullable', 'regex:/^\+?[0-9]{10,15}$/'],
         ]);
+
+        // 🔹 Handle "Other" for State
+        if ($request->state === 'other') {
+            if (!$request->filled('state_name')) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Please enter state name if you choose Other.'
+                ]);
+            }
+
+            // Save to states table (optional)
+            $state = State::create(['name' => $request->state_name]);
+            $validated['state'] = $state->id;
+        }
+
+        // 🔹 Handle "Other" for City
+        if ($request->city === 'other') {
+            if (!$request->filled('city_name')) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Please enter city name if you choose Other.'
+                ]);
+            }
+
+            // Save to cities table (optional)
+            $city = City::create([
+                'name' => $request->city_name,
+                'state_id' => $validated['state'], // link to selected/created state
+                'shipping' => 0, // default, adjust if needed
+            ]);
+            $validated['city'] = $city->id;
+        }
 
         $message = '';
         if(!Auth::check()){
