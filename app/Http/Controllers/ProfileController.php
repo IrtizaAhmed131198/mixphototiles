@@ -8,6 +8,8 @@ use App\Models\CustomColor;
 use App\Models\ShippingAddress;
 use App\Models\SessionCollection;
 use App\Models\CollectionImages;
+use App\Models\State;
+use App\Models\City;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
@@ -236,77 +238,109 @@ class ProfileController extends Controller
 
     public function storeAddress(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
-            'pin_code' => 'required',
+            'phone' => 'required|digits_between:10,15',
+            'email' => 'required|email',
+            'pin_code' => 'required|digits:6',
             'address1' => 'required',
             'address2' => 'nullable',
             'state' => 'required',
             'city' => 'required',
-            'alt_phone' => 'nullable',
+            'state_manual' => 'nullable|string|max:255',
+            'city_manual' => 'nullable|string|max:255',
+            'alt_phone' => 'nullable|digits_between:10,15',
             'default_address' => 'nullable|boolean',
         ]);
 
-        // Set other addresses as non-default if this one is marked default
-        // if ($request->default_address) {
-        //     ShippingAddress::where('user_id', Auth::id())->update(['default_address' => false]);
-        // }
+        // If state is "other" -> create new state
+        if ($request->state === 'other' && $request->filled('state_manual')) {
+            $state = State::create(['name' => $request->state_manual]);
+            $stateId = $state->id;
+        } else {
+            $stateId = $request->state;
+        }
 
+        // If city is "other" -> create new city under that state
+        if ($request->city === 'other' && $request->filled('city_manual')) {
+            $city = City::create([
+                'name' => $request->city_manual,
+                'state_id' => $stateId,
+            ]);
+            $cityId = $city->id;
+        } else {
+            $cityId = $request->city;
+        }
+
+        // Save Address
         ShippingAddress::create([
-            'user_id' => Auth::user()->id,
+            'user_id' => Auth::id(),
             'recipient_name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
             'pin_code' => $request->pin_code,
             'address_line1' => $request->address1,
             'address_line2' => $request->address2,
-            'state' => $request->state,
-            'city' => $request->city,
+            'state' => $stateId,
+            'city' => $cityId,
             'alt_phone' => $request->alt_phone,
             'default_address' => $request->default_address ? true : false,
         ]);
 
-        return back()->with('success', 'Address added successfully!');
+        return response()->json(['message' => 'Address added successfully!']);
     }
 
-    public function updateAddress(Request $request, $id)
+    public function editAddress($id)
     {
-        $request->validate([
+        $address = ShippingAddress::findOrFail($id);
+        return response()->json(['address' => $address]);
+    }
+
+    public function updateAddress(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:shipping_addresses,id',
             'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
-            'pin_code' => 'required',
+            'phone' => 'required|digits_between:10,15',
             'address1' => 'required',
-            'address2' => 'nullable',
-            'state' => 'required',
-            'city' => 'required',
-            'alt_phone' => 'nullable',
-            'default_address' => 'nullable|boolean',
+            'pin_code' => 'required|digits:6',
+            'state' => 'nullable',
+            'city' => 'nullable',
+            'state_manual' => 'nullable|string|max:255',
+            'city_manual' => 'nullable|string|max:255',
         ]);
 
-        $address = ShippingAddress::findOrFail($id);
-
-        // Set other addresses as non-default if this one is marked default
-        if ($request->default_address) {
-            ShippingAddress::where('user_id', Auth::id())->update(['default_address' => false]);
+        // If state is "other" -> create new state
+        if ($request->state === 'other' && $request->filled('state_manual')) {
+            $state = State::create(['name' => $request->state_manual]);
+            $stateId = $state->id;
+        } else {
+            $stateId = $request->state;
         }
 
+        // If city is "other" -> create new city under that state
+        if ($request->city === 'other' && $request->filled('city_manual')) {
+            $city = City::create([
+                'name' => $request->city_manual,
+                'state_id' => $stateId,
+            ]);
+            $cityId = $city->id;
+        } else {
+            $cityId = $request->city;
+        }
+
+        $address = ShippingAddress::findOrFail($request->id);
         $address->update([
             'recipient_name' => $request->name,
             'phone' => $request->phone,
-            'email' => $request->email,
             'pin_code' => $request->pin_code,
             'address_line1' => $request->address1,
             'address_line2' => $request->address2,
-            'state' => $request->state,
-            'city' => $request->city,
-            'alt_phone' => $request->alt_phone,
-            'default_address' => $request->default_address ? true : false,
+            'state' => $stateId,
+            'city' => $cityId,
         ]);
 
-        return back()->with('success', 'Address updated successfully!');
+        return response()->json(['message' => 'Address updated successfully!']);
     }
 
     public function deleteAddress($id)

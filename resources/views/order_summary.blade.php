@@ -74,8 +74,9 @@
                                                     <div class="col-lg-6">
                                                         <div label="Mobile Number">
                                                             <input placeholder="Mobile number" maxlength="10"
-                                                                id="phoneInput" class="form-control" type="tel"
-                                                                name="phone_number" value="{{ $shipping_address->phone ?? '' }}">
+                                                                id="phoneInput" class="form-control" type="text"
+                                                                name="phone_number" value="{{ $shipping_address->phone ?? '' }}"
+                                                                maxlength="15" pattern="\d{10,15}">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -99,7 +100,7 @@
 
                                                     <div class="col-lg-6">
                                                         <div label="Pin Code">
-                                                            <input placeholder="Pin Code" maxlength="6" id="pinCodeInput"
+                                                            <input placeholder="Pin Code" maxlength="6" pattern="\d{6}" id="pinCodeInput"
                                                                 class="form-control" type="number" name="pincode"
                                                                 value="{{ $shipping_address->pin_code ?? '' }}">
                                                         </div>
@@ -135,9 +136,9 @@
                                                     <input type="hidden" name="shipping" id="shippingInput" value="0">
                                                     <div class="col-lg-6">
                                                         <div label="Alternative Phone Number">
-                                                            <input placeholder="Alternative Phone Number" maxlength="10"
-                                                                id="altPhoneInput" class="form-control" type="text"
-                                                                name="alternate_phone_number"
+                                                            <input placeholder="Alternative Phone Number" id="altPhoneInput"
+                                                                class="form-control" type="text"
+                                                                name="alternate_phone_number" maxlength="15" pattern="\d{10,15}"
                                                                 value="{{ $shipping_address->alt_phone ?? '' }}">
                                                         </div>
                                                     </div>
@@ -315,6 +316,32 @@
         let cartGrandTotal = {{ $cartGrandTotal }};
         let giftCard = {{ $giftCard }};
         let discount = {{ $appliedCoupon['discount'] ?? 0 }};
+
+        const numericFields = [{
+                id: 'pinCodeInput',
+                max: 6
+            },
+            {
+                id: 'phoneInput',
+                max: 15
+            },
+            {
+                id: 'altPhoneInput',
+                max: 15
+            }
+        ];
+
+        numericFields.forEach(field => {
+            const input = document.getElementById(field.id);
+            if (!input) return;
+
+            input.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, ''); // remove non-digits
+                if (field.max && this.value.length > field.max) {
+                    this.value = this.value.slice(0, field.max);
+                }
+            });
+        });
 
         document.addEventListener('DOMContentLoaded', function() {
             const stateDropdown = document.getElementById('stateDropdown');

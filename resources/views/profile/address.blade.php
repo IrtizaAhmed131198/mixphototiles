@@ -11,7 +11,7 @@
                     @include('partials/profilesidebar')
                 </div>
                 <div class="col-lg-9">
-                    @if(!$data)
+                    @if (!$data)
                         <div class="account-information">
                             <div class="add-address">
                                 <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -35,7 +35,8 @@
                                                 <div class="main-radio-select col-md-5">
                                                     <div class="new-address-added">
                                                         <div class="radio-address">
-                                                            <input type="radio" id="default_address_check" name="default_address_check" value=""
+                                                            <input type="radio" id="default_address_check"
+                                                                name="default_address_check" value=""
                                                                 {{ $val->default_address == 1 ? 'checked' : '' }} />
                                                         </div>
                                                         <div class="address-info">
@@ -45,27 +46,19 @@
                                                         </div>
                                                     </div>
                                                     <div class="address-show">
-                                                        <button type="button" class="edit-btn edit-address" data-id="{{ $val->id }}"
-                                                            data-name="{{ $val->recipient_name }}"
-                                                            data-phone="{{ $val->phone }}"
-                                                            data-email="{{ $val->email }}"
-                                                            data-pin_code="{{ $val->pin_code }}"
-                                                            data-address1="{{ $val->address_line1 }}"
-                                                            data-address2="{{ $val->address_line2 }}"
-                                                            data-state="{{ $val->state }}"
-                                                            data-city="{{ $val->city }}"
-                                                            data-alt_phone="{{ $val->alt_phone }}"
-                                                            data-default_address="{{ $val->default_address }}"
-                                                            data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        <button type="button" class="edit-btn edit-address"
+                                                            data-id="{{ $val->id }}">
                                                             Edit
                                                         </button>
-                                                        <button type="button" class="delete-btn" data-id="{{ $val->id }}">
+                                                        <button type="button" class="delete-btn"
+                                                            data-id="{{ $val->id }}">
                                                             <svg width="15.9" height="17.5" class="w-em h-em me-1"
                                                                 viewBox="0 0 15.9 17.5" xmlns="http://www.w3.org/2000/svg">
                                                                 <g transform="translate(-2.25 -1.25)">
-                                                                    <path d="M3,6H17.4" transform="translate(0 -0.8)" fill="none"
-                                                                        stroke="currentColor" stroke-linecap="round"
-                                                                        stroke-linejoin="round" stroke-width="1.5"></path>
+                                                                    <path d="M3,6H17.4" transform="translate(0 -0.8)"
+                                                                        fill="none" stroke="currentColor"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="1.5"></path>
                                                                     <path
                                                                         d="M16.2,6V17.2a1.721,1.721,0,0,1-1.6,1.6h-8A1.721,1.721,0,0,1,5,17.2V6"
                                                                         transform="translate(-0.4 -0.8)" fill="none"
@@ -73,15 +66,17 @@
                                                                         stroke-linejoin="round" stroke-width="1.5"></path>
                                                                     <path
                                                                         d="M8,5.2V3.6A1.721,1.721,0,0,1,9.6,2h3.2a1.721,1.721,0,0,1,1.6,1.6V5.2"
-                                                                        transform="translate(-1)" fill="none" stroke="currentColor"
+                                                                        transform="translate(-1)" fill="none"
+                                                                        stroke="currentColor" stroke-linecap="round"
+                                                                        stroke-linejoin="round" stroke-width="1.5"></path>
+                                                                    <line y2="5" transform="translate(8.2 9)"
+                                                                        fill="none" stroke="currentColor"
                                                                         stroke-linecap="round" stroke-linejoin="round"
-                                                                        stroke-width="1.5"></path>
-                                                                    <line y2="5" transform="translate(8.2 9)" fill="none"
-                                                                        stroke="currentColor" stroke-linecap="round"
-                                                                        stroke-linejoin="round" stroke-width="1.5"></line>
-                                                                    <line y2="5" transform="translate(12.2 9)" fill="none"
-                                                                        stroke="currentColor" stroke-linecap="round"
-                                                                        stroke-linejoin="round" stroke-width="1.5"></line>
+                                                                        stroke-width="1.5"></line>
+                                                                    <line y2="5" transform="translate(12.2 9)"
+                                                                        fill="none" stroke="currentColor"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="1.5"></line>
                                                                 </g>
                                                             </svg>
                                                             Delete
@@ -132,7 +127,7 @@
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <input type="text" class="form-control" name="phone" id="phone"
-                                            placeholder="Mobile Number">
+                                            placeholder="Mobile Number" maxlength="15" pattern="\d{10,15}">
                                         <small class="text-danger" id="phoneError"></small>
                                     </div>
                                 </div>
@@ -146,7 +141,7 @@
                                 <div class="col-6">
                                     <div class="form-group birth-label">
                                         <input type="text" class="form-control" name="pin_code" id="pin_code"
-                                            placeholder="Pin Code">
+                                            placeholder="Pin Code" maxlength="6" pattern="\d{6}">
                                         <small class="text-danger" id="pinCodeError"></small>
                                     </div>
                                 </div>
@@ -165,22 +160,28 @@
                                     <div class="form-group birth-label">
                                         <select name="state" id="state" class="form-control">
                                             <option value="" disabled selected>---Select State---</option>
+                                            <!-- states load here via ajax -->
+                                            <option value="other">Other</option>
                                         </select>
-                                        <small class="text-danger" id="stateError"></small>
+                                        <input type="text" id="stateInput" name="state_manual"
+                                            class="form-control mt-2 d-none" placeholder="Enter State">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group birth-label">
                                         <select class="form-select form-control" id="city" name="city">
                                             <option value="">---Select City---</option>
+                                            <!-- cities load here via ajax -->
+                                            <option value="other">Other</option>
                                         </select>
-                                        <small class="text-danger" id="cityError"></small>
+                                        <input type="text" id="cityInput" name="city_manual"
+                                            class="form-control mt-2 d-none" placeholder="Enter City">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group birth-label">
                                         <input type="text" class="form-control" name="alt_phone" id="alt_phone"
-                                            placeholder="Alternative Phone Number">
+                                            placeholder="Alternative Phone Number" maxlength="15" pattern="\d{10,15}">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -205,112 +206,532 @@
         </div>
     </div>
 
+    <div class="modal fade address-modal" id="editAddressModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Shipping Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-form">
+                        <form id="editAddressForm" action="{{ route('address.update') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" id="editId">
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <input type="text" class="form-control" name="name" id="editName"
+                                            placeholder="Full Name">
+                                        <small class="text-danger" id="editNameError"></small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <input type="text" class="form-control" name="phone" id="editPhone"
+                                            placeholder="Mobile Number" maxlength="15" pattern="\d{10,15}">
+                                        <small class="text-danger" id="editPhoneError"></small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <input type="text" class="form-control" name="email" id="editEmail"
+                                            placeholder="Email">
+                                        <small class="text-danger" id="editEmailError"></small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group birth-label">
+                                        <input type="text" class="form-control" name="pin_code" id="editPincode"
+                                            placeholder="Pin Code" maxlength="6" pattern="\d{6}">
+                                        <small class="text-danger" id="editPinCodeError"></small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group birth-label">
+                                        <textarea name="address1" class="form-control" id="editAddress1" placeholder="Address Line 1" rows="3"></textarea>
+                                        <small class="text-danger" id="editAddress1Error"></small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group birth-label">
+                                        <textarea name="address2" class="form-control" id="editAddress2" placeholder="Address Line 2" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group birth-label">
+                                        <select name="state" id="editState" class="form-control">
+                                            <option value="" disabled selected>---Select State---</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                        <input type="text" id="editStateInput" name="state_manual"
+                                            class="form-control mt-2 d-none" placeholder="Enter State">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group birth-label">
+                                        <select class="form-select form-control" id="editCity" name="city">
+                                            <option value="">---Select City---</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                        <input type="text" id="editCityInput" name="city_manual"
+                                            class="form-control mt-2 d-none" placeholder="Enter City">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group birth-label">
+                                        <input type="text" class="form-control" name="alt_phone" id="editAltPhone"
+                                            placeholder="Alternative Phone Number" maxlength="15" pattern="\d{10,15}">
+                                        <small class="text-danger" id="editAltPhoneError"></small>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="gender-label">
+                                        <div class="input-toggle-click mt-3 mb-3">
+                                            <input type="checkbox" name="default_address" id="editDefaultAddress" value="1">
+                                            <label class="focusimg">Use this as default address</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="save-btn">
+                                        <button class="btn custom-btn" type="button" data-bs-dismiss="modal">Cancel</button>
+                                        <button class="btn custom-btn filled" type="submit">Save Changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 @endsection
 
 @push('scripts')
     <script>
-        document.getElementById("addressForm").addEventListener("submit", function(event) {
-            let isValid = true;
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('addressForm');
 
-            // Clear previous error messages
-            document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
+            const stateDropdown = document.getElementById('state');
+            const cityDropdown = document.getElementById('city');
+            const stateInput = document.getElementById('stateInput');
+            const cityInput = document.getElementById('cityInput');
 
-            // Validate Full Name
-            let name = document.getElementById("name");
-            if (name.value.trim() === "") {
-                document.getElementById("nameError").innerText = "Full Name is required.";
-                isValid = false;
-            }
+            // ========================
+            // Load States on Page Load
+            // ========================
+            fetch("{{ route('states') }}")
+                .then(response => response.json())
+                .then(result => {
+                    const states = result.data;
+                    stateDropdown.innerHTML = '<option value="">---Select State---</option>';
 
-            // Validate Phone Number
-            let phone = document.getElementById("phone");
-            if (phone.value.trim() === "") {
-                document.getElementById("phoneError").innerText = "Mobile Number is required.";
-                isValid = false;
-            }
+                    states.forEach(state => {
+                        const option = document.createElement('option');
+                        option.value = state.id;
+                        option.textContent = state.name;
+                        stateDropdown.appendChild(option);
+                    });
 
-            // Validate Email
-            let email = document.getElementById("email");
-            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (email.value.trim() === "") {
-                document.getElementById("emailError").innerText = "Email is required.";
-                isValid = false;
-            } else if (!emailPattern.test(email.value)) {
-                document.getElementById("emailError").innerText = "Enter a valid email address.";
-                isValid = false;
-            }
+                    // always append "Other"
+                    const otherOption = document.createElement('option');
+                    otherOption.value = "other";
+                    otherOption.textContent = "Other";
+                    stateDropdown.appendChild(otherOption);
+                })
+                .catch(error => console.error('Error fetching states:', error));
 
-            // Validate Pin Code
-            let pinCode = document.getElementById("pin_code");
-            if (pinCode.value.trim() === "") {
-                document.getElementById("pinCodeError").innerText = "Pin Code is required.";
-                isValid = false;
-            }
+            // ========================
+            // State change
+            // ========================
+            stateDropdown.addEventListener('change', function() {
+                const stateId = this.value;
+                cityDropdown.innerHTML = '<option value="">---Select City---</option>'; // reset
+                cityInput.classList.add('d-none');
+                cityInput.value = '';
 
-            // Validate Address Line 1
-            let address1 = document.getElementById("address1");
-            if (address1.value.trim() === "") {
-                document.getElementById("address1Error").innerText = "Address Line 1 is required.";
-                isValid = false;
-            }
+                if (stateId === 'other') {
+                    // show manual state input
+                    stateInput.classList.remove('d-none');
 
-            // Validate State
-            let state = document.getElementById("state");
-            if (state.value.trim() === "") {
-                document.getElementById("stateError").innerText = "Please select a state.";
-                isValid = false;
-            }
+                    // city dropdown should only have "Other"
+                    cityDropdown.innerHTML = `
+                        <option value="">---Select City---</option>
+                        <option value="other">Other</option>
+                    `;
+                } else {
+                    stateInput.classList.add('d-none');
+                    stateInput.value = '';
 
-            // Validate City
-            let city = document.getElementById("city");
-            if (city.value.trim() === "") {
-                document.getElementById("cityError").innerText = "City is required.";
-                isValid = false;
-            }
+                    // load cities from API
+                    fetch("{{ url('cities') }}/" + stateId)
+                        .then(response => response.json())
+                        .then(result => {
+                            const cities = result.data;
+                            cityDropdown.innerHTML = '<option value="">---Select City---</option>';
 
-            const saveBtn = document.getElementById("btn-save");
-            const cancelBtn = document.getElementById("btn-cancel");
+                            cities.forEach(city => {
+                                const option = document.createElement('option');
+                                option.value = city.id;
+                                option.textContent = city.name;
+                                cityDropdown.appendChild(option);
+                            });
 
-            // If validation passes, disable buttons to prevent multiple submissions
-            if (isValid) {
-                saveBtn.disabled = true;
-                cancelBtn.disabled = true;
-            } else {
-                // Prevent form submission if validation fails
-                event.preventDefault();
-            }
-        });
-
-        $(document).ready(function () {
-            $(".edit-address").click(function () {
-                let id = $(this).data("id");
-                $("#addressForm").attr("action", "{{ url('address/update') }}/" + id); // Set action for update
-
-                $("#name").val($(this).data("name"));
-                $("#phone").val($(this).data("phone"));
-                $("#email").val($(this).data("email"));
-                $("#pin_code").val($(this).data("pin_code"));
-                $("#address1").val($(this).data("address1"));
-                $("#address2").val($(this).data("address2"));
-                $("#state").val($(this).data("state"));
-                $("#city").val($(this).data("city"));
-                $("#alt_phone").val($(this).data("alt_phone"));
-                $("input[name='default_address']").prop("checked", $(this).data("default_address") == 1);
-
-                $(".modal-title").text("Edit Address"); // Change modal title
-                $(".filled").text("Update"); // Change button text
+                            // always append "Other"
+                            const otherOption = document.createElement('option');
+                            otherOption.value = "other";
+                            otherOption.textContent = "Other";
+                            cityDropdown.appendChild(otherOption);
+                        })
+                        .catch(error => console.error('Error fetching cities:', error));
+                }
             });
 
-            // Reset modal when closed
-            $("#exampleModal").on("hidden.bs.modal", function () {
-                $("#addressForm").trigger("reset");
-                $(".modal-title").text("Add Address");
-                $(".filled").text("Save");
-                $("#addressForm").attr("action", "{{ route('address.store') }}");
+            // ========================
+            // City change
+            // ========================
+            cityDropdown.addEventListener('change', function() {
+                if (this.value === 'other') {
+                    cityInput.classList.remove('d-none');
+                } else {
+                    cityInput.classList.add('d-none');
+                    cityInput.value = '';
+                }
+            });
+
+            const numericFields = [{
+                    id: 'pin_code',
+                    max: 6
+                },
+                {
+                    id: 'phone',
+                    max: 15
+                },
+                {
+                    id: 'alt_phone',
+                    max: 15
+                }
+            ];
+
+            numericFields.forEach(field => {
+                const input = document.getElementById(field.id);
+                if (!input) return;
+
+                input.addEventListener('input', function() {
+                    this.value = this.value.replace(/\D/g, ''); // remove non-digits
+                    if (field.max && this.value.length > field.max) {
+                        this.value = this.value.slice(0, field.max);
+                    }
+                });
+            });
+
+            // =========================
+            // AJAX Form Submit
+            // =========================
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // stop default form submit
+
+                // clear previous errors
+                document.querySelectorAll("small.text-danger").forEach(el => el.textContent = "");
+
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+                            "Accept": "application/json"
+                        },
+                        body: formData
+                    })
+                    .then(async response => {
+                        if (!response.ok) {
+                            let err = await response.json();
+                            if (err.errors) {
+                                // show validation errors
+                                Object.keys(err.errors).forEach(key => {
+                                    const errorElement = document.getElementById(key +
+                                        "Error");
+                                    if (errorElement) {
+                                        errorElement.textContent = err.errors[key][0];
+                                    }
+                                });
+                            }
+                            throw new Error("Validation failed");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        Swal.fire({
+                            title: "Added!",
+                            text: "Address added successfully!",
+                            icon: "success",
+                            showClass: {
+                                popup: 'animate__animated animate__fadeIn animate__slow'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOut animate__faster'
+                            }
+                        }).then(() => {
+                            location.reload();
+                        });
+                        form.reset(); // reset form
+                        document.getElementById('city').innerHTML =
+                            '<option value="">---Select City---</option>';
+                    })
+                    .catch(error => console.error(error));
             });
         });
 
-        $(document).on("click", ".delete-btn", function () {
+        document.addEventListener('DOMContentLoaded', function () {
+            const editStateDropdown = document.getElementById('editState');
+            const editCityDropdown = document.getElementById('editCity');
+            const editStateInput = document.getElementById('editStateInput');
+            const editCityInput = document.getElementById('editCityInput');
+
+            // When Edit button clicked
+            document.querySelectorAll('.edit-address').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+
+                    fetch(`{{ url('address') }}/${id}/edit`)
+                        .then(res => res.json())
+                        .then(data => {
+                            const addr = data.address;
+
+                            // Fill basic fields
+                            document.getElementById('editId').value = addr.id;
+                            document.getElementById('editName').value = addr.recipient_name;
+                            document.getElementById('editEmail').value = addr.email;
+                            document.getElementById('editPhone').value = addr.phone;
+                            document.getElementById('editAddress1').value = addr.address_line1;
+                            document.getElementById('editAddress2').value = addr.address_line2;
+                            document.getElementById('editPincode').value = addr.pin_code;
+                            document.getElementById('editAltPhone').value = addr.alt_phone;
+
+                            // Load States
+                            fetch("{{ route('states') }}")
+                                .then(r => r.json())
+                                .then(result => {
+                                    editStateDropdown.innerHTML = '<option value="">---Select State---</option>';
+                                    result.data.forEach(st => {
+                                        const option = document.createElement('option');
+                                        option.value = st.id;
+                                        option.textContent = st.name;
+                                        if (st.id == addr.state) {
+                                            option.selected = true;
+                                            console.log("Matched State:", st.name, "with ID:", st.id);
+                                        }
+                                        editStateDropdown.appendChild(option);
+                                    });
+                                    editStateDropdown.appendChild(new Option("Other", "other"));
+
+                                    // If saved state is manual
+                                    // if (!result.data.some(st => st.name === addr.state)) {
+                                    //     editStateDropdown.value = "other";
+                                    //     editStateInput.classList.remove('d-none');
+                                    //     editStateInput.value = addr.state;
+                                    // }
+                                });
+
+                            // Load Cities
+                            fetch("{{ url('cities') }}/" + addr.state)
+                                .then(r => r.json())
+                                .then(result => {
+                                    editCityDropdown.innerHTML = '<option value="">---Select City---</option>';
+                                    result.data.forEach(ct => {
+                                        const option = document.createElement('option');
+                                        option.value = ct.id;
+                                        option.textContent = ct.name;
+                                        if (ct.id == addr.city) {
+                                            option.selected = true;
+                                        }
+                                        editCityDropdown.appendChild(option);
+                                    });
+                                    editCityDropdown.appendChild(new Option("Other", "other"));
+
+                                    // If saved city is manual
+                                    // if (!result.data.some(ct => ct.name === addr.city)) {
+                                    //     editCityDropdown.value = "other";
+                                    //     editCityInput.classList.remove('d-none');
+                                    //     editCityInput.value = addr.city;
+                                    // }
+                                });
+
+                            // Show modal
+                            new bootstrap.Modal(document.getElementById('editAddressModal')).show();
+                        });
+                });
+            });
+
+            // State change in edit modal
+            editStateDropdown.addEventListener('change', function () {
+                if (this.value === "other") {
+                    editStateInput.classList.remove('d-none');
+                    editStateInput.value = "";
+                    editCityDropdown.innerHTML = `
+                        <option value="">---Select City---</option>
+                        <option value="other">Other</option>
+                    `;
+                } else {
+                    editStateInput.classList.add('d-none');
+                    editStateInput.value = "";
+
+                    fetch("{{ url('cities') }}/"+ this.value)
+                        .then(r => r.json())
+                        .then(result => {
+                            editCityDropdown.innerHTML = '<option value="">---Select City---</option>';
+                            result.data.forEach(ct => {
+                                const option = document.createElement('option');
+                                option.value = ct.id;
+                                option.textContent = ct.name;
+                                editCityDropdown.appendChild(option);
+                            });
+                            editCityDropdown.appendChild(new Option("Other", "other"));
+                        });
+                }
+            });
+
+            // City change in edit modal
+            editCityDropdown.addEventListener('change', function () {
+                if (this.value === "other") {
+                    editCityInput.classList.remove('d-none');
+                    editCityInput.value = "";
+                } else {
+                    editCityInput.classList.add('d-none');
+                    editCityInput.value = "";
+                }
+            });
+
+            // Submit Edit form
+            document.getElementById('editAddressForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+
+                fetch(this.action, {
+                    method: "POST", // PUT via hidden field
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    Swal.fire("Updated!", "Address updated successfully!", "success")
+                        .then(() => location.reload());
+                })
+                .catch(err => console.error(err));
+            });
+        });
+
+
+        // document.getElementById("addressForm").addEventListener("submit", function(event) {
+        //     let isValid = true;
+
+        //     // Clear previous error messages
+        //     document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
+
+        //     // Validate Full Name
+        //     let name = document.getElementById("name");
+        //     if (name.value.trim() === "") {
+        //         document.getElementById("nameError").innerText = "Full Name is required.";
+        //         isValid = false;
+        //     }
+
+        //     // Validate Phone Number
+        //     let phone = document.getElementById("phone");
+        //     if (phone.value.trim() === "") {
+        //         document.getElementById("phoneError").innerText = "Mobile Number is required.";
+        //         isValid = false;
+        //     }
+
+        //     // Validate Email
+        //     let email = document.getElementById("email");
+        //     let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        //     if (email.value.trim() === "") {
+        //         document.getElementById("emailError").innerText = "Email is required.";
+        //         isValid = false;
+        //     } else if (!emailPattern.test(email.value)) {
+        //         document.getElementById("emailError").innerText = "Enter a valid email address.";
+        //         isValid = false;
+        //     }
+
+        //     // Validate Pin Code
+        //     let pinCode = document.getElementById("pin_code");
+        //     if (pinCode.value.trim() === "") {
+        //         document.getElementById("pinCodeError").innerText = "Pin Code is required.";
+        //         isValid = false;
+        //     }
+
+        //     // Validate Address Line 1
+        //     let address1 = document.getElementById("address1");
+        //     if (address1.value.trim() === "") {
+        //         document.getElementById("address1Error").innerText = "Address Line 1 is required.";
+        //         isValid = false;
+        //     }
+
+        //     // Validate State
+        //     let state = document.getElementById("state");
+        //     if (state.value.trim() === "") {
+        //         document.getElementById("stateError").innerText = "Please select a state.";
+        //         isValid = false;
+        //     }
+
+        //     // Validate City
+        //     let city = document.getElementById("city");
+        //     if (city.value.trim() === "") {
+        //         document.getElementById("cityError").innerText = "City is required.";
+        //         isValid = false;
+        //     }
+
+        //     const saveBtn = document.getElementById("btn-save");
+        //     const cancelBtn = document.getElementById("btn-cancel");
+
+        //     // If validation passes, disable buttons to prevent multiple submissions
+        //     if (isValid) {
+        //         saveBtn.disabled = true;
+        //         cancelBtn.disabled = true;
+        //     } else {
+        //         // Prevent form submission if validation fails
+        //         event.preventDefault();
+        //     }
+        // });
+
+        // $(document).ready(function () {
+        //     $(".edit-address").click(function () {
+        //         let id = $(this).data("id");
+        //         $("#addressForm").attr("action", "{{ url('address/update') }}/" + id); // Set action for update
+
+        //         $("#name").val($(this).data("name"));
+        //         $("#phone").val($(this).data("phone"));
+        //         $("#email").val($(this).data("email"));
+        //         $("#pin_code").val($(this).data("pin_code"));
+        //         $("#address1").val($(this).data("address1"));
+        //         $("#address2").val($(this).data("address2"));
+        //         $("#state").val($(this).data("state"));
+        //         $("#city").val($(this).data("city"));
+        //         $("#alt_phone").val($(this).data("alt_phone"));
+        //         $("input[name='default_address']").prop("checked", $(this).data("default_address") == 1);
+
+        //         $(".modal-title").text("Edit Address"); // Change modal title
+        //         $(".filled").text("Update"); // Change button text
+        //     });
+
+        //     // Reset modal when closed
+        //     $("#exampleModal").on("hidden.bs.modal", function () {
+        //         $("#addressForm").trigger("reset");
+        //         $(".modal-title").text("Add Address");
+        //         $(".filled").text("Save");
+        //         $("#addressForm").attr("action", "{{ route('address.store') }}");
+        //     });
+        // });
+
+        $(document).on("click", ".delete-btn", function() {
             let id = $(this).data("id");
 
             Swal.fire({
@@ -332,8 +753,10 @@
                     $.ajax({
                         url: "{{ url('address/delete') }}/" + id,
                         type: "DELETE",
-                        data: { _token: "{{ csrf_token() }}" },
-                        success: function (response) {
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
                             Swal.fire({
                                 title: "Deleted!",
                                 text: response.message,
@@ -348,7 +771,7 @@
                                 location.reload();
                             });
                         },
-                        error: function () {
+                        error: function() {
                             Swal.fire({
                                 title: "Error!",
                                 text: "Error deleting address.",
@@ -367,7 +790,7 @@
         });
 
 
-        $(document).on("click", ".main-radio-select", function (e) {
+        $(document).on("click", ".main-radio-select", function(e) {
             // Prevent triggering when clicking on buttons inside the div
             if ($(e.target).hasClass("edit-btn") || $(e.target).hasClass("delete-btn")) {
                 return;
@@ -387,9 +810,10 @@
                         _token: "{{ csrf_token() }}",
                         id: id,
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.success) {
-                            $(".main-radio-select input[name='default_address_check']").prop("checked", false);
+                            $(".main-radio-select input[name='default_address_check']").prop("checked",
+                                false);
                             radio.prop("checked", true);
 
                             Swal.fire({
@@ -417,7 +841,7 @@
                             });
                         }
                     },
-                    error: function () {
+                    error: function() {
                         Swal.fire({
                             icon: "error",
                             title: "Error",
@@ -434,7 +858,7 @@
             }
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
+        /*document.addEventListener('DOMContentLoaded', function () {
             // Load states
             fetch("{{ route('states') }}")
                 .then(response => response.json())
@@ -472,7 +896,6 @@
                         .catch(error => console.error('Error fetching cities:', error));
                 }
             });
-        });
-
+        });*/
     </script>
 @endpush

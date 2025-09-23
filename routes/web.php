@@ -157,7 +157,8 @@ Route::get('/get-orders', [ProfileController::class, 'getOrders'])->name('get.or
 Route::post('/orders/update-status/{order}', [ProfileController::class, 'updateStatus'])->name('orders.update-status');
 Route::get('/address', [ProfileController::class, 'address'])->name('address');
 Route::post('/address/store', [ProfileController::class, 'storeAddress'])->name('address.store');
-Route::post('/address/update/{id}', [ProfileController::class, 'updateAddress'])->name('address.update');
+Route::get('/address/{id}/edit', [ProfileController::class, 'editAddress'])->name('address.edit');
+Route::post('/address/update', [ProfileController::class, 'updateAddress'])->name('address.update');
 Route::delete('/address/delete/{id}', [ProfileController::class, 'deleteAddress'])->name('address.delete');
 Route::post('/address/set-default', [ProfileController::class, 'setDefault'])->name('address.set-default');
 Route::get('/resetpassword', [ProfileController::class, 'resetpassword'])->name('resetpassword');
