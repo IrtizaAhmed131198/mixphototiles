@@ -989,7 +989,7 @@ class MainController extends Controller
         }
 
         $order = Order::with(['orderItems.product', 'user', 'address'])->findOrFail($order->id);
-        $admin_email = get_setting('contact_email', 'help@magentickphotoframes.com');
+        $admin_email = get_setting('contact_email', 'support@magentickphotoframes.com');
 
         // Send order confirmation to user
         Mail::to($user->email)->send(new OrderPlacedUserMail($order));
