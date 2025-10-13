@@ -1679,9 +1679,9 @@ div#accordionFlushExample {
 }
 
 .Footer_footer .Footer_footerLinksWrp img {
-    width: 87%;
-    margin-top: -32px;
-    height: 100px;
+    width: 100%;
+    margin-top: -12px;
+    margin-left: -72px;
 }
 
 .Footer_footer .Footer_footerLinksWrp .whatsapp-icon {
@@ -1717,7 +1717,7 @@ div#accordionFlushExample {
 .Footer_socialNav.nav {
     padding-bottom: 0;
     padding-top: 1.1rem;
-    padding-left: 20px;
+    padding-left: 30px;
 }
 
 .Footer_socialNav.nav a.nav-link {
@@ -3586,7 +3586,7 @@ button.accordion-button:disabled .text-body-tertiary {
 }
 
 span.caption-crop {
-    margin-left: 30rem;
+    margin-left: 23rem;
     margin-top: 1rem;
     font-weight: 800;
     font-size: 16px;
@@ -4022,7 +4022,7 @@ input[type="radio"]:checked {
 }
 
 button.btn-close.text-reset {
-    margin-top: -37px;
+    margin-top: -50px;
 }
 
 .topmenu-logo {
@@ -4038,7 +4038,7 @@ button.btn-close.text-reset {
 }
 
 .topmenu-logo a img {
-    width: 14%;
+    width: 19%;
 }
 
 header.scrollheader {
@@ -4178,6 +4178,7 @@ section.custom-tabs-section.py {
 
 .offcanvas-header {
     padding-bottom: 1px !important;
+    margin-top: 5px;
 }
 
 /* new css end */

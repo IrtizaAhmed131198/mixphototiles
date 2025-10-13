@@ -14,7 +14,7 @@
                     <div class="Footer_socialNav nav" style=" align-items: end; ">
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
-                                href="{{ get_setting('facebook') ?? 'javascript:;' }}">
+                                href="https://www.facebook.com/profile.php?id=61581391095915">
                                 <svg width="11.01" height="22.019" class="w-em h-em d-block" viewBox="0 0 11.01 22.019"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill="currentColor"
@@ -25,7 +25,7 @@
                         </div>
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
-                                href="{{ get_setting('instagram') ?? 'javascript:;' }}">
+                                href="https://www.instagram.com/magnetickphotoframes/">
                                 <svg width="22.019" height="22.019" class="w-em h-em d-block"
                                     viewBox="0 0 22.019 22.019" xmlns="http://www.w3.org/2000/svg">
                                     <g transform="translate(3827 6277.01)">

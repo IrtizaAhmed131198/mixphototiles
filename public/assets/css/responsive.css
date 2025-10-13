@@ -1474,6 +1474,7 @@
     .Footer_footer .Footer_footerLinksWrp img {
         width: 59%;
         height: 56px;
+        margin-left: 15px;
     }
 
     .Footer_socialNav.nav {
