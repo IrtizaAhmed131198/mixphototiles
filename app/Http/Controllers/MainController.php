@@ -995,7 +995,7 @@ class MainController extends Controller
         Mail::to($user->email)->send(new OrderPlacedUserMail($order));
 
         // Send order notification to admin
-        Mail::to($admin_email)->send(new OrderPlacedAdminMail($order));
+        Mail::to(env('MAIL_USERNAME'))->send(new OrderPlacedAdminMail($order));
 
         // Clear cart and session items after order placed
         session()->forget(['cart', 'applied_coupon', 'gift_card_applied', 'user_address']);
