@@ -65,7 +65,7 @@ class PagesController extends Controller
         Contact::create($data);
 
         // Send to Admin
-        Mail::to('support@magentickphotoframes.com')->send(new ContactAdminMail($data));
+        Mail::to(env('MAIL_USERNAME'))->send(new ContactAdminMail($data));
 
         // Send to User
         Mail::to($data['email'])->send(new ContactUserMail($data));
