@@ -1,11 +1,13 @@
 @extends('components.layouts.app')
 
+@section('noindex', true)
+
 @section('title', $title)
 
 @section('css')
     <style>
         button.btn.btn-sm.btn-primary.edit-user {
-            background-color: #ff0168;
+            background-color: #EB2371;
             border: 1px solid;
         }
 
@@ -28,7 +30,7 @@
                         <div class="frames-main">
                             <h1>{{ $title }} List</h1>
 
-                            <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            <button class="btn design-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#addAdminModal"> Add New</button>
                         </div>
                         <table id="example" class="table table-striped" style="width:100%">
@@ -134,8 +136,8 @@
                             </div>
                             <div class="col-12">
                                 <div class="save-btn">
-                                    <button class="btn custom-btn" type="button" data-bs-dismiss="modal">Cancel</button>
-                                    <button class="btn custom-btn filled" type="submit">Save</button>
+                                    <button class="btn design-btn" type="button" data-bs-dismiss="modal">Cancel</button>
+                                    <button class="btn design-btn filled" type="submit">Save</button>
                                 </div>
                             </div>
                         </form>
@@ -228,8 +230,8 @@
                             </div>
                             <div class="col-12">
                                 <div class="save-btn">
-                                    <button class="btn custom-btn" type="button" data-bs-dismiss="modal">Cancel</button>
-                                    <button class="btn custom-btn filled" type="submit">Save</button>
+                                    <button class="btn design-btn" type="button" data-bs-dismiss="modal">Cancel</button>
+                                    <button class="btn design-btn filled" type="submit">Save</button>
                                 </div>
                             </div>
                         </form>

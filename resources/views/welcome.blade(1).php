@@ -1,18 +1,24 @@
 @extends('components.layouts.app')
 
-@section('title', 'Magnetic Photo Frames for Walls | No Nails, No Damage, No Wall Marks')
-
-@section('description', 'Magnetic photo frames for walls with no nails, no drilling, and no wall damage. Reposition anytime. Design custom photo frames online. Made in India.')
-
-@section('keywords', 'magnetic photo frames, photo frames without nails, no drill photo frames, wall frames no damage, light weight photo frames, stylish photo frames, modern photo frames, no marks on walls photo frames')
-
-@section('canonical', url('/'))
+@section('title', 'Home Page')
 
 
 @push('css')
     <style>
-        
+        /* @keyframes circle {
+                    0% {
+                        transform: rotate(0deg);
+                    }
 
+                    100% {
+                        transform: rotate(360deg);
+
+                    }
+                } */
+
+    
+
+/* ===== HERO CLARITY OVERLAY ===== */
     .hero-clarity-overlay {
         position: absolute;
         inset: 0;
@@ -21,20 +27,23 @@
         justify-content: center;
         align-items: center;
         padding: 20px;
-        background: rgba(0, 0, 0, 0.20);
+        background: rgba(0, 0, 0, 0.35);
         z-index: 2;
         text-align: center;
     }
 
     .hero-clarity-overlay h1 {
-        font-size: 4.2rem;
+        font-size: 2.2rem;
         font-weight: 700;
         line-height: 1.2;
-        margin-bottom: 2rem;
-        margin-top: 5vh;
+        margin-bottom: 1rem;
+        margin-top: 4vh;
     }
 
-
+    .hero-clarity-overlay p {
+        max-width: 820px;
+        margin: 0 auto 1rem auto;
+    }
 
     /* Make buttons clickable even if you later decide to disable pointer events */
     .hero-clarity-overlay .btn {
@@ -55,7 +64,7 @@
         position: absolute;
         left: 0;
         top: 0;
-        color: #EB2371;
+        color: #ff0168;
         font-weight: 700;
     }
 
@@ -65,7 +74,9 @@
         .hero-clarity-overlay h1 {
             font-size: 1.6rem;
         }
-        
+        .hero-clarity-overlay p {
+            font-size: 0.95rem;
+        }
     }
 
     /* ===== HOW IT WORKS SECTION ===== */
@@ -73,7 +84,7 @@
 
     .how-it-works-clarity {
         background: #fafafa;
-        margin-top:1rem;
+        margin-top:3rem;
     }
 
     .how-card {
@@ -92,7 +103,7 @@
         right: 24px;
         font-size: 3.2rem;
         font-weight: 700;
-        color: rgba(255, 1, 104, 0.10); /* brand pink, very soft */
+        color: rgba(255, 1, 104, 0.12); /* brand pink, very soft */
         line-height: 1;
     }
 
@@ -112,7 +123,86 @@
         z-index: 1;
     }
 
-   
+    
+    /* ===============================
+    HERO TRUST BAR – DESKTOP
+    ================================ */
+    .hero-trust-bar {
+        display: inline-flex;
+        align-items: center;
+        gap: 20px;
+        padding: 12px 22px;
+        margin: 18px auto 26px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+    }
+
+    .trust-item {
+        position: relative;
+        padding-left: 20px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #ffffff;
+        white-space: nowrap;
+    }
+
+    .trust-item::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #ff0168;
+        font-weight: 700;
+    }
+
+    
+    /* ===============================
+    HERO TRUST BAR – MOBILE
+    ================================ */
+    
+    /* =================================================
+   FIX HERO TRUST BAR HORIZONTAL OVERFLOW (MOBILE)
+================================================= */
+    @media (max-width: 768px) {
+
+        .hero-trust-bar {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center;
+
+            width: 100% !important;
+            max-width: 100% !important;
+
+            margin: 0px auto 0px;
+            padding: 0;
+
+            background: transparent;
+            backdrop-filter: none;
+        }
+
+        .trust-item {
+            white-space: normal !important;   /* ✅ allow wrapping */
+            max-width: 100%;
+
+            font-size: 0.85rem;
+            line-height: 1.3;
+
+            background: rgba(255, 1, 104, 0.18);
+            padding: 8px 14px 8px 28px;
+            border-radius: 999px;
+
+            margin: 4px 6px;
+        }
+
+        .trust-item::before {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
 
 
     /* Assurance chips */
@@ -134,38 +224,9 @@
 
     .assurance-chip::before {
         content: "✓";
-        color: #EB2371;
+        color: #ff0168;
         font-weight: 700;
         margin-right: 8px;
-    }
-    
-    .premium-trust-card {
-    background: #ffffff;
-    padding: 28px 22px;
-    border-radius: 18px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-    height: 100%;
-    }
-    
-    .premium-trust-card h6 {
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-    
-    .premium-trust-card p {
-        font-size: 0.95rem;
-        color: #555;
-        line-height: 1.6;
-        margin: 0;
-    }
-    
-    .premium-trust-card.highlighted {
-        border: 1px solid rgba(255, 1, 104, 0.25);
-        background: linear-gradient(
-            180deg,
-            rgba(255,1,104,0.06),
-            #ffffff
-        );
     }
 
     /* Mobile tuning */
@@ -177,8 +238,6 @@
             padding: 40px 26px 32px;
         }
     }
-
-
     
     </style>
 @endpush
@@ -294,16 +353,33 @@
                         <!-- ✅ HERO CLARITY OVERLAY -->
                         <div class="hero-clarity-overlay text-white">
                             <h1>
-                                No Nails, No Stickers, No Wall Marks
+                                Hang Photo Frames on Any Wall - Without Nails, Stickers, Glue, or  Damage
                             </h1>
 
+                            <p>
+                                Magnetick frames use a <strong>thin iron sheet + strong magnets</strong>
+                                to hold frames securely on normal walls. so you can move, rearrange,
+                                or remove them anytime without leaving marks.
+                            </p>
+
+                            
+                            
+                            <div class="hero-trust-bar">
+                                <span class="trust-item">No Nails</span>
+                                <span class="trust-item">No Stickers</span>
+                                <span class="trust-item">No Wall Marks</span>
+                                <span class="trust-item">Rental home‑safe</span>
+                            </div>
+
+
+
                             <div>
-                                <a href="{{ route('design') }}" class="btn custom-btn">
+                                <a href="{{ route('design') }}" class="btn custom-btn filled">
                                     Design Your Frame
                                 </a>
 
-                                <a href="{{ route('collections') }}" class="btn custom-btn ms-3">
-                                    Your Collections
+                                <a href="#how-it-works" class="btn custom-btn ms-3">
+                                    See How It Works
                                 </a>
                             </div>
                         </div>
@@ -314,73 +390,12 @@
         </div>
     </section>
 
-
-    
-<!-- =========================
-CENTERED TRUST SECTION
-========================= -->
-<section class="premium-trust-section">
-    <div class="container">
-
-        <div class="text-center">
-
-            <h2 class="trust-title">
-                Hang Photo Frames on Any Wall
-            </h2>
-
-            <p class="trust-subtitle">
-                Without Nails, Stickers, Wall Marks, or Damage
-            </p>
-
-            
-            <p class="trust-description">
-            A refined magnetic system inspired by premium American and European wall‑mounting standards,
-            engineered using a thin iron sheet and precision‑calibrated magnet pads.
-            Designed to hold frames securely while keeping your walls untouched.
-            Learn more about our
-            <a href="{{ url('/photo-frames-without-nails') }}" class="brand-link">
-                photo frames without nails
-            </a>
-            and damage‑free hanging system.
-             </p>
-
-
-            <div class="trust-pills justify-content-center">
-                <span>No Nails</span>
-                <span>No Stickers</span>
-                <span>No Wall Marks</span>
-                <span>Clean Walls</span>
-                <span>Rental‑Home Safe</span>
-            </div>
-
-            <div class="trust-cta mt-4">
-                <a href="{{ route('design') }}" class="btn design-btn filled">
-                    Design Your Frame
-                </a>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-
-
     <section class="how-it-works-clarity py-5">
     <div class="container">
 
         <!-- Section title -->
         <div class="text-center mb-5">
             <h2 class="heading-3">How Magnetick Frames Actually Work</h2>
-            
-            <p class="para text-center mb-4">
-                Designed for modern homes that prefer
-                <a href="{{ url('/photo-frames-without-nails') }}" class="brand-link">
-                    photo frames without nails
-                </a>,
-                drilling, or wall damage.
-            </p>
-
         </div>
 
         <!-- Steps -->
@@ -423,9 +438,9 @@ CENTERED TRUST SECTION
 
         <!-- Assurance chips -->
         <div class="how-assurance mt-5 text-center">
-            <span class="assurance-chip">Strong power</span>
-            <span class="assurance-chip">Life-time stability</span>
-            <span class="assurance-chip">Designed for Indian painted walls & Rented homes/Apartments</span>
+            <span class="assurance-chip">Not a sticker</span>
+            <span class="assurance-chip">Not glue‑based</span>
+            <span class="assurance-chip">Designed for Indian painted walls & rented homes/apartments</span>
         </div>
 
     </div>
@@ -433,52 +448,24 @@ CENTERED TRUST SECTION
 
 
 
-        <section class="premium-material">
+    <section class="premium-material">
         <div class="container">
-            <div class="row text-center align-items-center gy-4">
-    
-                <!-- Column 1 -->
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="premium-trust-card">
-                        <img src="{{ asset('assets/images/Indian-Made.webp') }}" class="img-fluid mb-3" alt="">
-                        <h6>Crafted in India</h6>
-                        <p>
-                            Designed and assembled with precision craftsmanship and attention to detail.
-                        </p>
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="usa-pic usa-logo">
+                        <img src="{{ asset('assets/images/USA.webp') }}" loading="lazy" class="img-fluid" alt="">
+                        <h6>Made in India with Premium U.S Materials</h6>
                     </div>
                 </div>
-    
-                <!-- Column 2 -->
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="premium-trust-card highlighted">
-                        <img src="{{ asset('assets/images/USA.webp') }}" class="img-fluid mb-3" alt="">
-                        <h6>American–European Quality Standards</h6>
-                        <p>
-                            Built using materials and finishing benchmarks inspired by premium US and European interiors.
-                        </p>
+                <div class="col-lg-6  col-md-6 col-12">
+                    <div class="usa-pic indian-logo">
+                        <img src="{{ asset('assets/images/Indian-Made.webp') }}" loading="lazy" class="img-fluid" alt="">
+                        <h6>The First-Ever Low-Cost Premium Frames</h6>
                     </div>
                 </div>
-    
-                <!-- Column 3 -->
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="premium-trust-card">
-                        <img src="{{ asset('assets/images/premium-quality.webp') }}" class="img-fluid mb-3" alt="">
-                        <h6>Premium, Made Accessible</h6>
-                        <p>
-                            Gallery‑grade look and durability. Thoughtfully priced for modern homes.
-                        </p>
-                    </div>
-                </div>
-    
             </div>
         </div>
     </section>
-
-
-    <p class="text-center para mt-4 mb-5">
-    Trusted by homeowners who want premium wall décor without compromise.
-    </p>
-
 
     <section class="custom-tabs-section py">
         <div class="container-fluid">
@@ -546,32 +533,7 @@ CENTERED TRUST SECTION
         </div>
     </section>
 
-    <!-- ✅ MOBILE-ONLY MAIN BANNER (correct mobile position) -->
-<section class="main-banner-section d-block d-md-none">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="text-center">
-                    <h1 class="main-title">
-                        <span class="heading-2">
-                            Turn your photos into a masterpiece
-                        </span>
-                        <span class="heading-1">
-                            let your walls tell your story
-                        </span>
-                    </h1>
-
-                    <button type="button" class="btn design-btn filled"
-                        onclick="window.location.href='{{ route('design') }}';">
-                        Design your frame
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <section class="main-banner-section d-none d-md-block">
+    <section class="main-banner-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-12">
@@ -581,9 +543,9 @@ CENTERED TRUST SECTION
                                 photos into a masterpiece</span>
                             <span class="heading-1">let your walls tell your story</span>
                         </h1>
-                        <button type="button" class="btn design-btn filled"
+                        <button type="button" class="btn custom-btn filled"
                             onclick="window.location.href='{{ route('design') }}';">
-                            <!-- <svg width="26.122" height="26.849" class="w-em h-em me-2 ttl-26 mb-0"
+                            <svg width="26.122" height="26.849" class="w-em h-em me-2 ttl-26 mb-0"
                                 viewBox="0 0 26.122 26.849" xmlns="http://www.w3.org/2000/svg">
                                 <g transform="translate(-858.42 -842.908)">
                                     <path fill="currentColor" transform="translate(866.746 842.818)"
@@ -592,7 +554,7 @@ CENTERED TRUST SECTION
                                     <path fill="currentColor" transform="translate(859.67 845.317)"
                                         d="M23.511,24.441H-1.25V-1.25H14.126V1.2H1.2v20.8H21.064V8.171h2.447Z"></path>
                                 </g>
-                            </svg> -->
+                            </svg>
                             Design your frame
                         </button>
                     </div>
@@ -606,7 +568,7 @@ CENTERED TRUST SECTION
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-12">
                     <div class="text-center">
-                        <h2 class="heading-2">Collections For Your Memorable Walls</h2>
+                        <h2 class="heading-2">Collections for your memorable walls</h2>
                         <p class="para">
                             Looking for ideas or effortless elegance?
                             <span class="d-block">
@@ -669,7 +631,7 @@ CENTERED TRUST SECTION
 
                     <div class="ctaBtnParent text-center" onclick="window.location.href='{{ route('collections') }}';">
                         <button type="button" onclick="window.location.href='{{ route('collections') }}';"
-                            class="btn design-btn filled">
+                            class="btn custom-btn filled">
                             View All Collections
                         </button>
                     </div>
@@ -694,12 +656,12 @@ CENTERED TRUST SECTION
                     </div>
                     <button type="button" class="btn custom-btn filled mt-5"
                         onclick="window.location.href='{{ route('design') }}';">
-                       <!--  <svg width="20" height="20" viewBox="0 0 20 20" class="w-em h-em me-1 ttl-20 mb-0"
+                        <svg width="20" height="20" viewBox="0 0 20 20" class="w-em h-em me-1 ttl-20 mb-0"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill="currentColor" transform="translate(-2 -2)"
                                 d="M10,16.5,16,12,10,7.5ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z">
                             </path>
-                        </svg> -->
+                        </svg>
                         Design your frame
                     </button>
                 </div>
@@ -808,14 +770,14 @@ CENTERED TRUST SECTION
                 </div>
                 <div class="col-lg-12 col-md-12 col-12">
                     <div class="text-center mt-5">
-                        <button type="button" class="btn design-btn filled"
+                        <button type="button" class="btn custom-btn filled"
                             onclick="window.location.href='{{ route('design') }}';">
-                            <!-- <svg width="20" height="20" viewBox="0 0 20 20" class="w-em h-em me-1 ttl-20 mb-0"
+                            <svg width="20" height="20" viewBox="0 0 20 20" class="w-em h-em me-1 ttl-20 mb-0"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill="currentColor" transform="translate(-2 -2)"
                                     d="M10,16.5,16,12,10,7.5ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z">
                                 </path>
-                            </svg> -->
+                            </svg>
                             Design your frame
                         </button>
                     </div>
@@ -829,7 +791,7 @@ CENTERED TRUST SECTION
             <div class="container">
                 <h2 class="heading-3">What can you frame?</h2>
                 <p class="para">Anything you love. Breathe life into your memories.
-                    Elevate the moments hidden in your phone or computer into bold, beautiful wall art, where every
+                    Elevate the moments hidden in your phone or computer into bold, beautiful wall art — where every
                     glance ignites a feeling.</p>
             </div>
         </div>
@@ -1136,7 +1098,7 @@ CENTERED TRUST SECTION
                 <div class="newframeimg">
                     <h3 class="heading-4">For Business Inquiries, <span class="d-block">Retails or Bulk Ordering,</span>
                     </h3>
-                    <button type="button" class="btn design-btn filled"
+                    <button type="button" class="btn custom-btn filled"
                         onclick="window.location.href='{{ route('contact') }}'">
                         Contact Us
                     </button>

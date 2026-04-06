@@ -1,6 +1,15 @@
 @extends('components.layouts.app')
 
-@section('title', 'Shipping Policy')
+
+@section('title', 'Shipping Policy | Magnetick Photo Frames')
+
+@section(
+    'description',
+    'View shipping timelines, delivery details, and order processing information for Magnetick Photo Frames.'
+)
+
+
+@section('canonical', url('/shipping-policy')
 
 @push('css')
     <style>
@@ -70,7 +79,7 @@
             top: 10px;
             width: 8px;
             height: 8px;
-            background: #ff0168;
+            background: #EB2371;
             border-radius: 0;
         }
 

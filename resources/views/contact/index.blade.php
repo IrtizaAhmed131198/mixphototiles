@@ -5,7 +5,7 @@
 @section('css')
     <style>
         button.btn.btn-sm.btn-primary.edit-contact {
-            background-color: #ff0168;
+            background-color: #EB2371;
             border: 1px solid;
         }
 
@@ -27,7 +27,7 @@
                         <div class="frames-main">
                             <h1>{{ $title }} List</h1>
 
-                            {{-- <button class="btn custom-btn" type="button" data-bs-toggle="modal"
+                            {{-- <button class="btn design-btn" type="button" data-bs-toggle="modal"
                                 data-bs-target="#addContactModal"> Add New</button> --}}
                         </div>
                         <table id="example" class="table table-striped" style="width:100%">

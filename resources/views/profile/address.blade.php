@@ -1,5 +1,7 @@
 @extends('components.layouts.app')
 
+@section('noindex', true)
+
 @section('title', 'Order Summary')
 
 @section('content')
@@ -14,7 +16,7 @@
                     @if (!$data)
                         <div class="account-information">
                             <div class="add-address">
-                                <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                <button class="btn design-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     <svg width="16" height="16" class="w-em h-em me-1 fs-20" fill="currentColor"
                                         viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +90,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            <button class="btn design-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 <svg width="16" height="16" class="w-em h-em me-1 fs-20" fill="currentColor"
                                     viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -194,8 +196,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="save-btn">
-                                        <button class="btn custom-btn" id="btn-cancel" type="button">Cancel</button>
-                                        <button class="btn custom-btn filled" id="btn-save" type="submit">Save</button>
+                                        <button class="btn design-btn" id="btn-cancel" type="button">Cancel</button>
+                                        <button class="btn design-btn filled" id="btn-save" type="submit">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -298,8 +300,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="save-btn">
-                                        <button class="btn custom-btn" type="button" data-bs-dismiss="modal">Cancel</button>
-                                        <button class="btn custom-btn filled" type="submit">Save Changes</button>
+                                        <button class="btn design-btn" type="button" data-bs-dismiss="modal">Cancel</button>
+                                        <button class="btn design-btn filled" type="submit">Save Changes</button>
                                     </div>
                                 </div>
                             </div>

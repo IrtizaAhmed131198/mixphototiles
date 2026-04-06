@@ -5,7 +5,7 @@
 @section('css')
 <style>
     button.btn.btn-sm.btn-primary.edit-sizes {
-        background-color: #ff0168;
+        background-color: #EB2371;
         border: 1px solid;
     }
     button.btn.btn-sm.btn-danger.delete-sizes {
@@ -27,7 +27,7 @@
                         <div class="frames-main">
                             <h1>Sizes List</h1>
 
-                            <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            <button class="btn design-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#addSizesModal"> Add New</button>
                         </div>
                         <table id="example" class="table table-striped" style="width:100%">
@@ -117,8 +117,8 @@
                             </div>
                             <div class="col-12">
                                 <div class="save-btn">
-                                    <button class="btn custom-btn" type="button" data-bs-dismiss="modal">Cancel</button>
-                                    <button class="btn custom-btn filled" type="submit">Save</button>
+                                    <button class="btn design-btn" type="button" data-bs-dismiss="modal">Cancel</button>
+                                    <button class="btn design-btn filled" type="submit">Save</button>
                                 </div>
                             </div>
                         </form>
@@ -196,8 +196,8 @@
                             </div>
                             <div class="col-12">
                                 <div class="save-btn">
-                                    <button class="btn custom-btn" type="button" data-bs-dismiss="modal">Cancel</button>
-                                    <button class="btn custom-btn filled" type="submit">Save</button>
+                                    <button class="btn design-btn" type="button" data-bs-dismiss="modal">Cancel</button>
+                                    <button class="btn design-btn filled" type="submit">Save</button>
                                 </div>
                             </div>
                         </form>

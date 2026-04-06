@@ -27,7 +27,7 @@ class OtpMail extends Mailable
 
     public function build()
     {
-        return $this->from('help@magentickphotoframes.com', 'MagentickPhotoFrames')
+        return $this->from('support@magentickphotoframes.com', 'MagentickPhotoFrames')
                     ->subject('Password Reset OTP')
                     ->view('emails.otp')
                     ->with([

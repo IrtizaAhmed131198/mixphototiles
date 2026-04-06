@@ -121,7 +121,7 @@
 @if(!in_array(Route::currentRouteName(), ['design', 'cart', 'order_summary', 'collections_detail']))
     <div class="shopbtnmobile">
         <div class="shopvideobtn">
-            <a href="{{ route('design') }}" class="btn custom-btn filled">Order Yours</a>
+            <a href="{{ route('design') }}" class="btn design-btn filled">Order Yours</a>
         </div>
     </div>
 @endif
@@ -206,7 +206,7 @@
                                     password</button>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn" onclick="submitLogin()">Login</button>
+                                <button type="button" class="btn design-btn filled" onclick="submitLogin()">Login</button>
                             </div>
                         </form>
                         <div id="loginMessage"></div>
@@ -306,7 +306,7 @@
                                 <div class="d-flex Login_forgotBtn"><button type="button"
                                         class="ms-auto btn btn-text btn-sm">Forgot password</button></div>
                                 <div class="d-grid pt-3 pb-4">
-                                    <button type="submit" class="btn custom-btn">Sign Up</button>
+                                    <button type="submit" class="btn design-btn filled">Sign Up</button>
                                 </div>
                             </form>
                             <p class="mb-0 text-center d-flex align-items-center justify-content-center">Already have
@@ -344,7 +344,7 @@
                                 <small class="text-danger" id="emailErrorVerify"></small>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn btn-otp-verify"
+                                <button type="button" class="btn design-btn filled btn-otp-verify"
                                     onclick="sendOtpEmail()">Send OTP</button>
                             </div>
                             <div id="forgotPasswordMessageVerify"></div>
@@ -379,7 +379,7 @@
                                 <small class="text-danger" id="emailError"></small>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn btn-otp" onclick="sendOtp()">Send
+                                <button type="button" class="btn design-btn filled btn-otp" onclick="sendOtp()">Send
                                     OTP</button>
                             </div>
                             <div id="forgotPasswordMessage"></div>
@@ -414,7 +414,7 @@
                                 <small class="text-danger" id="otpError"></small>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn btn-verify" onclick="verifyOtp()">Verify
+                                <button type="button" class="btn design-btn filled btn-verify" onclick="verifyOtp()">Verify
                                     OTP</button>
                             </div>
                             <div id="otpMessage"></div>
@@ -448,7 +448,7 @@
                                 <small class="text-danger" id="otpErrorSign"></small>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn btn-verify-sign"
+                                <button type="button" class="btn design-btn filled btn-verify-sign"
                                     onclick="verifyOtpSign()">Verify OTP</button>
                             </div>
                             <div id="otpMessageSign"></div>
@@ -494,7 +494,7 @@
                                 <label for="confirmPassword">Confirm Password</label>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn custom-btn btn-reset"
+                                <button type="button" class="btn design-btn filled btn-reset"
                                     onclick="resetPassword()">Reset Password</button>
                             </div>
                             <div id="resetPasswordMessage"></div>

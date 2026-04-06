@@ -36,7 +36,7 @@
                         <div class="frames-main">
                             <h1>Collections</h1>
 
-                            <button class="btn custom-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            <button class="btn design-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#frames"> Add New</button>
                         </div>
                         <table id="example" class="table table-striped" style="width:100%">
@@ -177,8 +177,8 @@
 
                                 <div class="col-12">
                                     <div class="save-btn">
-                                        <button class="btn custom-btn" type="button">Cancel</button>
-                                        <button class="btn custom-btn filled" type="submit">Save Product</button>
+                                        <button class="btn design-btn" type="button">Cancel</button>
+                                        <button class="btn design-btn filled" type="submit">Save Product</button>
                                     </div>
                                 </div>
                             </div>
@@ -279,8 +279,8 @@
 
                                 <div class="col-12">
                                     <div class="save-btn">
-                                        <button type="button" class="btn custom-btn" data-bs-dismiss="modal">Cancel</button>
-                                        <button class="btn custom-btn filled" type="submit">Save Product</button>
+                                        <button type="button" class="btn design-btn" data-bs-dismiss="modal">Cancel</button>
+                                        <button class="btn design-btn filled" type="submit">Save Product</button>
                                     </div>
                                 </div>
                             </div>
@@ -314,6 +314,7 @@
 @endsection
 
 @push('scripts')
+<script defer src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('descriptionEditor');
     CKEDITOR.replace('descriptionEditor2');

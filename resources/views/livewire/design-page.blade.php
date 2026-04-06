@@ -1,6 +1,13 @@
 @extends('components.layouts.app')
 
-@section('title', 'Design Page')
+@section('title', 'Create Custom Magnetic Photo Frames Online | Magnetic Wall Frames')
+
+@section('description', 'Upload your photos and create custom magnetic wall photo frames. We print, frame, and deliver. Easy installation, no wall damage.')
+
+@section('keywords', 'custom photo frames online, magnetic photo frames, photo printing wall frames, no wall marks photo frames, damage free photo tiles, custom magnetic photo frames')
+
+@section('canonical', route('design'))
+
 
 @push('css')
     <style>
@@ -59,6 +66,24 @@
         .no-border-design {
             padding: 18px !important;
         }
+        
+        
+        .design-seo-content {
+            background: #ede4e4;
+        }
+        
+        
+        .brand-link {
+            color: #9d0b78; /* matches your accent color */
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .brand-link:hover {
+            text-decoration: underline;
+        }
+
+
 
         @media(max-width:991) {
             footer {
@@ -579,9 +604,9 @@
                                     <div id="upload-demo" class="mx-auto"></div>
                                 </div>
                                 <div class="modal-footer mt-4">
-                                    <button type="button" class="btn custom-btn filled"
+                                    <button type="button" class="btn design-btn filled"
                                         data-bs-dismiss="modal">Close</button>
-                                    <button type="button" id="cropImageBtn" class="btn custom-btn filled">Crop</button>
+                                    <button type="button" id="cropImageBtn" class="btn design-btn filled">Crop</button>
                                 </div>
                             </div>
                         </div>
@@ -592,7 +617,7 @@
                                 <p class="">Grand Total</p>
                                 <h6 class="" id="grand-total-1" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
                             </div>
-                            <button type="button" class="btn custom-btn filled" id="add-to-cart-1"> Add to Cart
+                            <button type="button" class="btn design-btn filled" id="add-to-cart-1"> Add to Cart
                                 <svg width="21" height="21" viewBox="0 0 21 21"
                                     class="w-em h-em RightSidebar_addtocart_btn_icon__nIKa3"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -902,7 +927,7 @@
                                         <p class="">Grand Total</p>
                                         <h6 class="" id="grand-total-2" data-val="0">₹0</h6>
                                     </div>
-                                    <button type="button" class="btn custom-btn filled" id="add-to-cart-2"> Add to Cart
+                                    <button type="button" class="btn design-btn filled" id="add-to-cart-2"> Add to Cart
                                         <svg width="21" height="21" viewBox="0 0 21 21"
                                             class="w-em h-em RightSidebar_addtocart_btn_icon__nIKa3"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -972,6 +997,50 @@
                 </div>
             </div>
         </section>
+        
+        {{-- SEO Content Block for Google --}}
+        <section class="design-seo-content py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+        
+                        <h1 class="mb-3">Create Custom Magnetic Photo Frames Online</h1>
+        
+                        <p class="mb-4">
+                            Design your own magnetic photo frames online with <a href="{{ url('/') }}" class="brand-link">MagnetickPhotoFrames.com</a>.
+                            Upload your photos, choose your frame style, size, and finish,
+                            and preview how they will look on your wall.
+                            Our frames require no nails or drilling and leave no marks when removed.
+                        </p>
+        
+                        <h2 class="mt-4 mb-2">How the design process works</h2>
+                        <ol class="ordered-list">
+                            <li>Upload your favorite photos from your device</li>
+                            <li>Select frame style, color, size, and finish</li>
+                            <li>Preview the layout instantly</li>
+                            <li>Add to cart and place your order</li>
+                        </ol>
+        
+                        <h2 class="mt-4 mb-2">Why choose Magnetick Photo Frames?</h2>
+                        <ul class="ordered-list">
+                            <li>No nails, no drilling, no wall damage</li>
+                            <li>Frames can be repositioned anytime</li>
+                            <li>Rental‑friendly wall decor solution</li>
+                            <li>Premium quality prints and materials</li>
+                        </ul>
+        
+                        <p class="mt-4">
+                            Whether you’re decorating your bedroom, living room, or staircase,
+                            <a href="{{ url('/') }}" class="brand-link">MagnetickPhotoFrames.com</a> makes it easy to create personalized wall decor
+                            without damaging your walls.
+                        </p>
+        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
     </main>
 @endsection
 

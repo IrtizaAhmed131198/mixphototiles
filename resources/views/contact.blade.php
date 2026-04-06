@@ -1,6 +1,15 @@
 @extends('components.layouts.app')
 
-@section('title', 'Contact Us')
+
+@section('title', 'Contact Us | Magnetick Photo Frames')
+
+@section(
+    'description',
+    'Contact Magnetick Photo Frames for order support, delivery queries, or general questions about our magnetic photo frames.'
+)
+
+
+@section('canonical', url('/contact'))
 
 @push('css')
     <style>
@@ -138,7 +147,7 @@
                             </div>
 
                             <div class="d-grid d-md-flex">
-                                <button type="submit" class="btn custom-btn filled contact-btn">Send Message</button>
+                                <button type="submit" class="btn design-btn filled contact-btn">Send Message</button>
                             </div>
                         </form>
                         <div id="thankYouMessage" style="display:none;" class="alert alert-success mt-3">

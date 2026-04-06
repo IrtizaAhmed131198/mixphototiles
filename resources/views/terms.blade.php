@@ -1,6 +1,14 @@
 @extends('components.layouts.app')
 
-@section('title', 'Terms and Conditions')
+
+@section('title', 'Terms and Conditions | Magnetick Photo Frames')
+
+@section(
+    'description',
+    'Read the terms and conditions governing the use of Magnetick Photo Frames website and services.'
+)
+
+@section('canonical', url('/terms-and-conditions'))
 
 @push('css')
     <style>
@@ -70,7 +78,7 @@
             top: 10px;
             width: 8px;
             height: 8px;
-            background: #ff0168;
+            background: #EB2371;
             border-radius: 0;
         }
 

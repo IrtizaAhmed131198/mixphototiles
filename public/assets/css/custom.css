@@ -1,4 +1,9 @@
 /* custom css  */
+
+* {
+  font-display: swap;
+}
+
 @font-face {
     font-family: Plus_Jakarta_Sans_44fb9e;
     font-style: normal;
@@ -27,7 +32,7 @@ p.para.frame {
 }
 
 .py {
-    padding-top: 25px;
+    padding-top: 38px;
     padding-bottom: 45px;
 }
 
@@ -46,11 +51,11 @@ p.para.frame {
 } */
 
 .text-brand-dark {
-    color: #ff0168;
+    color: #EB2371;
 }
 
 .btn-brand-dark {
-    background-color: #ff0168 !important;
+    background-color: #EB2371 !important;
     color: #fff !important;
 }
 
@@ -59,14 +64,14 @@ p.para.frame {
 }
 
 .custom-btn {
-    background: transparent;
-    border: 2px solid #ff0168;
-    border-radius: 0;
+    background: #eadddd00;
+    border-radius: 20px;
     padding: 12px 20px;
     font-size: 16px;
     position: relative;
     z-index: 0;
-    color: #ff0168;
+    color: #fff !important;
+	backdrop-filter: blur(50px);
     font-weight: 600;
 }
 
@@ -74,9 +79,7 @@ p.para.frame {
     content: "";
     position: absolute;
     right: 0px;
-    top: 0px;
-    border-bottom: 2px solid #ff0168;
-    border-right: 2px solid #ff0168;
+    top: 0px;   
     width: 90%;
     height: 100%;
     opacity: 0;
@@ -86,16 +89,159 @@ p.para.frame {
     transition: all 0.3s ease-in-out;
 }
 
-.custom-btn:hover::before {
-    opacity: 1;
-    right: calc(-0.4rem - 3px);
-    top: calc(0.4rem + 2px);
-    width: 100%;
-}
+
 
 .custom-btn:hover {
-    background-color: #ff0168 !important;
-    color: white !important;
+    background: rgb(203, 189, 203);
+	color:#ee3981 !important;
+    font-weight:bolder;
+	backdrop-filter: blur(60px);
+	transform: scale(0.97);
+}
+
+.design-btn:hover {
+    background: rgb(203, 189, 203);
+	color:#fff !important;
+    font-weight:bolder;
+	backdrop-filter: blur(60px);
+	transform: scale(0.97);
+}
+
+
+
+/* =========================
+CENTERED TRUST SECTION – TYPO MATCH
+========================= */
+
+.premium-trust-section {
+    padding: 70px 0 30px 0;                /* same vertical density */
+    background: #ffffff;
+}
+
+/* Main heading — match How-it-works title scale */
+.trust-title {
+    font-size: 60px;              /* matches heading-3 feel */
+    font-weight: 600;                /* NOT 700 */
+    line-height: 1.35;
+    margin-bottom: 10px;
+}
+
+/* Subtitle — subtle, not dominant */
+.trust-subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 24px;
+}
+
+/* Description — same as how-card paragraph */
+.trust-description {
+    max-width: 680px;
+    margin: 0 auto 40px;
+    font-size: 1.1rem;                 /* SAME as .how-card p */
+    line-height: 1.7;
+    color: #444;
+}
+
+/* Pills — unchanged but calmer spacing */
+.trust-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin-bottom: 50px;
+}
+
+.trust-pills span {
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: rgba(255, 1, 104, 0.08);
+    /*border: 1px solid rgba(255, 1, 104, 0.15);*/
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #222;
+}
+ .trust-pills span::before {
+        content: "✓";
+        color: #EB2371;
+        font-weight: 700;
+        margin-right: 8px;
+    }
+/* CTA spacing */
+.trust-cta {
+    margin-top: 6px;
+}
+
+/* =========================
+MOBILE — MATCH HOW SECTION
+========================= */
+@media (max-width: 768px) {
+    .trust-title {
+        font-size: 1.45rem;
+    }
+
+    .trust-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .trust-description {
+        font-size: 0.95rem;
+    }
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+@media (max-width: 991px) {
+    .trust-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .trust-accent {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid #eee;
+        padding-top: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .trust-title {
+        font-size: 1.9rem;
+    }
+
+    .trust-title span {
+        font-size: 1.25rem;
+    }
+}
+
+
+
+/* =========================
+MOBILE RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+
+    .d-mobile {
+        display: block;
+    }
+
+    .section-title {
+        font-size: 1.7rem;
+    }
+
+    .how-steps {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .magnetick-trust-section {
+        padding: 60px 0 40px;
+    }
+
+    .magnetick-how-section {
+        padding: 50px 0;
+    }
 }
 
 header .navbar-brand img {
@@ -115,14 +261,14 @@ header .navbar-brand img {
 header .nav-link.active,
 .nav-underline .nav-link:focus,
 .nav-underline .nav-link:hover {
-    color: #ff0168 !important;
-    border-bottom: 2px solid #ff0168 !important;
+    color: #EB2371 !important;
+    border-bottom: 2px solid #EB2371 !important;
 }
 
 .nav-link:focus,
 .nav-link:hover {
-    color: #ff0168 !important;
-    border-bottom: 2px solid #ff0168 !important;
+    color: #EB2371 !important;
+    border-bottom: 2px solid #EB2371 !important;
 }
 
 header .nav-link {
@@ -133,8 +279,8 @@ header .nav-link {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #ff0168;
-    border: 3px solid #ff0168;
+    background-color: #EB2371;
+    border: 3px solid #EB2371;
 }
 
 ::-webkit-scrollbar-track {
@@ -184,7 +330,7 @@ header {
     top: -6px;
     right: -6px;
     font-size: 12px;
-    background: #ff0168;
+    background: #EB2371;
     width: 15px;
     height: 16px;
     display: flex;
@@ -199,7 +345,7 @@ header {
 .porfile-dropdown .custom-btn {
     padding: 0;
     border: none;
-    color: #ff0168 !important;
+    color: #EB2371 !important;
     margin-left: 10px;
 }
 
@@ -487,39 +633,30 @@ header {
     }
 }
 
-.custom-btn.filled {
-    line-height: 1.75;
-    animation: custom-btn 0.6s ease-in-out forwards;
-    will-change: transform, opacity;
-    transform-origin: bottom;
-    background: #ff0168;
-    color: white;
+.design-btn.filled {
+    background:#EB2371;
+    backdrop-filter: blur(40px);
+    color: #fff !important;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 11rem;
+    border-radius: 20px;
+    position: relative;
 }
 
 @media (min-width: 768px) {
-    .custom-btn.filled {
+    .design-btn.filled {
         line-height: 1;
     }
 }
 
-.custom-btn.filled {
-    animation: custom-btn 0.8s ease-in-out forwards;
-    animation-delay: 0.1s;
-    will-change: transform, opacity;
-    transform-origin: bottom;
-}
-
-.custom-btn.filled {
-    min-width: auto;
-    --bs-btn-font-size: 1.125rem;
-    animation: custom-btn 1s ease-in-out forwards;
-    animation-delay: 0.15s;
-    will-change: transform, opacity;
-}
 
 .main-banner-section {
-    padding-bottom: 2.5rem;
+    padding-bottom: 4.5rem;
     /* margin-top: -5rem; */
+    padding-top: 3.5rem;
+    background: #f3eded;
 }
 
 .heading-2 {
@@ -594,10 +731,8 @@ span.realPize {
 }
 
 .clusters-section {
-    padding: 26px 115px;
-    background: linear-gradient(180deg,
-            hsla(0, 0%, 87%, 0.2),
-            hsla(0, 0%, 100%, 0));
+    padding: 80px 115px 50px 115px;
+    background: linear-gradient(180deg, hsla(0, 0%, 87%, 0.2), hsla(0, 0%, 100%, 0));
 }
 
 .swiper .swiper-button-next {
@@ -638,7 +773,7 @@ span.realPize {
 .swiper .swiper-button-next:hover,
 .swiper .swiper-button-prev:hover {
     box-shadow: none;
-    background-color: #ff0168;
+    background-color: #EB2371;
     transition: background-color 0.3scubic-bezier(0.455, 0.03, 0.515, 0.955),
         box-shadow 0.3scubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
@@ -1059,12 +1194,12 @@ figure.PropertiesleftChild {
 
 ul.LeftSidebar_designTool button.show {
     /* background: #f5e5f1; */
-    color: #ff0168;
-    border-color: #ff0168;
+    color: #EB2371;
+    border-color: #EB2371;
 }
 
 ul.LeftSidebar_designTool button.show p {
-    color: #ff0168;
+    color: #EB2371;
 }
 
 ul.designToolPropertiesLists.show {
@@ -1080,9 +1215,7 @@ ul.designToolPropertiesLists.show {
     transition: all ease 0.7s;
 }
 
-ul.designToolPropertiesLists li:last-child {
-    /* margin-bottom: 0 !important; */
-}
+
 
 li.designToolPropertiesChild {
     padding: 0rem 0;
@@ -1126,7 +1259,7 @@ li.designToolPropertiesChild {
 .AboutSliderParent {
     display: flex;
     flex-direction: column;
-    background: rgb(251, 246, 246);
+    background: rgba(255, 1, 104, 0.08);
     height: 100%;
     max-width: 100%;
     width: 56%;
@@ -1134,14 +1267,15 @@ li.designToolPropertiesChild {
     min-width: 80px;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid rgba(0, 0, 0, 0.11); */
+    /* border: 1px solid rgba(0, 0, 0, 0.11); 
+    background: rgb(251, 246, 246); */
     border-radius: 15px;
     text-align: center;
     margin: auto;
 }
 
 .AboutSliderParent h5 {
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .AboutSliderParent p {
@@ -1518,7 +1652,7 @@ li.designToolPropertiesChild {
 
 .swiper-pagination-bullet-active {
     opacity: 1;
-    background: #ff0168;
+    background: #EB2371;
 }
 
 .swiper-pagination-bullet {
@@ -1526,18 +1660,18 @@ li.designToolPropertiesChild {
     height: 7px;
     display: inline-block;
     border-radius: 5px;
-    background: #ff0168;
+    background: #EB2371;
     opacity: 0.31;
 }
 
 .swiper .swiper-pagination-bullet.swiper-pagination-bullet-active {
     width: 23px;
-    background: #ff0168;
+    background: #EB2371;
     opacity: 1;
 }
 
 .TestimonialCard_cardContent .text-primary {
-    color: #ff0168 !important;
+    color: #EB2371 !important;
 }
 
 .TestimonialCard_cardContent svg.text-primary {
@@ -1552,7 +1686,7 @@ li.designToolPropertiesChild {
 /* testimonial slider  */
 
 .subtitle a {
-    color: #ff0168 !important;
+    color: #EB2371 !important;
 }
 
 /* faq css  */
@@ -1658,7 +1792,7 @@ div#accordionFlushExample {
 /* footer css  */
 
 .Footer_footer {
-    background-color: #ededed;
+    background-color: #fbf9f9;
     padding: 5rem 0 0rem;
 }
 
@@ -1700,7 +1834,7 @@ div#accordionFlushExample {
 .Footer_footer .Footer_footerBottomWrp {
     /* padding: 2rem 0 3.2rem; */
     color: #896b82 !important;
-    --bs-link-hover-color: #ff0168;
+    --bs-link-hover-color: #EB2371;
     border-top: 1px solid #000000;
     padding: 2rem 0;
     margin-top: 5rem;
@@ -1741,14 +1875,14 @@ a:hover {
 }
 
 a {
-    color: #ff0168;
+    color: #EB2371;
 }
 
 /* footer css  */
 
 /* design css */
 .li-border-color {
-    border-color: #ff0168;
+    border-color: #EB2371;
     color: var(--swiper-pagination-color);
 }
 
@@ -1946,7 +2080,7 @@ a {
 
 .main-logo {
     padding: 11px;
-    background-color: #ff0168;
+    background-color: #EB2371;
     color: #fff;
     font-size: 17px;
     font-weight: 900;
@@ -2059,8 +2193,8 @@ figure.Tabframed img {
 }
 
 .custom-tabs-content button.active {
-    color: #ff0168;
-    border-left: 2px solid #ff0168;
+    color: #EB2371;
+    border-left: 2px solid #EB2371;
 }
 
 .custom-tabs-content .heading-4 span {
@@ -2109,7 +2243,7 @@ figure {
 
 .swiper.Images-frame-slider .swiper-slide.swiper-slide-active .box {
     background: #f5e5f1;
-    border-top: 2px solid #ff0168;
+    border-top: 2px solid #EB2371;
     /* padding: 1rem 1.25rem 2.5rem; */
 }
 
@@ -2121,7 +2255,7 @@ figure {
     max-height: 80px;
 }
 
-.frameinner {}
+
 
 .swiper.Images-frame-slider .swiper-slide .box .frame-main-wrap {
     padding: 6px 6px !important;
@@ -2134,7 +2268,7 @@ figure {
 }
 
 .sec-2-span {
-    color: #ff0168;
+    color: #EB2371;
 }
 
 .RightSliderChild.whyChooseUs {
@@ -2254,7 +2388,7 @@ button.Login_authSwitch {
     border: 0;
     text-decoration: underline;
     font-weight: 700;
-    color: #FF0168;
+    color: #EB2371;
 }
 
 .custom-modal .modal-dialog.modal-dialog-centered {
@@ -2302,7 +2436,7 @@ figure.frameBackground img {
 
 .clusterAddBtn__Rreup {
     transition: all 0.3s ease-in-out;
-    background: #FF0168;
+    background: #EB2371;
     color: white;
     width: 60%; /* relative to container */
     height: 60%; /* maintains ratio */
@@ -2429,7 +2563,7 @@ ul.designToolPropertiesLists.CustomizeOption {
 
 .pricedetails h5 {
     font-size: 26px;
-    color: #FF0168;
+    color: #EB2371;
     font-weight: 800;
     margin: 0;
 }
@@ -2501,11 +2635,11 @@ ul.designToolPropertiesLists.CustomizeOption .parentProperties {
 }
 
 ul.designToolPropertiesLists.CustomizeOption li.active figure.PropertiesleftChild {
-    border: 2px solid #FF0168;
+    border: 2px solid #EB2371;
 }
 
 ul.designToolPropertiesLists.CustomizeOption li.active p.propertyName {
-    color: #FF0168;
+    color: #EB2371;
 }
 
 ul.designToolPropertiesLists.CustomizeOption li figure.PropertiesleftChild {
@@ -2525,7 +2659,7 @@ p.noted {
 }
 
 .parentaccording .accordion-item svg {
-    color: #FF0168;
+    color: #EB2371;
 }
 
 ul.ClusterDetails_detailsList li {
@@ -2639,7 +2773,7 @@ figure.carditemimage img {
 }
 
 .CartListItem_action:hover {
-    color: #FF0168;
+    color: #EB2371;
 }
 
 .cartheader {
@@ -2924,7 +3058,7 @@ ul.designToolPropertiesLists.CustomizeOption {
 
 .pricedetails h5 {
     font-size: 26px;
-    color: #FF0168;
+    color: #EB2371;
     font-weight: 800;
     margin: 0;
 }
@@ -2996,11 +3130,11 @@ ul.designToolPropertiesLists.CustomizeOption .parentProperties {
 }
 
 ul.designToolPropertiesLists.CustomizeOption li.active figure.PropertiesleftChild {
-    border: 2px solid #FF0168;
+    border: 2px solid #EB2371;
 }
 
 ul.designToolPropertiesLists.CustomizeOption li.active p.propertyName {
-    color: #FF0168;
+    color: #EB2371;
 }
 
 ul.designToolPropertiesLists.CustomizeOption li figure.PropertiesleftChild {
@@ -3020,7 +3154,7 @@ p.noted {
 }
 
 .parentaccording .accordion-item svg {
-    color: #FF0168;
+    color: #EB2371;
 }
 
 ul.ClusterDetails_detailsList li {
@@ -3081,7 +3215,7 @@ button.btn.custom-btn.transparent.copied svg {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.3125;
-    color: #ff0168;
+    color: #EB2371;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -3101,7 +3235,7 @@ button.btn.custom-btn.transparent.copied svg {
 }
 
 .btn-apply-coupon {
-    color: #ff0168;
+    color: #EB2371;
     padding: 16px;
     font-weight: 500;
     width: 27%;
@@ -3112,13 +3246,13 @@ button.btn.custom-btn.transparent.copied svg {
 
 .btn-apply-coupon:hover {
     color: #fff;
-    background-color: #ff0168;
-    border-color: #ff0168;
+    background-color: #EB2371;
+    border-color: #EB2371;
 }
 
 .rounded-pill:hover {
     color: #fff;
-    background-color: #ff0168;
+    background-color: #EB2371;
 }
 
 .couponsuccess {
@@ -3167,7 +3301,7 @@ button.btn.custom-btn.transparent.copied svg {
 }
 
 .couponsuccess_btn {
-    color: #ff0168;
+    color: #EB2371;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -3591,7 +3725,7 @@ span.caption-crop {
     font-weight: 800;
     font-size: 16px;
     font-style: italic;
-    color: #ff0168;
+    color: #EB2371;
 }
 
 a.link {
@@ -3721,7 +3855,7 @@ button.Login_authSwitch {
     border: 0;
     text-decoration: underline;
     font-weight: 700;
-    color: #FF0168;
+    color: #EB2371;
 }
 
 .custom-modal .modal-dialog.modal-dialog-centered {
@@ -3887,21 +4021,21 @@ button.Login_authSwitch {
 }
 
 .swal-image-confirm-button {
-    background-color: #ff0168 !important;
+    background-color: #EB2371 !important;
     color: white !important;
 }
 
 .swal-image-cancel-button {
-    background-color: #ff0168 !important;
+    background-color: #EB2371 !important;
     color: white !important;
 }
 
 .swal2-confirm {
-    background-color: #ff0168 !important;
+    background-color: #EB2371 !important;
 }
 
 .main-radio-select {
-    border: 1px solid #ff0168;
+    border: 1px solid #EB2371;
     padding: 20px;
     margin: 40px 0;
 }
@@ -3944,12 +4078,12 @@ button.Login_authSwitch {
 }
 
 .radio-address input {
-    border-color: #ff0168;
+    border-color: #EB2371;
 }
 
 input[type="radio"]:checked {
 
-    background-color: #ff0168;
+    background-color: #EB2371;
 }
 
 .parent-address {
@@ -4017,8 +4151,8 @@ input[type="radio"]:checked {
 
 .mixphototilessidemenu .navbar-nav {
     padding-top: 20px;
-    /* margin-top: 20px; */
-    border-top: 1px solid #00000040;
+    /* margin-top: 20px; 
+    border-top: 1px solid #00000040;*/
 }
 
 button.btn-close.text-reset {
@@ -4083,6 +4217,7 @@ button.hammenubtn {
 
 .premium-material {
     padding: 22px 0;
+    margin: 50px 50px;
 }
 
 .usa-pic {
@@ -4125,7 +4260,7 @@ button.hammenubtn {
 .shopvideobtn a.btn.custom-btn.filled {
     padding: 20px 40px;
     border-radius: 10px;
-    background: rgba(231, 216, 225, 0.3);
+    background: rgba(247, 244, 246, 0.3);
     border: none;
     font-weight: 900;
 }
@@ -4147,12 +4282,12 @@ button.hammenubtn {
 }
 
 .shopvideobtn a.btn.custom-btn.filled{
-    background: rgb(219 209 209 / 60%) !important;
+    background: rgba(248, 244, 244, 0.6) !important;
     color: rgb(255, 255, 255) !important;
 }
 
 .shopvideobtn a.btn.custom-btn.filled:hover {
-    background: rgba(231, 216, 225, 0.7) !important;
+    background: rgba(253, 251, 252, 0.7) !important;
     color: rgb(215, 42, 110) !important;
 }
 
@@ -4164,9 +4299,28 @@ button.hammenubtn {
     border-bottom: none !important;
 }
 
-section.custom-tabs-section.py {
-    padding-left: 169px;
+section.custom-tabs-section.py {    
+    background: #ffffff;
+    position: relative;
+    z-index: 1;
+    padding: 60px 0 100px 169px;
 }
+
+
+section.custom-tabs-section.py::before {
+    content: "";
+    position: absolute;
+    top: -16px;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.06),
+        rgba(0,0,0,0)
+    );
+}
+
 
 .custom-tabs-content .heading-3 {
     font-size: 41px;
@@ -4178,7 +4332,12 @@ section.custom-tabs-section.py {
 
 .offcanvas-header {
     padding-bottom: 1px !important;
-    margin-top: 5px;
+    margin-top: 6px;
+}
+
+.offcanvas-header .img-fluid {
+    padding-bottom: 1px !important;
+    margin-top: 24px;
 }
 
 /* new css end */
@@ -4188,3 +4347,7 @@ section.custom-tabs-section.py {
     margin-top: -24px;
     margin-left: 3px;
 }
+
+
+
+

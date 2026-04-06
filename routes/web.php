@@ -65,6 +65,8 @@ Route::get('/design', [DesignController::class, 'show'])->name('design');
 Route::get('/your-collection', [CollectionsController::class, 'index'])->name('collections');
 Route::get('/your-collection/load', [CollectionsController::class, 'loadMoreProducts'])->name('collections.load');
 Route::get('/collection/{slug}', [CollectionDetailController::class, 'show'])->name('collections_detail');
+Route::get('/photo-frames-without-nails', [PagesController::class, 'noNails'])->name('no_nails');
+
 
 // Policy and information pages
 Route::get('/privacy-policy', [PagesController::class, 'privacy'])->name('privacy');
@@ -303,6 +305,7 @@ Route::post('/orders/refund', [ProfileController::class, 'processRefund']);
 Route::get('/check-user-address', function () {
     return response()->json(['hasAddress' => session()->has('user_address') && !empty(session('user_address'))]);
 })->name('check_user_address');
+
 
 
 // Laravel auth routes

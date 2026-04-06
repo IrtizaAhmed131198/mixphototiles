@@ -1,6 +1,15 @@
 @extends('components.layouts.app')
 
-@section('title', 'Refund Policy')
+
+@section('title', 'Refund Policy | Magnetick Photo Frames')
+
+@section(
+    'description',
+    'Learn about Magnetick Photo Frames refund and replacement policy for custom magnetic photo frame orders.'
+)
+
+
+@section('canonical', url('/refund-policy')
 
 @push('css')
     <style>
@@ -70,7 +79,7 @@
             top: 10px;
             width: 8px;
             height: 8px;
-            background: #ff0168;
+            background: #EB2371;
             border-radius: 0;
         }
 

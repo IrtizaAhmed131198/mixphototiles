@@ -50,7 +50,7 @@
                 <ul class="navbar-nav pt-0 login-nav">
                         <li>
                             <a href="javascript:;" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
-                                class="btn custom-btn filled mt-3">Login / Sign up</a>
+                                class="btn design-btn filled mt-3">Login / Sign up</a>
                         </li>
                         <li style="margin-top: 18px;"><span><b>Sign up</b></span><span> to save your progress &amp;
                                 track orders</span></li>

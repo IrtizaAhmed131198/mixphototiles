@@ -1,5 +1,7 @@
 @extends('components.layouts.app')
 
+@section('noindex', true)
+
 @section('title', 'My Profile')
 
 @section('content')
@@ -65,7 +67,7 @@
                                     </div>
                                 </div>
                                 <div class="frm-btn">
-                                    <button type="submit" class="btn custom-btn filled mt-5">Save Changes</button>
+                                    <button type="submit" class="btn design-btn filled mt-5">Save Changes</button>
                                 </div>
                             </div>
                         </form>

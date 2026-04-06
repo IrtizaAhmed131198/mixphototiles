@@ -1,6 +1,30 @@
 @extends('components.layouts.app')
 
-@section('title', 'Collection Detail')
+
+@php
+    use Illuminate\Support\Str;
+
+    // Collection / product name
+    $collectionName = $product->name ?? Str::headline($product->slug ?? 'Photo Frame Collection');
+@endphp
+
+@section(
+    'title',
+    $collectionName . ' – Magnetic Photo Frame Set | No Nails Wall Decor'
+)
+
+@section(
+    'description',
+    $collectionName . ' is a premium magnetic photo frame set designed for stylish wall decor. No nails, no drilling, no wall damage. Easy to reposition and rental friendly.'
+)
+
+@section(
+    'keywords',
+    strtolower($collectionName) . ', magnetic photo frame set, no nail photo frames, wall decor frames, apartment friendly, flat residents friendly'
+)
+
+@section('canonical', url()->current())
+
 
 @push('css')
     <style>
@@ -265,7 +289,7 @@
 
 
                                 </div>
-                                <button type="button" id="zoombtn" class="btn custom-btn filled rounded">Zoom
+                                <button type="button" id="zoombtn" class="btn design-btn filled rounded">Zoom
                                     1.5x</button>
                             </div>
 
@@ -579,16 +603,16 @@
                         <div class="addtocardbtn">
                             @if ($collectionImages != null)
                                 <button type="button" id="continue-to-cart-btn" onclick="continueToCart()"
-                                    class="btn custom-btn filled">
+                                    class="btn design-btn filled">
                                     Continue to Cart
                                 </button>
                             @else
                                 <button type="button" id="add-to-cart-btn" onclick="addToCart()"
-                                    class="btn custom-btn filled">
+                                    class="btn design-btn filled">
                                     Add to Cart
                                 </button>
                             @endif
-                            <button type="button" id="copyUrlBtn" class="btn custom-btn transparent copied">
+                            <button type="button" id="copyUrlBtn" class="btn design-btn transparent copied">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12.58" height="12.58"
                                     viewBox="0 0 12.58 12.58" class="w-em h-em">
                                     <g transform="translate(0.5 0.5)">
@@ -604,7 +628,7 @@
                                 </svg>
                             </button>
                             <p id="copyMessage"
-                                style="display: none; font-size: 14px; color: #ff0168; margin-top: 2px; margin-left: 23rem;">
+                                style="display: none; font-size: 14px; color: #EB2371; margin-top: 2px; margin-left: 23rem;">
                                 Copied!</p>
                         </div>
 
@@ -758,9 +782,9 @@
                         </div>
 
                         <div class="modal-btns-parent">
-                            <button type="button" class="btn custom-btn filled done-button"
+                            <button type="button" class="btn design-btn filled done-button"
                                 data-bs-dismiss="modal">Done</button>
-                            <button type="button" class="btn custom-btn transparent">
+                            <button type="button" class="btn design-btn transparent">
                                 <svg width="15.9" height="17.5" class="w-em h-em pe-1 fs-16" viewBox="0 0 15.9 17.5"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <g transform="translate(-2.25 -1.25)">
@@ -814,7 +838,7 @@
                         </div>
 
                         <div class="modal-btns-parent">
-                            <button type="button" class="btn custom-btn filled done-button-2"
+                            <button type="button" class="btn design-btn filled done-button-2"
                                 data-bs-dismiss="modal">Done</button>
                         </div>
                     </div>
@@ -831,8 +855,8 @@
                 <div class="mt-3 text-end">
                 </div>
                 <div class="mt-5 text-center">
-                    <button type="button" class="btn custom-btn filled me-3" data-bs-dismiss="modal">Cancel</button>
-                    <button id="cropImageBtn" class="bbtn custom-btn filled">Crop</button>
+                    <button type="button" class="btn design-btn filled me-3" data-bs-dismiss="modal">Cancel</button>
+                    <button id="cropImageBtn" class="bbtn design-btn filled">Crop</button>
                 </div>
             </div>
         </div>

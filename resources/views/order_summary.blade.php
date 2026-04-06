@@ -1,6 +1,8 @@
 @extends('components.layouts.app')
 
-@section('title', 'Order Summary')
+@section('noindex', true)
+
+@section('title', 'OrderSummary')
 
 @push('css')
     <style>
@@ -153,7 +155,7 @@
                                                             }
                                                         @endphp
                                                         <button type="button" id="saveAddressBtn"
-                                                            class="btn custom-btn filled {{ $disabled }}" style="{{ $css }}"
+                                                            class="btn design-btn filled {{ $disabled }}" style="{{ $css }}"
                                                             >Save @if (!Auth::check()) & Sign Up @endif
                                                         </button>
                                                     </div>
@@ -272,7 +274,7 @@
                                         </label>
                                     </div>
 
-                                    <button type="button" class="btn custom-btn filled" onclick="validateAndProceed()">
+                                    <button type="button" class="btn design-btn filled" onclick="validateAndProceed()">
                                         Pay Now
                                     </button>
 

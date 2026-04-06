@@ -173,7 +173,21 @@ class AuthController extends Controller
         $user->save();
 
         // Dispatch job to queue instead of sending immediately
-        dispatch(new SendOtpEmailJob($otp, $user->email, $user->name));
+        
+        try {
+            Mail::to($user->email)->send(new OtpMail($otp, $user->name));
+        } catch (\Throwable $e) {
+            \Log::error('OTP email failed', [
+                'email' => $user->email,
+                'error' => $e->getMessage()
+            ]);
+        
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to send OTP. Please try again.'
+            ], 500);
+        }
+
 
         // Send OTP via email
         // Mail::raw("Your OTP code is: $otp", function ($message) use ($user) {

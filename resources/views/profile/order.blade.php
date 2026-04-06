@@ -1,5 +1,7 @@
 @extends('components.layouts.app')
 
+@section('noindex', true)
+
 @section('title', 'Order Summary')
 
 @section('css')

@@ -1,6 +1,15 @@
 @extends('components.layouts.app')
 
-@section('title', 'Privacy Policy')
+
+@section('title', 'Privacy Policy | Magnetick Photo Frames')
+
+@section(
+    'description',
+    'Read Magnetick Photo Frames privacy policy to understand how we collect, use, and protect your personal information.'
+)
+
+
+@section('canonical', url('/privacy-policy'))
 
 @push('css')
     <style>
@@ -70,7 +79,7 @@
             top: 10px;
             width: 8px;
             height: 8px;
-            background: #ff0168;
+            background: #EB2371;
             border-radius: 0;
         }
 

@@ -1,6 +1,12 @@
 @extends('components.layouts.app')
 
-@section('title', 'Collections')
+@section('title', 'Magnetic Photo Frames Collections | Damage-Free Wall Decor Collections')
+
+@section('description', 'Explore curated magnetic photo frame sets for bedrooms, staircases and living rooms. No nails, no marks. Easy to move and reuse.')
+
+@section('keywords', 'photo frame sets, staircase photo frames, wall decor frames, magnetic wall frames, living room photo frames, no damage photo frames, no sticker and no nails photo frames, damage free photo frames')
+
+@section('canonical', url('/your-collection'))
 
 @section('content')
     <section class="clusters-section inner-cluster">

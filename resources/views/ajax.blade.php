@@ -60,11 +60,11 @@
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                'X-CSRF-TOKEN': window.csrfToken()
             },
             body: JSON.stringify({ email: email })
         })
-        .then(response => response.json())
+        .then(window.safeJson)
         .then(data => {
             if (data.status === "success") {
 
@@ -115,11 +115,11 @@
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                'X-CSRF-TOKEN': window.csrfToken()
             },
             body: JSON.stringify({ email: email })
         })
-        .then(response => response.json())
+        .then(window.safeJson)
         .then(data => {
             if (data.status === "success") {
                 forgotPasswordMessage.innerHTML = `<span class="text-success">${data.message}</span>`;
@@ -178,7 +178,7 @@
             },
             body: JSON.stringify({ email: email, otp: otp, password: 1 })
         })
-        .then(response => response.json())
+        .then(window.safeJson)
         .then(data => {
             if (data.status === 'success') {
                 otpMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
@@ -242,7 +242,7 @@
             },
             body: JSON.stringify({ email: email, otp: otp, password: 0 })
         })
-        .then(response => response.json())
+        .then(window.safeJson)
         .then(data => {
             if (data.status === 'success') {
                 // otpMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
@@ -344,11 +344,11 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                'X-CSRF-TOKEN': window.csrfToken()
             },
             body: JSON.stringify({ email: email, password: newPassword, password_confirmation: confirmPassword })
         })
-        .then(response => response.json())
+        .then(window.safeJson)
         .then(data => {
             if (data.status === 'success') {
                 resetPasswordMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;

@@ -520,35 +520,54 @@ function updateGrandTotal() {
         });
 }
 
+// function calculateFrameCost(quantity = 1) {
+//     // step 1: cost calculations
+//     let frame_cost = quantity * average_cost;
+//     let total_cost = frame_cost + delivery_cost;
+
+//     // step 2: profit margin calculation
+//     // base_margin assumed to be entered in % (e.g. 20 for 20%)
+//     let profit_margin = (base_margin / Math.pow(quantity, 0.2)) / 100;
+
+//     // step 3: profit per sale
+//     let profit_per_sale = Math.floor(total_cost * profit_margin);
+
+//     // step 4: selling price
+//     let selling_price = Math.floor(total_cost + profit_per_sale);
+
+//     // nicely structured console output
+//     // console.log("=== Frame Cost Calculation Quantity "+quantity+" ===");
+//     // console.log("Delivery Cost   :", delivery_cost);
+//     // console.log("Average Cost    :", average_cost);
+//     // console.log("Base Margin (%) :", base_margin);
+//     // console.log("Quantity        :", quantity);
+//     // console.log("-------------------------------");
+//     // console.log("Frame Cost      :", frame_cost);
+//     // console.log("Total Cost      :", total_cost);
+//     // console.log("Selling Price   :", selling_price);
+//     // console.log("Profit per Sale :", profit_per_sale);
+//     // console.log("Profit Margin   :", profit_margin);
+//     // console.log("===============================\n");
+
+//     return selling_price;
+// }
+
 function calculateFrameCost(quantity = 1) {
-    // step 1: cost calculations
     let frame_cost = quantity * average_cost;
-    let total_cost = frame_cost + delivery_cost;
+    
 
-    // step 2: profit margin calculation
-    // base_margin assumed to be entered in % (e.g. 20 for 20%)
+    // ✅ FIX: apply margin to production cost only, not (cost + shipping)
     let profit_margin = (base_margin / Math.pow(quantity, 0.2)) / 100;
+    let profit_per_sale = Math.floor(frame_cost * profit_margin);  // was: total_cost * profit_margin
 
-    // step 3: profit per sale
-    let profit_per_sale = Math.floor(total_cost * profit_margin);
+    let selling_price = Math.floor(frame_cost + profit_per_sale) + delivery_cost;  // add shipping after
 
-    // step 4: selling price
-    let selling_price = Math.floor(total_cost + profit_per_sale);
-
-    // nicely structured console output
-    // console.log("=== Frame Cost Calculation Quantity "+quantity+" ===");
-    // console.log("Delivery Cost   :", delivery_cost);
-    // console.log("Average Cost    :", average_cost);
-    // console.log("Base Margin (%) :", base_margin);
-    // console.log("Quantity        :", quantity);
-    // console.log("-------------------------------");
-    // console.log("Frame Cost      :", frame_cost);
-    // console.log("Total Cost      :", total_cost);
-    // console.log("Selling Price   :", selling_price);
-    // console.log("Profit per Sale :", profit_per_sale);
-    // console.log("Profit Margin   :", profit_margin);
-    // console.log("===============================\n");
-
+    console.log("average_cost = ", average_cost);
+    console.log("quantity = ", quantity);
+    console.log("frame_cost = ", frame_cost);
+    console.log("profit_margin = ", profit_margin);
+    console.log("profit_per_sale = ", profit_per_sale);
+    console.log("selling_price = ", selling_price);
     return selling_price;
 }
 

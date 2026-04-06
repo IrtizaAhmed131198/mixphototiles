@@ -1,5 +1,7 @@
 @extends('components.layouts.app')
 
+@section('noindex', true)
+
 @section('title', 'Cart')
 
 @push('css')
@@ -43,7 +45,7 @@
                                 <span class="itemsCount">({{ count($cartItems) ?? 0 }} Items)</span>
                                 <form action="{{ route('cart.clear') }}" method="POST" style="display:inline;">
                                     @csrf
-                                    <button type="submit" class="btn custom-btn filled">
+                                    <button type="submit" class="btn design-btn filled">
                                         Remove All
                                     </button>
                                 </form>
@@ -237,7 +239,7 @@
                                                 </span> Apply Coupon
                                             </p>
                                             <a href="javascript:;" data-bs-target="#applycoupon" data-bs-toggle="modal"
-                                                class="btn custom-btn" id="applyCouponButton">Apply</a>
+                                                class="btn design-btn filled" id="applyCouponButton">Apply</a>
                                         </div>
                                     </div>
                                 </div>
@@ -285,7 +287,7 @@
                                         </ul>
                                     </div>
 
-                                    <button type="button" class="btn custom-btn filled"
+                                    <button type="button" class="btn design-btn filled"
                                         onclick="updateCartAndRedirect()">
                                         Continue
                                     </button>
@@ -322,7 +324,7 @@
                     </div>
                     <div class="col-12 text-center ">
                         <button type="button" onclick="window.location.href='{{ route('design') }}';"
-                            class="btn custom-btn filled">Continue</button>
+                            class="btn design-btn filled">Continue</button>
                     </div>
                 </div>
             </div>
@@ -649,7 +651,7 @@
                                     <img src="{{ asset('assets/images/tags.svg') }}" class="img-fluid" alt="">
                                 </span> Apply Coupon
                             </p>
-                            <a href="javascript:;" data-bs-target="#applycoupon" data-bs-toggle="modal" class="btn custom-btn" id="applyCouponButton">Apply</a>
+                            <a href="javascript:;" data-bs-target="#applycoupon" data-bs-toggle="modal" class="btn design-btn" id="applyCouponButton">Apply</a>
                         </div>
                     `;
 
@@ -736,7 +738,7 @@
                                     <img src="${document.querySelector('#applyCouponButton')?.getAttribute('data-img-src')}" class="img-fluid" alt="">
                                 </span> Apply Coupon
                             </p>
-                            <a href="javascript:;" data-bs-target="#applycoupon" data-bs-toggle="modal" class="btn custom-btn" id="applyCouponButton">Apply</a>
+                            <a href="javascript:;" data-bs-target="#applycoupon" data-bs-toggle="modal" class="btn design-btn" id="applyCouponButton">Apply</a>
                         </div>
                     `;
                             couponContainer.innerHTML = applyCouponHTML;

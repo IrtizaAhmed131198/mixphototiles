@@ -39,6 +39,11 @@ class PagesController extends Controller
     {
         return view('terms');
     }
+    
+    public function noNails()
+    {
+        return view('no-nails');
+    }
 
     public function faq()
     {

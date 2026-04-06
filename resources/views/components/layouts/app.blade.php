@@ -5,9 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ get_setting('site_name') ?? env('APP_NAME') }} - @yield('title')</title>
-    <meta name="description" content="@yield('description', 'Default description')">
-    <meta name="keywords" content="@yield('keywords', 'default, keywords')">
+    <title>
+    {{ get_setting('site_name') ?? env('APP_NAME') }}
+        @hasSection('title')
+            - @yield('title')
+        @endif
+    </title>
+    <meta name="description" content="@yield('description', 'Magnetic photo frames for walls with no nails, no stickers, no wall marks and no damage. Design custom photo frames online with Magnetick.')">
+    <meta name="keywords" content="@yield('keywords', 'magnetic photo frames, wall photo frames, no nail frames, no wall marks photo frames, damage free photo frames for apartments and rented homes')">
+    
+    @hasSection('noindex')
+        <meta name="robots" content="noindex, nofollow">
+    @endif
+
+
+    @hasSection('canonical')
+        <link rel="canonical" href="@yield('canonical')" />
+    @endif
+    
+    
+    
+
 
     {{-- <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/favicon-32x32.png') }}">
@@ -96,9 +114,7 @@
     <!-- Dropify JS -->
     <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
     <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
-    <script src="
-                    https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js
-                    "></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <!-- Cropper.js JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <script src="{{ asset('assets/js/dataTables.js') }}"></script>
@@ -108,6 +124,24 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     @livewireScripts
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    
+    
+    <script>
+      window.csrfToken = function () {
+        const el = document.querySelector('meta[name="csrf-token"]');
+        return el ? el.getAttribute('content') : '';
+      };
+    
+      window.safeJson = async function (response) {
+        const text = await response.text();
+        try { return JSON.parse(text); }
+        catch (e) {
+          console.error('Non-JSON response:', text);
+          throw e;
+        }
+      };
+    </script>
+
 
     @include('ajax')
 
@@ -158,6 +192,19 @@
     <script>
         // console.clear();
     </script>
+    
+    
+<script>
+  // Global CSRF header for all jQuery AJAX calls (fetch already sets headers in your code)
+  if (window.$ && document.querySelector('meta[name="csrf-token"]')) {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    });
+  }
+</script>
+
 
 </body>
 
