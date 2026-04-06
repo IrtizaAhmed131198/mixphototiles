@@ -822,10 +822,10 @@ class MainController extends Controller
     public function order_summary()
     {
         $cart = session()->get('cart', []); // Product details
-        $cartGrandTotal = session()->get('cart_grand_total', 0); // Total price
+        $cartGrandTotal = floatval(session()->get('cart_grand_total', 0)); // Total price
         $giftCard = 0; // Gift card (optional)
         // $giftCard = session()->get('gift_card_applied', 0); // Gift card (optional)
-        $shipping = get_setting('shipping_price') ?? 0; // Gift card (optional)
+        $shipping = floatval(get_setting('shipping_price')) ?? 0; // Gift card (optional)
 
         $shipping_address = ShippingAddress::where('user_id', Auth::user()->id ?? null)
             ->where('default_address', 1)
@@ -1065,7 +1065,9 @@ class MainController extends Controller
             if($existUser){
                 return response()->json([
                     'error' => true,
-                    'message' => 'Email is already exist, please login'
+                    'type' => 'email_exists',
+                    'email' => $request->email,
+                    'message' => 'Entered email exists, please log in'
                 ]);
             }
             $message = "Address and account saved successfully!";

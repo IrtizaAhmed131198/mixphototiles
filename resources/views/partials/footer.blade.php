@@ -185,14 +185,14 @@
                                 class="bg-white px-2 position-relative">or</span></div>
                         <form class="loginForm">
                             <div class="mb-4 form-floating">
-                                <input placeholder="Email address" id="emailInput" class="form-control"
-                                    type="email" value="" name="emailOrMobile">
+                                <input placeholder="Email address" id="emailInput" class="form-control emailOrMobileInput"
+                                    type="email" value="" name="emailOrMobile" autocomplete="new-password">
                                 <label for="emailInput">Email address</label>
                                 <small class="text-danger" id="emailOrMobileError"></small>
                             </div>
                             <div class="position-relative PasswordInput_passwordWrp mb-3 form-floating">
                                 <input placeholder="Password" id="PasswordInput2" class="form-control"
-                                    type="password" value="" name="password">
+                                    type="password" value="" name="password" autocomplete="new-password">
                                 <button type="button"
                                     class="position-absolute top-0 end-0 rounded-pill PasswordInput_showButton btn btn-text toggle-password">
                                     <i class="fa fa-eye"></i>

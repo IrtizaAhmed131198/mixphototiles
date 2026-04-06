@@ -155,7 +155,7 @@
                                                             }
                                                         @endphp
                                                         <button type="button" id="saveAddressBtn"
-                                                            class="btn design-btn filled {{ $disabled }}" style="{{ $css }}"
+                                                            class="btn design-btn filled" style=""
                                                             >Save @if (!Auth::check()) & Sign Up @endif
                                                         </button>
                                                     </div>
@@ -493,17 +493,36 @@
                         });
                         bsCollapse.hide(); // This will close the accordion section
                     } else if (response.error) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: response.message,
-                            showClass: {
-                                popup: 'animate__animated animate__fadeIn animate__slow'
-                            },
-                            hideClass: {
-                                popup: 'animate__animated animate__fadeOut animate__faster'
-                            }
-                        });
+                        if (response.type === 'email_exists') {
+
+                            // Show a small message above the login form
+                            $('#loginMessage').html(
+                                '<div class="alert alert-warning text-center mb-3">' + response.message + '</div>'
+                            );
+
+                            // Close any open modal first, then open login modal
+                            $('.modal').modal('hide');
+                            setTimeout(function() {
+                                $('#exampleModalToggle').one('shown.bs.modal', function() {
+                                    $('.emailOrMobileInput').val(response.email);
+                                });
+                                $('#exampleModalToggle').modal('show');
+                            }, 400);
+
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.message,
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeIn animate__slow'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOut animate__faster'
+                                }
+                            });
+                        }
+
                     } else {
                         Swal.fire({
                             icon: 'error',

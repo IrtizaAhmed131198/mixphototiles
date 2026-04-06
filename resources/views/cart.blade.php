@@ -16,6 +16,9 @@
 
             }
         } */
+        .parentCart h4 .btn {
+            margin-left: 27px;
+        }
     </style>
 @endpush
 
