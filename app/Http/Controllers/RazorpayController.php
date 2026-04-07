@@ -60,6 +60,10 @@ class RazorpayController extends Controller
                 'payment' => $payment->toArray() // You can return full details if needed
             ]);
         } catch (\Exception $e) {
+            \Log::error('Razorpay Verification Failed', [
+                'error' => $e->getMessage(),
+                'attributes' => $attributes
+            ]);
             return response()->json(['error' => 'Payment verification failed.'], 500);
         }
     }
