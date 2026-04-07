@@ -21,14 +21,13 @@ class AccountVerified extends Mailable
 
     public function __construct($user, $password)
     {
-        $this->user = $user;    
+        $this->user = $user;
         $this->password = $password;
     }
 
     public function build()
     {
-        return $this->from('support@magentickphotoframes.com', 'MagentickPhotoFrames')
-                    ->subject('Account Verified')
+        return $this->subject('Account Verified')
                     ->view('emails.account_verified')
                     ->with([
                         'name' => $this->user->name,
