@@ -7,7 +7,7 @@
         <tr>
             <td align="center" style="padding: 10px;">
                 <!-- Logo goes here; ensure the URL is absolute and publicly accessible -->
-                <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style="max-width: 100px; height: 100px;">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style="max-width: 333px; height: 58px;">
             </td>
         </tr>
         <tr>
