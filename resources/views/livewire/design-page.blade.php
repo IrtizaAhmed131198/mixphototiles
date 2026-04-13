@@ -90,6 +90,14 @@
                 display: none;
             }
         }
+        
+        .view-grand-total-2 .design-btn {
+            margin-left: 21px;
+        }
+        
+        .view-grand-total-1 .design-btn {
+            width: 10rem !important;
+        }
     </style>
 @endpush
 
@@ -614,8 +622,26 @@
                     <div class="grid-4">
                         <div class="Right-Sidebar-footer view-grand-total-1">
                             <div class="GrandTotal">
-                                <p class="">Grand Total</p>
-                                <h6 class="" id="grand-total-1" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
+                                <div class="d-flex justify-content-between w-100 mb-1">
+                                    <p class="mb-0">Bundle Total</p>
+                                    <h6 class="mb-0" id="bundle-total-1">₹0</h6>
+                                </div>
+                                <div class="d-flex justify-content-between w-100 mb-1">
+                                    <p class="mb-0">Delivery</p>
+                                    @if(get_setting('delivery_cost') == 0)
+                                        <p class="mb-0 text-success fw-bold">Free Shipping</p>
+                                    @else
+                                        <h6 class="mb-0" id="delivery-show-1">₹{{ get_setting('delivery_cost') }}</h6>
+                                    @endif
+                                </div>
+                                <hr class="my-2">
+                                <div class="d-flex justify-content-between w-100 mb-1">
+                                    <p class="mb-0 fw-bold">Grand Total</p>
+                                    <h6 class="mb-0" id="grand-total-1" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
+                                </div>
+                                <div class="w-100 mt-1">
+                                    <p class="saving-message mb-0" style="display:none; color:#28a745; font-size:12px; font-weight:600;"></p>
+                                </div>
                             </div>
                             <button type="button" class="btn design-btn filled" id="add-to-cart-1"> Add to Cart
                                 <svg width="21" height="21" viewBox="0 0 21 21"
@@ -924,8 +950,26 @@
                                 </div>
                                 <div class="Right-Sidebar-footer view-grand-total-2">
                                     <div class="GrandTotal">
-                                        <p class="">Grand Total</p>
-                                        <h6 class="" id="grand-total-2" data-val="0">₹0</h6>
+                                        <div class="d-flex justify-content-between w-100 mb-1">
+                                            <p class="mb-0">Bundle Total</p>
+                                            <h6 class="mb-0" id="bundle-total-2">₹0</h6>
+                                        </div>
+                                        <div class="d-flex justify-content-between w-100 mb-1">
+                                            <p class="mb-0">Delivery</p>
+                                            @if(get_setting('delivery_cost') == 0)
+                                                <p class="mb-0 text-success fw-bold">Free Shipping</p>
+                                            @else
+                                                <h6 class="mb-0" id="delivery-show-2">₹{{ get_setting('delivery_cost') }}</h6>
+                                            @endif
+                                        </div>
+                                        <hr class="my-2">
+                                        <div class="d-flex justify-content-between w-100 mb-1">
+                                            <p class="mb-0 fw-bold">Grand Total</p>
+                                            <h6 class="mb-0" id="grand-total-2" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
+                                        </div>
+                                        <div class="w-100 mt-1">
+                                            <p class="saving-message mb-0" style="display:none; color:#28a745; font-size:12px; font-weight:600;"></p>
+                                        </div>
                                     </div>
                                     <button type="button" class="btn design-btn filled" id="add-to-cart-2"> Add to Cart
                                         <svg width="21" height="21" viewBox="0 0 21 21"
@@ -990,6 +1034,12 @@
                                     value="{{ get_setting('base_margin') ?? 0 }}">
                                 <input type="hidden" name="item_price" id="item_price"
                                     value="{{ $item_price ?? 0 }}">
+                                <input type="hidden" name="floor_price" id="floor_price" 
+                                    value="{{ get_setting('floor_price') ?? 599 }}">
+                                <input type="hidden" name="d_step" id="d_step"      
+                                    value="{{ get_setting('d_step') ?? 5 }}">
+                                <input type="hidden" name="d_max" id="d_max"       
+                                    value="{{ get_setting('d_max') ?? 20 }}">
 
                             </div>
                         </div>

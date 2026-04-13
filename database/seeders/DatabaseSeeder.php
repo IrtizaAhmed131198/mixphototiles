@@ -15,11 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $this->call([
-            // SettingsTableSeeder::class,
-            // LedSeeder::class,
-            // StatesTableSeeder::class,
-            // CitiesTableSeeder::class,
+            SettingsTableSeeder::class,
+            LedSeeder::class,
+            StatesTableSeeder::class,
+            CitiesTableSeeder::class,
             GlobalSeeder::class,
+            // PricingSettingsSeeder::class,
         ]);
     }
 }

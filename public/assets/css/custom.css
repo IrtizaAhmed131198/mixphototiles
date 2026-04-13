@@ -954,7 +954,7 @@ ul.LeftSidebar_designTool button p {
 .multi-upload-Main .file-uploadMain {
     /* position: absolute; */
     z-index: 0;
-    background: white;
+    background: #f8f5f5;
     /* bottom: 0; */
     /* left: 0; */
     padding: 3px;
@@ -975,7 +975,7 @@ ul.LeftSidebar_designTool button p {
 
 .swiper.Images-frame-slider:before {
     left: 0;
-    background: linear-gradient(90deg, #ffffff, transparent);
+    background: linear-gradient(90deg, #f8f5f5, transparent);
     top: 0;
     z-index: 2;
     content: "";

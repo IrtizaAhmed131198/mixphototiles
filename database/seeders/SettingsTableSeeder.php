@@ -106,6 +106,36 @@ class SettingsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 10,
+                'name' => 'floor_price',
+                'label' => 'Flooer Price',
+                'value' => '599',
+                'description' => 'Enter floor price',
+                'type' => 'number',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 11,
+                'name' => 'd_step',
+                'label' => 'D Step',
+                'value' => '5',
+                'description' => 'Enter D Step',
+                'type' => 'number',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 12,
+                'name' => 'd_max',
+                'label' => 'D Max',
+                'value' => '20',
+                'description' => 'Enter D Max',
+                'type' => 'number',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

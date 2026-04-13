@@ -437,20 +437,39 @@ class MainController extends Controller
             $slug = Str::slug($name . '-' . time(). '-'.$sessionImage['id']);
 
             //price
-            $price =
-                (float) ($frameConfig['led']['price'] ?? 0) +
-                (float) ($frameConfig['size']['frame_price'] ?? 0) +
-                (float) ($frameConfig['color']['color_price'] ?? 0) +
-                (float) ($frameConfig['design']['design_price'] ?? 0) +
-                (float) ($frameConfig['finish']['finish_price'] ?? 0);
+            // $price =
+            //     (float) ($frameConfig['led']['price'] ?? 0) +
+            //     (float) ($frameConfig['size']['frame_price'] ?? 0) +
+            //     (float) ($frameConfig['color']['color_price'] ?? 0) +
+            //     (float) ($frameConfig['design']['design_price'] ?? 0) +
+            //     (float) ($frameConfig['finish']['finish_price'] ?? 0);
 
-                // dd($frameConfig);
-            if ($price == 0) {
-                $sellingPrice = calculateFrameCost($quantity);
-                $price = $sellingPrice / $quantity;
-                $price = round($price, 2);
-            }
+            //     // dd($frameConfig);
+            // if ($price == 0) {
+            //     $sellingPrice = calculateFrameCost($quantity);
+            //     $price = $sellingPrice / $quantity;
+            //     $price = round($price, 2);
+            // }
             // dd($price);
+            
+            // Per frame base price — use size price as base (new logic)
+            $sizePrice   = (float) ($frameConfig['size']['frame_price']     ?? 0);
+            $finishPrice = (float) ($frameConfig['finish']['finish_price']  ?? 0);
+            $ledPrice    = (float) ($frameConfig['led']['price']            ?? 0);
+            
+            // Size price is the base, finish & led are addons
+            $unitPrice = $sizePrice > 0
+                ? $sizePrice + $finishPrice + $ledPrice
+                : (float) get_setting('average_cost') + $finishPrice + $ledPrice;
+            
+            // Build subtotal for all frames
+            $subtotal = $unitPrice * $quantity;
+            
+            // Apply new bundle pricing formula
+            $bundleResult = calculateBundlePrice($subtotal, $quantity);
+            
+            // Per frame price after bundle discount
+            $price = round($bundleResult['perFrame'], 2);
 
             // Create product in `products` table
             $product = Product::create([
@@ -475,13 +494,13 @@ class MainController extends Controller
             // Add product to `carts` table
             $sessionCart[] = [
                 'product_id' => $product->id,
-                'name' => $product->name,
-                'image' => $product->image,
-                'quantity' => 1,
-                'price' => $product->price,
-                'total' => $product->price,
-                'type' => 'manual',
-                'slug' => ''
+                'name'       => $product->name,
+                'image'      => $product->image,
+                'quantity'   => 1,
+                'price'      => $price,
+                'total'      => $bundleResult['bundleTotal'] + (float)(get_setting('delivery_cost') ?? 0), // grand total with delivery
+                'type'       => 'manual',
+                'slug'       => ''
             ];
 
             $productsAdded[] = $product;
