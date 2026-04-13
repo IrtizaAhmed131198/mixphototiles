@@ -11,7 +11,6 @@ class PricingSettingsSeeder extends Seeder
     {
         $settings = [
             [
-                'id'          => 15,
                 'name'        => 'floor_price',
                 'label'       => 'Floor Price',
                 'value'       => '599',
@@ -21,7 +20,6 @@ class PricingSettingsSeeder extends Seeder
                 'updated_at'  => now(),
             ],
             [
-                'id'          => 16,
                 'name'        => 'd_step',
                 'label'       => 'D Step',
                 'value'       => '5',
@@ -31,7 +29,6 @@ class PricingSettingsSeeder extends Seeder
                 'updated_at'  => now(),
             ],
             [
-                'id'          => 17,
                 'name'        => 'd_max',
                 'label'       => 'D Max',
                 'value'       => '20',
@@ -44,7 +41,7 @@ class PricingSettingsSeeder extends Seeder
 
         foreach ($settings as $setting) {
             DB::table('settings')->updateOrInsert(
-                ['id' => $setting['id'], 'name' => $setting['name']],
+                ['name' => $setting['name']],
                 $setting
             );
         }
