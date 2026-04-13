@@ -39,26 +39,12 @@ const D_MAX       = (parseFloat($("#d_max").val())  || 20) / 100;  // convert % 
  * @returns {object}         - { bundleTotal, perFrame, saving, discount }
  */
 function calculateBundlePrice(subtotal, n) {
-
-    console.log("===== Bundle Price Calculation START =====");
-
-    console.log("Input Values:", {
-        subtotal: subtotal,
-        frames: n,
-        FLOOR_PRICE: FLOOR_PRICE,
-        D_STEP: D_STEP,
-        D_MAX: D_MAX
-    });
-
     if (n <= 0 || subtotal <= 0) {
-        console.warn("Invalid input detected");
-
         return { bundleTotal: 0, perFrame: 0, saving: 0, discount: 0 };
     }
 
     if (n === 1) {
-        console.log("Single frame — no discount applied");
-
+        // Single frame — show price directly, no discount
         return {
             bundleTotal: subtotal,
             perFrame: subtotal,
@@ -68,31 +54,19 @@ function calculateBundlePrice(subtotal, n) {
     }
 
     // Step 1: calculate discount
-    const discount = Math.min(D_MAX, D_STEP * (n - 1));
-    console.log("Calculated Discount:", (discount * 100) + "%");
+    const discount    = Math.min(D_MAX, D_STEP * (n - 1));
 
-    // Step 2: apply discount
-    const discounted = subtotal * (1 - discount);
-    console.log("Discounted Subtotal:", discounted);
+    // Step 2: apply discount to subtotal
+    const discounted  = subtotal * (1 - discount);
 
-    // Step 3: floor check
-    const floorCheck = n * FLOOR_PRICE;
-    console.log("Floor Check Value:", floorCheck);
+    // Step 3: floor check — never go below FLOOR_PRICE × N
+    const floorCheck  = n * FLOOR_PRICE;
 
     // Step 4: final bundle total
     const bundleTotal = Math.max(floorCheck, discounted);
-    console.log("Final Bundle Total:", bundleTotal);
 
-    // Final values
-    const perFrame = parseFloat((bundleTotal / n).toFixed(2));
-    const saving   = parseFloat((subtotal - bundleTotal).toFixed(2));
-
-    console.log("Final Results:", {
-        perFrame: perFrame,
-        saving: saving
-    });
-
-    console.log("===== Bundle Price Calculation END =====");
+    const perFrame    = parseFloat((bundleTotal / n).toFixed(2));
+    const saving      = parseFloat((subtotal - bundleTotal).toFixed(2));
 
     return { bundleTotal, perFrame, saving, discount };
 }
