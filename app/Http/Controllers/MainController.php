@@ -420,6 +420,22 @@ class MainController extends Controller
         $sessionCart = session()->get('cart', []);
         $productsAdded = [];
 
+        $subtotal = 0;
+
+        foreach ($sessionImages as $sessionImage) {
+            $frameConfig = json_decode($sessionImage->frame_configuration, true);
+
+            $sizePrice   = (float) ($frameConfig['size']['frame_price'] ?? 0);
+            $finishPrice = (float) ($frameConfig['finish']['finish_price'] ?? 0);
+            $ledPrice    = (float) ($frameConfig['led']['price'] ?? 0);
+
+            $unitPrice = $sizePrice > 0
+                ? $sizePrice + $finishPrice + $ledPrice
+                : (float) get_setting('average_cost') + $finishPrice + $ledPrice;
+
+            $subtotal += $unitPrice;
+        }
+
         foreach ($sessionImages as $sessionImage) {
             // Build product name using frame configuration details (assume frame_configuration has JSON data)
             $frameConfig = json_decode($sessionImage->frame_configuration, true);
@@ -451,23 +467,10 @@ class MainController extends Controller
             //     $price = round($price, 2);
             // }
             // dd($price);
-            
-            // Per frame base price — use size price as base (new logic)
-            $sizePrice   = (float) ($frameConfig['size']['frame_price']     ?? 0);
-            $finishPrice = (float) ($frameConfig['finish']['finish_price']  ?? 0);
-            $ledPrice    = (float) ($frameConfig['led']['price']            ?? 0);
-            
-            // Size price is the base, finish & led are addons
-            $unitPrice = $sizePrice > 0
-                ? $sizePrice + $finishPrice + $ledPrice
-                : (float) get_setting('average_cost') + $finishPrice + $ledPrice;
-            
-            // Build subtotal for all frames
-            $subtotal = $unitPrice * $quantity;
-            
+
             // Apply new bundle pricing formula
             $bundleResult = calculateBundlePrice($subtotal, $quantity);
-            
+
             // Per frame price after bundle discount
             $price = round($bundleResult['perFrame'], 2);
 

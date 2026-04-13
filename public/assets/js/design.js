@@ -39,12 +39,26 @@ const D_MAX       = (parseFloat($("#d_max").val())  || 20) / 100;  // convert % 
  * @returns {object}         - { bundleTotal, perFrame, saving, discount }
  */
 function calculateBundlePrice(subtotal, n) {
+
+    console.log("===== Bundle Price Calculation START =====");
+
+    console.log("Input Values:", {
+        subtotal: subtotal,
+        frames: n,
+        FLOOR_PRICE: FLOOR_PRICE,
+        D_STEP: D_STEP,
+        D_MAX: D_MAX
+    });
+
     if (n <= 0 || subtotal <= 0) {
+        console.warn("Invalid input detected");
+
         return { bundleTotal: 0, perFrame: 0, saving: 0, discount: 0 };
     }
 
     if (n === 1) {
-        // Single frame — show price directly, no discount
+        console.log("Single frame — no discount applied");
+
         return {
             bundleTotal: subtotal,
             perFrame: subtotal,
@@ -54,19 +68,31 @@ function calculateBundlePrice(subtotal, n) {
     }
 
     // Step 1: calculate discount
-    const discount    = Math.min(D_MAX, D_STEP * (n - 1));
+    const discount = Math.min(D_MAX, D_STEP * (n - 1));
+    console.log("Calculated Discount:", (discount * 100) + "%");
 
-    // Step 2: apply discount to subtotal
-    const discounted  = subtotal * (1 - discount);
+    // Step 2: apply discount
+    const discounted = subtotal * (1 - discount);
+    console.log("Discounted Subtotal:", discounted);
 
-    // Step 3: floor check — never go below FLOOR_PRICE × N
-    const floorCheck  = n * FLOOR_PRICE;
+    // Step 3: floor check
+    const floorCheck = n * FLOOR_PRICE;
+    console.log("Floor Check Value:", floorCheck);
 
     // Step 4: final bundle total
     const bundleTotal = Math.max(floorCheck, discounted);
+    console.log("Final Bundle Total:", bundleTotal);
 
-    const perFrame    = parseFloat((bundleTotal / n).toFixed(2));
-    const saving      = parseFloat((subtotal - bundleTotal).toFixed(2));
+    // Final values
+    const perFrame = parseFloat((bundleTotal / n).toFixed(2));
+    const saving   = parseFloat((subtotal - bundleTotal).toFixed(2));
+
+    console.log("Final Results:", {
+        perFrame: perFrame,
+        saving: saving
+    });
+
+    console.log("===== Bundle Price Calculation END =====");
 
     return { bundleTotal, perFrame, saving, discount };
 }
@@ -375,7 +401,6 @@ function updateGrandTotal() {
                     const sizePrice    = parseFloat(frameConfig?.size?.frame_price) || 0;
                     const finishPrice  = parseFloat(frameConfig?.finish?.finish_price) || 0;
                     const ledPrice     = parseFloat(frameConfig?.led?.price) || 0;
-                    console.log(sizePrice + " " + finishPrice + " " + ledPrice);
 
                     // Per-frame price: use size price as base (client requirement)
                     // finish & led are addons on top of size price
@@ -387,7 +412,7 @@ function updateGrandTotal() {
                 });
 
                 // Apply new bundle formula
-                console.log(subtotal + " ponka " + n);
+                // console.log(subtotal, n);
                 const result = calculateBundlePrice(subtotal, n);
 
                 // Update quantity hidden input
@@ -397,6 +422,7 @@ function updateGrandTotal() {
                 // console.log(result.perFrame);
                 document.getElementById("price-show").textContent = "₹" + result.perFrame;
                 document.getElementById("price-show").setAttribute("data-val", result.perFrame);
+                // console.log("2nd frame price updated to: ₹" + result.perFrame);
 
                 // Update grand total display
                 const grandTotal = Math.round(result.bundleTotal + delivery_cost);
@@ -460,10 +486,11 @@ function updateFramePrice(frameConfig) {
         : item_price + finishPrice + ledPrice;
 
     unitPrice = parseFloat(unitPrice.toFixed(2));
-    
-    console.log(unitPrice);
+
+    // console.log(unitPrice);
     document.getElementById("price-show").textContent = "₹" + unitPrice;
     document.getElementById("price-show").setAttribute("data-val", unitPrice);
+    // console.log("1st frame price updated to: ₹" + unitPrice);
 
     updateGrandTotal();
 }
