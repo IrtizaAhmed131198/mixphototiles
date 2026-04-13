@@ -14,7 +14,7 @@ class RazorpayController extends Controller
         try {
             $cartTotal = session('cart_grand_total');
 
-            $amount = (float)$cartTotal * 100;
+            $amount = (int) round($cartTotal * 100);
 
             $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
 
