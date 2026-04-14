@@ -1468,6 +1468,17 @@
         margin-top: -12px;
         margin-left: -3px;
     }
+
+    .whatsapp-float {
+        bottom: 15px;
+        right: 15px;
+        padding: 0;
+    }
+
+    .whatsapp-float img {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 @media (max-width: 575px) {

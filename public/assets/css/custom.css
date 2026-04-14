@@ -79,7 +79,7 @@ p.para.frame {
     content: "";
     position: absolute;
     right: 0px;
-    top: 0px;   
+    top: 0px;
     width: 90%;
     height: 100%;
     opacity: 0;
@@ -1267,7 +1267,7 @@ li.designToolPropertiesChild {
     min-width: 80px;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid rgba(0, 0, 0, 0.11); 
+    /* border: 1px solid rgba(0, 0, 0, 0.11);
     background: rgb(251, 246, 246); */
     border-radius: 15px;
     text-align: center;
@@ -4151,7 +4151,7 @@ input[type="radio"]:checked {
 
 .mixphototilessidemenu .navbar-nav {
     padding-top: 20px;
-    /* margin-top: 20px; 
+    /* margin-top: 20px;
     border-top: 1px solid #00000040;*/
 }
 
@@ -4299,7 +4299,7 @@ button.hammenubtn {
     border-bottom: none !important;
 }
 
-section.custom-tabs-section.py {    
+section.custom-tabs-section.py {
     background: #ffffff;
     position: relative;
     z-index: 1;
@@ -4348,6 +4348,33 @@ section.custom-tabs-section.py::before {
     margin-left: 3px;
 }
 
+/* whatsapp-icon */
 
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    border-radius: 50%;
+    padding: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+}
+
+.whatsapp-float img {
+    height: 100%;
+    width: 100%;
+}
+
+/* Hover effect */
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
 
 
