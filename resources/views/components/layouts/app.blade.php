@@ -67,7 +67,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}?v={{ time() }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}?v={{ time() }}">
     @stack('css')
-    @livewireStyles
+    {{-- @livewireStyles --}}
     <style>
         @keyframes circle {
             0% {
@@ -122,7 +122,7 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    @livewireScripts
+    {{-- @livewireScripts --}}
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
 
