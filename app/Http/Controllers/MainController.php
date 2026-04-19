@@ -766,14 +766,36 @@ class MainController extends Controller
             return $item['product_id'] != $productId;
         });
 
-        // Step 4: recalc prices for remaining items
+        // Step 4: recalc subtotal first
+        $subtotal = 0;
+
+        foreach ($updatedCart as $item) {
+            $product = Product::find($item['product_id']);
+            if ($product) {
+                $frameConfig = json_decode($product->frame_config, true);
+
+                $sizePrice   = (float) ($frameConfig['size']['frame_price'] ?? 0);
+                $finishPrice = (float) ($frameConfig['finish']['finish_price'] ?? 0);
+                $ledPrice    = (float) ($frameConfig['led']['price'] ?? 0);
+
+                $unitPrice = $sizePrice > 0
+                    ? $sizePrice + $finishPrice + $ledPrice
+                    : (float) get_setting('average_cost') + $finishPrice + $ledPrice;
+
+                $subtotal += $unitPrice;
+            }
+        }
+
+        // Apply SAME bundle logic
+        $quantity = count($updatedCart);
+        $bundleResult = calculateBundlePrice($subtotal, $quantity);
+
+        // Step 5: update per item price
         foreach ($updatedCart as &$item) {
-            $sellingPrice = calculateFrameCost(count($updatedCart));
-            $price = $sellingPrice / count($updatedCart);
-            $price = round($price, 2);
+            $price = round($bundleResult['perFrame'], 2);
 
             $item['price'] = $price;
-            $item['total'] = $price;
+            $item['total'] = $bundleResult['bundleTotal'] + (float)(get_setting('delivery_cost') ?? 0);
 
             $product = Product::find($item['product_id']);
             if ($product) {
