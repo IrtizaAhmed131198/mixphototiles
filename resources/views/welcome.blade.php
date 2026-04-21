@@ -67,6 +67,127 @@
         }
         
     }
+    
+    
+/* =========================
+   FIRST SECTION UNDER THE BANNER VIDEO (under hero video)
+========================= */
+.benefit-strip {
+    background: #ffffff;
+    padding: 100px 0;
+}
+
+.benefit-item {
+    text-align: center;
+    padding: 10px 18px;
+}
+
+.benefit-icon {
+    width: 85px;
+    height: 85px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.benefit-icon-img{
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+}
+
+.benefit-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #0b1b3a;
+}
+
+.benefit-subtitle {
+    font-size: 1.1rem;
+    color: #2f3a4a;
+    margin: 0;
+}
+
+/* Keep spacing balanced on mobile */
+@media (max-width: 768px) {
+    .benefit-strip { padding: 40px 0; }
+    .benefit-item { margin-bottom: 26px; }
+    .benefit-title { font-size: 1.35rem; }
+    .benefit-subtitle { font-size: 1rem; }
+}
+26px
+    
+    /* =========================
+       SECOND SECTION UNDER BANNER VIDEO
+    ========================= */
+    
+    .photo-moments-section{
+        background: #f6f6f3; /* light warm gray like the sample */
+        padding: 122px 0;
+    }
+    
+    .photo-moments-content h2{
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1.15;
+        color: #0b1b3a; /* deep navy like sample */
+        margin-bottom: 18px;
+    }
+    
+    .photo-moments-content p{
+        font-size: 1.15rem;
+        line-height: 1.7;
+        color: #2f3a4a;
+        max-width: 520px;
+        margin-bottom: 28px;
+    }
+    
+    .photo-moments-btn{
+        background: #EB2371; /* your brand pink */
+        color: #fff;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .photo-moments-btn:hover{
+        background: #d81d66;
+        color: #fff;
+    }
+    
+    /* Right side image */
+    .photo-moments-image{
+        text-align: right;
+    }
+    
+    .photo-moments-image img{
+        width: 100%;
+        max-width: 720px;
+        height: auto;
+        border-radius: 18px;
+        box-shadow: 0 14px 45px rgba(0,0,0,0.10);
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px){
+        .photo-moments-section{
+            padding: 48px 0;
+        }
+        .photo-moments-content h2{
+            font-size: 2.1rem;
+        }
+        .photo-moments-image{
+            margin-top: 28px;
+            text-align: center;
+        }
+    }
+
 
     /* ===== HOW IT WORKS SECTION ===== */
    /* HOW IT WORKS – ENHANCED PREMIUM STYLE */
@@ -313,8 +434,173 @@
             </div>
         </div>
     </section>
+    
 
 
+<!-- =========================
+FIRST SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
+========================= -->
+
+<section class="benefit-strip">
+    <div class="container">
+        <div class="row justify-content-center g-4">
+
+            <!-- 1) Free shipping -->
+            <div class="col-lg-4 col-md-4 col-12">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <img 
+                            src="{{ asset('assets/icons/shipping.jpg') }}" 
+                            alt="Free shipping"
+                            class="benefit-icon-img"
+                        >
+                    </div>
+                    <div class="benefit-title">Free shipping</div>
+                    <p class="benefit-subtitle">Free shipping on all orders</p>
+                </div>
+            </div>
+
+            <!-- 2) Wall friendly -->
+            <div class="col-lg-4 col-md-4 col-12">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <img 
+                            src="{{ asset('assets/icons/no-nail.jpg') }}" 
+                            alt="Wall friendly"
+                            class="benefit-icon-img"
+                        >
+                    </div>
+                    <div class="benefit-title">Wall friendly</div>
+                    <p class="benefit-subtitle">Leaves no marks</p>
+                </div>
+            </div>
+
+            <!-- 3) Made in India -->
+            <div class="col-lg-4 col-md-4 col-12">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <img 
+                            src="{{ asset('assets/icons/made-in-india.png') }}" 
+                            alt="Made in India"
+                            class="benefit-icon-img"
+                        >
+                    </div>
+                    <div class="benefit-title">Made in India</div>
+                    <p class="benefit-subtitle">Designed &amp; assembled in India</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+    
+<!-- =========================
+SECOND SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
+========================= -->
+<section class="photo-moments-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- LEFT: Text -->
+            <div class="col-lg-5">
+                <div class="photo-moments-content">
+                    <h2>Decorate your wall with life’s special moments.</h2>
+
+                    <p>
+                        Upload your favorite photos and choose a frame style you love.
+                        We’ll print, frame, and deliver. Ready to hang without nails or wall damage.
+                    </p>
+
+                    <a href="{{ route('design') }}" class="btn photo-moments-btn">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+
+            <!-- RIGHT: Image -->
+            <div class="col-lg-7">
+                <div class="photo-moments-image">
+                    <img
+                        src="{{ asset('assets/images/my-collage-banner-1.png') }}"
+                        alt="Decorate your wall with moments"
+                        loading="lazy"
+                    >
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<section class="custom-tabs-section py">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-3 col-12">
+                    <div class="custom-tabs-content">
+                        <h2 class="heading-3">
+                            Your Phone Photos to Magnetick<span> Hanging</span>
+                        </h2>
+                        <div class="d-flex align-items-start nails-tabs">
+                            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                                aria-orientation="vertical">
+                                <button class="active" id="v-pills-tap-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-tap" type="button" role="tab" aria-controls="v-pills-tap"
+                                    aria-selected="true" data-start="0">Peel and
+                                    stick</button>
+
+                                <button class="" id="v-pills-hooks-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-hooks" type="button" role="tab"
+                                    aria-controls="v-pills-hooks" aria-selected="true" data-start="20">Adjust to
+                                    position</button>
+
+                                <button class="" id="v-pills-home-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-home" type="button" role="tab"
+                                    aria-controls="v-pills-home" aria-selected="true" data-start="40">Leaves no
+                                    marks</button>
+
+                                <button class="" id="v-pills-again-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-again" type="button" role="tab"
+                                    aria-controls="v-pills-again" aria-selected="true" data-start="40">Move, Again and
+                                    Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-12">
+                    <div class="tab-content customTabsContent" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
+                            aria-labelledby="v-pills-tap-tab" tabindex="0">
+                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
+                                <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel" aria-labelledby="v-pills-hooks-tab"
+                            tabindex="0">
+                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
+                                <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
+                            tabindex="0">
+                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
+                                <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-again" role="tabpanel"
+                            aria-labelledby="v-pills-again-tab" tabindex="0">
+                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
+                                <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     
 <!-- =========================
 CENTERED TRUST SECTION
@@ -480,71 +766,7 @@ CENTERED TRUST SECTION
     </p>
 
 
-    <section class="custom-tabs-section py">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-lg-3 col-md-3 col-12">
-                    <div class="custom-tabs-content">
-                        <h2 class="heading-3">
-                            No Nail - Magentick <span>Hanging</span>
-                        </h2>
-                        <div class="d-flex align-items-start nails-tabs">
-                            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
-                                aria-orientation="vertical">
-                                <button class="active" id="v-pills-tap-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-tap" type="button" role="tab" aria-controls="v-pills-tap"
-                                    aria-selected="true" data-start="0">Peel and
-                                    stick</button>
-
-                                <button class="" id="v-pills-hooks-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-hooks" type="button" role="tab"
-                                    aria-controls="v-pills-hooks" aria-selected="true" data-start="20">Adjust to
-                                    position</button>
-
-                                <button class="" id="v-pills-home-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-home" type="button" role="tab"
-                                    aria-controls="v-pills-home" aria-selected="true" data-start="40">Leaves no
-                                    marks</button>
-
-                                <button class="" id="v-pills-again-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-again" type="button" role="tab"
-                                    aria-controls="v-pills-again" aria-selected="true" data-start="40">Move, Again and
-                                    Again</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-9 col-md-9 col-12">
-                    <div class="tab-content customTabsContent" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
-                            aria-labelledby="v-pills-tap-tab" tabindex="0">
-                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
-                                <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel" aria-labelledby="v-pills-hooks-tab"
-                            tabindex="0">
-                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
-                                <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
-                            tabindex="0">
-                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
-                                <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-again" role="tabpanel"
-                            aria-labelledby="v-pills-again-tab" tabindex="0">
-                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
-                                <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
-                            </video>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
     <!-- ✅ MOBILE-ONLY MAIN BANNER (correct mobile position) -->
 <section class="main-banner-section d-block d-md-none">
@@ -747,15 +969,15 @@ CENTERED TRUST SECTION
                                 </video>
                             </div>
                             <div class="peel_stick">
-                                <h4>Leaves no marks</h4>
-                                <video class="img-fluid" autoplay muted loop playsinline>
-                                    <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
-                                </video>
-                            </div>
-                            <div class="peel_stick">
                                 <h4>Adjust to position</h4>
                                 <video class="img-fluid" autoplay muted loop playsinline>
                                     <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="peel_stick">
+                                <h4>Leaves no marks</h4>
+                                <video class="img-fluid" autoplay muted loop playsinline>
+                                    <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
                                 </video>
                             </div>
                             <div class="peel_stick">
