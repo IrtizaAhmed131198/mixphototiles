@@ -608,10 +608,6 @@
         padding: 50px 0;
     }
 
-    .custom-tabs-section:not(.mobile_view_tabs) {
-        display: none;
-    }
-
     .heading-3 {
         font-size: 25px;
         /* text-align: start; */
@@ -1707,6 +1703,10 @@
 
     section.custom-tabs-section.py {
         padding-left: 0 !important;
+    }
+
+    .custom-tabs-section:not(.mobile_view_tabs) {
+        display: none;
     }
 
     .main-video {
