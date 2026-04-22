@@ -11,7 +11,7 @@
 
 @push('css')
     <style>
-        
+
 
     .hero-clarity-overlay {
         position: absolute;
@@ -41,7 +41,7 @@
         pointer-events: auto;
     }
 
-    
+
     .hero-checks span {
         position: relative;
         padding-left: 22px;
@@ -65,10 +65,10 @@
         .hero-clarity-overlay h1 {
             font-size: 1.6rem;
         }
-        
+
     }
-    
-    
+
+
 /* =========================
    FIRST SECTION UNDER THE BANNER VIDEO (under hero video)
 ========================= */
@@ -118,16 +118,16 @@
     .benefit-subtitle { font-size: 1rem; }
 }
 26px
-    
+
     /* =========================
        SECOND SECTION UNDER BANNER VIDEO
     ========================= */
-    
+
     .photo-moments-section{
         background: #f6f6f3; /* light warm gray like the sample */
         padding: 122px 0;
     }
-    
+
     .photo-moments-content h2{
         font-size: 3rem;
         font-weight: 700;
@@ -135,7 +135,7 @@
         color: #0b1b3a; /* deep navy like sample */
         margin-bottom: 18px;
     }
-    
+
     .photo-moments-content p{
         font-size: 1.15rem;
         line-height: 1.7;
@@ -143,7 +143,7 @@
         max-width: 520px;
         margin-bottom: 28px;
     }
-    
+
     .photo-moments-btn{
         background: #EB2371; /* your brand pink */
         color: #fff;
@@ -155,17 +155,17 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
-    
+
     .photo-moments-btn:hover{
         background: #d81d66;
         color: #fff;
     }
-    
+
     /* Right side image */
     .photo-moments-image{
         text-align: right;
     }
-    
+
     .photo-moments-image img{
         width: 100%;
         max-width: 720px;
@@ -173,7 +173,7 @@
         border-radius: 18px;
         box-shadow: 0 14px 45px rgba(0,0,0,0.10);
     }
-    
+
     /* Responsive */
     @media (max-width: 992px){
         .photo-moments-section{
@@ -233,7 +233,7 @@
         z-index: 1;
     }
 
-   
+
 
 
     /* Assurance chips */
@@ -259,7 +259,7 @@
         font-weight: 700;
         margin-right: 8px;
     }
-    
+
     .premium-trust-card {
     background: #ffffff;
     padding: 28px 22px;
@@ -267,19 +267,19 @@
     box-shadow: 0 8px 30px rgba(0,0,0,0.06);
     height: 100%;
     }
-    
+
     .premium-trust-card h6 {
         font-weight: 600;
         margin-bottom: 8px;
     }
-    
+
     .premium-trust-card p {
         font-size: 0.95rem;
         color: #555;
         line-height: 1.6;
         margin: 0;
     }
-    
+
     .premium-trust-card.highlighted {
         border: 1px solid rgba(255, 1, 104, 0.25);
         background: linear-gradient(
@@ -300,7 +300,7 @@
     }
 
 
-    
+
     </style>
 @endpush
 
@@ -434,7 +434,7 @@
             </div>
         </div>
     </section>
-    
+
 
 
 <!-- =========================
@@ -449,8 +449,8 @@ FIRST SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
             <div class="col-lg-4 col-md-4 col-12">
                 <div class="benefit-item">
                     <div class="benefit-icon">
-                        <img 
-                            src="{{ asset('assets/icons/shipping.jpg') }}" 
+                        <img
+                            src="{{ asset('assets/icons/shipping.jpg') }}"
                             alt="Free shipping"
                             class="benefit-icon-img"
                         >
@@ -464,8 +464,8 @@ FIRST SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
             <div class="col-lg-4 col-md-4 col-12">
                 <div class="benefit-item">
                     <div class="benefit-icon">
-                        <img 
-                            src="{{ asset('assets/icons/no-nail.jpg') }}" 
+                        <img
+                            src="{{ asset('assets/icons/no-nail.jpg') }}"
                             alt="Wall friendly"
                             class="benefit-icon-img"
                         >
@@ -479,8 +479,8 @@ FIRST SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
             <div class="col-lg-4 col-md-4 col-12">
                 <div class="benefit-item">
                     <div class="benefit-icon">
-                        <img 
-                            src="{{ asset('assets/icons/made-in-india.png') }}" 
+                        <img
+                            src="{{ asset('assets/icons/made-in-india.png') }}"
                             alt="Made in India"
                             class="benefit-icon-img"
                         >
@@ -496,7 +496,7 @@ FIRST SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
 
 
 
-    
+
 <!-- =========================
 SECOND SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
 ========================= -->
@@ -601,7 +601,7 @@ SECOND SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
             </div>
         </div>
     </section>
-    
+
 <!-- =========================
 CENTERED TRUST SECTION
 ========================= -->
@@ -618,7 +618,7 @@ CENTERED TRUST SECTION
                 Without Nails, Stickers, Wall Marks, or Damage
             </p>
 
-            
+
             <p class="trust-description">
             A refined magnetic system inspired by premium American and European wall‑mounting standards,
             engineered using a thin iron sheet and precision‑calibrated magnet pads.
@@ -658,7 +658,7 @@ CENTERED TRUST SECTION
         <!-- Section title -->
         <div class="text-center mb-5">
             <h2 class="heading-3">How Magnetick Frames Actually Work</h2>
-            
+
             <p class="para text-center mb-4">
                 Designed for modern homes that prefer
                 <a href="{{ url('/photo-frames-without-nails') }}" class="brand-link">
@@ -722,7 +722,7 @@ CENTERED TRUST SECTION
         <section class="premium-material">
         <div class="container">
             <div class="row text-center align-items-center gy-4">
-    
+
                 <!-- Column 1 -->
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="premium-trust-card">
@@ -733,7 +733,7 @@ CENTERED TRUST SECTION
                         </p>
                     </div>
                 </div>
-    
+
                 <!-- Column 2 -->
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="premium-trust-card highlighted">
@@ -744,7 +744,7 @@ CENTERED TRUST SECTION
                         </p>
                     </div>
                 </div>
-    
+
                 <!-- Column 3 -->
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="premium-trust-card">
@@ -755,7 +755,7 @@ CENTERED TRUST SECTION
                         </p>
                     </div>
                 </div>
-    
+
             </div>
         </div>
     </section>
@@ -766,7 +766,7 @@ CENTERED TRUST SECTION
     </p>
 
 
-    
+
 
     <!-- ✅ MOBILE-ONLY MAIN BANNER (correct mobile position) -->
 <section class="main-banner-section d-block d-md-none">
@@ -953,7 +953,7 @@ CENTERED TRUST SECTION
         </div>
     </section> --}}
 
-    <section class="custom-tabs-section py mobile_view_tabs" style="display: none">
+    <section class="custom-tabs-section py mobile_view_tabs">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-12 col-md-12 col-12 main-video">
