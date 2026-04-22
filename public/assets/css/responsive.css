@@ -608,6 +608,10 @@
         padding: 50px 0;
     }
 
+    .custom-tabs-section:not(.mobile_view_tabs) {
+        display: none;
+    }
+
     .heading-3 {
         font-size: 25px;
         /* text-align: start; */
