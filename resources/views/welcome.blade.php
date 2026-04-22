@@ -2,305 +2,318 @@
 
 @section('title', 'Magnetic Photo Frames for Walls | No Nails, No Damage, No Wall Marks')
 
-@section('description', 'Magnetic photo frames for walls with no nails, no drilling, and no wall damage. Reposition anytime. Design custom photo frames online. Made in India.')
+@section('description', 'Magnetic photo frames for walls with no nails, no drilling, and no wall damage. Reposition
+    anytime. Design custom photo frames online. Made in India.')
 
-@section('keywords', 'magnetic photo frames, photo frames without nails, no drill photo frames, wall frames no damage, light weight photo frames, stylish photo frames, modern photo frames, no marks on walls photo frames')
+@section('keywords', 'magnetic photo frames, photo frames without nails, no drill photo frames, wall frames no damage,
+    light weight photo frames, stylish photo frames, modern photo frames, no marks on walls photo frames')
 
 @section('canonical', url('/'))
 
 
 @push('css')
     <style>
-
-
-    .hero-clarity-overlay {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.20);
-        z-index: 2;
-        text-align: center;
-    }
-
-    .hero-clarity-overlay h1 {
-        font-size: 4.2rem;
-        font-weight: 700;
-        line-height: 1.2;
-        margin-bottom: 2rem;
-        margin-top: 5vh;
-    }
-
-
-
-    /* Make buttons clickable even if you later decide to disable pointer events */
-    .hero-clarity-overlay .btn {
-        pointer-events: auto;
-    }
-
-
-    .hero-checks span {
-        position: relative;
-        padding-left: 22px;
-        margin-right: 16px;
-        display: inline-block;
-        font-weight: 500;
-    }
-
-    .hero-checks span::before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        top: 0;
-        color: #EB2371;
-        font-weight: 700;
-    }
-
-
-    /* Responsive sizing for mobile */
-    @media (max-width: 768px) {
-        .hero-clarity-overlay h1 {
-            font-size: 1.6rem;
-        }
-
-    }
-
-
-/* =========================
-   FIRST SECTION UNDER THE BANNER VIDEO (under hero video)
-========================= */
-.benefit-strip {
-    background: #ffffff;
-    padding: 100px 0;
-}
-
-.benefit-item {
-    text-align: center;
-    padding: 10px 18px;
-}
-
-.benefit-icon {
-    width: 85px;
-    height: 85px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 18px;
-}
-
-.benefit-icon-img{
-    width: 85px;
-    height: 85px;
-    object-fit: contain;
-}
-
-.benefit-title {
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #0b1b3a;
-}
-
-.benefit-subtitle {
-    font-size: 1.1rem;
-    color: #2f3a4a;
-    margin: 0;
-}
-
-/* Keep spacing balanced on mobile */
-@media (max-width: 768px) {
-    .benefit-strip { padding: 40px 0; }
-    .benefit-item { margin-bottom: 26px; }
-    .benefit-title { font-size: 1.35rem; }
-    .benefit-subtitle { font-size: 1rem; }
-}
-26px
-
-    /* =========================
-       SECOND SECTION UNDER BANNER VIDEO
-    ========================= */
-
-    .photo-moments-section{
-        background: #f6f6f3; /* light warm gray like the sample */
-        padding: 122px 0;
-    }
-
-    .photo-moments-content h2{
-        font-size: 3rem;
-        font-weight: 700;
-        line-height: 1.15;
-        color: #0b1b3a; /* deep navy like sample */
-        margin-bottom: 18px;
-    }
-
-    .photo-moments-content p{
-        font-size: 1.15rem;
-        line-height: 1.7;
-        color: #2f3a4a;
-        max-width: 520px;
-        margin-bottom: 28px;
-    }
-
-    .photo-moments-btn{
-        background: #EB2371; /* your brand pink */
-        color: #fff;
-        border: none;
-        padding: 14px 28px;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .photo-moments-btn:hover{
-        background: #d81d66;
-        color: #fff;
-    }
-
-    /* Right side image */
-    .photo-moments-image{
-        text-align: right;
-    }
-
-    .photo-moments-image img{
-        width: 100%;
-        max-width: 720px;
-        height: auto;
-        border-radius: 18px;
-        box-shadow: 0 14px 45px rgba(0,0,0,0.10);
-    }
-
-    /* Responsive */
-    @media (max-width: 992px){
-        .photo-moments-section{
-            padding: 48px 0;
-        }
-        .photo-moments-content h2{
-            font-size: 2.1rem;
-        }
-        .photo-moments-image{
-            margin-top: 28px;
+        .hero-clarity-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.20);
+            z-index: 2;
             text-align: center;
         }
-    }
 
-
-    /* ===== HOW IT WORKS SECTION ===== */
-   /* HOW IT WORKS – ENHANCED PREMIUM STYLE */
-
-    .how-it-works-clarity {
-        background: #fafafa;
-        margin-top:1rem;
-    }
-
-    .how-card {
-        position: relative;
-        background: #ffffff;
-        padding: 48px 32px 25px;
-        border-radius: 20px;
-        height: 100%;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-        overflow: hidden;
-    }
-
-    .how-step-bg {
-        position: absolute;
-        top: 18px;
-        right: 24px;
-        font-size: 3.2rem;
-        font-weight: 700;
-        color: rgba(255, 1, 104, 0.10); /* brand pink, very soft */
-        line-height: 1;
-    }
-
-    .how-card h4 {
-        font-weight: 600;
-        margin-bottom: 12px;
-        margin-top: 25px;
-        position: relative;
-        z-index: 1;
-    }
-
-    .how-card p {
-        font-size: 1rem;
-        line-height: 1.7;
-        color: #444;
-        position: relative;
-        z-index: 1;
-    }
-
-
-
-
-    /* Assurance chips */
-    .how-assurance {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 14px;
-    }
-
-    .assurance-chip {
-        padding: 10px 18px;
-        border-radius: 999px;
-        background: rgba(255, 1, 104, 0.08);
-        color: #222;
-        font-weight: 500;
-        font-size: 0.95rem;
-    }
-
-    .assurance-chip::before {
-        content: "✓";
-        color: #EB2371;
-        font-weight: 700;
-        margin-right: 8px;
-    }
-
-    .premium-trust-card {
-    background: #ffffff;
-    padding: 28px 22px;
-    border-radius: 18px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-    height: 100%;
-    }
-
-    .premium-trust-card h6 {
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-
-    .premium-trust-card p {
-        font-size: 0.95rem;
-        color: #555;
-        line-height: 1.6;
-        margin: 0;
-    }
-
-    .premium-trust-card.highlighted {
-        border: 1px solid rgba(255, 1, 104, 0.25);
-        background: linear-gradient(
-            180deg,
-            rgba(255,1,104,0.06),
-            #ffffff
-        );
-    }
-
-    /* Mobile tuning */
-    @media (max-width: 768px) {
-        .how-step-bg {
-            font-size: 2.6rem;
+        .hero-clarity-overlay h1 {
+            font-size: 4.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            margin-top: 5vh;
         }
+
+
+
+        /* Make buttons clickable even if you later decide to disable pointer events */
+        .hero-clarity-overlay .btn {
+            pointer-events: auto;
+        }
+
+
+        .hero-checks span {
+            position: relative;
+            padding-left: 22px;
+            margin-right: 16px;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .hero-checks span::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #EB2371;
+            font-weight: 700;
+        }
+
+
+        /* Responsive sizing for mobile */
+        @media (max-width: 768px) {
+            .hero-clarity-overlay h1 {
+                font-size: 1.6rem;
+            }
+
+        }
+
+
+        /* =========================
+       FIRST SECTION UNDER THE BANNER VIDEO (under hero video)
+    ========================= */
+        .benefit-strip {
+            background: #ffffff;
+            padding: 100px 0;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 10px 18px;
+        }
+
+        .benefit-icon {
+            width: 85px;
+            height: 85px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .benefit-icon-img {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+        }
+
+        .benefit-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #0b1b3a;
+        }
+
+        .benefit-subtitle {
+            font-size: 1.1rem;
+            color: #2f3a4a;
+            margin: 0;
+        }
+
+        /* Keep spacing balanced on mobile */
+        @media (max-width: 768px) {
+            .benefit-strip {
+                padding: 40px 0;
+            }
+
+            .benefit-item {
+                margin-bottom: 26px;
+            }
+
+            .benefit-title {
+                font-size: 1.35rem;
+            }
+
+            .benefit-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        26px
+        /* =========================
+           SECOND SECTION UNDER BANNER VIDEO
+        ========================= */
+
+        .photo-moments-section {
+            background: #f6f6f3;
+            /* light warm gray like the sample */
+            padding: 122px 0;
+        }
+
+        .photo-moments-content h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.15;
+            color: #0b1b3a;
+            /* deep navy like sample */
+            margin-bottom: 18px;
+        }
+
+        .photo-moments-content p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #2f3a4a;
+            max-width: 520px;
+            margin-bottom: 28px;
+        }
+
+        .photo-moments-btn {
+            background: #EB2371;
+            /* your brand pink */
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .photo-moments-btn:hover {
+            background: #d81d66;
+            color: #fff;
+        }
+
+        /* Right side image */
+        .photo-moments-image {
+            text-align: right;
+        }
+
+        .photo-moments-image img {
+            width: 100%;
+            max-width: 720px;
+            height: auto;
+            border-radius: 18px;
+            box-shadow: 0 14px 45px rgba(0, 0, 0, 0.10);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .photo-moments-section {
+                padding: 48px 0;
+            }
+
+            .photo-moments-content h2 {
+                font-size: 2.1rem;
+            }
+
+            .photo-moments-image {
+                margin-top: 28px;
+                text-align: center;
+            }
+        }
+
+
+        /* ===== HOW IT WORKS SECTION ===== */
+        /* HOW IT WORKS – ENHANCED PREMIUM STYLE */
+
+        .how-it-works-clarity {
+            background: #fafafa;
+            margin-top: 1rem;
+        }
+
         .how-card {
-            padding: 40px 26px 32px;
+            position: relative;
+            background: #ffffff;
+            padding: 48px 32px 25px;
+            border-radius: 20px;
+            height: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
         }
-    }
+
+        .how-step-bg {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: rgba(255, 1, 104, 0.10);
+            /* brand pink, very soft */
+            line-height: 1;
+        }
+
+        .how-card h4 {
+            font-weight: 600;
+            margin-bottom: 12px;
+            margin-top: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .how-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #444;
+            position: relative;
+            z-index: 1;
+        }
 
 
 
+
+        /* Assurance chips */
+        .how-assurance {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .assurance-chip {
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: rgba(255, 1, 104, 0.08);
+            color: #222;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .assurance-chip::before {
+            content: "✓";
+            color: #EB2371;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .premium-trust-card {
+            background: #ffffff;
+            padding: 28px 22px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            height: 100%;
+        }
+
+        .premium-trust-card h6 {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .premium-trust-card p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .premium-trust-card.highlighted {
+            border: 1px solid rgba(255, 1, 104, 0.25);
+            background: linear-gradient(180deg,
+                    rgba(255, 1, 104, 0.06),
+                    #ffffff);
+        }
+
+        /* Mobile tuning */
+        @media (max-width: 768px) {
+            .how-step-bg {
+                font-size: 2.6rem;
+            }
+
+            .how-card {
+                padding: 40px 26px 32px;
+            }
+        }
     </style>
 @endpush
 
@@ -437,106 +450,93 @@
 
 
 
-<!-- =========================
-FIRST SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
-========================= -->
+    <!-- =========================
+    FIRST SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
+    ========================= -->
 
-<section class="benefit-strip">
-    <div class="container">
-        <div class="row justify-content-center g-4">
+    <section class="benefit-strip">
+        <div class="container">
+            <div class="row justify-content-center g-4">
 
-            <!-- 1) Free shipping -->
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <img
-                            src="{{ asset('assets/icons/shipping.jpg') }}"
-                            alt="Free shipping"
-                            class="benefit-icon-img"
-                        >
+                <!-- 1) Free shipping -->
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <img src="{{ asset('assets/icons/shipping.jpg') }}" alt="Free shipping"
+                                class="benefit-icon-img">
+                        </div>
+                        <div class="benefit-title">Free shipping</div>
+                        <p class="benefit-subtitle">Free shipping on all orders</p>
                     </div>
-                    <div class="benefit-title">Free shipping</div>
-                    <p class="benefit-subtitle">Free shipping on all orders</p>
                 </div>
-            </div>
 
-            <!-- 2) Wall friendly -->
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <img
-                            src="{{ asset('assets/icons/no-nail.jpg') }}"
-                            alt="Wall friendly"
-                            class="benefit-icon-img"
-                        >
+                <!-- 2) Wall friendly -->
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <img src="{{ asset('assets/icons/no-nail.jpg') }}" alt="Wall friendly" class="benefit-icon-img">
+                        </div>
+                        <div class="benefit-title">Wall friendly</div>
+                        <p class="benefit-subtitle">Leaves no marks</p>
                     </div>
-                    <div class="benefit-title">Wall friendly</div>
-                    <p class="benefit-subtitle">Leaves no marks</p>
                 </div>
-            </div>
 
-            <!-- 3) Made in India -->
-            <div class="col-lg-4 col-md-4 col-12">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <img
-                            src="{{ asset('assets/icons/made-in-india.png') }}"
-                            alt="Made in India"
-                            class="benefit-icon-img"
-                        >
+                <!-- 3) Made in India -->
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <img src="{{ asset('assets/icons/made-in-india.png') }}" alt="Made in India"
+                                class="benefit-icon-img">
+                        </div>
+                        <div class="benefit-title">Made in India</div>
+                        <p class="benefit-subtitle">Designed &amp; assembled in India</p>
                     </div>
-                    <div class="benefit-title">Made in India</div>
-                    <p class="benefit-subtitle">Designed &amp; assembled in India</p>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 
 
-<!-- =========================
-SECOND SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
-========================= -->
-<section class="photo-moments-section">
-    <div class="container">
-        <div class="row align-items-center">
+    <!-- =========================
+    SECOND SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
+    ========================= -->
+    <section class="photo-moments-section">
+        <div class="container">
+            <div class="row align-items-center">
 
-            <!-- LEFT: Text -->
-            <div class="col-lg-5">
-                <div class="photo-moments-content">
-                    <h2>Decorate your wall with life’s special moments.</h2>
+                <!-- LEFT: Text -->
+                <div class="col-lg-5">
+                    <div class="photo-moments-content">
+                        <h2>Decorate your wall with life’s special moments.</h2>
 
-                    <p>
-                        Upload your favorite photos and choose a frame style you love.
-                        We’ll print, frame, and deliver. Ready to hang without nails or wall damage.
-                    </p>
+                        <p>
+                            Upload your favorite photos and choose a frame style you love.
+                            We’ll print, frame, and deliver. Ready to hang without nails or wall damage.
+                        </p>
 
-                    <a href="{{ route('design') }}" class="btn photo-moments-btn">
-                        Get Started
-                    </a>
+                        <a href="{{ route('design') }}" class="btn photo-moments-btn">
+                            Get Started
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <!-- RIGHT: Image -->
-            <div class="col-lg-7">
-                <div class="photo-moments-image">
-                    <img
-                        src="{{ asset('assets/images/my-collage-banner-1.png') }}"
-                        alt="Decorate your wall with moments"
-                        loading="lazy"
-                    >
+                <!-- RIGHT: Image -->
+                <div class="col-lg-7">
+                    <div class="photo-moments-image">
+                        <img src="{{ asset('assets/images/my-collage-banner-1.png') }}"
+                            alt="Decorate your wall with moments" loading="lazy">
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<section class="custom-tabs-section py">
+    <section class="custom-tabs-section py">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-lg-3 col-md-3 col-12">
@@ -574,25 +574,29 @@ SECOND SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
                     <div class="tab-content customTabsContent" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-tap" role="tabpanel"
                             aria-labelledby="v-pills-tap-tab" tabindex="0">
-                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
+                            <video class="img-fluid" autoplay muted loop playsinline preload="metadata"
+                                style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel" aria-labelledby="v-pills-hooks-tab"
-                            tabindex="0">
-                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
+                        <div class="tab-pane fade" id="v-pills-hooks" role="tabpanel"
+                            aria-labelledby="v-pills-hooks-tab" tabindex="0">
+                            <video class="img-fluid" autoplay muted loop playsinline preload="metadata"
+                                style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
                             tabindex="0">
-                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
+                            <video class="img-fluid" autoplay muted loop playsinline preload="metadata"
+                                style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
                         <div class="tab-pane fade" id="v-pills-again" role="tabpanel"
                             aria-labelledby="v-pills-again-tab" tabindex="0">
-                            <video class="img-fluid"  autoplay  muted loop playsinline preload="metadata" style="pointer-events: none;">
+                            <video class="img-fluid" autoplay muted loop playsinline preload="metadata"
+                                style="pointer-events: none;">
                                 <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
                             </video>
                         </div>
@@ -602,124 +606,164 @@ SECOND SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
         </div>
     </section>
 
-<!-- =========================
-CENTERED TRUST SECTION
-========================= -->
-<section class="premium-trust-section">
-    <div class="container">
-
-        <div class="text-center">
-
-            <h2 class="trust-title">
-                Hang Photo Frames on Any Wall
-            </h2>
-
-            <p class="trust-subtitle">
-                Without Nails, Stickers, Wall Marks, or Damage
-            </p>
-
-
-            <p class="trust-description">
-            A refined magnetic system inspired by premium American and European wall‑mounting standards,
-            engineered using a thin iron sheet and precision‑calibrated magnet pads.
-            Designed to hold frames securely while keeping your walls untouched.
-            Learn more about our
-            <a href="{{ url('/photo-frames-without-nails') }}" class="brand-link">
-                photo frames without nails
-            </a>
-            and damage‑free hanging system.
-             </p>
-
-
-            <div class="trust-pills justify-content-center">
-                <span>No Nails</span>
-                <span>No Stickers</span>
-                <span>No Wall Marks</span>
-                <span>Clean Walls</span>
-                <span>Rental‑Home Safe</span>
+    <section class="custom-tabs-section py mobile_view_tabs">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12 col-md-12 col-12 main-video">
+                    <div class="mobile-tabs-video">
+                        <h2 class="heading-3" style=" font-size: 41px; ">
+                            No Nail - Magentick <span>Hanging</span>
+                        </h2>
+                        <div class="custom-tabs-content">
+                            <div class="peel_stick">
+                                <h4>Peel and stick</h4>
+                                <video class="img-fluid" autoplay muted loop playsinline>
+                                    <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="peel_stick">
+                                <h4>Adjust to position</h4>
+                                <video class="img-fluid" autoplay muted loop playsinline>
+                                    <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="peel_stick">
+                                <h4>Leaves no marks</h4>
+                                <video class="img-fluid" autoplay muted loop playsinline>
+                                    <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="peel_stick">
+                                <h4>Move, Again and Again</h4>
+                                <video class="img-fluid" autoplay muted loop playsinline>
+                                    <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="trust-cta mt-4">
-                <a href="{{ route('design') }}" class="btn design-btn filled">
-                    Design Your Frame
-                </a>
+    <!-- =========================
+    CENTERED TRUST SECTION
+    ========================= -->
+    <section class="premium-trust-section">
+        <div class="container">
+
+            <div class="text-center">
+
+                <h2 class="trust-title">
+                    Hang Photo Frames on Any Wall
+                </h2>
+
+                <p class="trust-subtitle">
+                    Without Nails, Stickers, Wall Marks, or Damage
+                </p>
+
+
+                <p class="trust-description">
+                    A refined magnetic system inspired by premium American and European wall‑mounting standards,
+                    engineered using a thin iron sheet and precision‑calibrated magnet pads.
+                    Designed to hold frames securely while keeping your walls untouched.
+                    Learn more about our
+                    <a href="{{ url('/photo-frames-without-nails') }}" class="brand-link">
+                        photo frames without nails
+                    </a>
+                    and damage‑free hanging system.
+                </p>
+
+
+                <div class="trust-pills justify-content-center">
+                    <span>No Nails</span>
+                    <span>No Stickers</span>
+                    <span>No Wall Marks</span>
+                    <span>Clean Walls</span>
+                    <span>Rental‑Home Safe</span>
+                </div>
+
+                <div class="trust-cta mt-4">
+                    <a href="{{ route('design') }}" class="btn design-btn filled">
+                        Design Your Frame
+                    </a>
+                </div>
+
             </div>
 
         </div>
-
-    </div>
-</section>
+    </section>
 
 
 
     <section class="how-it-works-clarity py-5">
-    <div class="container">
+        <div class="container">
 
-        <!-- Section title -->
-        <div class="text-center mb-5">
-            <h2 class="heading-3">How Magnetick Frames Actually Work</h2>
+            <!-- Section title -->
+            <div class="text-center mb-5">
+                <h2 class="heading-3">How Magnetick Frames Actually Work</h2>
 
-            <p class="para text-center mb-4">
-                Designed for modern homes that prefer
-                <a href="{{ url('/photo-frames-without-nails') }}" class="brand-link">
-                    photo frames without nails
-                </a>,
-                drilling, or wall damage.
-            </p>
+                <p class="para text-center mb-4">
+                    Designed for modern homes that prefer
+                    <a href="{{ url('/photo-frames-without-nails') }}" class="brand-link">
+                        photo frames without nails
+                    </a>,
+                    drilling, or wall damage.
+                </p>
 
-        </div>
-
-        <!-- Steps -->
-        <div class="row g-4">
-
-            <div class="col-lg-4 col-md-6">
-                <div class="how-card">
-                    <div class="how-step-bg">01</div>
-                    <h4>Place the ultra‑thin iron sheet</h4>
-                    <p>
-                        A lightweight iron sheet sits flush on your wall.
-                        No nails, No drilling, No stickers, No peeling paints.
-                    </p>
-                </div>
             </div>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="how-card">
-                    <div class="how-step-bg">02</div>
-                    <h4>The frame snaps on magnetically</h4>
-                    <p>
-                        Strong magnets inside the frame hold it firmly in place.
-                        Stable, Secure, and Safe.
-                    </p>
+            <!-- Steps -->
+            <div class="row g-4">
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="how-card">
+                        <div class="how-step-bg">01</div>
+                        <h4>Place the ultra‑thin iron sheet</h4>
+                        <p>
+                            A lightweight iron sheet sits flush on your wall.
+                            No nails, No drilling, No stickers, No peeling paints.
+                        </p>
+                    </div>
                 </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="how-card">
+                        <div class="how-step-bg">02</div>
+                        <h4>The frame snaps on magnetically</h4>
+                        <p>
+                            Strong magnets inside the frame hold it firmly in place.
+                            Stable, Secure, and Safe.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="how-card">
+                        <div class="how-step-bg">03</div>
+                        <h4>Move or remove anytime</h4>
+                        <p>
+                            Rearrange layouts or remove frames easily.
+                            Your wall stays clean and undamaged.
+                        </p>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="how-card">
-                    <div class="how-step-bg">03</div>
-                    <h4>Move or remove anytime</h4>
-                    <p>
-                        Rearrange layouts or remove frames easily.
-                        Your wall stays clean and undamaged.
-                    </p>
-                </div>
+            <!-- Assurance chips -->
+            <div class="how-assurance mt-5 text-center">
+                <span class="assurance-chip">Strong power</span>
+                <span class="assurance-chip">Life-time stability</span>
+                <span class="assurance-chip">Designed for Indian painted walls & Rented homes/Apartments</span>
             </div>
 
         </div>
-
-        <!-- Assurance chips -->
-        <div class="how-assurance mt-5 text-center">
-            <span class="assurance-chip">Strong power</span>
-            <span class="assurance-chip">Life-time stability</span>
-            <span class="assurance-chip">Designed for Indian painted walls & Rented homes/Apartments</span>
-        </div>
-
-    </div>
-</section>
+    </section>
 
 
 
-        <section class="premium-material">
+    <section class="premium-material">
         <div class="container">
             <div class="row text-center align-items-center gy-4">
 
@@ -748,7 +792,8 @@ CENTERED TRUST SECTION
                 <!-- Column 3 -->
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="premium-trust-card">
-                        <img src="{{ asset('assets/images/premium-quality.webp') }}" class="img-fluid mb-3" alt="">
+                        <img src="{{ asset('assets/images/premium-quality.webp') }}" class="img-fluid mb-3"
+                            alt="">
                         <h6>Premium, Made Accessible</h6>
                         <p>
                             Gallery‑grade look and durability. Thoughtfully priced for modern homes.
@@ -762,36 +807,36 @@ CENTERED TRUST SECTION
 
 
     <p class="text-center para mt-4 mb-5">
-    Trusted by homeowners who want premium wall décor without compromise.
+        Trusted by homeowners who want premium wall décor without compromise.
     </p>
 
 
 
 
     <!-- ✅ MOBILE-ONLY MAIN BANNER (correct mobile position) -->
-<section class="main-banner-section d-block d-md-none">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="text-center">
-                    <h1 class="main-title">
-                        <span class="heading-2">
-                            Turn your photos into a masterpiece
-                        </span>
-                        <span class="heading-1">
-                            let your walls tell your story
-                        </span>
-                    </h1>
+    <section class="main-banner-section d-block d-md-none">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        <h1 class="main-title">
+                            <span class="heading-2">
+                                Turn your photos into a masterpiece
+                            </span>
+                            <span class="heading-1">
+                                let your walls tell your story
+                            </span>
+                        </h1>
 
-                    <button type="button" class="btn design-btn filled"
-                        onclick="window.location.href='{{ route('design') }}';">
-                        Design your frame
-                    </button>
+                        <button type="button" class="btn design-btn filled"
+                            onclick="window.location.href='{{ route('design') }}';">
+                            Design your frame
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section class="main-banner-section d-none d-md-block">
         <div class="container">
@@ -806,15 +851,15 @@ CENTERED TRUST SECTION
                         <button type="button" class="btn design-btn filled"
                             onclick="window.location.href='{{ route('design') }}';">
                             <!-- <svg width="26.122" height="26.849" class="w-em h-em me-2 ttl-26 mb-0"
-                                viewBox="0 0 26.122 26.849" xmlns="http://www.w3.org/2000/svg">
-                                <g transform="translate(-858.42 -842.908)">
-                                    <path fill="currentColor" transform="translate(866.746 842.818)"
-                                        d="M16.622.112c-.067,0-.089.045-.134.067L8.121,6.114a1.558,1.558,0,0,0-.29.357l-.29.558a5.119,5.119,0,0,1,3.347,3.347l.558-.29A1.457,1.457,0,0,0,11.8,9.8l5.935-8.367c.067-.112.089-.2,0-.29L16.756.157A.193.193,0,0,0,16.622.09ZM5.957,8.97a2.947,2.947,0,0,0-2.923,2.99,5.983,5.983,0,0,1-2.99,5.154,6.135,6.135,0,0,0,2.99.759,5.918,5.918,0,0,0,5.935-5.935,3,3,0,0,0-2.99-2.99Z">
-                                    </path>
-                                    <path fill="currentColor" transform="translate(859.67 845.317)"
-                                        d="M23.511,24.441H-1.25V-1.25H14.126V1.2H1.2v20.8H21.064V8.171h2.447Z"></path>
-                                </g>
-                            </svg> -->
+                                    viewBox="0 0 26.122 26.849" xmlns="http://www.w3.org/2000/svg">
+                                    <g transform="translate(-858.42 -842.908)">
+                                        <path fill="currentColor" transform="translate(866.746 842.818)"
+                                            d="M16.622.112c-.067,0-.089.045-.134.067L8.121,6.114a1.558,1.558,0,0,0-.29.357l-.29.558a5.119,5.119,0,0,1,3.347,3.347l.558-.29A1.457,1.457,0,0,0,11.8,9.8l5.935-8.367c.067-.112.089-.2,0-.29L16.756.157A.193.193,0,0,0,16.622.09ZM5.957,8.97a2.947,2.947,0,0,0-2.923,2.99,5.983,5.983,0,0,1-2.99,5.154,6.135,6.135,0,0,0,2.99.759,5.918,5.918,0,0,0,5.935-5.935,3,3,0,0,0-2.99-2.99Z">
+                                        </path>
+                                        <path fill="currentColor" transform="translate(859.67 845.317)"
+                                            d="M23.511,24.441H-1.25V-1.25H14.126V1.2H1.2v20.8H21.064V8.171h2.447Z"></path>
+                                    </g>
+                                </svg> -->
                             Design your frame
                         </button>
                     </div>
@@ -953,46 +998,6 @@ CENTERED TRUST SECTION
         </div>
     </section> --}}
 
-    <section class="custom-tabs-section py mobile_view_tabs">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-12 col-md-12 col-12 main-video">
-                    <div class="mobile-tabs-video">
-                        <h2 class="heading-3" style=" font-size: 41px; ">
-                            No Nail - Magentick <span>Hanging</span>
-                        </h2>
-                        <div class="custom-tabs-content">
-                            <div class="peel_stick">
-                                <h4>Peel and stick</h4>
-                                <video class="img-fluid" autoplay muted loop playsinline>
-                                    <source src="{{ asset('assets/video/Video_1_Photo.mp4') }}" type="video/mp4">
-                                </video>
-                            </div>
-                            <div class="peel_stick">
-                                <h4>Adjust to position</h4>
-                                <video class="img-fluid" autoplay muted loop playsinline>
-                                    <source src="{{ asset('assets/video/Video_2_Photo.mp4') }}" type="video/mp4">
-                                </video>
-                            </div>
-                            <div class="peel_stick">
-                                <h4>Leaves no marks</h4>
-                                <video class="img-fluid" autoplay muted loop playsinline>
-                                    <source src="{{ asset('assets/video/Video_3_Photo.mp4') }}" type="video/mp4">
-                                </video>
-                            </div>
-                            <div class="peel_stick">
-                                <h4>Move, Again and Again</h4>
-                                <video class="img-fluid" autoplay muted loop playsinline>
-                                    <source src="{{ asset('assets/video/Video_4_Photo.mp4') }}" type="video/mp4">
-                                </video>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="about-section py sofa-covered">
         <div class="container">
             <div class="row align-items-center">
@@ -1033,11 +1038,11 @@ CENTERED TRUST SECTION
                         <button type="button" class="btn design-btn filled"
                             onclick="window.location.href='{{ route('design') }}';">
                             <!-- <svg width="20" height="20" viewBox="0 0 20 20" class="w-em h-em me-1 ttl-20 mb-0"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill="currentColor" transform="translate(-2 -2)"
-                                    d="M10,16.5,16,12,10,7.5ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z">
-                                </path>
-                            </svg> -->
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="currentColor" transform="translate(-2 -2)"
+                                        d="M10,16.5,16,12,10,7.5ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z">
+                                    </path>
+                                </svg> -->
                             Design your frame
                         </button>
                     </div>
@@ -1228,8 +1233,8 @@ CENTERED TRUST SECTION
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <figure>
-                        <img src="{{ asset('assets/images/Needy-poor3.webp') }}" loading="lazy" class="img-fluid" alt=""
-                            style=" margin-left: 41px; height: 500px;">
+                        <img src="{{ asset('assets/images/Needy-poor3.webp') }}" loading="lazy" class="img-fluid"
+                            alt="" style=" margin-left: 41px; height: 500px;">
                     </figure>
                 </div>
             </div>
@@ -1350,8 +1355,8 @@ CENTERED TRUST SECTION
 
     <section class="py-0 HomeEnquire_homeEnquireWrp scroll-fade ">
         <div class="mobile-back-img">
-            <img src="{{ asset('assets/images/home-enquire-bg-v2mob.jpg') }}" loading="lazy" class="img-fluid" alt=""
-                style="display: none">
+            <img src="{{ asset('assets/images/home-enquire-bg-v2mob.jpg') }}" loading="lazy" class="img-fluid"
+                alt="" style="display: none">
         </div>
         <div class="container">
             <div class="text-center text-lg-start HomeEnquire_homeEnquireContent">
@@ -1364,7 +1369,8 @@ CENTERED TRUST SECTION
                     </button>
                 </div>
                 <div class="newframe-sideimg">
-                    <img src="{{ asset('assets/images/bulkOrder-5.webp') }}" loading="lazy" class="img-fluid" alt="">
+                    <img src="{{ asset('assets/images/bulkOrder-5.webp') }}" loading="lazy" class="img-fluid"
+                        alt="">
                 </div>
             </div>
         </div>
@@ -1372,59 +1378,59 @@ CENTERED TRUST SECTION
 @endsection
 @push('scripts')
     <script>
-document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
-  // 1) Get all pill tab buttons
-  const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
+            // 1) Get all pill tab buttons
+            const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
 
-  // 2) Helper: pause + reset all videos inside tab panes
-  function resetAllTabVideos() {
-    document.querySelectorAll('.tab-pane video').forEach(v => {
-      try {
-        v.pause();
-        v.currentTime = 0;
-      } catch (err) {
-        // ignore (some browsers may throw if not loaded yet)
-      }
-    });
-  }
+            // 2) Helper: pause + reset all videos inside tab panes
+            function resetAllTabVideos() {
+                document.querySelectorAll('.tab-pane video').forEach(v => {
+                    try {
+                        v.pause();
+                        v.currentTime = 0;
+                    } catch (err) {
+                        // ignore (some browsers may throw if not loaded yet)
+                    }
+                });
+            }
 
-  // 3) Helper: play the active tab's video
-  function playVideoInPane(targetSelector) {
-    const pane = document.querySelector(targetSelector);
-    const video = pane ? pane.querySelector("video") : null;
+            // 3) Helper: play the active tab's video
+            function playVideoInPane(targetSelector) {
+                const pane = document.querySelector(targetSelector);
+                const video = pane ? pane.querySelector("video") : null;
 
-    if (video) {
-      // Reset first for consistent playback
-      video.currentTime = 0;
+                if (video) {
+                    // Reset first for consistent playback
+                    video.currentTime = 0;
 
-      // Play (autoplay policy safe)
-      const p = video.play();
-      if (p && typeof p.catch === "function") {
-        p.catch(() => {
-          // Autoplay may be blocked in some cases; muted usually avoids this
+                    // Play (autoplay policy safe)
+                    const p = video.play();
+                    if (p && typeof p.catch === "function") {
+                        p.catch(() => {
+                            // Autoplay may be blocked in some cases; muted usually avoids this
+                        });
+                    }
+                }
+            }
+
+            // 4) When a tab becomes active
+            tabButtons.forEach(button => {
+                button.addEventListener("shown.bs.tab", function(e) {
+                    const targetSelector = e.target.getAttribute("data-bs-target");
+                    resetAllTabVideos(); // <-- NEW: stop others
+                    playVideoInPane(targetSelector); // <-- keep your behavior
+                });
+            });
+
+            // 5) On initial page load: ensure only the default active tab video plays
+            // Find the active tab button (Bootstrap adds .active)
+            const activeBtn = document.querySelector('[data-bs-toggle="pill"].active');
+            if (activeBtn) {
+                const initialTarget = activeBtn.getAttribute("data-bs-target");
+                resetAllTabVideos();
+                playVideoInPane(initialTarget);
+            }
         });
-      }
-    }
-  }
-
-  // 4) When a tab becomes active
-  tabButtons.forEach(button => {
-    button.addEventListener("shown.bs.tab", function (e) {
-      const targetSelector = e.target.getAttribute("data-bs-target");
-      resetAllTabVideos();               // <-- NEW: stop others
-      playVideoInPane(targetSelector);   // <-- keep your behavior
-    });
-  });
-
-  // 5) On initial page load: ensure only the default active tab video plays
-  // Find the active tab button (Bootstrap adds .active)
-  const activeBtn = document.querySelector('[data-bs-toggle="pill"].active');
-  if (activeBtn) {
-    const initialTarget = activeBtn.getAttribute("data-bs-target");
-    resetAllTabVideos();
-    playVideoInPane(initialTarget);
-  }
-});
-</script>
+    </script>
 @endpush
