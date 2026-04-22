@@ -1705,7 +1705,7 @@
         padding-left: 0 !important;
     }
 
-    .custom-tabs-section:not(.mobile_view_tabs) {
+    section.custom-tabs-section.py:not(.mobile_view_tabs) {
         display: none;
     }
 
