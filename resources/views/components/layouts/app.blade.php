@@ -5,75 +5,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>
-        {{ get_setting('site_name') ?? env('APP_NAME') }}
+    {{ get_setting('site_name') ?? env('APP_NAME') }}
         @hasSection('title')
             - @yield('title')
         @endif
     </title>
-
     <meta name="description" content="@yield('description', 'Magnetic photo frames for walls with no nails, no stickers, no wall marks and no damage. Design custom photo frames online with Magnetick.')">
-    <meta name="keywords" content="@yield('keywords', 'magnetic photo frames, wall photo frames, no nail frames, damage free frames')">
+    <meta name="keywords" content="@yield('keywords', 'magnetic photo frames, wall photo frames, no nail frames, no wall marks photo frames, damage free photo frames for apartments and rented homes')">
 
     @hasSection('noindex')
         <meta name="robots" content="noindex, nofollow">
     @endif
 
+
     @hasSection('canonical')
         <link rel="canonical" href="@yield('canonical')" />
     @endif
 
-    <!-- ✅ Favicon -->
+
+
+
+
+    {{-- <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('assets/favicon/site.webmanifest') }}"> --}}
+    {{-- <link rel="icon" type="image/png" sizes="512x512"
+        href="{{ asset('assets/favicon/android-chrome-512x512.png') }}"> --}}
     <link rel="shortcut icon" href="{{ asset('assets/favicon/favicon.png') }}">
 
-    <!-- ✅ Preconnect (important for fonts speed) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Magnific Popup core CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+    <!-- crop js  -->
+    <link rel='stylesheet' href='https://foliotek.github.io/Croppie/croppie.css'>
+    {{-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <!-- ckedor js -->
+    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    <!-- daterangepicker css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
-    <!-- ✅ Fonts -->
-    <link rel="preload"
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
-        as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-
-    <noscript>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
-            rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-    </noscript>
-
-    <!-- ✅ Bootstrap (NON-BLOCKING) -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    </noscript>
-
-    <!-- ✅ Optional libraries (LOAD ONLY WHERE NEEDED) -->
-    @stack('plugin-css')
-
-    <!-- ✅ Your CSS (NON-BLOCKING) -->
-    <link rel="preload" href="{{ asset('assets/css/custom.css') }}" as="style" onload="this.rel='stylesheet'">
-    <link rel="preload" href="{{ asset('assets/css/responsive.css') }}" as="style" onload="this.rel='stylesheet'">
-    <link rel="preload" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}" as="style"
-        onload="this.rel='stylesheet'">
-
-    <noscript>
-        <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}">
-    </noscript>
-
-    <!-- ✅ Critical CSS (tiny only) -->
+    <!-- CSS Files with Cache Busting -->
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}?v={{ time() }}">
+    @stack('css')
+    {{-- @livewireStyles --}}
     <style>
-        body {
-            margin: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
         @keyframes circle {
             0% {
                 transform: rotate(0deg);
@@ -81,11 +76,10 @@
 
             100% {
                 transform: rotate(360deg);
+
             }
         }
     </style>
-
-    @stack('css')
 </head>
 
 <body>
@@ -133,20 +127,19 @@
 
 
     <script>
-        window.csrfToken = function() {
-            const el = document.querySelector('meta[name="csrf-token"]');
-            return el ? el.getAttribute('content') : '';
-        };
+      window.csrfToken = function () {
+        const el = document.querySelector('meta[name="csrf-token"]');
+        return el ? el.getAttribute('content') : '';
+      };
 
-        window.safeJson = async function(response) {
-            const text = await response.text();
-            try {
-                return JSON.parse(text);
-            } catch (e) {
-                console.error('Non-JSON response:', text);
-                throw e;
-            }
-        };
+      window.safeJson = async function (response) {
+        const text = await response.text();
+        try { return JSON.parse(text); }
+        catch (e) {
+          console.error('Non-JSON response:', text);
+          throw e;
+        }
+      };
     </script>
 
 
@@ -201,20 +194,20 @@
     </script>
 
 
-    <script>
-        // Global CSRF header for all jQuery AJAX calls (fetch already sets headers in your code)
-        if (window.$ && document.querySelector('meta[name="csrf-token"]')) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            });
-        }
-    </script>
+<script>
+  // Global CSRF header for all jQuery AJAX calls (fetch already sets headers in your code)
+  if (window.$ && document.querySelector('meta[name="csrf-token"]')) {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    });
+  }
+</script>
 
-    <a href="https://wa.me/9342874392" target="_blank" class="whatsapp-float">
-        <img src="{{ asset('assets/images/whatsapp-bottom.png') }}" alt="WhatsApp">
-    </a>
+<a href="https://wa.me/9342874392" target="_blank" class="whatsapp-float">
+    <img src="{{ asset('assets/images/whatsapp-bottom.png') }}" alt="WhatsApp">
+</a>
 
 </body>
 
