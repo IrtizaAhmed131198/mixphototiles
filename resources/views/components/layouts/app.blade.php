@@ -102,8 +102,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    @stack('plugin-js')
 
     <!-- Magnific Popup core JS file -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
@@ -124,23 +124,6 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     {{-- @livewireScripts --}}
     <script src="{{ asset('assets/js/app.js') }}"></script>
-
-
-    <script>
-      window.csrfToken = function () {
-        const el = document.querySelector('meta[name="csrf-token"]');
-        return el ? el.getAttribute('content') : '';
-      };
-
-      window.safeJson = async function (response) {
-        const text = await response.text();
-        try { return JSON.parse(text); }
-        catch (e) {
-          console.error('Non-JSON response:', text);
-          throw e;
-        }
-      };
-    </script>
 
 
     @include('ajax')
@@ -194,20 +177,20 @@
     </script>
 
 
-<script>
-  // Global CSRF header for all jQuery AJAX calls (fetch already sets headers in your code)
-  if (window.$ && document.querySelector('meta[name="csrf-token"]')) {
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      }
-    });
-  }
-</script>
+    <script>
+        // Global CSRF header for all jQuery AJAX calls (fetch already sets headers in your code)
+        if (window.$ && document.querySelector('meta[name="csrf-token"]')) {
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+            });
+        }
+    </script>
 
-<a href="https://wa.me/9342874392" target="_blank" class="whatsapp-float">
-    <img src="{{ asset('assets/images/whatsapp-bottom.png') }}" alt="WhatsApp">
-</a>
+    <a href="https://wa.me/9342874392" target="_blank" class="whatsapp-float">
+        <img src="{{ asset('assets/images/whatsapp-bottom.png') }}" alt="WhatsApp">
+    </a>
 
 </body>
 

@@ -864,8 +864,25 @@
 
 @endsection
 
+@push('plugin-js')
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+@endpush
+
 @push('scripts')
     <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var swiper7 = new Swiper(".frame-layout-slider", {
+                slidesPerView: 1,
+                spaceBetween: 40,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             // Listen for any modal close event (globally)
             document.querySelectorAll('.modal').forEach(function(modalEl) {

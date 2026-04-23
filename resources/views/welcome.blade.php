@@ -1376,6 +1376,12 @@
         </div>
     </section>
 @endsection
+
+@push('plugin-js')
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+@endpush
+
 @push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -1431,6 +1437,164 @@
                 resetAllTabVideos();
                 playVideoInPane(initialTarget);
             }
+
+            var swiper1 = new Swiper(".swiper-horizontal", {
+                cssMode: true,
+                slidesPerView: 4,
+                spaceBetween: 30,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 1,
+                    },
+                    375: {
+                        slidesPerView: 1,
+                    },
+                    400: {
+                        slidesPerView: 1,
+                    },
+                    500: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    900: {
+                        slidesPerView: 3,
+                    },
+                }
+            });
+
+            var swiper3 = new Swiper(".mySwiper-grid", {
+                slidesPerView: 6,
+                grid: {
+                    rows: 4,
+                },
+                spaceBetween: 10,
+                loop: true,
+                speed: 5000, // Duration for a complete slide transition (adjust as needed)
+                autoplay: {
+                    delay: 0, // No delay between transitions for continuous motion
+                    disableOnInteraction: false,
+                },
+                freeMode: true, // Enable free mode for fluid sliding
+                freeModeMomentum: false, // Disable momentum to maintain a steady pace
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+            });
+
+            var swiper5 = new Swiper(".mySwiper", {
+                loop: true,
+                autoplay: {
+                    delay: 1200,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                    1400: {
+                        slidesPerView: 4,
+                    },
+                },
+            });
+
+            // var swiper6 = new Swiper(".main-banner-slider", {
+            //     effect: "coverflow",
+            //     speed: 1000, // Transition duration in milliseconds for smooth animations
+            //     loop: true,
+            //     centeredSlides: true,
+            //     spaceBetween: 55,
+            //     grabCursor: true,
+            //     slidesPerView: "auto",
+            //     autoplay: {
+            //         delay: 1200,
+            //         disableOnInteraction: false,
+            //     },
+            //     coverflowEffect: {
+            //         rotate: 0,
+            //         stretch: 0,
+            //         depth: 45,
+            //         modifier: 2,
+            //         slidesPerView: 5,
+            //         slideShadows: true,
+            //     },
+            //     pagination: {
+            //         el: ".swiper-pagination",
+            //         // clickable: true,
+            //         dynamicBullets: true, // Enables dynamic bullet pagination
+            //     },
+            //     // breakpoints: {
+            //     //     320: {
+            //     //         slidesPerView: 1,
+            //     //     },
+            //     //     576: {
+            //     //         slidesPerView: 1,
+            //     //     },
+            //     //     576: {
+            //     //         slidesPerView: 1,
+            //     //     },
+            //     //     768: {
+            //     //         slidesPerView: 5,
+            //     //         spaceBetween: 35,
+            //     //     },
+            //     //     1024: {
+            //     //         slidesPerView: 5,
+            //     //         spaceBetween: 55,
+            //     //     },
+            //     //     1400: {
+            //     //         slidesPerView: 5,
+            //     //         spaceBetween: 55,
+            //     //     },
+            //     // },
+            //     breakpoints: {
+
+            //         500: {
+            //             slidesPerView: 1,
+            //             spaceBetween: 0,
+            //         },
+            //         650: {
+            //             slidesPerView: 4,
+            //             spaceBetween: 40,
+            //         },
+            //         900: {
+            //             slidesPerView: 5,
+            //             spaceBetween: 45,
+            //         },
+            //         1100: {
+            //             slidesPerView: 5,
+            //             spaceBetween: 55,
+            //         },
+            //         1400: {
+            //             slidesPerView: 5,
+            //             spaceBetween: 55,
+            //         },
+            //     }
+
+            // });
         });
+
     </script>
 @endpush
