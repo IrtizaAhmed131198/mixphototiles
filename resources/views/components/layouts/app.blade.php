@@ -8,7 +8,9 @@
 
     <title>
         {{ get_setting('site_name') ?? env('APP_NAME') }}
-        @hasSection('title') - @yield('title') @endif
+        @hasSection('title')
+            - @yield('title')
+        @endif
     </title>
 
     <meta name="description" content="@yield('description', 'Magnetic photo frames for walls with no nails, no stickers, no wall marks and no damage. Design custom photo frames online with Magnetick.')">
@@ -30,16 +32,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- ✅ Fonts -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+
     <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+            rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     </noscript>
 
     <!-- ✅ Bootstrap (NON-BLOCKING) -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     </noscript>
@@ -50,7 +58,8 @@
     <!-- ✅ Your CSS (NON-BLOCKING) -->
     <link rel="preload" href="{{ asset('assets/css/custom.css') }}" as="style" onload="this.rel='stylesheet'">
     <link rel="preload" href="{{ asset('assets/css/responsive.css') }}" as="style" onload="this.rel='stylesheet'">
-    <link rel="preload" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}" as="style" onload="this.rel='stylesheet'">
+    <link rel="preload" href="{{ asset('assets/css/dataTables.bootstrap5.css') }}" as="style"
+        onload="this.rel='stylesheet'">
 
     <noscript>
         <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -60,11 +69,19 @@
 
     <!-- ✅ Critical CSS (tiny only) -->
     <style>
-        body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
         @keyframes circle {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 
@@ -87,8 +104,10 @@
         @include('partials.footer')
     </div>
     <!-- JS Files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
@@ -99,8 +118,8 @@
     <!-- sweetalert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Dropify JS -->
-    <!--<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>-->
-    <!--<script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>-->
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+    <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <!-- Cropper.js JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
@@ -114,19 +133,20 @@
 
 
     <script>
-      window.csrfToken = function () {
-        const el = document.querySelector('meta[name="csrf-token"]');
-        return el ? el.getAttribute('content') : '';
-      };
+        window.csrfToken = function() {
+            const el = document.querySelector('meta[name="csrf-token"]');
+            return el ? el.getAttribute('content') : '';
+        };
 
-      window.safeJson = async function (response) {
-        const text = await response.text();
-        try { return JSON.parse(text); }
-        catch (e) {
-          console.error('Non-JSON response:', text);
-          throw e;
-        }
-      };
+        window.safeJson = async function(response) {
+            const text = await response.text();
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                console.error('Non-JSON response:', text);
+                throw e;
+            }
+        };
     </script>
 
 
@@ -181,20 +201,20 @@
     </script>
 
 
-<script>
-  // Global CSRF header for all jQuery AJAX calls (fetch already sets headers in your code)
-  if (window.$ && document.querySelector('meta[name="csrf-token"]')) {
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      }
-    });
-  }
-</script>
+    <script>
+        // Global CSRF header for all jQuery AJAX calls (fetch already sets headers in your code)
+        if (window.$ && document.querySelector('meta[name="csrf-token"]')) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+        }
+    </script>
 
-<a href="https://wa.me/9342874392" target="_blank" class="whatsapp-float">
-    <img src="{{ asset('assets/images/whatsapp-bottom.png') }}" alt="WhatsApp">
-</a>
+    <a href="https://wa.me/9342874392" target="_blank" class="whatsapp-float">
+        <img src="{{ asset('assets/images/whatsapp-bottom.png') }}" alt="WhatsApp">
+    </a>
 
 </body>
 
