@@ -205,104 +205,7 @@
         }
 
 
-        /* ===== HOW IT WORKS SECTION ===== */
-        /* HOW IT WORKS – ENHANCED PREMIUM STYLE */
-
-        .how-it-works-clarity {
-            background: #fafafa;
-            margin-top: 1rem;
-        }
-
-        .how-card {
-            position: relative;
-            background: #ffffff;
-            padding: 48px 32px 25px;
-            border-radius: 20px;
-            height: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-        }
-
-        .how-step-bg {
-            position: absolute;
-            top: 18px;
-            right: 24px;
-            font-size: 3.2rem;
-            font-weight: 700;
-            color: rgba(255, 1, 104, 0.10);
-            /* brand pink, very soft */
-            line-height: 1;
-        }
-
-        .how-card h4 {
-            font-weight: 600;
-            margin-bottom: 12px;
-            margin-top: 25px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .how-card p {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: #444;
-            position: relative;
-            z-index: 1;
-        }
-
-
-
-
-        /* Assurance chips */
-        .how-assurance {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 14px;
-        }
-
-        .assurance-chip {
-            padding: 10px 18px;
-            border-radius: 999px;
-            background: rgba(255, 1, 104, 0.08);
-            color: #222;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .assurance-chip::before {
-            content: "✓";
-            color: #EB2371;
-            font-weight: 700;
-            margin-right: 8px;
-        }
-
-        .premium-trust-card {
-            background: #ffffff;
-            padding: 28px 22px;
-            border-radius: 18px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-            height: 100%;
-        }
-
-        .premium-trust-card h6 {
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .premium-trust-card p {
-            font-size: 0.95rem;
-            color: #555;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .premium-trust-card.highlighted {
-            border: 1px solid rgba(255, 1, 104, 0.25);
-            background: linear-gradient(180deg,
-                    rgba(255, 1, 104, 0.06),
-                    #ffffff);
-        }
+ 
 
         /* Mobile tuning */
         @media (max-width: 768px) {
@@ -314,6 +217,75 @@
                 padding: 40px 26px 32px;
             }
         }
+        
+        
+    /* =========================
+    ICON CARD TRUST SECTION (IMAGE BASED)
+    ========================= */
+    
+    .trust-card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        margin-top: 50px;
+    }
+    
+    .trust-card {
+        background: rgb(251, 246, 246);
+        border-radius: 18px;
+        padding: 32px 26px;
+        text-align: center;
+    }
+    
+    .trust-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: rgba(235, 35, 113, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .trust-icon img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+    }
+    
+    .trust-card h4 {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    
+    .trust-card p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #444;
+        margin: 0;
+    }
+    
+    .trust-cta {
+        margin-top: 40px;
+    }
+    
+    /* Tablet */
+    @media (max-width: 991px) {
+        .trust-card-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+    }
+    
+    /* Mobile */
+    @media (max-width: 576px) {
+        .trust-card-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
     </style>
 @endpush
 
@@ -459,7 +431,7 @@
             <div class="row justify-content-center g-4">
 
                 <!-- 1) Free shipping -->
-                <div class="col-lg-4 col-md-4 col-12">
+                <div class="col-lg-3 col-md-3 col-12">
                     <div class="benefit-item">
                         <div class="benefit-icon">
                             <img src="{{ asset('assets/icons/shipping.jpg') }}" alt="Free shipping"
@@ -471,18 +443,30 @@
                 </div>
 
                 <!-- 2) Wall friendly -->
-                <div class="col-lg-4 col-md-4 col-12">
+                <div class="col-lg-3 col-md-3 col-12">
                     <div class="benefit-item">
                         <div class="benefit-icon">
-                            <img src="{{ asset('assets/icons/no-nail.jpg') }}" alt="Wall friendly" class="benefit-icon-img">
+                            <img src="{{ asset('assets/icons/no-nail.png') }}" alt="Wall friendly" class="benefit-icon-img">
                         </div>
                         <div class="benefit-title">Wall friendly</div>
                         <p class="benefit-subtitle">Leaves no marks</p>
                     </div>
                 </div>
+                
+                <!-- 3) Made in US -->
+                <div class="col-lg-3 col-md-3 col-12">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <img src="{{ asset('assets/icons/made-in-us.jpg') }}" alt="Made in US"
+                                class="benefit-icon-img">
+                        </div>
+                        <div class="benefit-title">Materials from US</div>
+                        <p class="benefit-subtitle">US &amp; Euro standard finishing</p>
+                    </div>
+                </div>
 
                 <!-- 3) Made in India -->
-                <div class="col-lg-4 col-md-4 col-12">
+                <div class="col-lg-3 col-md-3 col-12">
                     <div class="benefit-item">
                         <div class="benefit-icon">
                             <img src="{{ asset('assets/icons/made-in-india.png') }}" alt="Made in India"
@@ -649,224 +633,69 @@
     <!-- =========================
     CENTERED TRUST SECTION
     ========================= -->
+
     <section class="premium-trust-section">
         <div class="container">
-
+    
             <div class="text-center">
-
-                <h2 class="trust-title">
-                    Hang Photo Frames on Any Wall
-                </h2>
-
-                <p class="trust-subtitle">
-                    Without Nails, Stickers, Wall Marks, or Damage
-                </p>
-
-
-                <p class="trust-description">
-                    A refined magnetic system inspired by premium American and European wall‑mounting standards,
-                    engineered using a thin iron sheet and precision‑calibrated magnet pads.
-                    Designed to hold frames securely while keeping your walls untouched.
-                    Learn more about our
-                    <a href="{{ url('/photo-frames-without-nails') }}" class="brand-link">
-                        photo frames without nails
-                    </a>
-                    and damage‑free hanging system.
-                </p>
-
-
-                <div class="trust-pills justify-content-center">
-                    <span>No Nails</span>
-                    <span>No Stickers</span>
-                    <span>No Wall Marks</span>
-                    <span>Clean Walls</span>
-                    <span>Rental‑Home Safe</span>
-                </div>
-
-                <div class="trust-cta mt-4">
-                    <a href="{{ route('design') }}" class="btn design-btn filled">
-                        Design Your Frame
-                    </a>
-                </div>
-
+                <h2 class="trust-title">We’ve Got You Covered</h2>
             </div>
-
+    
+            <!-- ICON CARDS -->
+            <div class="trust-card-grid">
+    
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <img src="{{ asset('assets/icons/placeholder.svg') }}"
+                             alt="Magnetic mounting system">
+                    </div>
+                    <h4>Magnetic Mounting System</h4>
+                    <p>
+                        A refined, calibrated magnetic system 
+                        provides lifetime stability.
+                    </p>
+                </div>
+                
+    
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <img src="{{ asset('assets/icons/placeholder.svg') }}"
+                             alt="Rental home safe">
+                    </div>
+                    <h4>Rental‑Home Safe</h4>
+                    <p>
+                        Designed to hold frames securely while keeping your walls untouched.
+                    </p>
+                </div>
+    
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <img src="{{ asset('assets/icons/placeholder.svg') }}"
+                             alt="Built for Indian walls">
+                    </div>
+                    <h4>Built for Indian Walls</h4>
+                    <p>
+                        Inspired by premium American and European mounting standards,
+                        adapted for Indian painted walls.
+                    </p>
+                </div>
+    
+            </div>
+    
+            <!-- CTA -->
+            <div class="text-center trust-cta">
+                <a href="{{ route('design') }}" class="btn design-btn filled">
+                    Design Your Frame
+                </a>
+            </div>
+    
         </div>
     </section>
 
 
 
-    <section class="how-it-works-clarity py-5">
-        <div class="container">
 
-            <!-- Section title -->
-            <div class="text-center mb-5">
-                <h2 class="heading-3">How Magnetick Frames Actually Work</h2>
-
-                <p class="para text-center mb-4">
-                    Designed for modern homes that prefer
-                    <a href="{{ url('/photo-frames-without-nails') }}" class="brand-link">
-                        photo frames without nails
-                    </a>,
-                    drilling, or wall damage.
-                </p>
-
-            </div>
-
-            <!-- Steps -->
-            <div class="row g-4">
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="how-card">
-                        <div class="how-step-bg">01</div>
-                        <h4>Place the ultra‑thin iron sheet</h4>
-                        <p>
-                            A lightweight iron sheet sits flush on your wall.
-                            No nails, No drilling, No stickers, No peeling paints.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="how-card">
-                        <div class="how-step-bg">02</div>
-                        <h4>The frame snaps on magnetically</h4>
-                        <p>
-                            Strong magnets inside the frame hold it firmly in place.
-                            Stable, Secure, and Safe.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="how-card">
-                        <div class="how-step-bg">03</div>
-                        <h4>Move or remove anytime</h4>
-                        <p>
-                            Rearrange layouts or remove frames easily.
-                            Your wall stays clean and undamaged.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Assurance chips -->
-            <div class="how-assurance mt-5 text-center">
-                <span class="assurance-chip">Strong power</span>
-                <span class="assurance-chip">Life-time stability</span>
-                <span class="assurance-chip">Designed for Indian painted walls & Rented homes/Apartments</span>
-            </div>
-
-        </div>
-    </section>
-
-
-
-    <section class="premium-material">
-        <div class="container">
-            <div class="row text-center align-items-center gy-4">
-
-                <!-- Column 1 -->
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="premium-trust-card">
-                        <img src="{{ asset('assets/images/Indian-Made.webp') }}" class="img-fluid mb-3" alt="">
-                        <h6>Crafted in India</h6>
-                        <p>
-                            Designed and assembled with precision craftsmanship and attention to detail.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Column 2 -->
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="premium-trust-card highlighted">
-                        <img src="{{ asset('assets/images/USA.webp') }}" class="img-fluid mb-3" alt="">
-                        <h6>American–European Quality Standards</h6>
-                        <p>
-                            Built using materials and finishing benchmarks inspired by premium US and European interiors.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Column 3 -->
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="premium-trust-card">
-                        <img src="{{ asset('assets/images/premium-quality.webp') }}" class="img-fluid mb-3"
-                            alt="">
-                        <h6>Premium, Made Accessible</h6>
-                        <p>
-                            Gallery‑grade look and durability. Thoughtfully priced for modern homes.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <p class="text-center para mt-4 mb-5">
-        Trusted by homeowners who want premium wall décor without compromise.
-    </p>
-
-
-
-
-    <!-- ✅ MOBILE-ONLY MAIN BANNER (correct mobile position) -->
-    <section class="main-banner-section d-block d-md-none">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="text-center">
-                        <h1 class="main-title">
-                            <span class="heading-2">
-                                Turn your photos into a masterpiece
-                            </span>
-                            <span class="heading-1">
-                                let your walls tell your story
-                            </span>
-                        </h1>
-
-                        <button type="button" class="btn design-btn filled"
-                            onclick="window.location.href='{{ route('design') }}';">
-                            Design your frame
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="main-banner-section d-none d-md-block">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-12">
-                    <div class="text-center">
-                        <h1 class="main-title">
-                            <span class="heading-2">Turn your
-                                photos into a masterpiece</span>
-                            <span class="heading-1">let your walls tell your story</span>
-                        </h1>
-                        <button type="button" class="btn design-btn filled"
-                            onclick="window.location.href='{{ route('design') }}';">
-                            <!-- <svg width="26.122" height="26.849" class="w-em h-em me-2 ttl-26 mb-0"
-                                    viewBox="0 0 26.122 26.849" xmlns="http://www.w3.org/2000/svg">
-                                    <g transform="translate(-858.42 -842.908)">
-                                        <path fill="currentColor" transform="translate(866.746 842.818)"
-                                            d="M16.622.112c-.067,0-.089.045-.134.067L8.121,6.114a1.558,1.558,0,0,0-.29.357l-.29.558a5.119,5.119,0,0,1,3.347,3.347l.558-.29A1.457,1.457,0,0,0,11.8,9.8l5.935-8.367c.067-.112.089-.2,0-.29L16.756.157A.193.193,0,0,0,16.622.09ZM5.957,8.97a2.947,2.947,0,0,0-2.923,2.99,5.983,5.983,0,0,1-2.99,5.154,6.135,6.135,0,0,0,2.99.759,5.918,5.918,0,0,0,5.935-5.935,3,3,0,0,0-2.99-2.99Z">
-                                        </path>
-                                        <path fill="currentColor" transform="translate(859.67 845.317)"
-                                            d="M23.511,24.441H-1.25V-1.25H14.126V1.2H1.2v20.8H21.064V8.171h2.447Z"></path>
-                                    </g>
-                                </svg> -->
-                            Design your frame
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
     <section class="clusters-section">
         <div class="container-fluid">
@@ -941,6 +770,61 @@
                         </button>
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ✅ MOBILE-ONLY MAIN BANNER (correct mobile position) -->
+    <section class="main-banner-section d-block d-md-none">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        <h1 class="main-title">
+                            <span class="heading-2">
+                                Turn your photos into a masterpiece
+                            </span>
+                            <span class="heading-1">
+                                let your walls tell your story
+                            </span>
+                        </h1>
+
+                        <button type="button" class="btn design-btn filled"
+                            onclick="window.location.href='{{ route('design') }}';">
+                            Design your frame
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-banner-section d-none d-md-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="text-center">
+                        <h1 class="main-title">
+                            <span class="heading-2">Turn your
+                                photos into a masterpiece</span>
+                            <span class="heading-1">let your walls tell your story</span>
+                        </h1>
+                        <button type="button" class="btn design-btn filled"
+                            onclick="window.location.href='{{ route('design') }}';">
+                            <!-- <svg width="26.122" height="26.849" class="w-em h-em me-2 ttl-26 mb-0"
+                                    viewBox="0 0 26.122 26.849" xmlns="http://www.w3.org/2000/svg">
+                                    <g transform="translate(-858.42 -842.908)">
+                                        <path fill="currentColor" transform="translate(866.746 842.818)"
+                                            d="M16.622.112c-.067,0-.089.045-.134.067L8.121,6.114a1.558,1.558,0,0,0-.29.357l-.29.558a5.119,5.119,0,0,1,3.347,3.347l.558-.29A1.457,1.457,0,0,0,11.8,9.8l5.935-8.367c.067-.112.089-.2,0-.29L16.756.157A.193.193,0,0,0,16.622.09ZM5.957,8.97a2.947,2.947,0,0,0-2.923,2.99,5.983,5.983,0,0,1-2.99,5.154,6.135,6.135,0,0,0,2.99.759,5.918,5.918,0,0,0,5.935-5.935,3,3,0,0,0-2.99-2.99Z">
+                                        </path>
+                                        <path fill="currentColor" transform="translate(859.67 845.317)"
+                                            d="M23.511,24.441H-1.25V-1.25H14.126V1.2H1.2v20.8H21.064V8.171h2.447Z"></path>
+                                    </g>
+                                </svg> -->
+                            Design your frame
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
