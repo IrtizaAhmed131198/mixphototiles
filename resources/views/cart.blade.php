@@ -120,7 +120,7 @@
                                         </div>
                                     </div>
                                     <div class="cartPrice">
-                                        <h5>₹{{ number_format($item['price'], 2) }}</h5>
+                                        <h5>₹{{ round($item['price'], 0) }}</h5>
                                     </div>
                                 </div>
                             @endforeach
@@ -222,7 +222,7 @@
 
                                 </div>
                                 <div class="cartPrice">
-                                    <h5>₹{{ number_format($gift, 2) }}</h5>
+                                    <h5>₹{{ round($gift, 0) }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -254,38 +254,45 @@
                                         </h5>
                                         <ul class="cartListpaymentdetails">
                                             <li>
-                                                <p class="customTilename">Sub Total
-                                                    {{-- <span class="text-body-tertiary">includes ₹394 GST @ 12%</span> --}}
-                                                </p>
-                                                <span id="subtotal" data-val="{{ $subtotal }}">
-                                                    ₹{{ number_format($subtotal, 2) }} </span>
+                                                <p class="customTilename">Sub Total</p>
+                                                <span id="subtotal" data-val="{{ round($subtotal) }}">
+                                                    ₹{{ round($subtotal) }}
+                                                </span>
                                             </li>
+
                                             <li>
-                                                <p class="customTilename">Discount
-                                                </p>
-                                                <span class="discounttag"> ₹{{ number_format($discount, 2) }} </span>
+                                                <p class="customTilename">Discount</p>
+                                                <span class="discounttag">
+                                                    ₹{{ round($discount) }}
+                                                </span>
                                             </li>
+
                                             <li style="display: none" id="gift-price">
-                                                <p class="customTilename">Gift
-                                                </p>
-                                                <span id="gift" data-val="{{ $gift }}">
-                                                    ₹{{ number_format($gift, 2) }} </span>
+                                                <p class="customTilename">Gift</p>
+                                                <span id="gift" data-val="{{ round($gift) }}">
+                                                    ₹{{ round($gift) }}
+                                                </span>
                                             </li>
+
                                             <li>
                                                 <p class="customTilename">Shipping</p>
-                                                <span id="shipping" data-val="{{ $shipping_price }}">
+                                                <span id="shipping" data-val="{{ round($shipping_price) }}">
                                                     @if($shipping_price == 0)
                                                         Free
                                                     @else
-                                                        ₹{{ number_format($shipping_price, 2) }}
+                                                        ₹{{ round($shipping_price) }}
                                                     @endif
                                                 </span>
                                             </li>
+
                                             <li class="grandTotal">
-                                                <p class="customTilename">Grand Total
-                                                </p>
-                                                <span id="grand_total" data-val="{{ $subtotal + $discount + $shipping_price }}">
-                                                    ₹{{ number_format($subtotal + $discount, 2) }} </span>
+                                                <p class="customTilename">Grand Total</p>
+                                                @php
+                                                    $grandTotal = (int) round((float)$subtotal + (float)$discount + (float)$shipping_price);
+                                                @endphp
+                                                <span id="grand_total" data-val="{{ $grandTotal }}">
+                                                    ₹{{ $grandTotal }}
+                                                </span>
                                             </li>
                                         </ul>
                                     </div>
@@ -515,7 +522,7 @@
 
                 const grandTotalElement = document.getElementById('grand_total');
                 grandTotalElement.setAttribute('data-val', grandTotal);
-                grandTotalElement.innerText = `₹${grandTotal.toFixed(2)}`;
+                grandTotalElement.innerText = `₹${Math.round(grandTotal)}`;
             }
         });
 
@@ -527,7 +534,7 @@
             // };
 
             const subTotal = $('#grand_total').attr('data-val'); // Example subtotal (can be dynamically fetched)
-            console.log(subTotal);
+            // console.log(subTotal);
 
             // Handle static coupon apply buttons
             document.querySelectorAll('.btn-input-apply').forEach(button => {
@@ -560,17 +567,17 @@
             function applyCoupon(couponCode) {
                 const discountPercent = staticCoupons[couponCode];
                 const discountAmount = (subTotal * discountPercent) / 100;
-                const discountedPrice = discountAmount.toFixed(2);
+                const discountedPrice = Math.round(discountAmount);
 
                 const discountSpan = document.querySelector('.discounttag');
                 if (discountSpan) {
-                    discountSpan.textContent = `-₹${discountAmount.toFixed(2)}`;
+                    discountSpan.textContent = `-₹${Math.round(discountAmount)}`;
                 }
 
                 const grandTotalElement = document.getElementById('grand_total');
                 if (grandTotalElement) {
                     const originalGrandTotal = parseFloat(grandTotalElement.getAttribute('data-val'));
-                    const newGrandTotal = (originalGrandTotal - discountAmount).toFixed(2);
+                    const newGrandTotal = Math.round(originalGrandTotal - discountAmount);
 
                     grandTotalElement.textContent = `₹${newGrandTotal}`;
                 }
@@ -662,7 +669,7 @@
 
                         const discountSpan = document.querySelector('.discounttag');
                         if (discountSpan) {
-                            discountSpan.textContent = `₹0.00`;
+                            discountSpan.textContent = `₹0`;
                         }
 
                         // Reset Grand Total to Original
@@ -670,7 +677,7 @@
                         if (grandTotalElement) {
                             const originalGrandTotal = parseFloat(grandTotalElement.getAttribute(
                                 'data-val'));
-                            grandTotalElement.textContent = `₹${originalGrandTotal.toFixed(2)}`;
+                            grandTotalElement.textContent = `₹${Math.round(originalGrandTotal)}`;
                         }
 
                         removeCouponFromSession();
@@ -721,14 +728,14 @@
                             couponContainer.innerHTML = appliedCouponHTML;
                             const discountSpan = document.querySelector('.discounttag');
                             if (discountSpan) {
-                                discountSpan.textContent = `-₹${data.coupon.discount.toFixed(2)}`;
+                                discountSpan.textContent = `-₹${Math.round(data.coupon.discount)}`;
                             }
 
                             const grandTotalElement = document.getElementById('grand_total');
                             if (grandTotalElement) {
                                 const originalGrandTotal = parseFloat(grandTotalElement.getAttribute(
                                     'data-val'));
-                                const newGrandTotal = (originalGrandTotal - data.coupon.discount).toFixed(2);
+                                const newGrandTotal = Math.round(originalGrandTotal - data.coupon.discount);
                                 grandTotalElement.textContent = `₹${newGrandTotal}`;
                             }
                             attachRemoveCouponListener();
@@ -748,7 +755,7 @@
 
                             const discountSpan = document.querySelector('.discounttag');
                             if (discountSpan) {
-                                discountSpan.textContent = `₹0.00`;
+                                discountSpan.textContent = `₹0`;
                             }
 
                             // Reset Grand Total to Original
@@ -756,7 +763,7 @@
                             if (grandTotalElement) {
                                 const originalGrandTotal = parseFloat(grandTotalElement.getAttribute(
                                     'data-val'));
-                                grandTotalElement.textContent = `₹${originalGrandTotal.toFixed(2)}`;
+                                grandTotalElement.textContent = `₹${Math.round(originalGrandTotal)}`;
                             }
                         }
                     })

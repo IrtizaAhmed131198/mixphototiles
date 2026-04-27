@@ -39,6 +39,9 @@ class SizesController extends Controller
                 // Return the full image URL for the image
                 return '<img src="' . asset($row->image) . '" alt="Image" style="max-width: 100px;">';
             })
+            ->addColumn('price', function ($row) {
+                return (int) round($row->price);
+            })
             ->addColumn('action', function ($sizes) {
                 return '<button class="btn btn-sm btn-brand-dark edit-sizes" data-id="'.$sizes->id.'">Edit</button>
                         <button class="btn btn-sm btn-brand-dark delete-sizes" data-id="'.$sizes->id.'">Delete</button>';

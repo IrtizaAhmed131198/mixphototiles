@@ -113,7 +113,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" step="0.01" class="form-control" name="price" placeholder="Price" required value="{{ old('price') }}">
+                                        <input type="number" class="form-control" name="price" placeholder="Price" required value="{{ old('price') }}">
                                         @error('price')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -122,7 +122,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" step="0.01" class="form-control" name="discount" placeholder="Discount" value="{{ old('discount') }}">
+                                        <input type="number" class="form-control" name="discount" placeholder="Discount" value="{{ old('discount') }}">
                                         @error('discount')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -226,13 +226,13 @@
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" step="0.01" class="form-control" name="price" placeholder="Price" required>
+                                        <input type="number" class="form-control" name="price" placeholder="Price" required>
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" step="0.01" class="form-control" name="discount" placeholder="Discount">
+                                        <input type="number" class="form-control" name="discount" placeholder="Discount">
                                     </div>
                                 </div>
 

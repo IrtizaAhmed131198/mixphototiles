@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" step="any" class="form-control" name="price" placeholder="Price" autocomplete="price" required>
+                                        <input type="number" class="form-control" name="price" placeholder="Price" autocomplete="price" required>
                                         @error('price')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" step="any" class="form-control" name="price" id="price" placeholder="Price" autocomplete="price" required>
+                                        <input type="number" class="form-control" name="price" id="price" placeholder="Price" autocomplete="price" required>
                                         @error('price')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

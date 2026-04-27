@@ -77,7 +77,7 @@ class ProfileController extends Controller
                 });
             })
             ->addColumn('price', function ($order) {
-                return number_format($order->total_amount, 2);
+                return round($order->total_amount, 0);
             })
             ->filterColumn('price', function ($query, $keyword) {
                 // Remove formatting (like commas) to match raw DB value

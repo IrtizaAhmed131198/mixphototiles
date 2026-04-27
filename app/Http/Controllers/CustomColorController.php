@@ -43,6 +43,9 @@ class CustomColorController extends Controller
                 // Return the full image URL for the frame_img
                 return '<img src="' . asset($row->frame_img) . '" alt="Frame Image" style="max-width: 100px;">';
             })
+            ->addColumn('price', function ($row) {
+                return (int) round($row->price);
+            })
             ->addColumn('action', function ($color) {
                 return '<button class="btn btn-sm btn-brand-dark edit-color" data-id="'.$color->id.'">Edit</button>
                         <button class="btn btn-sm btn-brand-dark delete-color" data-id="'.$color->id.'">Delete</button>';

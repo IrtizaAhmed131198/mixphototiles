@@ -122,7 +122,7 @@ class MainController extends Controller
     public function cart()
     {
         $cartItems = session()->get('cart', []);
-        $discount = get_setting('discount') ?? 0;
+        $discount = (float) get_setting('discount') ?? 0;
         $shipping_price = get_setting('shipping_price') ?? 0;
         $gift = 30;
         $today = Carbon::today()->format('Y-m-d');

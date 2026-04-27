@@ -39,6 +39,9 @@ class LedController extends Controller
                 // Return the full image URL for the option_img
                 return '<img src="' . asset($row->image) . '" alt="Image" style="max-width: 100px;">';
             })
+            ->addColumn('price', function ($row) {
+                return (int) round($row->price);
+            })
             ->addColumn('action', function ($led) {
                 return '<button class="btn btn-sm btn-brand-dark edit-led" data-id="'.$led->id.'">Edit</button>
                         <button class="btn btn-sm btn-brand-dark delete-led" data-id="'.$led->id.'">Delete</button>';

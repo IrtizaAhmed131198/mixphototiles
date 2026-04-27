@@ -65,8 +65,8 @@ function calculateBundlePrice(subtotal, n) {
     // Step 4: final bundle total
     const bundleTotal = Math.max(floorCheck, discounted);
 
-    const perFrame    = parseFloat((bundleTotal / n).toFixed(2));
-    const saving      = parseFloat((subtotal - bundleTotal).toFixed(2));
+    const perFrame = Math.round(bundleTotal / n);
+    const saving   = Math.round(subtotal - bundleTotal);
 
     return { bundleTotal, perFrame, saving, discount };
 }
@@ -459,7 +459,7 @@ function updateFramePrice(frameConfig) {
         ? sizePrice + finishPrice + ledPrice
         : item_price + finishPrice + ledPrice;
 
-    unitPrice = parseFloat(unitPrice.toFixed(2));
+    unitPrice = parseFloat(Math.round(unitPrice));
 
     // console.log(unitPrice);
     document.getElementById("price-show").textContent = "₹" + unitPrice;

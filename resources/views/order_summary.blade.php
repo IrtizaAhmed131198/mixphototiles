@@ -202,7 +202,7 @@
                                     </figure>
                                     <div class="cardlistdetail">
                                         <p class="heading-6">{{ $item['name'] }}</p>
-                                        <h5>₹{{ number_format($item['total'], 2) }}</h5>
+                                        <h5>₹{{ round($item['total']) }}</h5>
                                     </div>
                                 </div>
                             @endforeach
@@ -213,7 +213,7 @@
                                     <ul class="cartListpaymentdetails">
                                         <li>
                                             <p class="customTilename">Sub Total</p>
-                                            <span>₹{{ number_format($cartGrandTotal, 2) }}</span>
+                                            <span>₹{{ round($cartGrandTotal) }}</span>
                                         </li>
 
                                         @if ($appliedCoupon['code'])
@@ -221,13 +221,13 @@
                                                 <p class="customTilename">Coupon Applied ({{ $appliedCoupon['code'] }})
                                                 </p>
                                                 <span class="discounttag">-
-                                                    ₹{{ number_format($appliedCoupon['discount'], 2) }}</span>
+                                                    ₹{{ round($appliedCoupon['discount']) }}</span>
                                             </li>
                                         @endif
 
                                         {{-- <li>
                                         <p class="customTilename">Gift Card</p>
-                                        <span class="">₹{{ number_format($giftCard, 2) }}</span>
+                                        <span class="">₹{{ $giftCard }}</span>
                                     </li> --}}
 
                                         <li>
@@ -236,7 +236,7 @@
                                                 @if($shipping == 0)
                                                     Free
                                                 @else
-                                                    ₹{{ number_format($shipping, 2) }}
+                                                    ₹{{ round($shipping) }}
                                                 @endif
                                             </span>
                                         </li>
@@ -246,7 +246,7 @@
                                         @endphp
                                         <li class="grandTotal">
                                             <p class="customTilename">Grand Total</p>
-                                            <span>₹{{ number_format($finalTotal, 2) }}</span>
+                                            <span>₹{{ round($finalTotal) }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -450,12 +450,16 @@
                 if (shippingPrice === 0) {
                     document.querySelector('.shipping_total').textContent = 'Free';
                 } else {
-                    document.querySelector('.shipping_total').textContent = `₹${shippingPrice.toFixed(2)}`;
+                    document.querySelector('.shipping_total').textContent = `₹${Math.round(shippingPrice)}`;
                 }
-                document.querySelector('#shippingInput').value = `${shippingPrice.toFixed(2)}`;
 
+                // input me bhi integer bhejo
+                document.querySelector('#shippingInput').value = Math.round(shippingPrice);
+
+                // Grand Total
                 const newGrandTotal = (cartGrandTotal + giftCard + shippingPrice) - discount;
-                document.querySelector('.grandTotal span').textContent = `₹${newGrandTotal.toFixed(2)}`;
+
+                document.querySelector('.grandTotal span').textContent = `₹${Math.round(newGrandTotal)}`;
             });
         });
 

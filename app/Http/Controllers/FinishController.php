@@ -35,6 +35,9 @@ class FinishController extends Controller
                 $counter++;
                 return $counter;
             })
+            ->addColumn('price', function ($row) {
+                return (int) round($row->price);
+            })
             ->addColumn('action', function ($finish) {
                 return '<button class="btn btn-sm btn-brand-dark edit-finish" data-id="'.$finish->id.'">Edit</button>
                         <button class="btn btn-sm btn-brand-dark delete-finish" data-id="'.$finish->id.'">Delete</button>';

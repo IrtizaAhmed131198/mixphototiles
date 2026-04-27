@@ -298,15 +298,15 @@
                                     N/A
                                 @endif
                             {{-- <td>{{ $item->quantity }}</td> --}}
-                            <td>Rs.{{ number_format($price, 2) }}</td>
-                            <td>Rs.{{ number_format($price * $quantity, 2) }}</td>
+                            <td>Rs.{{ round($price, 0) }}</td>
+                            <td>Rs.{{ round($price * $quantity, 0) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
 
             <div class="text-end mt-3">
-                <h4>Total Amount: Rs.{{ number_format($order->total_amount, 2) }}</h4>
+                <h4>Total Amount: Rs.{{ round($order->total_amount, 0) }}</h4>
             </div>
 
             @if ($item->product->type == 'manual')

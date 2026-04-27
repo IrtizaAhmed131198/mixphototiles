@@ -114,6 +114,12 @@ class ProductController extends Controller
                 $url = asset($product->image);
                 return '<img src="'.$url.'" alt="Product Image" width="50" height="50">';
             })
+            ->addColumn('price', function ($product) {
+                return (int) round($product->price);
+            })
+            ->addColumn('discount', function ($product) {
+                return (int) round($product->discount);
+            })
             ->addColumn('coordinates', function ($product) {
                 return !empty($product->coordinates)
                     ? '<span class="text-success">Coordinates have been added</span>'

@@ -35,6 +35,9 @@ class CouponController extends Controller
                 $counter++;
                 return $counter;
             })
+            ->addColumn('discount_amount', function ($row) {
+                return (int) round($row->discount_amount);
+            })
             ->addColumn('action', function ($coupon) {
                 return '<button class="btn btn-sm btn-brand-dark edit-coupon" data-id="'.$coupon->id.'">Edit</button>
                         <button class="btn btn-sm btn-brand-dark delete-coupon" data-id="'.$coupon->id.'">Delete</button>';
