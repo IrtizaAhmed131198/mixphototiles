@@ -499,6 +499,7 @@ class MainController extends Controller
                 'product_id' => $product->id,
                 'name'       => $product->name,
                 'image'      => $product->image,
+                'image_name' => $sessionImage->filename,
                 'quantity'   => 1,
                 'price'      => $price,
                 'total'      => $bundleResult['bundleTotal'] + (float)(get_setting('delivery_cost') ?? 0), // grand total with delivery
@@ -759,6 +760,36 @@ class MainController extends Controller
                 $product->delete(); // permanently delete
                 // OR $product->update(['status' => 0]); // soft remove if you prefer
             }
+
+            if (!empty($removed['image_name'])) {
+
+                $sessionId = session()->getId();
+
+                $sessionImage = SessionImage::where('session_id', $sessionId)
+                    ->where('filename', $removed['image_name'])
+                    ->first();
+
+                if ($sessionImage) {
+
+                    // delete DB record
+                    $sessionImage->delete();
+
+                    // delete files
+                    $filePath = public_path($sessionImage->filename);
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                    }
+
+                    $originalFilePath = public_path($sessionImage->original_file_url);
+                    if (file_exists($originalFilePath)) {
+                        unlink($originalFilePath);
+                    }
+
+                    // update quantity
+                    $quantity = session()->get('image_quantity', 0);
+                    session()->put('image_quantity', max(0, $quantity - 1));
+                }
+            }
         }
 
         // Step 3: keep only the remaining items in cart
@@ -827,8 +858,36 @@ class MainController extends Controller
 
     public function clear_cart()
     {
-        // Remove all cart items
+        $cart = session()->get('cart', []);
+        $sessionId = session()->getId();
+
+        foreach ($cart as $item) {
+
+            if (!empty($item['image_name'])) {
+
+                $sessionImage = SessionImage::where('session_id', $sessionId)
+                    ->where('filename', $item['image_name'])
+                    ->first();
+
+                if ($sessionImage) {
+
+                    $sessionImage->delete();
+
+                    $filePath = public_path($sessionImage->filename);
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                    }
+
+                    $originalFilePath = public_path($sessionImage->original_file_url);
+                    if (file_exists($originalFilePath)) {
+                        unlink($originalFilePath);
+                    }
+                }
+            }
+        }
+
         session()->forget('cart');
+        session()->put('image_quantity', 0);
 
         return redirect()->back()->with('success', 'All items removed from cart.');
     }
