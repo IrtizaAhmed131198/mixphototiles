@@ -323,10 +323,10 @@
                                     @endphp
                                     @if ($total_price != null)
                                         <span class="currency" data-base="{{ $total_price }}"
-                                            data-val="{{ $total_price }}">₹{{ number_format($total_price, 2) }}</span>
+                                            data-val="{{ $total_price }}">₹{{ number_format($total_price, 0) }}</span>
                                     @else
                                         <span class="currency" data-base="{{ $finalPrice }}"
-                                            data-val="{{ $finalPrice }}">₹{{ number_format($finalPrice, 2) }}</span>
+                                            data-val="{{ $finalPrice }}">₹{{ number_format($finalPrice, 0) }}</span>
                                     @endif
                                 </h5>
                                 <p class="discount">

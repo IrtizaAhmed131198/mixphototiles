@@ -238,8 +238,8 @@
     }
     
     .trust-icon {
-        width: 64px;
-        height: 64px;
+        width: 105px;
+        height: 105px;
         margin: 0 auto 18px;
         border-radius: 50%;
         background: rgba(235, 35, 113, 0.08);
@@ -249,8 +249,8 @@
     }
     
     .trust-icon img {
-        width: 32px;
-        height: 32px;
+        width: 65px;
+        height: 65px;
         object-fit: contain;
     }
     
@@ -630,71 +630,7 @@
         </div>
     </section>
 
-    <!-- =========================
-    CENTERED TRUST SECTION
-    ========================= -->
-
-    <section class="premium-trust-section">
-        <div class="container">
-    
-            <div class="text-center">
-                <h2 class="trust-title">We’ve Got You Covered</h2>
-            </div>
-    
-            <!-- ICON CARDS -->
-            <div class="trust-card-grid">
-    
-                <div class="trust-card">
-                    <div class="trust-icon">
-                        <img src="{{ asset('assets/icons/placeholder.svg') }}"
-                             alt="Magnetic mounting system">
-                    </div>
-                    <h4>Magnetic Mounting System</h4>
-                    <p>
-                        A refined, calibrated magnetic system 
-                        provides lifetime stability.
-                    </p>
-                </div>
-                
-    
-                <div class="trust-card">
-                    <div class="trust-icon">
-                        <img src="{{ asset('assets/icons/placeholder.svg') }}"
-                             alt="Rental home safe">
-                    </div>
-                    <h4>Rental‑Home Safe</h4>
-                    <p>
-                        Designed to hold frames securely while keeping your walls untouched.
-                    </p>
-                </div>
-    
-                <div class="trust-card">
-                    <div class="trust-icon">
-                        <img src="{{ asset('assets/icons/placeholder.svg') }}"
-                             alt="Built for Indian walls">
-                    </div>
-                    <h4>Built for Indian Walls</h4>
-                    <p>
-                        Inspired by premium American and European mounting standards,
-                        adapted for Indian painted walls.
-                    </p>
-                </div>
-    
-            </div>
-    
-            <!-- CTA -->
-            <div class="text-center trust-cta">
-                <a href="{{ route('design') }}" class="btn design-btn filled">
-                    Design Your Frame
-                </a>
-            </div>
-    
-        </div>
-    </section>
-
-
-
-
+ 
     
 
     <section class="clusters-section">
@@ -733,7 +669,7 @@
                                             <div class="card-prize">
                                                 <h4 class="product-prize">
                                                     <span class="realPize">
-                                                        ₹ {{ number_format($finalPrice, 2) }}
+                                                        ₹ {{ number_format($finalPrice, 0) }}
                                                     </span>
                                                     @if ($product->discount > 0)
                                                         <span class="cutPrize">
@@ -772,6 +708,69 @@
 
                 </div>
             </div>
+        </div>
+    </section>
+    
+    
+       <!-- =========================
+    CENTERED TRUST SECTION
+    ========================= -->
+
+    <section class="premium-trust-section">
+        <div class="container">
+    
+            <div class="text-center">
+                <h2 class="trust-title">We’ve Got You Covered</h2>
+            </div>
+    
+            <!-- ICON CARDS -->
+            <div class="trust-card-grid">
+    
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <img src="{{ asset('assets/icons/magnet.png') }}"
+                             alt="Magnetic mounting system">
+                    </div>
+                    <h4>Magnetic Mounting System</h4>
+                    <p>
+                        A refined, calibrated magnetic system 
+                        provides lifetime stability.
+                    </p>
+                </div>
+                
+    
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <img src="{{ asset('assets/icons/rental-safe.png') }}"
+                             alt="Rental home safe">
+                    </div>
+                    <h4>Rental‑Home Safe</h4>
+                    <p>
+                        Designed to hold frames securely while keeping your walls untouched.
+                    </p>
+                </div>
+    
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <img src="{{ asset('assets/icons/indian-wall.png') }}"
+                             alt="Built for Indian walls">
+                    </div>
+                    <h4>Built for Indian Walls</h4>
+                    <p>
+                        Inspired by premium American and European mounting standards,
+                        adapted for Indian painted walls.
+                    </p>
+                </div>
+    
+            </div>
+    
+            <!-- CTA -->
+            <div class="text-center trust-cta">
+                <a href="{{ route('design') }}" class="btn design-btn filled">
+                    Design Your Frame
+                </a>
+            </div>
+    
         </div>
     </section>
     
