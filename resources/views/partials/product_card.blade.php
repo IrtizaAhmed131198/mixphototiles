@@ -15,11 +15,11 @@
                     <div class="card-prize">
                         <h4 class="product-prize">
                             <span class="realPize">
-                                ₹ {{ number_format($finalPrice, 2) }}
+                                ₹ {{ round($finalPrice) }}
                             </span>
                             @if ($product->discount > 0)
                                 <span class="cutPrize">
-                                    <del>₹ {{ number_format($product->price, 2) }}</del>
+                                    <del>₹ {{ round($product->price) }}</del>
                                 </span>
                                 <span class="discountPercent">
                                     {{ round($product->discount) }}% OFF
