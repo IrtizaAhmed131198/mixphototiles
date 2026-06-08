@@ -25,7 +25,7 @@
                         </div>
                         <div class="nav-item">
                             <a title="javascript:;" rel="noopener noreferrer" target="_blank" class="nav-link"
-                                href="https://www.instagram.com/magnetickphotoframes/">
+                                href="https://www.instagram.com/magneticphotoframes_official/">
                                 <svg width="22.019" height="22.019" class="w-em h-em d-block"
                                     viewBox="0 0 22.019 22.019" xmlns="http://www.w3.org/2000/svg">
                                     <g transform="translate(3827 6277.01)">

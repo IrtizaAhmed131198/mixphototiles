@@ -460,7 +460,7 @@
                             <img src="{{ asset('assets/icons/made-in-us.jpg') }}" alt="Made in US"
                                 class="benefit-icon-img">
                         </div>
-                        <div class="benefit-title">Materials from US</div>
+                        <div class="benefit-title">American standard</div>
                         <p class="benefit-subtitle">US &amp; Euro standard finishing</p>
                     </div>
                 </div>
@@ -757,8 +757,8 @@
                     </div>
                     <h4>Built for Indian Walls</h4>
                     <p>
-                        Inspired by premium American and European mounting standards,
-                        adapted for Indian painted walls.
+                        Design Engineered with American and European standards,
+                        for Indian painted walls.
                     </p>
                 </div>
     
