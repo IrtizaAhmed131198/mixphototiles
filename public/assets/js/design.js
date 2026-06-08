@@ -375,12 +375,13 @@ function updateGrandTotal() {
                     const sizePrice    = parseFloat(frameConfig?.size?.frame_price) || 0;
                     const finishPrice  = parseFloat(frameConfig?.finish?.finish_price) || 0;
                     const ledPrice     = parseFloat(frameConfig?.led?.price) || 0;
+                    const designPrice  = parseFloat(frameConfig?.design?.design_price) || 0;
 
                     // Per-frame price: use size price as base (client requirement)
                     // finish & led are addons on top of size price
                     const frameUnitPrice = sizePrice > 0
-                        ? sizePrice + finishPrice + ledPrice
-                        : item_price + finishPrice + ledPrice;
+                        ? sizePrice + finishPrice + ledPrice + designPrice
+                        : item_price + finishPrice + ledPrice + designPrice;
 
                     subtotal += frameUnitPrice;
                 });
@@ -453,11 +454,11 @@ function updateFramePrice(frameConfig) {
     const sizePrice   = parseFloat(frame_config.size?.frame_price)     || 0;
     const finishPrice = parseFloat(frame_config.finish?.finish_price)   || 0;
     const ledPrice    = parseFloat(frame_config.led?.price)             || 0;
-
+    const designPrice = parseFloat(frame_config.design?.design_price)  || 0;
     // Use size price as base; fallback to item_price if size not set
     let unitPrice = sizePrice > 0
-        ? sizePrice + finishPrice + ledPrice
-        : item_price + finishPrice + ledPrice;
+        ? sizePrice + finishPrice + ledPrice + designPrice
+        : item_price + finishPrice + ledPrice + designPrice;
 
     unitPrice = parseFloat(Math.round(unitPrice));
 

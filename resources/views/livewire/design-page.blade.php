@@ -229,7 +229,7 @@
                                         </li>
 
                                         <li type="button" class="parentProperties frame-change dropdown-item"
-                                            data-design="frameless-card-design" data-price="0" data-text="Frameless">
+                                            data-design="frameless-card-design" data-price="10" data-text="Frameless">
                                             <figure class="PropertiesleftChild">
                                                 <img alt="drawer" width="72" height="72" class="LeftSidebar"
                                                     src="{{ asset('assets/images/1704186603681.png') }}">
