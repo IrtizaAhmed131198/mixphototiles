@@ -375,13 +375,12 @@ function updateGrandTotal() {
                     const sizePrice    = parseFloat(frameConfig?.size?.frame_price) || 0;
                     const finishPrice  = parseFloat(frameConfig?.finish?.finish_price) || 0;
                     const ledPrice     = parseFloat(frameConfig?.led?.price) || 0;
-                    const designPrice  = parseFloat(frameConfig?.design?.design_price) || 0;
 
                     // Per-frame price: use size price as base (client requirement)
                     // finish & led are addons on top of size price
                     const frameUnitPrice = sizePrice > 0
-                        ? sizePrice + finishPrice + ledPrice + designPrice
-                        : item_price + finishPrice + ledPrice + designPrice;
+                        ? sizePrice + finishPrice + ledPrice
+                        : item_price + finishPrice + ledPrice;
 
                     subtotal += frameUnitPrice;
                 });
@@ -454,11 +453,10 @@ function updateFramePrice(frameConfig) {
     const sizePrice   = parseFloat(frame_config.size?.frame_price)     || 0;
     const finishPrice = parseFloat(frame_config.finish?.finish_price)   || 0;
     const ledPrice    = parseFloat(frame_config.led?.price)             || 0;
-    const designPrice = parseFloat(frame_config.design?.design_price)  || 0;
     // Use size price as base; fallback to item_price if size not set
     let unitPrice = sizePrice > 0
-        ? sizePrice + finishPrice + ledPrice + designPrice
-        : item_price + finishPrice + ledPrice + designPrice;
+        ? sizePrice + finishPrice + ledPrice
+        : item_price + finishPrice + ledPrice;
 
     unitPrice = parseFloat(Math.round(unitPrice));
 
@@ -963,6 +961,12 @@ designOptions.forEach((option) => {
                 const sizeText = sizeOption.querySelector(".propertyName").textContent.trim();
                 sizeOption.style.display = sizeText === '8" X 8"' ? "flex" : "none";
             });
+
+            const eightByEight = Array.from(sizeOptionsTemp).find(
+                (s) => s.querySelector(".propertyName").textContent.trim() === '8" X 8"'
+            );
+            if (eightByEight) eightByEight.click();
+
         } else {
             sizeOptionsTemp.forEach((sizeOption) => { sizeOption.style.display = "flex"; });
         }
