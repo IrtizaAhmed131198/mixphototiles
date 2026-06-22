@@ -1,5 +1,6 @@
 @foreach ($products as $product)
     @php
+        dump($product->id);
         $discountAmount = ($product->price * $product->discount) / 100;
         $finalPrice = $product->price - $discountAmount;
         $url = url('collection') . '/' . $product->slug;
