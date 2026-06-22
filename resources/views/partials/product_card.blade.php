@@ -1,4 +1,3 @@
-@dump($products)
 @foreach ($products as $product)
     @php
         $discountAmount = ($product->price * $product->discount) / 100;
