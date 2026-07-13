@@ -403,8 +403,6 @@ class MainController extends Controller
 
     public function add_to_cart(Request $request)
     {
-        session()->forget('cart');
-
         $quantity = $request->input('quantity', 1);
         $sessionId = session()->getId();
         $sessionImages = SessionImage::where('session_id', $sessionId)->get();
@@ -418,6 +416,19 @@ class MainController extends Controller
 
         $userId = auth()->id();  // Assuming user is logged in
         $sessionCart = session()->get('cart', []);
+        
+        // Remove existing manual items from the cart to replace them with the updated session images
+        foreach ($sessionCart as $key => $item) {
+            if (isset($item['type']) && $item['type'] === 'manual') {
+                $product = Product::find($item['product_id']);
+                if ($product) {
+                    $product->delete();
+                }
+                unset($sessionCart[$key]);
+            }
+        }
+        $sessionCart = array_values($sessionCart);
+
         $productsAdded = [];
 
         $subtotal = 0;
