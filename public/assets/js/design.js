@@ -486,10 +486,12 @@ function calculateFrameCost_legacy(quantity = 1) {
 
 const uploadPhotoElements = document.querySelectorAll(".upload-photo");
 uploadPhotoElements.forEach((element) => {
-    element.addEventListener("change", async function (event) {
+    element.addEventListener("change", function (event) {
         const mainLoader = document.querySelector(".loadermain");
         if (mainLoader) mainLoader.style.display = "flex";
-        await processAndUploadImages(event.target.files, mainLoader);
+        setTimeout(async () => {
+            await processAndUploadImages(event.target.files, mainLoader);
+        }, 50);
     });
 });
 
@@ -615,8 +617,30 @@ async function processAndUploadImages(files, mainLoader) {
 }
 
 function isImageBlurred(canvas) {
-    const ctx = canvas.getContext("2d");
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    // Create a temporary canvas for downscaling
+    const tempCanvas = document.createElement("canvas");
+    const tempCtx = tempCanvas.getContext("2d");
+
+    // Downscale the image to a maximum dimension of 400px (keeps aspect ratio)
+    const maxDimension = 400;
+    let width = canvas.width;
+    let height = canvas.height;
+
+    if (width > maxDimension || height > maxDimension) {
+        if (width > height) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+        } else {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+        }
+    }
+
+    tempCanvas.width = width;
+    tempCanvas.height = height;
+    tempCtx.drawImage(canvas, 0, 0, width, height);
+
+    const imageData = tempCtx.getImageData(0, 0, width, height);
     const pixels = imageData.data;
 
     let grayData = [];
@@ -626,16 +650,15 @@ function isImageBlurred(canvas) {
     }
 
     let laplacianSqSum = 0;
-    const width = canvas.width;
-    for (let y = 1; y < canvas.height - 1; y++) {
-        for (let x = 1; x < canvas.width - 1; x++) {
+    for (let y = 1; y < height - 1; y++) {
+        for (let x = 1; x < width - 1; x++) {
             const idx = y * width + x;
             const laplacian = -4 * grayData[idx] + grayData[idx - 1] + grayData[idx + 1] + grayData[idx - width] + grayData[idx + width];
             laplacianSqSum += laplacian * laplacian;
         }
     }
 
-    const variance = laplacianSqSum / (canvas.width * canvas.height);
+    const variance = laplacianSqSum / (width * height);
     return variance < 100;
 }
 
