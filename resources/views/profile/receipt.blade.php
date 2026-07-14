@@ -164,7 +164,7 @@
                 <p><strong>Customer Name:</strong> {{$order->user->name }}</p>
                 <p><strong>Customer Email:</strong> {{$order->user->email }}</p>
                 <p><strong>Customer Phone:</strong> {{$order->user->phone }}</p>
-                <p><strong>Address:</strong> {{$order->address->address_line1.' '.$order->address->address_line2 }}</p>
+                <p><strong>Address:</strong> {{$order->address->address_line1.' '.$order->address->address_line2.', '.$order->address->city.' - '.$order->address->pincode }}</p>
                 <p><strong>Status:</strong> {{ ucfirst($order->status) }}</p>
                 <p><strong>Date:</strong> {{ $order->created_at->format('Y-m-d H:i') }}</p>
                 <p><strong>Payment Method:</strong> {{ strtoupper($order->payment_method) }}</p>
@@ -498,8 +498,10 @@
             // Set dynamic classes
             try {
                 const config = JSON.parse(frameConfigRaw);
+                console.log(config);
                 const designClass = config?.design?.designClass || 'classic-card-design';
                 const shadowClass = config?.color?.shadowClass || 'box-shadow-black';
+                console.log(designClass, shadowClass);
                 // let frameClass;
                 // if(frameClass == 'frameless-card-design') {
                 //     frameClass = 'frameinner-less';
@@ -512,6 +514,20 @@
 
                 // Update wrapper classes
                 frameWrapper.className = `frame-main-wrap ${designClass} ${shadowClass} frame-main-wrap-main`;
+
+                // Update dynamic border-image-source
+                if (designClass !== 'frameless-card-design' && config?.color?.img_src) {
+                    const baseUrl = '{{ asset('') }}';
+                    const imgSrc = config.color.img_src;
+                    const fullImgUrl = imgSrc.startsWith('http://') || imgSrc.startsWith('https://') || imgSrc.startsWith('/') 
+                        ? imgSrc 
+                        : baseUrl + imgSrc;
+                    frameWrapper.style.borderImageSource = `url('${fullImgUrl}')`;
+                    frameWrapper.style.borderImageSlice = "30";
+                    frameWrapper.style.borderImageRepeat = "stretch";
+                } else {
+                    frameWrapper.style.borderImageSource = 'none';
+                }
             } catch (e) {
                 console.error('Invalid frame_config:', e);
             }
