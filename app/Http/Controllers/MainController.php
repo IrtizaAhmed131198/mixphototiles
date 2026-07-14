@@ -808,12 +808,21 @@ class MainController extends Controller
             return $item['product_id'] != $productId;
         });
 
-        // Step 4: recalc subtotal first
+        // Step 4: recalc subtotal first (only for manual items)
         $subtotal = 0;
+        $manualItemsCount = 0;
 
         foreach ($updatedCart as $item) {
+            if (isset($item['type']) && $item['type'] == 'collection') {
+                continue;
+            }
+
             $product = Product::find($item['product_id']);
             if ($product) {
+                if ($product->type == 'collection' || $product->type == 'manual_collection') {
+                    continue;
+                }
+
                 $frameConfig = json_decode($product->frame_config, true);
 
                 $sizePrice   = (float) ($frameConfig['size']['frame_price'] ?? 0);
@@ -825,24 +834,34 @@ class MainController extends Controller
                     : (float) get_setting('average_cost') + $finishPrice + $ledPrice;
 
                 $subtotal += $unitPrice;
+                $manualItemsCount++;
             }
         }
 
-        // Apply SAME bundle logic
-        $quantity = count($updatedCart);
-        $bundleResult = calculateBundlePrice($subtotal, $quantity);
+        // Apply SAME bundle logic (only if there are remaining manual items)
+        if ($manualItemsCount > 0) {
+            $bundleResult = calculateBundlePrice($subtotal, $manualItemsCount);
 
-        // Step 5: update per item price
-        foreach ($updatedCart as &$item) {
-            $price = round($bundleResult['perFrame'], 2);
+            // Step 5: update per item price (only for manual items)
+            foreach ($updatedCart as &$item) {
+                if (isset($item['type']) && $item['type'] == 'collection') {
+                    continue;
+                }
 
-            $item['price'] = $price;
-            $item['total'] = $bundleResult['bundleTotal'] + (float)(get_setting('delivery_cost') ?? 0);
+                $product = Product::find($item['product_id']);
+                if ($product) {
+                    if ($product->type == 'collection' || $product->type == 'manual_collection') {
+                        continue;
+                    }
 
-            $product = Product::find($item['product_id']);
-            if ($product) {
-                $product->price = $price;
-                $product->save();
+                    $price = round($bundleResult['perFrame'], 2);
+
+                    $item['price'] = $price;
+                    $item['total'] = $bundleResult['bundleTotal'] + (float)(get_setting('delivery_cost') ?? 0);
+
+                    $product->price = $price;
+                    $product->save();
+                }
             }
         }
 

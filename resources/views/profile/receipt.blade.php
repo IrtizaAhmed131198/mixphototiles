@@ -498,10 +498,8 @@
             // Set dynamic classes
             try {
                 const config = JSON.parse(frameConfigRaw);
-                console.log(config);
                 const designClass = config?.design?.designClass || 'classic-card-design';
                 const shadowClass = config?.color?.shadowClass || 'box-shadow-black';
-                console.log(designClass, shadowClass);
                 // let frameClass;
                 // if(frameClass == 'frameless-card-design') {
                 //     frameClass = 'frameinner-less';
@@ -519,8 +517,8 @@
                 if (designClass !== 'frameless-card-design' && config?.color?.img_src) {
                     const baseUrl = '{{ asset('') }}';
                     const imgSrc = config.color.img_src;
-                    const fullImgUrl = imgSrc.startsWith('http://') || imgSrc.startsWith('https://') || imgSrc.startsWith('/') 
-                        ? imgSrc 
+                    const fullImgUrl = imgSrc.startsWith('http://') || imgSrc.startsWith('https://') || imgSrc.startsWith('/')
+                        ? imgSrc
                         : baseUrl + imgSrc;
                     frameWrapper.style.borderImageSource = `url('${fullImgUrl}')`;
                     frameWrapper.style.borderImageSlice = "30";
