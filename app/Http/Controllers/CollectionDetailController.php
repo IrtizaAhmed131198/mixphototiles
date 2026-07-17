@@ -25,7 +25,8 @@ class CollectionDetailController extends Controller
             $product = Product::where('slug', $slug)->with('additionalImages')->first();
         }
 
-        $cluster_images = ClusterImage::where('created_at', '>=', Carbon::now()->subDay())
+        $uploadedIds = session()->get('uploaded_cluster_image_ids', []);
+        $cluster_images = ClusterImage::whereIn('id', $uploadedIds)
             ->orderBy('id', 'desc')
             ->limit(12)
             ->get();
@@ -74,7 +75,9 @@ class CollectionDetailController extends Controller
         $perPage = 12;
         $offset = ($page - 1) * $perPage;
 
-        $cluster_images = ClusterImage::where('created_at', '>=', Carbon::now()->subDay())
+        $uploadedIds = session()->get('uploaded_cluster_image_ids', []);
+
+        $cluster_images = ClusterImage::whereIn('id', $uploadedIds)
             ->orderBy('id', 'desc')
             ->offset($offset)
             ->limit($perPage)

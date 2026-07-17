@@ -1240,6 +1240,9 @@ class MainController extends Controller
                     'image_path' => $imagePath
                 ]);
 
+                // Store in session to isolate uploads by user
+                session()->push('uploaded_cluster_image_ids', $clusterImage->id);
+
                 $imageData[] = [
                     'id' => $clusterImage->id,
                     'image_path' => asset($imagePath),
@@ -1260,12 +1263,20 @@ class MainController extends Controller
             $image->delete();
         }
 
+        // Remove from session
+        $uploaded = session()->get('uploaded_cluster_image_ids', []);
+        if (($key = array_search($request->image_id, $uploaded)) !== false) {
+            unset($uploaded[$key]);
+            session()->put('uploaded_cluster_image_ids', array_values($uploaded));
+        }
+
         return response()->json(['success' => true, 'message' => 'Image deleted successfully']);
     }
 
     public function fetch_images(Request $request)
     {
-        $images = ClusterImage::get();
+        $uploadedIds = session()->get('uploaded_cluster_image_ids', []);
+        $images = ClusterImage::whereIn('id', $uploadedIds)->get();
 
         return response()->json(['success' => true, 'data' => $images]);
     }
