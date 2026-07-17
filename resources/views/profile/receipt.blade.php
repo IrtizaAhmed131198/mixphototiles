@@ -363,10 +363,10 @@
                                             <div class="clusterFrameWrp {{ $colorClass }} {{ $frameClass }}"
                                                 id="cluster-block-{{ $cluster->id }}"
                                                 style="position: absolute;
-                                            top: {{ $cluster->y }}px;
-                                            left: {{ $cluster->x }}px;
-                                            width: {{ $cluster->width }}px;
-                                            height: {{ $cluster->height }}px;">
+                                            top: {{ $cluster->y }}%;
+                                            left: {{ $cluster->x }}%;
+                                            width: {{ $cluster->width }}%;
+                                            height: {{ $cluster->height }}%;">
 
                                                 <div class="frame-main-wrap">
                                                     <div class="frameborder">
