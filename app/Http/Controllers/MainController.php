@@ -583,14 +583,40 @@ class MainController extends Controller
             $imageUrl = asset('uploads/cart_images/' . $mainImageName);
         }
 
-        // Slug (make unique slug from name)
-        $slug = Str::slug($request->input('name') . '-' . time(). '-'.$request->input('product_id'));
-
         $exist_prod = Product::find($request->input('product_id'));
+        $name = $exist_prod ? $exist_prod->name : $request->input('name');
+        // Clean any existing customization details in parentheses
+        $name = preg_replace('/\s*\(.*?\)\s*$/', '', $name);
+
+        // Build product name with customization details
+        $config = json_decode($request->input('configuration'), true);
+        if ($config) {
+            $details = [];
+            if (!empty($config['color']['name'])) {
+                $details[] = $config['color']['name'];
+            }
+            if (!empty($config['finish']['name'])) {
+                $details[] = $config['finish']['name'];
+            }
+            if (!empty($config['frame']['name']) && $config['frame']['name'] !== 'none') {
+                $details[] = $config['frame']['name'];
+            }
+            if (!empty($config['led']['val']) && strtolower($config['led']['val']) === 'yes') {
+                $details[] = 'LED Frame';
+            }
+            
+            if (count($details) > 0) {
+                $name .= ' (' . implode(', ', $details) . ')';
+            }
+        }
+
+        // Slug (make unique slug from name)
+        $slug = Str::slug($name . '-' . time(). '-'.$request->input('product_id'));
 
         if($request->input('temp_id') != null){
             $product = Product::find($request->input('temp_id'));
             $product->update([
+                'name' => $name,
                 'price' => $request->input('price'),
                 'image' => $exist_prod->image,
                 'no_coordinates_image' => $exist_prod->no_coordinates_image,
@@ -600,7 +626,7 @@ class MainController extends Controller
             ]);
         }else{
             $product = Product::create([
-                'name' => $request->input('name'),
+                'name' => $name,
                 'slug' => $slug,
                 'description' => 'Custom frame product', // You can adjust
                 'price' => $request->input('price'), // Assuming price is in frame_configuration
@@ -620,7 +646,7 @@ class MainController extends Controller
         // Add product to session cart
         $sessionCart[] = [
             'product_id' => $product->id,
-            'name' => $request->input('name'),
+            'name' => $product->name,
             'image' => $imageUrl, // Image stored in public folder
             'quantity' => 1,
             'price' => $request->input('price'),
