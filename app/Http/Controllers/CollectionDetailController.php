@@ -25,7 +25,10 @@ class CollectionDetailController extends Controller
             $product = Product::where('slug', $slug)->with('additionalImages')->first();
         }
 
-        $cluster_images = ClusterImage::where('created_at', '>=', Carbon::now()->subDay())->get();
+        $cluster_images = ClusterImage::where('created_at', '>=', Carbon::now()->subDay())
+            ->orderBy('id', 'desc')
+            ->limit(12)
+            ->get();
 
         if (!$product) {
             abort(404); // Show 404 page if product not found
@@ -62,6 +65,31 @@ class CollectionDetailController extends Controller
             'finish' => $finish,
             'led' => $led,
             'temp_id' => $temp_id,
+        ]);
+    }
+
+    public function fetchClusterImages(Request $request)
+    {
+        $page = $request->query('page', 1);
+        $perPage = 12;
+        $offset = ($page - 1) * $perPage;
+
+        $cluster_images = ClusterImage::where('created_at', '>=', Carbon::now()->subDay())
+            ->orderBy('id', 'desc')
+            ->offset($offset)
+            ->limit($perPage)
+            ->get();
+
+        $formatted_images = $cluster_images->map(function ($img) {
+            return [
+                'id' => $img->id,
+                'image_path' => asset($img->image_path),
+            ];
+        });
+
+        return response()->json([
+            'cluster_images' => $formatted_images,
+            'has_more' => $cluster_images->count() == $perPage
         ]);
     }
 }

@@ -775,7 +775,7 @@
                                     <div class="child-layout-photos">
                                         <img alt="Frame" id="modal-preview-{{ $item->id }}"
                                             data-id="{{ $item->id }}" class="img-fluid preview-image"
-                                            src="{{ asset($item->image_path) }}">
+                                            src="{{ asset($item->image_path) }}" loading="lazy" decoding="async">
                                     </div>
                                 </div>
                             @endforeach
@@ -831,7 +831,7 @@
                                     <div class="child-layout-photos">
                                         <img alt="Frame" id="swap-modal-preview-{{ $item->id }}"
                                             data-id-swap="{{ $item->id }}" class="img-fluid preview-image"
-                                            src="{{ asset($item->image_path) }}">
+                                            src="{{ asset($item->image_path) }}" loading="lazy" decoding="async">
                                     </div>
                                 </div>
                             @endforeach
@@ -866,6 +866,74 @@
 
 @push('scripts')
     <script>
+        let currentPage = 1;
+        let isLoading = false;
+        let hasMore = true;
+
+        function loadMoreImages() {
+            if (isLoading || !hasMore) return;
+            isLoading = true;
+
+            fetch(`{{ route('fetch_cluster_images') }}?page=${currentPage + 1}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cluster_images && data.cluster_images.length > 0) {
+                        currentPage++;
+                        const modalPreviewContainer = document.querySelector('.SwapImageModal_swapImages');
+                        const modalPreviewContainer2 = document.querySelector('.SwapImageModal_swapImages_2');
+
+                        data.cluster_images.forEach(img => {
+                            if (document.getElementById(`modal-preview-${img.id}`)) return;
+
+                            const imageDiv = document.createElement('div');
+                            imageDiv.className = 'col-sm-3 col-4 SwapImageModal_progress';
+                            imageDiv.innerHTML = `
+                                <div class="child-layout-photos">
+                                    <img alt="Frame" id="modal-preview-${img.id}" data-id="${img.id}" class="img-fluid preview-image" src="${img.image_path}" loading="lazy" decoding="async">
+                                </div>
+                            `;
+                            modalPreviewContainer.appendChild(imageDiv);
+                            imageDiv.querySelector('.preview-image').addEventListener('click', selectSingleImage);
+
+                            const imageDiv2 = document.createElement('div');
+                            imageDiv2.className = 'col-sm-3 col-4 SwapImageModal_progress_2';
+                            imageDiv2.innerHTML = `
+                                <div class="child-layout-photos">
+                                    <img alt="Frame" id="swap-modal-preview-${img.id}" data-id-swap="${img.id}" class="img-fluid preview-image" src="${img.image_path}" loading="lazy" decoding="async">
+                                </div>
+                            `;
+                            modalPreviewContainer2.appendChild(imageDiv2);
+                            imageDiv2.querySelector('.preview-image').addEventListener('click', selectSingleImage);
+                        });
+                    }
+                    hasMore = data.has_more;
+                    isLoading = false;
+                })
+                .catch(error => {
+                    console.error('Error fetching images:', error);
+                    isLoading = false;
+                });
+        }
+
+        function handleScroll(event) {
+            const container = event.target;
+            if (container.scrollHeight - container.scrollTop - container.clientHeight < 50) {
+                loadMoreImages();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const container1 = document.querySelector('.SwapImageModal_swapImages');
+            const container2 = document.querySelector('.SwapImageModal_swapImages_2');
+
+            if (container1) {
+                container1.addEventListener('scroll', handleScroll);
+            }
+            if (container2) {
+                container2.addEventListener('scroll', handleScroll);
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             // Listen for any modal close event (globally)
             document.querySelectorAll('.modal').forEach(function(modalEl) {

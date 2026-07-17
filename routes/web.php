@@ -65,6 +65,7 @@ Route::get('/design', [DesignController::class, 'show'])->name('design');
 Route::get('/your-collection', [CollectionsController::class, 'index'])->name('collections');
 Route::get('/your-collection/load', [CollectionsController::class, 'loadMoreProducts'])->name('collections.load');
 Route::get('/collection/{slug}', [CollectionDetailController::class, 'show'])->name('collections_detail');
+Route::get('/fetch-cluster-images', [CollectionDetailController::class, 'fetchClusterImages'])->name('fetch_cluster_images');
 Route::get('/photo-frames-without-nails', [PagesController::class, 'noNails'])->name('no_nails');
 
 

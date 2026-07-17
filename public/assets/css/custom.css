@@ -2956,9 +2956,12 @@ button.Login_authSwitch {
     max-width: 686px
 }
 
-.SwapImageModal_swapImages {
+.SwapImageModal_swapImages,
+.SwapImageModal_swapImages_2 {
     align-items: center;
-    margin: 2rem 0
+    margin: 2rem 0;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .SwapImageModal_swapTop h4.heading-3 {
