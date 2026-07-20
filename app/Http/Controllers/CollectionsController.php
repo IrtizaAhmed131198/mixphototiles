@@ -12,7 +12,7 @@ class CollectionsController extends Controller
         $products = Product::where('type', 'collections')
             ->where('status', 1)
             ->whereNotNull('coordinates')
-            ->orderBy('id', 'desc')
+            ->orderBy('price', 'asc')
             ->paginate(10); // 10 per page
 
         return view('livewire.collections', compact('products'));
@@ -23,7 +23,7 @@ class CollectionsController extends Controller
         $products = Product::where('type', 'collections')
             ->where('status', 1)
             ->whereNotNull('coordinates')
-            ->orderBy('id', 'desc')
+            ->orderBy('price', 'asc')
             ->paginate(10); // 10 per page
 
         if ($request->ajax()) {
