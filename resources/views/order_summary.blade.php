@@ -627,16 +627,29 @@
                         fetch("{{ route('razorpay.create_order') }}", {
                                 method: 'GET',
                             })
-                            .then(response => response.json())
+                            .then(response => {
+                                if (!response.ok) {
+                                    return response.json().then(errData => {
+                                        throw new Error(errData.error || 'Server returned status ' + response.status);
+                                    }).catch(() => {
+                                        throw new Error('Server returned an invalid response with status ' + response.status);
+                                    });
+                                }
+                                return response.json();
+                            })
                             .then(order => {
+                                if (!order.id) {
+                                    throw new Error("Failed to retrieve a valid order ID from server.");
+                                }
                                 let options = {
-                                    "key": "{{ env('RAZORPAY_KEY') }}", // Or use config('services.razorpay.key')
+                                    "key": "{{ config('services.razorpay.key') }}",
                                     "amount": order.amount,
                                     "currency": "INR",
                                     "name": "Magentick Photo Frames",
                                     "description": "Order Payment",
                                     "order_id": order.id,
                                     "handler": function(response) {
+                                        if (mainLoader) mainLoader.style.display = 'flex';
                                         // Step 2: Verify payment
                                         fetch("{{ route('razorpay.verify_payment') }}", {
                                                 method: 'POST',
@@ -653,7 +666,12 @@
                                                         .razorpay_signature
                                                 })
                                             })
-                                            .then(res => res.json())
+                                            .then(res => {
+                                                if (!res.ok) {
+                                                    throw new Error('Payment verification server error.');
+                                                }
+                                                return res.json();
+                                            })
                                             .then(data => {
                                                 if (data.success) {
                                                     const method = data.method;
@@ -670,7 +688,12 @@
                                                                 payment: data.payment    // Full payment details if you want to log it
                                                             })
                                                         })
-                                                        .then(res => res.json())
+                                                        .then(res => {
+                                                            if (!res.ok) {
+                                                                throw new Error('Order placement server error.');
+                                                            }
+                                                            return res.json();
+                                                        })
                                                         .then(result => {
                                                             if (result.success) {
                                                                 if (mainLoader) mainLoader.style.display = 'none';
@@ -694,7 +717,7 @@
                                                                 Swal.fire({
                                                                     icon: 'error',
                                                                     title: 'Error',
-                                                                    text: 'Order placement failed!',
+                                                                    text: result.message || 'Order placement failed!',
                                                                     showClass: {
                                                                         popup: 'animate__animated animate__fadeIn animate__slow'
                                                                     },
@@ -703,13 +726,21 @@
                                                                     }
                                                                 });
                                                             }
+                                                        })
+                                                        .catch(err => {
+                                                            if (mainLoader) mainLoader.style.display = 'none';
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Error',
+                                                                text: err.message || 'Order placement failed.',
+                                                            });
                                                         });
                                                 } else {
                                                     if (mainLoader) mainLoader.style.display = 'none';
                                                     Swal.fire({
                                                         icon: 'error',
                                                         title: 'Error',
-                                                        text: 'Payment verification failed!',
+                                                        text: data.error || 'Payment verification failed!',
                                                         showClass: {
                                                             popup: 'animate__animated animate__fadeIn animate__slow'
                                                         },
@@ -718,6 +749,14 @@
                                                         }
                                                     });
                                                 }
+                                            })
+                                            .catch(err => {
+                                                if (mainLoader) mainLoader.style.display = 'none';
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Error',
+                                                    text: err.message || 'Payment verification failed.',
+                                                });
                                             });
                                     },
                                     "modal": {
@@ -749,8 +788,20 @@
                                     }
                                 };
 
+                                if (mainLoader) mainLoader.style.display = 'none';
                                 let rzp = new Razorpay(options);
                                 rzp.open();
+                            })
+                            .catch(error => {
+                                if (mainLoader) mainLoader.style.display = 'none';
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Payment Initialization Failed',
+                                    text: error.message,
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeIn'
+                                    }
+                                });
                             });
                     }
                 });

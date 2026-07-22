@@ -16,7 +16,7 @@ class RazorpayController extends Controller
 
             $amount = (int) round($cartTotal * 100);
 
-            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
             $order = $api->order->create([
                 'receipt' => uniqid(),
@@ -39,7 +39,7 @@ class RazorpayController extends Controller
 
     public function verifyPayment(Request $request)
     {
-        $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
         $attributes = [
             'razorpay_order_id' => $request->razorpay_order_id,
