@@ -11,7 +11,7 @@ class RazorpayController extends Controller
 {
     public function createOrder()
     {
-        try {
+        // try {
             $cartTotal = session('cart_grand_total');
 
             $amount = (int) round($cartTotal * 100);
@@ -28,13 +28,13 @@ class RazorpayController extends Controller
 
             return response()->json(['id' => $order['id'], 'amount' => $amount]);
 
-        } catch (\Razorpay\Api\Errors\BadRequestError $e) {
-            return response()->json(['error' => 'Bad request: ' . $e->getMessage()], 400);
-        } catch (\Razorpay\Api\Errors\ServerError $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()], 500);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'General error: ' . $e->getMessage()], 500);
-        }
+        // } catch (\Razorpay\Api\Errors\BadRequestError $e) {
+        //     return response()->json(['error' => 'Bad request: ' . $e->getMessage()], 400);
+        // } catch (\Razorpay\Api\Errors\ServerError $e) {
+        //     return response()->json(['error' => 'Server error: ' . $e->getMessage()], 500);
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => 'General error: ' . $e->getMessage()], 500);
+        // }
     }
 
     public function verifyPayment(Request $request)

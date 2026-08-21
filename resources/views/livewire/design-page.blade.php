@@ -52,7 +52,7 @@
         }
 
         .frameinner img {
-            object-fit: fill !important;
+            object-fit: cover !important;
         }
 
         .grid-2 {

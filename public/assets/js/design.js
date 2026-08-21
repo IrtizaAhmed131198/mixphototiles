@@ -541,34 +541,6 @@ async function processAndUploadImages(files, mainLoader) {
             continue;
         }
 
-        const objectURL = URL.createObjectURL(file);
-        const img = new Image();
-        img.src = objectURL;
-
-        await new Promise((resolve, reject) => { img.onload = resolve; img.onerror = reject; });
-
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0, img.width, img.height);
-
-        if (img.width < 500 || img.height < 500 || isImageBlurred(canvas)) {
-            if (mainLoader) mainLoader.style.display = "none";
-
-            const result = await Swal.fire({
-                title: "Low Quality Image",
-                text: "Your image is pretty small and may make blurry frames. Do you want to keep it anyway?",
-                icon: "warning", showCancelButton: true,
-                confirmButtonText: "Keep Anyway", cancelButtonText: "Remove",
-                customClass: { confirmButton: "swal-image-confirm-button", cancelButton: "swal-image-cancel-button" },
-                showClass: { popup: "animate__animated animate__fadeIn animate__slow" },
-                hideClass: { popup: "animate__animated animate__fadeOut animate__faster" },
-            });
-
-            if (!result.isConfirmed) { uploadInput.disabled = false; continue; }
-        }
-
         const originalName = file.name;
         const extension = originalName.split(".").pop();
         const baseName = originalName.substring(0, originalName.lastIndexOf("."));
