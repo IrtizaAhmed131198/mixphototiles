@@ -111,6 +111,15 @@
             }
         </style>
     </head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0Z61DZGH6R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0Z61DZGH6R');
+</script>
     <body>
         <nav class="navigation">
             <a href="https://hpanel.hostinger.com" rel="nofollow" target="_blank">
