@@ -113,15 +113,6 @@ function fetchAndRenderSessionImages() {
                 applyInitialFrameFinish(images[0]);
                 applyInitialFrameLED(images[0]);
                 updateFramePrice(images[0]);
-
-                if (images[0].crop === 1) {
-                    const inheritDesignDiv = document.querySelector("#frameWrap .inherit-design");
-                    if (inheritDesignDiv) {
-                        inheritDesignDiv.style.position = "absolute";
-                        inheritDesignDiv.style.zIndex = "-1";
-                        inheritDesignDiv.style.padding = "24px";
-                    }
-                }
             } else {
                 document.querySelector(".file-uploadSection").style.display = "flex";
                 document.querySelector(".FrameDesignSection").style.display = "none";
@@ -273,11 +264,17 @@ function applyInitialFrameSize(imageObj) {
     });
 
     const frameWrap = document.getElementById("frameWrap");
-    if (!frameWrap) return;
+    if (frameWrap) {
+        frameWrap.style.width    = initialSize.width;
+        frameWrap.style.height   = initialSize.height;
+        frameWrap.style.maxWidth = initialSize.max_width;
+    }
 
-    frameWrap.style.width    = initialSize.width;
-    frameWrap.style.height   = initialSize.height;
-    frameWrap.style.maxWidth = initialSize.max_width;
+    const frameBox = document.querySelector(".frame-box");
+    if (frameBox) {
+        frameBox.style.width  = initialSize.width;
+        frameBox.style.height = initialSize.height;
+    }
 
     const frameSizeShow = document.getElementById("size-show");
     if (frameSizeShow) frameSizeShow.textContent = initialSize.frameSizeText;
@@ -831,19 +828,6 @@ function updateActiveImage() {
                                 applyInitialFrameLED(data.frame_configuration);
                                 document.getElementById("uploaded-image").src = activeSrc;
                                 updateFramePrice(data.frame_configuration);
-
-                                const inheritDesignDiv = document.querySelector("#frameWrap .inherit-design");
-                                if (inheritDesignDiv) {
-                                    if (data.frame_configuration.crop === 1) {
-                                        inheritDesignDiv.style.position = "absolute";
-                                        inheritDesignDiv.style.zIndex = "-1";
-                                        inheritDesignDiv.style.padding = "24px";
-                                    } else {
-                                        inheritDesignDiv.style.position = "";
-                                        inheritDesignDiv.style.zIndex = "";
-                                        inheritDesignDiv.style.padding = "";
-                                    }
-                                }
                             }
                         })
                         .catch((err) => console.error("Error fetching frame configuration:", err));
@@ -886,19 +870,6 @@ document.querySelector(".Images-frame-slider .swiper-wrapper").addEventListener(
                         applyInitialFrameLED(data.frame_configuration);
                         document.getElementById("uploaded-image").src = img.src;
                         updateFramePrice(data.frame_configuration);
-
-                        const inheritDesignDiv = document.querySelector("#frameWrap .inherit-design");
-                        if (inheritDesignDiv) {
-                            if (data.frame_configuration.crop === 1) {
-                                inheritDesignDiv.style.position = "absolute";
-                                inheritDesignDiv.style.zIndex = "-1";
-                                inheritDesignDiv.style.padding = "24px";
-                            } else {
-                                inheritDesignDiv.style.position = "";
-                                inheritDesignDiv.style.zIndex = "";
-                                inheritDesignDiv.style.padding = "";
-                            }
-                        }
                     }
                 })
                 .catch((err) => console.error("Error fetching frame configuration:", err));
@@ -1031,13 +1002,25 @@ sizeOptions.forEach((option) => {
             frameWrap.style.maxWidth = max_width;
         }
 
+        const frameBox = document.querySelector(".frame-box");
+        if (frameBox) {
+            frameBox.style.width  = width;
+            frameBox.style.height = height;
+        }
+
         sizeOptions.forEach((item) => item.classList.remove("li-border-color"));
         this.classList.add("li-border-color");
         document.getElementById("size-show").textContent = frameSizeText;
 
         let get_active_config = JSON.parse($("#active_config").val());
         let frameConfig = JSON.parse(get_active_config.frame_configuration);
-        frameConfig.size.frame_price = frame_price;
+        frameConfig.size = {
+            width: width,
+            height: height,
+            max_width: max_width,
+            frame_price: frame_price,
+            frameSizeText: frameSizeText,
+        };
         get_active_config.frame_configuration = JSON.stringify(frameConfig);
         $("#active_config").val(JSON.stringify(get_active_config));
 
@@ -1122,72 +1105,176 @@ async function sendFrameConfigToServer(imageName, frameConfig, type) {
     }
 }
 
-$(document).ready(function () {
-    let $uploadCrop;
+function getActiveFrameDimensions() {
+    // 1. Check selected frame-size dropdown item
+    const selectedSizeOption = document.querySelector(".frame-size.li-border-color");
+    if (selectedSizeOption) {
+        const w = parseFloat(selectedSizeOption.getAttribute("data-width"));
+        const h = parseFloat(selectedSizeOption.getAttribute("data-height"));
+        if (w > 0 && h > 0) return { width: w, height: h };
+    }
 
-    function initializeCroppie(width, height) {
-        if ($uploadCrop) $uploadCrop.croppie("destroy");
+    // 2. Check active config
+    const activeConfigInput = document.getElementById("active_config");
+    if (activeConfigInput && activeConfigInput.value) {
+        try {
+            const activeConfig = JSON.parse(activeConfigInput.value);
+            const frameConfig = typeof activeConfig.frame_configuration === "string"
+                ? JSON.parse(activeConfig.frame_configuration)
+                : activeConfig.frame_configuration;
+            const size = frameConfig?.size;
+            if (size) {
+                const w = parseFloat(size.width);
+                const h = parseFloat(size.height);
+                if (w > 0 && h > 0) return { width: w, height: h };
+            }
+        } catch (e) {
+            console.error("Error reading active config size:", e);
+        }
+    }
+
+    // 3. Fallback to frameWrap dimensions
+    const frameWrap = document.getElementById("frameWrap");
+    if (frameWrap) {
+        const styleW = parseFloat(frameWrap.style.width);
+        const styleH = parseFloat(frameWrap.style.height);
+        if (styleW > 0 && styleH > 0) return { width: styleW, height: styleH };
+        if (frameWrap.offsetWidth > 0 && frameWrap.offsetHeight > 0) {
+            return { width: frameWrap.offsetWidth, height: frameWrap.offsetHeight };
+        }
+    }
+
+    return { width: 309, height: 318 };
+}
+
+function getActiveOriginalImageSrc() {
+    const uploadedImg = document.getElementById("uploaded-image");
+    const currentSrc = uploadedImg ? uploadedImg.src : "";
+
+    const activeConfigInput = document.getElementById("active_config");
+    if (activeConfigInput && activeConfigInput.value) {
+        try {
+            const activeConfig = JSON.parse(activeConfigInput.value);
+            const origPath = activeConfig.original_file_url;
+            if (origPath) {
+                if (origPath.startsWith("http://") || origPath.startsWith("https://")) {
+                    return origPath;
+                }
+                if (currentSrc) {
+                    const basePath = currentSrc.substring(0, currentSrc.lastIndexOf("/") + 1);
+                    const cleanOrig = origPath.replace(/^(\/)?uploads\//, "");
+                    return basePath + cleanOrig;
+                }
+            }
+        } catch (e) {
+            console.error("Error reading active config original image:", e);
+        }
+    }
+
+    return currentSrc;
+}
+
+$(document).ready(function () {
+    let $uploadCrop = null;
+
+    function initializeCroppie(targetWidth, targetHeight) {
+        if ($uploadCrop) {
+            try {
+                $uploadCrop.croppie("destroy");
+            } catch (e) {}
+            $uploadCrop = null;
+        }
+
+        // Available bounding dimensions in the modal
+        const maxModalWidth = Math.min($(window).width() * 0.85, 380);
+        const maxModalHeight = Math.min($(window).height() * 0.50, 380);
+
+        // Calculate uniform scale factor to strictly preserve targetWidth : targetHeight aspect ratio
+        const scale = Math.min(maxModalWidth / targetWidth, maxModalHeight / targetHeight);
+
+        const viewportWidth = Math.max(100, Math.round(targetWidth * scale * 0.85));
+        const viewportHeight = Math.max(100, Math.round(targetHeight * scale * 0.85));
+
+        const boundaryWidth = Math.min($(window).width() * 0.9, Math.round(viewportWidth + 40));
+        const boundaryHeight = Math.round(viewportHeight + 40);
+
         $uploadCrop = $("#upload-demo").croppie({
-            viewport: { width: width * 0.8, height: height * 0.8 },
-            boundary: { width: width * 0.9, height: height * 0.9 },
-            enforceBoundary: true, enableExif: true, showZoomer: true, mouseWheelZoom: false,
+            viewport: { width: viewportWidth, height: viewportHeight, type: "square" },
+            boundary: { width: boundaryWidth, height: boundaryHeight },
+            enforceBoundary: true,
+            enableExif: true,
+            showZoomer: true,
+            mouseWheelZoom: false,
         });
     }
 
-    $(".frame-size").on("click", function () {
-        const newWidth  = parseInt($(this).data("width"));
-        const newHeight = parseInt($(this).data("height"));
-        $(".frame-box").css({ width: newWidth, height: newHeight });
-        initializeCroppie(newWidth, newHeight);
+    $("#openCropModal").on("click", function () {
+        const rawSrc = getActiveOriginalImageSrc();
+        if (!rawSrc) return;
+
+        const dims = getActiveFrameDimensions();
+        initializeCroppie(dims.width, dims.height);
+
+        $("#cropImagePop").modal("show");
     });
 
     $("#cropImagePop").on("shown.bs.modal", function () {
-        const imgSrc = $("#uploaded-image").attr("src");
-        if (!imgSrc || imgSrc === "") return;
+        $(".LeftSidebar_designTool").addClass("blurred");
+        const rawSrc = getActiveOriginalImageSrc();
+        if (!rawSrc || !$uploadCrop) return;
 
-        const frameWidth  = $(".box").width();
-        const frameHeight = $(".box").height();
-        const maxWidth    = $(window).width() * 0.9;
-        const maxHeight   = $(window).height() * 0.9;
-
-        initializeCroppie(Math.min(frameWidth * 1.2, maxWidth), Math.min(frameHeight * 1.2, maxHeight));
-
-        $uploadCrop.croppie("bind", { url: imgSrc }).then(function () {
+        $uploadCrop.croppie("bind", { url: rawSrc }).then(function () {
             setTimeout(() => {
                 let minZoom = $(".cr-slider").attr("min");
-                $(".cr-slider").val(minZoom).trigger("input");
+                if (minZoom) {
+                    $(".cr-slider").val(minZoom).trigger("input");
+                }
             }, 100);
         });
     });
 
-    $("#cropImageBtn").on("click", function () {
-        const frameWidth  = $(".box").width();
-        const frameHeight = $(".box").height();
+    $("#cropImagePop").on("hidden.bs.modal", function () {
+        $(".LeftSidebar_designTool").removeClass("blurred");
+    });
 
-        $uploadCrop.croppie("result", { type: "base64", format: "jpeg", size: { width: frameWidth, height: frameHeight } })
-            .then(function (resp) {
-                const imgElement = document.querySelector(".swiper-slide-active img");
-                const filename = imgElement ? imgElement.getAttribute("data-frame-config") : "default.jpg";
-                $("#uploaded-image").attr("src", resp);
-                $("#slider-image").attr("src", resp);
-                saveCroppedImageToServer(resp, filename);
-                $("#cropImagePop").modal("hide");
-            });
+    $("#cropImageBtn").on("click", function () {
+        if (!$uploadCrop) return;
+
+        const dims = getActiveFrameDimensions();
+        // High-resolution export maintaining the exact same aspect ratio
+        const exportScale = Math.max(1, Math.min(3, 800 / dims.width));
+        const exportWidth = Math.round(dims.width * exportScale);
+        const exportHeight = Math.round(dims.height * exportScale);
+
+        $uploadCrop.croppie("result", {
+            type: "base64",
+            format: "jpeg",
+            size: { width: exportWidth, height: exportHeight }
+        }).then(function (resp) {
+            const imgElement = document.querySelector(".swiper-slide-active img");
+            const filename = imgElement ? imgElement.getAttribute("data-frame-config") : "default.jpg";
+            $("#uploaded-image").attr("src", resp);
+            $("#slider-image").attr("src", resp);
+            saveCroppedImageToServer(resp, filename);
+            $("#cropImagePop").modal("hide");
+        });
     });
 
     function saveCroppedImageToServer(base64Image, filename) {
         $.ajax({
-            url: save_cropped_image, type: "POST",
+            url: save_cropped_image,
+            type: "POST",
             data: { cropped_image: base64Image, filename: filename, _token: $('meta[name="csrf-token"]').attr("content") },
             success: function (response) {
                 if (response.success) {
                     Swal.fire({
-                        icon: "success", title: "Crop Image", text: "Image saved successfully!",
+                        icon: "success",
+                        title: "Crop Image",
+                        text: "Image saved successfully!",
                         showClass: { popup: "animate__animated animate__fadeIn animate__slow" },
                         hideClass: { popup: "animate__animated animate__fadeOut animate__faster" },
                     });
                     $("#frameWrap #uploaded-image").attr("src", response.file_url);
-                    $("#frameWrap .inherit-design").css({ position: "absolute", "z-index": "-1", padding: "24px" });
 
                     let imgElement = document.querySelector(".swiper-slide-active img");
                     if (imgElement) {
@@ -1196,7 +1283,9 @@ $(document).ready(function () {
                     }
                 } else {
                     Swal.fire({
-                        icon: "error", title: "Crop Image", text: "Failed to save image.",
+                        icon: "error",
+                        title: "Crop Image",
+                        text: "Failed to save image.",
                         showClass: { popup: "animate__animated animate__fadeIn animate__slow" },
                         hideClass: { popup: "animate__animated animate__fadeOut animate__faster" },
                     });
@@ -1205,18 +1294,6 @@ $(document).ready(function () {
             error: function (xhr, status, error) { console.error("Error:", error); },
         });
     }
-
-    $("#openCropModal").on("click", function () {
-        const imgSrc = $("#frameWrap #uploaded-image").attr("src");
-        if (!imgSrc) return;
-
-        initializeCroppie($(".box").width(), $(".box").height());
-        $uploadCrop.croppie("bind", { url: imgSrc });
-        $("#cropImagePop").modal("show");
-    });
-
-    $("#cropImagePop").on("shown.bs.modal", function () { $(".LeftSidebar_designTool").addClass("blurred"); });
-    $("#cropImagePop").on("hidden.bs.modal", function () { $(".LeftSidebar_designTool").removeClass("blurred"); });
 });
 
 ["add-to-cart-1", "add-to-cart-2"].forEach(function (id) {
