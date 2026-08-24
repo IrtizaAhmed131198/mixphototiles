@@ -93,7 +93,7 @@ define('D_MAX',       0.20);  // 20% — maximum total discount allowed
  */
 function calculateBundlePrice($subtotal, $n) {
     $delivery_cost = floatval(get_setting('delivery_cost') ?? 0);
-    $floor_price   = floatval(get_setting('floor_price')   ?? 599);
+    $floor_price   = floatval(get_setting('floor_price')   ?? 485);
     $d_step        = floatval(get_setting('d_step')        ?? 5) / 100;   // convert % to decimal
     $d_max         = floatval(get_setting('d_max')         ?? 20) / 100;  // convert % to decimal
 
@@ -105,7 +105,8 @@ function calculateBundlePrice($subtotal, $n) {
         return ['bundleTotal' => $subtotal, 'perFrame' => $subtotal, 'saving' => 0, 'discount' => 0, 'grandTotal' => $subtotal + $delivery_cost];
     }
 
-    $discount    = min($d_max, $d_step * ($n - 1));
+    // Step 1: discount percentage for multi-frame bundle (5% discount)
+    $discount    = $d_step;
     $discounted  = $subtotal * (1 - $discount);
     $floorCheck  = $n * $floor_price;
     $bundleTotal = max($floorCheck, $discounted);

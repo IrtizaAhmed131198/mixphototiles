@@ -42,7 +42,16 @@ class MainController extends Controller
         $type = $request->input('type'); // This will be 'design', 'color', 'finish', etc.
 
         // Find the session image record
-        $sessionImage = SessionImage::where('filename', $imageName)->first();
+        $sessionId = session()->getId();
+        $sessionImage = SessionImage::where('session_id', $sessionId)
+            ->where(function ($query) use ($imageName) {
+                $query->where('filename', $imageName)
+                      ->orWhere('file_url', 'like', '%' . $imageName . '%');
+            })->first();
+
+        if (!$sessionImage) {
+            $sessionImage = SessionImage::where('filename', $imageName)->first();
+        }
 
         if (!$sessionImage) {
             return response()->json([

@@ -53,14 +53,14 @@ function calculateBundlePrice(subtotal, n) {
         };
     }
 
-    // Step 1: calculate discount
-    const discount    = Math.min(D_MAX, D_STEP * (n - 1));
+    // Step 1: discount percentage for multi-frame bundle (5% discount from Excel calculator)
+    const discount = D_STEP;
 
     // Step 2: apply discount to subtotal
-    const discounted  = subtotal * (1 - discount);
+    const discounted = subtotal * (1 - discount);
 
     // Step 3: floor check — never go below FLOOR_PRICE × N
-    const floorCheck  = n * FLOOR_PRICE;
+    const floorCheck = n * FLOOR_PRICE;
 
     // Step 4: final bundle total
     const bundleTotal = Math.max(floorCheck, discounted);
@@ -1081,8 +1081,8 @@ function saveFrameConfigToDatabase(frameConfig, type) {
     if (activeSlide) {
         const activeImg = activeSlide.querySelector("img");
         if (activeImg) {
-            const activeSrc = activeImg.getAttribute("src");
-            const imageName = activeSrc.split("/").pop().split(".").slice(0, -1).join(".");
+            const imageName = activeImg.getAttribute("data-frame-config") ||
+                activeImg.getAttribute("src").split("/").pop().split(".").slice(0, -1).join(".");
             sendFrameConfigToServer(imageName, frameConfig, type);
         }
     }

@@ -263,7 +263,7 @@
                                             <li>
                                                 <p class="customTilename">Discount</p>
                                                 <span class="discounttag">
-                                                    ₹{{ round($discount) }}
+                                                    ₹0
                                                 </span>
                                             </li>
 
@@ -288,7 +288,7 @@
                                             <li class="grandTotal">
                                                 <p class="customTilename">Grand Total</p>
                                                 @php
-                                                    $grandTotal = (int) round((float)$subtotal + (float)$discount + (float)$shipping_price);
+                                                    $grandTotal = (int) round((float)$subtotal + (float)$shipping_price);
                                                 @endphp
                                                 <span id="grand_total" data-val="{{ $grandTotal }}">
                                                     ₹{{ $grandTotal }}
@@ -511,10 +511,9 @@
             // Grand total function
             function updateGrandTotal(giftAmount, isGiftChecked) {
                 const subtotal = parseFloat({{ $subtotal }});
-                const discount = parseFloat({{ $discount }});
-                // const shipping = parseFloat({{ $shipping }});
+                const shipping = parseFloat({{ $shipping_price ?? 0 }});
 
-                let grandTotal = subtotal + discount;
+                let grandTotal = subtotal + shipping;
 
                 if (isGiftChecked) {
                     grandTotal += giftAmount;
