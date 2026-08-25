@@ -1218,23 +1218,28 @@ $(document).ready(function () {
         $("#cropImagePop").modal("show");
     });
 
-    $("#cropImagePop").on("shown.bs.modal", function () {
+    $("#cropImagePop").off("shown.bs.modal").on("shown.bs.modal", function () {
         $(".LeftSidebar_designTool").addClass("blurred");
         const rawSrc = getActiveOriginalImageSrc();
         if (!rawSrc || !$uploadCrop) return;
 
-        $uploadCrop.croppie("bind", { url: rawSrc }).then(function () {
+        $uploadCrop.croppie("bind", { url: rawSrc, zoom: 0 }).then(function () {
             setTimeout(() => {
-                let minZoom = $(".cr-slider").attr("min");
-                if (minZoom) {
-                    $(".cr-slider").val(minZoom).trigger("input");
+                let minZoom = $("#upload-demo .cr-slider").attr("min") || 0;
+                $("#upload-demo .cr-slider").val(minZoom).trigger("input");
+                if ($uploadCrop) {
+                    $uploadCrop.croppie("setZoom", minZoom);
                 }
             }, 100);
         });
     });
 
-    $("#cropImagePop").on("hidden.bs.modal", function () {
+    $("#cropImagePop").off("hidden.bs.modal").on("hidden.bs.modal", function () {
         $(".LeftSidebar_designTool").removeClass("blurred");
+        if ($uploadCrop) {
+            $("#upload-demo").croppie("destroy");
+            $uploadCrop = null;
+        }
     });
 
     $("#cropImageBtn").on("click", function () {

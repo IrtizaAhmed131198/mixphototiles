@@ -1417,6 +1417,7 @@
             // Destroy existing Croppie instance if any
             if ($uploadCrop) {
                 $('#upload-demo-collection').croppie('destroy');
+                $uploadCrop = null;
             }
 
             // Initialize new Croppie instance with better zoom control
@@ -1435,13 +1436,31 @@
                 mouseWheelZoom: 'ctrl' // Prevent accidental zooming
             });
 
-            // Bind the image when modal opens
-            $('#cropImagePop').on('shown.bs.modal', function() {
-                $uploadCrop.croppie('bind', {
-                    url: rawImg
-                }).then(function() {
-                    console.log("Croppie bind complete.");
-                });
+            // Reset zoom to starting min position on modal show
+            $('#cropImagePop').off('shown.bs.modal').on('shown.bs.modal', function() {
+                if ($uploadCrop) {
+                    $uploadCrop.croppie('bind', {
+                        url: rawImg,
+                        zoom: 0
+                    }).then(function() {
+                        setTimeout(function() {
+                            const slider = $('#upload-demo-collection .cr-slider');
+                            const minZoom = slider.attr('min') || 0;
+                            slider.val(minZoom).trigger('input');
+                            if ($uploadCrop) {
+                                $uploadCrop.croppie('setZoom', minZoom);
+                            }
+                        }, 100);
+                    });
+                }
+            });
+
+            // Cleanup when modal closes
+            $('#cropImagePop').off('hidden.bs.modal').on('hidden.bs.modal', function() {
+                if ($uploadCrop) {
+                    $('#upload-demo-collection').croppie('destroy');
+                    $uploadCrop = null;
+                }
             });
 
             // Show the crop modal
