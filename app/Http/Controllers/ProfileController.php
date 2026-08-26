@@ -231,7 +231,7 @@ class ProfileController extends Controller
             return redirect()->route('home')->with('error', 'You are not allowed to access this page.');
         }
 
-        $data = ShippingAddress::all();
+        $data = ShippingAddress::where('user_id', Auth::id())->get();
 
         return view('profile.address', compact('data'));
     }
