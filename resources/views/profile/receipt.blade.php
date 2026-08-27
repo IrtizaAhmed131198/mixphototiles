@@ -346,7 +346,7 @@
                                                                             @php
                                                                                 $raw_path = $rawImg->crop_image_path ? asset($rawImg->crop_image_path) : asset($rawImg->image_path);
                                                                             @endphp
-                                                                            <img src="{{ $raw_path }}" class="img-fluid" alt="Preview">
+                                                                            <img src="{{ $raw_path }}" class="img-fluid" alt="Preview" data-product-id="{{ $item->product->id }}" data-image-id="{{ $rawImg->id }}">
                                                                         @endforeach
                                                                     </div>
                                                                 </div>
