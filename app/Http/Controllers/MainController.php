@@ -425,7 +425,7 @@ class MainController extends Controller
 
         $userId = auth()->id();  // Assuming user is logged in
         $sessionCart = session()->get('cart', []);
-        
+
         // Remove existing manual items from the cart to replace them with the updated session images
         foreach ($sessionCart as $key => $item) {
             if (isset($item['type']) && $item['type'] === 'manual') {
@@ -613,7 +613,7 @@ class MainController extends Controller
             if (!empty($config['led']['val']) && strtolower($config['led']['val']) === 'yes') {
                 $details[] = 'LED Frame';
             }
-            
+
             if (count($details) > 0) {
                 $name .= ' (' . implode(', ', $details) . ')';
             }
@@ -624,15 +624,25 @@ class MainController extends Controller
 
         if($request->input('temp_id') != null){
             $product = Product::find($request->input('temp_id'));
-            $product->update([
-                'name' => $name,
-                'price' => $request->input('price'),
-                'image' => $exist_prod->image,
-                'no_coordinates_image' => $exist_prod->no_coordinates_image,
-                'coordinates_image' => $exist_prod->coordinates_image,
-                'coordinates' => $exist_prod->coordinates,
-                'frame_config' => $request->input('configuration') ?? '',
-            ]);
+            if ($product) {
+                $product->update([
+                    'name' => $name,
+                    'price' => $request->input('price'),
+                    'image' => $exist_prod->image,
+                    'no_coordinates_image' => $exist_prod->no_coordinates_image,
+                    'coordinates_image' => $exist_prod->coordinates_image,
+                    'coordinates' => $exist_prod->coordinates,
+                    'frame_config' => $request->input('configuration') ?? '',
+                ]);
+
+                // Delete old product images and collection images associated with this temp product
+                ProductImage::where('product_id', $product->id)->delete();
+                $oldCollections = SessionCollection::where('product_id', $product->id)->get();
+                foreach ($oldCollections as $oldCol) {
+                    CollectionImages::where('collection_id', $oldCol->id)->delete();
+                    $oldCol->delete();
+                }
+            }
         }else{
             $product = Product::create([
                 'name' => $name,
@@ -1097,7 +1107,11 @@ class MainController extends Controller
             $user->otp_expires_at = Carbon::now()->addMinutes(10);
             $user->save();
 
-            Mail::to($user->email)->send(new OtpMail($otp, $user->name));
+            try {
+                Mail::to($user->email)->send(new OtpMail($otp, $user->name));
+            } catch (\Exception $e) {
+                \Log::warning('OTP mail sending failed: ' . $e->getMessage());
+            }
         }
 
 
@@ -1159,11 +1173,17 @@ class MainController extends Controller
         $order = Order::with(['orderItems.product', 'user', 'address'])->findOrFail($order->id);
         $admin_email = get_setting('contact_email', 'support@magentickphotoframes.com');
 
-        // Send order confirmation to user
-        Mail::to($user->email)->send(new OrderPlacedUserMail($order));
+        try {
+            // Send order confirmation to user
+            Mail::to($user->email)->send(new OrderPlacedUserMail($order));
 
-        // Send order notification to admin
-        Mail::to(env('MAIL_USERNAME'))->send(new OrderPlacedAdminMail($order));
+            // Send order notification to admin
+            if (env('MAIL_USERNAME')) {
+                Mail::to(env('MAIL_USERNAME'))->send(new OrderPlacedAdminMail($order));
+            }
+        } catch (\Exception $e) {
+            \Log::warning('Order confirmation mail sending failed: ' . $e->getMessage());
+        }
 
         // Clear cart and session items after order placed
         session()->forget(['cart', 'applied_coupon', 'gift_card_applied', 'user_address']);

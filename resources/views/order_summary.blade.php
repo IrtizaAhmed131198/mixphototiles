@@ -623,6 +623,71 @@
                         });
                     } else {
                         if (mainLoader) mainLoader.style.display = 'flex';
+
+                        // Check if running on local environment to bypass Razorpay
+                        const isLocalEnv = {{ env('APP_VERIFY') === 'local' ? 'true' : 'false' }};
+
+                        if (isLocalEnv) {
+                            fetch("{{ route('place_order') }}", {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    },
+                                    body: JSON.stringify({
+                                        razorpay_payment_id: 'local_test_' + Date.now(),
+                                        payment_method: 'local_test'
+                                    })
+                                })
+                                .then(res => {
+                                    if (!res.ok) {
+                                        throw new Error('Order placement server error.');
+                                    }
+                                    return res.json();
+                                })
+                                .then(result => {
+                                    if (mainLoader) mainLoader.style.display = 'none';
+                                    if (result.success) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Success (Local Mode)',
+                                            text: result.message || 'Order placed successfully!',
+                                            timer: 2000,
+                                            showConfirmButton: false,
+                                            showClass: {
+                                                popup: 'animate__animated animate__fadeIn animate__slow'
+                                            },
+                                            hideClass: {
+                                                popup: 'animate__animated animate__fadeOut animate__faster'
+                                            }
+                                        }).then(() => {
+                                            window.location.href = "{{ route('home') }}";
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Error',
+                                            text: result.message || 'Order placement failed!',
+                                            showClass: {
+                                                popup: 'animate__animated animate__fadeIn animate__slow'
+                                            },
+                                            hideClass: {
+                                                popup: 'animate__animated animate__fadeOut animate__faster'
+                                            }
+                                        });
+                                    }
+                                })
+                                .catch(err => {
+                                    if (mainLoader) mainLoader.style.display = 'none';
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: err.message || 'Order placement failed.',
+                                    });
+                                });
+                            return;
+                        }
+
                         // Step 1: Create Razorpay Order
                         fetch("{{ route('razorpay.create_order') }}", {
                                 method: 'GET',

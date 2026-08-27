@@ -236,15 +236,16 @@
                                                         </div>
                                                     </div>
                                                     <button class="btn btn-brand-dark mt-3 print-btn" onclick="printModalContent('designModal{{ $item->id }}', 'dynamicPrintStyles')">Print Image</button>
-                                                @else
+                                                 @else
                                                     @php
                                                         $clusters = json_decode($item->product->coordinates ?? '[]');
-                                                        $data = App\Models\SessionCollection::where('product_id', $item->product->id)->first();
+                                                        $data = App\Models\SessionCollection::where('product_id', $item->product->id)->latest('id')->first();
                                                         $config = json_decode($data->configuration ?? ($item->product->frame_config ?? '{}'));
                                                         if ($data) {
                                                             $collectionImages = App\Models\CollectionImages::where('collection_id', $data->id)->get();
                                                         } else {
-                                                            $collectionImages = App\Models\ProductImage::where('product_id', $item->product->id)->get();
+                                                            $clusterCount = count($clusters) ?: 4;
+                                                            $collectionImages = App\Models\ProductImage::where('product_id', $item->product->id)->latest('id')->take($clusterCount)->get()->reverse()->values();
                                                         }
                                                         $colorClass = $config->color->class ?? 'black-frame';
                                                         $frameClass = $config->frame->class ?? '';
@@ -325,7 +326,16 @@
                                         </div>
                                     @else
                                         @php
-                                            $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->get();
+                                            $clusters = json_decode($item->product->coordinates ?? '[]');
+                                            $clusterCount = count($clusters);
+                                            $sessionCol = App\Models\SessionCollection::where('product_id', $item->product->id)->latest('id')->first();
+                                            if ($sessionCol) {
+                                                $product_images = App\Models\CollectionImages::where('collection_id', $sessionCol->id)->get();
+                                            } elseif ($clusterCount > 0) {
+                                                $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->latest('id')->take($clusterCount)->get()->reverse();
+                                            } else {
+                                                $product_images = App\Models\ProductImage::where('product_id', $item->product->id)->get();
+                                            }
                                         @endphp
                                         <a href="javascript:void(0)" class="btn btn-sm btn-brand-dark"
                                             data-bs-toggle="modal" data-bs-target="#orignalImageModal{{ $item->id }}">View Image</a>
@@ -344,9 +354,20 @@
                                                                     <div class="gallery-grid">
                                                                         @foreach ($product_images as $rawImg)
                                                                             @php
-                                                                                $raw_path = $rawImg->crop_image_path ? asset($rawImg->crop_image_path) : asset($rawImg->image_path);
+                                                                                $raw_path = '';
+                                                                                if (isset($rawImg->original_image) && $rawImg->original_image) {
+                                                                                    $raw_path = asset($rawImg->original_image);
+                                                                                } elseif (isset($rawImg->crop_image_path) && $rawImg->crop_image_path) {
+                                                                                    $raw_path = asset($rawImg->crop_image_path);
+                                                                                } elseif (isset($rawImg->image_path) && $rawImg->image_path) {
+                                                                                    $raw_path = asset($rawImg->image_path);
+                                                                                } elseif (isset($rawImg->image) && $rawImg->image) {
+                                                                                    $raw_path = asset($rawImg->image);
+                                                                                }
                                                                             @endphp
-                                                                            <img src="{{ $raw_path }}" class="img-fluid" alt="Preview" data-product-id="{{ $item->product->id }}" data-image-id="{{ $rawImg->id }}">
+                                                                            @if ($raw_path)
+                                                                                <img src="{{ $raw_path }}" class="img-fluid" alt="Preview">
+                                                                            @endif
                                                                         @endforeach
                                                                     </div>
                                                                 </div>
