@@ -129,6 +129,15 @@
                                     </div>
                                 </div>
 
+                                <div class="col-12">
+                                    <div class="form-group label-hover">
+                                        <input type="text" class="form-control" name="frame_note" placeholder="Frame Note (e.g. Each frame @rs485)" value="{{ old('frame_note') }}">
+                                        @error('frame_note')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <!-- Main Image Upload with Error -->
                                 <div class="col-6">
                                     <div class="form-group label-hover">
@@ -233,6 +242,12 @@
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <input type="number" class="form-control" name="discount" placeholder="Discount">
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group label-hover">
+                                        <input type="text" class="form-control" name="frame_note" placeholder="Frame Note (e.g. Each frame @rs485)">
                                     </div>
                                 </div>
 
@@ -393,6 +408,7 @@
                 $('[name="slug"]').val(data.slug);
                 $('[name="description"]').text(data.description);
                 $('[name="price"]').val(data.price);
+                $('[name="frame_note"]').val(data.frame_note || '');
                 $('[name="discount"]').val(data.discount);
                 $('[name="status"]').val(data.status);
 

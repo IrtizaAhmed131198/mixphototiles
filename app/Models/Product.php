@@ -8,7 +8,7 @@ class Product extends Model
 {
     protected $table = "products";
 
-    protected $fillable = ['name', 'slug', 'description', 'price', 'discount', 'stock', 'image', 'no_coordinates_image', 'coordinates_image', 'coordinates', 'frame_config', 'status', 'type'];
+    protected $fillable = ['name', 'slug', 'description', 'price', 'frame_note', 'discount', 'stock', 'image', 'no_coordinates_image', 'coordinates_image', 'coordinates', 'frame_config', 'status', 'type'];
 
     public function additionalImages()
     {

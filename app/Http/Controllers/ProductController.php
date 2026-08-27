@@ -31,6 +31,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'required|string',
             'price' => 'required|numeric',
+            'frame_note' => 'nullable|string|max:255',
             'discount' => 'required|numeric',
             'main_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
             'no_coordinates_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -88,6 +89,7 @@ class ProductController extends Controller
             'slug' => $slug,
             'description' => $request->description,
             'price' => $request->price,
+            'frame_note' => $request->frame_note,
             'discount' => $request->discount ?? 0,
             'image' => $mainImagePath,
             'no_coordinates_image' => $noCordImagePath,
@@ -101,7 +103,7 @@ class ProductController extends Controller
 
     public function getData()
     {
-        $products = Product::select('id', 'name', 'price', 'discount', 'image', 'coordinates')
+        $products = Product::select('id', 'name', 'price', 'frame_note', 'discount', 'image', 'coordinates')
             ->where('type', 'collections');
 
         return DataTables::of($products)
@@ -147,6 +149,7 @@ class ProductController extends Controller
             'slug' => $product->slug,
             'description' => $product->description,
             'price' => $product->price,
+            'frame_note' => $product->frame_note,
             'discount' => $product->discount,
             'status' => $product->status,
             'main_image' => asset($product->image),
@@ -168,6 +171,7 @@ class ProductController extends Controller
             'slug' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
+            'frame_note' => 'nullable|string|max:255',
             'discount' => 'nullable|numeric|min:0',
             'status' => 'required|in:0,1',
             'main_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -192,6 +196,7 @@ class ProductController extends Controller
         $product->slug = $slug;
         $product->description = $request->description;
         $product->price = $request->price;
+        $product->frame_note = $request->frame_note;
         $product->discount = $request->discount ?? 0;
         $product->status = $request->status;
 

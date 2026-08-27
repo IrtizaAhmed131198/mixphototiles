@@ -28,9 +28,15 @@
             <div class="row" id="productContainer">
                 @include('partials.product_card', ['products' => $products])
             </div>
-            <div id="loader" style="text-align:center; padding:20px; display:none;">
-                <img src="{{ asset('assets/images/loader.gif') }}" width="50" alt="loading..." />
-            </div>
+
+            @if ($products->hasMorePages())
+                <div class="text-center mt-5 mb-4" id="loadMoreContainer">
+                    <button type="button" class="btn design-btn filled d-inline-flex align-items-center justify-content-center" id="loadMoreBtn" style="min-width: 180px; height: 48px; border: none; cursor: pointer;">
+                        <span id="loadMoreText">Load More</span>
+                        <span id="loadMoreSpinner" class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true" style="display: none;"></span>
+                    </button>
+                </div>
+            @endif
         </div>
     </section>
 @endsection
@@ -40,34 +46,41 @@
         let page = 1;
         let loading = false;
 
-        $(window).scroll(function() {
-            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100 && !loading) {
-                page++;
-                loadMore(page);
-            }
-        });
+        $('#loadMoreBtn').on('click', function() {
+            if (loading) return;
 
-        function loadMore(page) {
+            page++;
             loading = true;
-            $('#loader').show();
+            $('#loadMoreBtn').prop('disabled', true);
+            $('#loadMoreText').text('Loading...');
+            $('#loadMoreSpinner').show();
 
             $.ajax({
                 url: "{{ route('collections.load') }}?page=" + page,
                 type: "get",
-                success: function(data) {
-                    if (data.trim().length == 0) {
-                        $('#loader').text("No more collections");
-                        return;
+                dataType: "json",
+                success: function(response) {
+                    if (response && response.html && response.html.trim().length > 0) {
+                        $('#productContainer').append(response.html);
                     }
-                    $('#loader').hide();
-                    $('#productContainer').append(data);
+
+                    if (!response.hasMore || (response.html && response.html.trim().length === 0)) {
+                        $('#loadMoreContainer').fadeOut(300, function() { $(this).remove(); });
+                    } else {
+                        $('#loadMoreBtn').prop('disabled', false);
+                        $('#loadMoreText').text('Load More');
+                        $('#loadMoreSpinner').hide();
+                    }
                     loading = false;
                 },
-                error: function() {
-                    $('#loader').text("Something went wrong!");
+                error: function(xhr) {
+                    console.error("Error loading collections:", xhr);
+                    $('#loadMoreText').text('Try Again');
+                    $('#loadMoreSpinner').hide();
+                    $('#loadMoreBtn').prop('disabled', false);
                     loading = false;
                 }
             });
-        }
+        });
     </script>
 @endpush

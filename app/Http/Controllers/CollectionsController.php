@@ -27,7 +27,11 @@ class CollectionsController extends Controller
             ->paginate(10); // 10 per page
 
         if ($request->ajax()) {
-            return view('partials.product_card', compact('products'))->render(); // only render product cards
+            $html = view('partials.product_card', compact('products'))->render();
+            return response()->json([
+                'html' => $html,
+                'hasMore' => $products->hasMorePages(),
+            ]);
         }
 
         return view('livewire.collections', compact('products')); // initial load
