@@ -332,6 +332,9 @@
                                 <p class="discount">
                                     {{ $product->discount }}% OFF
                                 </p>
+                                @if (!empty($product->frame_note))
+                                    <span class="frameNote ms-2" style="font-size: 15px; color: #555; font-weight: 500;">{{ $product->frame_note }}</span>
+                                @endif
                             </div>
                             <p class="noted">
                                 All Taxes Included

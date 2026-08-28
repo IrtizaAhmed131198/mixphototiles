@@ -61,6 +61,9 @@
     span.realPize {
         font-size: 14px
     }
+    span.frameNote {
+        font-size: 13px;
+    }
     section.contact-us-section .contact-title {
         max-width: 90%;
         font-size: 40px

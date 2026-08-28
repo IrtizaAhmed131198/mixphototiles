@@ -610,6 +610,13 @@ span.realPize {
     color: #000
 }
 
+span.frameNote {
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+}
+
 .custom-card-body {
     margin: 1rem 0 0
 }

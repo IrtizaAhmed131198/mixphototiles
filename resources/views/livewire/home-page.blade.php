@@ -176,6 +176,9 @@
                                                         {{ round($product->discount) }}% OFF
                                                     </span>
                                                 @endif
+                                                @if (!empty($product->frame_note))
+                                                    <span class="frameNote">{{ $product->frame_note }}</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
