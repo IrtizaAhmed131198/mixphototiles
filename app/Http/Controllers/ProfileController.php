@@ -68,6 +68,9 @@ class ProfileController extends Controller
                 $counter++;
                 return $counter;
             })
+            ->addColumn('order_number', function ($order) {
+                return '#' . $order->id;
+            })
             ->addColumn('title', function ($order) {
                 return $order->orderItems->pluck('product.name')->implode(', ');
             })
@@ -118,6 +121,10 @@ class ProfileController extends Controller
                 $query->whereHas('user', function ($q) use ($keyword) {
                     $q->where('name', 'like', "%{$keyword}%");
                 });
+            })
+            ->filterColumn('order_number', function ($query, $keyword) {
+                $keyword = ltrim($keyword, '#');
+                $query->where('id', 'like', "%{$keyword}%");
             })
             ->filterColumn('status', function ($query, $keyword) {
                 $query->where('status', 'like', "%{$keyword}%");

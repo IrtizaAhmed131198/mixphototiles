@@ -38,7 +38,8 @@
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>S.No.</th>
+                                    <th>Order Id</th>
                                     <th>Title</th>
                                     <th>Price</th>
                                     <th>Status</th>
@@ -97,6 +98,7 @@ $(document).ready(function () {
         ajax: '{{ route("get.orders") }}',
         columns: [
             { data: 'id', name: 'id' },
+            { data: 'order_number', name: 'order_number' },
             {
                 data: 'title',
                 name: 'title',
