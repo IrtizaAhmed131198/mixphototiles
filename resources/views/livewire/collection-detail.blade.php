@@ -140,7 +140,10 @@
                 '
             .' .
                 $cssClassName .
-                '-frame::before {
+                '-frame::before,
+            .' .
+                $cssClassName .
+                '-frame .frame-side-border {
                 position: absolute;
                 z-index: 1;
                 content: "";
@@ -153,10 +156,15 @@
                 $val->before_color_code .
                 ';
                 transform: skewY(45deg);
+                -webkit-transform: skewY(45deg);
+                pointer-events: none;
             }
             .' .
                 $cssClassName .
-                '-frame::after {
+                '-frame::after,
+            .' .
+                $cssClassName .
+                '-frame .frame-bottom-border {
                 position: absolute;
                 z-index: 1;
                 content: "";
@@ -167,7 +175,9 @@
                 height: 6px;
                 bottom: -6px;
                 transform: skewX(45deg);
+                -webkit-transform: skewX(45deg);
                 left: 4px;
+                pointer-events: none;
             }';
             $frame_style .= '</style>';
         @endphp
@@ -216,7 +226,7 @@
                                                 $colorClass = $config->color->class ?? 'black-frame';
                                                 $frameClass = $config->frame->class ?? '';
                                             @endphp
-                                            @foreach ($clusters as $key => $cluster)
+                                             @foreach ($clusters as $key => $cluster)
                                                 <div class="clusterFrameWrp {{ $colorClass }} {{ $frameClass }}"
                                                     id="cluster-block-{{ $cluster->id }}"
                                                     style="position: absolute;
@@ -226,6 +236,9 @@
                                                     height: {{ $cluster->height }}%;"
                                                     data-bs-toggle="modal" data-bs-target="#editphotolayoutmodal"
                                                     data-cluster-id="{{ $cluster->id }}" onclick="">
+
+                                                    <div class="frame-side-border"></div>
+                                                    <div class="frame-bottom-border"></div>
 
                                                     <div class="frame-main-wrap">
                                                         <div class="frameborder">
@@ -259,6 +272,9 @@
                                                     height: {{ $cluster->height }}%;"
                                                     data-bs-toggle="modal" data-bs-target="#photolayoutmodal"
                                                     data-cluster-id="{{ $cluster->id }}" onclick="">
+
+                                                    <div class="frame-side-border"></div>
+                                                    <div class="frame-bottom-border"></div>
 
                                                     <div class="frame-main-wrap">
                                                         <div class="frameborder">
@@ -1793,7 +1809,12 @@
             //     confirmButtonText: 'Proceed'
             // });
 
-            html2canvas(document.getElementById('zoomContainer')).then(function(canvas) {
+            html2canvas(document.getElementById('zoomContainer'), {
+                useCORS: true,
+                allowTaint: true,
+                scale: 2,
+                logging: false
+            }).then(function(canvas) {
                 canvas.toBlob(function(blob) {
 
                     let price = $('.currency').attr('data-val');
@@ -1931,7 +1952,12 @@
             //     confirmButtonText: 'Proceed'
             // });
 
-            html2canvas(document.getElementById('zoomContainer')).then(function(canvas) {
+            html2canvas(document.getElementById('zoomContainer'), {
+                useCORS: true,
+                allowTaint: true,
+                scale: 2,
+                logging: false
+            }).then(function(canvas) {
                 canvas.toBlob(function(blob) {
 
                     let price = $('.currency').attr('data-val');

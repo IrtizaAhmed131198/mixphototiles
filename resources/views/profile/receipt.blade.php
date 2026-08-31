@@ -125,7 +125,8 @@
             }
         ';
         $style2 .= '
-            .'. $cssClassName2 .'-frame::before {
+            .'. $cssClassName2 .'-frame::before,
+            .'. $cssClassName2 .'-frame .frame-side-border {
                 position: absolute;
                 z-index: 1;
                 content: "";
@@ -136,8 +137,11 @@
                 width: 5px;
                 background: '. $val->before_color_code .';
                 transform: skewY(45deg);
+                -webkit-transform: skewY(45deg);
+                pointer-events: none;
             }
-            .'. $cssClassName2 .'-frame::after {
+            .'. $cssClassName2 .'-frame::after,
+            .'. $cssClassName2 .'-frame .frame-bottom-border {
                 position: absolute;
                 z-index: 1;
                 content: "";
@@ -146,7 +150,9 @@
                 height: 6px;
                 bottom: -6px;
                 transform: skewX(45deg);
+                -webkit-transform: skewX(45deg);
                 left: 4px;
+                pointer-events: none;
             }';
         $style2 .= '</style>';
 
@@ -447,7 +453,8 @@
         ';
 
         echo '
-            .'. $cssClassName2 .'-frame::before {
+            .'. $cssClassName2 .'-frame::before,
+            .'. $cssClassName2 .'-frame .frame-side-border {
                 position: absolute;
                 z-index: 1;
                 content: "";
@@ -458,8 +465,11 @@
                 width: 5px;
                 background: '. $val->before_color_code .';
                 transform: skewY(45deg);
+                -webkit-transform: skewY(45deg);
+                pointer-events: none;
             }
-            .'. $cssClassName2 .'-frame::after {
+            .'. $cssClassName2 .'-frame::after,
+            .'. $cssClassName2 .'-frame .frame-bottom-border {
                 position: absolute;
                 z-index: 1;
                 content: "";
@@ -468,7 +478,9 @@
                 height: 6px;
                 bottom: -6px;
                 transform: skewX(45deg);
+                -webkit-transform: skewX(45deg);
                 left: 4px;
+                pointer-events: none;
             }';
     }
 
