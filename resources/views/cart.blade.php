@@ -6,20 +6,79 @@
 
 @push('css')
     <style>
-        /* @keyframes circle {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-
-            }
-        } */
         .parentCart h4 .btn {
             margin-left: 27px;
         }
+
+        .frameinner {
+            padding: 14px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .frameinner-pad {
+            padding: 3px !important;
+        }
+
+        .frameinner-less {
+            padding: 0 !important;
+        }
+
+        .bold-image-width {
+            border-image-width: 4px !important;
+            border-image-slice: 30 fill !important;
+            border-image-repeat: round !important;
+        }
     </style>
+
+    @php
+        $custom_color = App\Models\CustomColor::where('status', 1)->get();
+    @endphp
+    @foreach ($custom_color as $val)
+        @php
+            $cssClassName2 = strtolower(str_replace(' ', '-', $val->name));
+        @endphp
+        <style>
+            .{{ $cssClassName2 }}-frame {
+                border-image : url({{ asset($val->frame_img) }});
+                border-image-slice: 30;
+                border-image-width: 3px;
+                border-image-outset: 0;
+                border-image-repeat: stretch;
+            }
+            .{{ $cssClassName2 }}-frame::before {
+                position: absolute;
+                z-index: 1;
+                content: "";
+                right: -5px;
+                top: 2px;
+                bottom: 0;
+                height: 100%;
+                width: 5px;
+                background: {{ $val->before_color_code }};
+                transform: skewY(45deg);
+            }
+            .{{ $cssClassName2 }}-frame::after {
+                position: absolute;
+                z-index: 1;
+                content: "";
+                background: {{ $val->after_color_code }};
+                width: 99%;
+                height: 6px;
+                bottom: -6px;
+                transform: skewX(45deg);
+                left: 4px;
+            }
+        </style>
+    @endforeach
 @endpush
 
 @section('content')
@@ -99,7 +158,7 @@
                                                 </svg>
                                                 Remove
                                             </button>
-                                            <button type="button" class="CartListItem_action edit-item"
+                                             <button type="button" class="CartListItem_action edit-item"
                                                 data-product-id="{{ $item['product_id'] }}"
                                                 data-image-name="{{ $item['image'] }}" data-type="{{ $item['type'] }}"
                                                 data-slug="{{ $item['slug'] }}" data-temp-slug="{{ $product['slug'] }}">
@@ -117,10 +176,101 @@
                                                 </svg>
                                                 Edit Items
                                             </button>
+                                            <button type="button" class="CartListItem_action view-design-item ms-2"
+                                                data-bs-toggle="modal" data-bs-target="#cartDesignModal{{ $loop->index }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-em h-em pe-1 fs-16" viewBox="0 0 16 16">
+                                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                                </svg>
+                                                View Image
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="cartPrice">
                                         <h5>₹{{ round($item['price'], 0) }}</h5>
+                                    </div>
+
+                                    <!-- Design Modal for Cart Item -->
+                                    <div class="modal fade" id="cartDesignModal{{ $loop->index }}" tabindex="-1" aria-labelledby="cartDesignModalLabel{{ $loop->index }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" style="{{ $product && $product->type == 'manual' ? '' : 'max-width: 846px;' }}">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="cartDesignModalLabel{{ $loop->index }}">Your Design</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-center overflow-hidden">
+                                                    @if ($product && $product->type == 'manual')
+                                                        @php
+                                                            $config = json_decode($product->frame_config ?? '{}', true);
+                                                            $designClass = $config['design']['designClass'] ?? 'classic-card-design';
+                                                            $shadowClass = $config['color']['shadowClass'] ?? 'box-shadow-black';
+                                                            $imgSrc = $config['color']['img_src'] ?? null;
+                                                            $borderStyle = '';
+                                                            if ($designClass !== 'frameless-card-design' && $imgSrc) {
+                                                                $fullImgUrl = (str_starts_with($imgSrc, 'http') || str_starts_with($imgSrc, '/')) ? $imgSrc : asset($imgSrc);
+                                                                $borderStyle = "border-image-source: url('{$fullImgUrl}'); border-image-slice: 30; border-image-repeat: stretch;";
+                                                            }
+                                                        @endphp
+                                                        <div class="frame-main-wrap {{ $designClass }} {{ $shadowClass }} frame-main-wrap-main" style="{{ $borderStyle }}">
+                                                            <div class="frameborder inherit-design">
+                                                                <div class="frameinner-manual child-inherit-design">
+                                                                    <img src="{{ asset($product->image) }}" class="img-fluid" alt="Preview">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        @php
+                                                            $clusters = json_decode($product->coordinates ?? '[]');
+                                                            $data = App\Models\SessionCollection::where('product_id', $product->id)->latest('id')->first();
+                                                            $config = json_decode($data->configuration ?? ($product->frame_config ?? '{}'));
+                                                            if ($data) {
+                                                                $collectionImages = App\Models\CollectionImages::where('collection_id', $data->id)->get();
+                                                            } else {
+                                                                $clusterCount = count($clusters) ?: 4;
+                                                                $collectionImages = App\Models\ProductImage::where('product_id', $product->id)->latest('id')->take($clusterCount)->get()->reverse()->values();
+                                                            }
+                                                            $colorClass = $config->color->class ?? 'black-frame';
+                                                            $frameClass = $config->frame->class ?? '';
+                                                        @endphp
+                                                        <div class="Parentframe" id="zoomContainerCart{{ $loop->index }}">
+                                                            <figure class="frameBackground">
+                                                                <img src="{{ asset($product->no_coordinates_image ?? $product->image) }}" class="img-fluid" alt="">
+                                                            </figure>
+                                                            <div class="framelayoutsParent">
+                                                                @if ($clusters)
+                                                                    @foreach ($clusters as $k => $cluster)
+                                                                        <div class="clusterFrameWrp {{ $colorClass }} {{ $frameClass }}"
+                                                                            id="cluster-block-cart-{{ $loop->parent->index }}-{{ $cluster->id }}"
+                                                                            style="position: absolute;
+                                                                            top: {{ $cluster->y }}%;
+                                                                            left: {{ $cluster->x }}%;
+                                                                            width: {{ $cluster->width }}%;
+                                                                            height: {{ $cluster->height }}%;">
+
+                                                                            <div class="frame-main-wrap">
+                                                                                <div class="frameborder">
+                                                                                    <div class="frameinner d-flex align-items-center justify-content-center {{ $frameClass == 'bold-image-width' ? 'frameinner-pad' : ($frameClass == 'frameless-image-width' ? 'frameinner-less' : '') }}">
+                                                                                        @php
+                                                                                            $clusterImg = $collectionImages[$k]->image ?? ($collectionImages[$k]->image_path ?? null);
+                                                                                        @endphp
+                                                                                        @if ($clusterImg)
+                                                                                            <img src="{{ asset($clusterImg) }}"
+                                                                                                id="preview-cart-{{ $loop->parent->index }}-{{ $cluster->id }}"
+                                                                                                class="image-preview w-100 h-100 object-fit-cover"
+                                                                                                alt="Preview">
+                                                                                        @endif
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach

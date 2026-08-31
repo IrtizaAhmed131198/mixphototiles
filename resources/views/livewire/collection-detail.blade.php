@@ -140,10 +140,7 @@
                 '
             .' .
                 $cssClassName .
-                '-frame::before,
-            .' .
-                $cssClassName .
-                '-frame .frame-side-border {
+                '-frame::before {
                 position: absolute;
                 z-index: 1;
                 content: "";
@@ -156,15 +153,10 @@
                 $val->before_color_code .
                 ';
                 transform: skewY(45deg);
-                -webkit-transform: skewY(45deg);
-                pointer-events: none;
             }
             .' .
                 $cssClassName .
-                '-frame::after,
-            .' .
-                $cssClassName .
-                '-frame .frame-bottom-border {
+                '-frame::after {
                 position: absolute;
                 z-index: 1;
                 content: "";
@@ -175,9 +167,7 @@
                 height: 6px;
                 bottom: -6px;
                 transform: skewX(45deg);
-                -webkit-transform: skewX(45deg);
                 left: 4px;
-                pointer-events: none;
             }';
             $frame_style .= '</style>';
         @endphp
@@ -237,9 +227,6 @@
                                                     data-bs-toggle="modal" data-bs-target="#editphotolayoutmodal"
                                                     data-cluster-id="{{ $cluster->id }}" onclick="">
 
-                                                    <div class="frame-side-border"></div>
-                                                    <div class="frame-bottom-border"></div>
-
                                                     <div class="frame-main-wrap">
                                                         <div class="frameborder">
                                                             <div
@@ -272,9 +259,6 @@
                                                     height: {{ $cluster->height }}%;"
                                                     data-bs-toggle="modal" data-bs-target="#photolayoutmodal"
                                                     data-cluster-id="{{ $cluster->id }}" onclick="">
-
-                                                    <div class="frame-side-border"></div>
-                                                    <div class="frame-bottom-border"></div>
 
                                                     <div class="frame-main-wrap">
                                                         <div class="frameborder">
