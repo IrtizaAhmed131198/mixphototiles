@@ -206,7 +206,10 @@
                                     password</button>
                             </div>
                             <div class="d-grid pt-3 pb-4">
-                                <button type="button" class="btn design-btn filled" onclick="submitLogin()">Login</button>
+                                <button type="button" id="loginBtn" class="btn design-btn filled" onclick="submitLogin()">
+                                    <span class="btn-text">Login</span>
+                                    <span class="spinner-border spinner-border-sm d-none" role="status"></span>
+                                </button>
                             </div>
                         </form>
                         <div id="loginMessage"></div>

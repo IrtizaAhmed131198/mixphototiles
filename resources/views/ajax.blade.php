@@ -6,22 +6,28 @@
     }
 
     function submitLogin() {
-        let formData = new FormData($('.loginForm')[0]);  // Get form element using jQuery and pass to FormData
+        let btn = $('#loginBtn');
 
+        // Disable button + show loading
+        btn.prop('disabled', true);
+        btn.find('.btn-text').text('Logging in...');
+        btn.find('.spinner-border').removeClass('d-none');
+
+        let formData = new FormData($('.loginForm')[0]);
         formData.append('redirect_to', window.location.href);
 
         $.ajax({
             url: "{{ route('login') }}",
             type: "POST",
             data: formData,
-            processData: false, // Required for FormData
-            contentType: false, // Required for FormData
+            processData: false,
+            contentType: false,
             headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Set CSRF token
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             success: function(response) {
                 if (response.success) {
-                    window.location.href = response.url; // Redirect to profile route
+                    window.location.href = response.url;
                 } else {
                     $('#loginMessage').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
@@ -34,6 +40,12 @@
 
                 let errors = response?.errors || {};
                 handleValidationErrors(errors);
+            },
+            complete: function() {
+                // Re-enable button + restore text
+                btn.prop('disabled', false);
+                btn.find('.btn-text').text('Login');
+                btn.find('.spinner-border').addClass('d-none');
             }
         });
     }
