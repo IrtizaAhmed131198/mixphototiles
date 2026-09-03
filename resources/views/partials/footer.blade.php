@@ -309,7 +309,10 @@
                                 <div class="d-flex Login_forgotBtn"><button type="button"
                                         class="ms-auto btn btn-text btn-sm">Forgot password</button></div>
                                 <div class="d-grid pt-3 pb-4">
-                                    <button type="submit" class="btn design-btn filled">Sign Up</button>
+                                    <button type="submit" id="signupSubmitBtn" class="btn design-btn filled">
+                                        <span class="btn-text">Sign Up</span>
+                                        <span class="spinner-border spinner-border-sm d-none" role="status"></span>
+                                    </button>
                                 </div>
                             </form>
                             <p class="mb-0 text-center d-flex align-items-center justify-content-center">Already have

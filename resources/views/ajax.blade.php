@@ -434,6 +434,9 @@
     $(document).ready(function () {
         $('#signupForm').submit(function (e) {
             e.preventDefault();
+
+            let btn = $('#signupSubmitBtn');
+
             $('.error-message').remove();
             var formData = new FormData(this);
 
@@ -443,18 +446,20 @@
                 data: formData,
                 contentType: false,
                 processData: false,
+
                 beforeSend: function () {
-                    $('#signupBtn').prop('disabled', true).text('Processing...');
+                    // Disable + loader show
+                    btn.prop('disabled', true);
+                    btn.find('.btn-text').text('Processing...');
+                    btn.find('.spinner-border').removeClass('d-none');
                 },
+
                 success: function (response) {
                     if (response.success) {
-                        // Store user ID or email temporarily for OTP verification
-                        $('#signupForm').data('user-email', response.email); // or response.user_id if preferred
+                        $('#signupForm').data('user-email', response.email);
 
-                        // Close the current modal
                         $('#exampleModalToggle2').modal('hide');
 
-                        // Show SweetAlert and wait for user to click "OK"
                         Swal.fire({
                             icon: 'success',
                             title: 'Almost there!',
@@ -466,7 +471,6 @@
                                 popup: 'animate__animated animate__fadeOut animate__faster'
                             }
                         }).then((result) => {
-                            // After the user clicks "OK", show the OTP modal
                             if (result.isConfirmed) {
                                 setTimeout(() => {
                                     $('#exampleModalToggleOtpSign').modal('show');
@@ -474,18 +478,25 @@
                             }
                         });
                     }
-
                 },
+
                 error: function (xhr) {
-                    $('#signupBtn').prop('disabled', false).text('Sign Up');
                     if (xhr.status === 422) {
                         var errors = xhr.responseJSON.errors;
+
                         $.each(errors, function (key, value) {
                             var input = $('input[name="' + key + '"]');
                             input.addClass('is-invalid');
                             input.after('<div class="error-message text-danger">' + value[0] + '</div>');
                         });
                     }
+                },
+
+                complete: function () {
+                    // Always re-enable
+                    btn.prop('disabled', false);
+                    btn.find('.btn-text').text('Sign Up');
+                    btn.find('.spinner-border').addClass('d-none');
                 }
             });
         });

@@ -109,7 +109,7 @@
                 </div>
                 <div class="col-md-5 col-12">
                     <div class="ms-auto ContactForm_contactFormWrp__4NjEW">
-                        <form class="contact-form" id="contactForm" method="post" action="{{ route('contact.submit') }}">
+                        {{-- <form class="contact-form" id="contactForm" method="post" action="{{ route('contact.submit') }}">
                             @csrf
                             <div class="mb-4">
                                 <input placeholder="Full Name" id="NameInput"
@@ -149,7 +149,7 @@
                             <div class="d-grid d-md-flex">
                                 <button type="submit" class="btn design-btn filled contact-btn">Send Message</button>
                             </div>
-                        </form>
+                        </form> --}}
                         <div id="thankYouMessage" style="display:none;" class="alert alert-success mt-3">
                             Thank you for contacting us!
                         </div>
