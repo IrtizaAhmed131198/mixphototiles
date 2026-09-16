@@ -295,7 +295,7 @@ Route::post('/add-to-cart-collection', [MainController::class, 'add_to_cart_coll
 Route::get('/frame-defaults', [MainController::class, 'getFrameDefaults'])->name('getFrameDefaults');
 
 // Payment processing routes
-Route::get('/razorpay/create-order', [RazorpayController::class, 'createOrder'])->name('razorpay.create_order');
+Route::post('/razorpay/create-order', [RazorpayController::class, 'createOrder'])->name('razorpay.create_order');
 Route::post('/razorpay/verify-payment', [RazorpayController::class, 'verifyPayment'])->name('razorpay.verify_payment');
 
 // Order payment and refund routes
@@ -311,3 +311,5 @@ Route::get('/check-user-address', function () {
 
 // Laravel auth routes
 require __DIR__ . '/auth.php';
+
+Route::post('/razorpay/webhook', [RazorpayController::class, 'webhook'])->name('razorpay.webhook');

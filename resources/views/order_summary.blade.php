@@ -624,83 +624,17 @@
                     } else {
                         if (mainLoader) mainLoader.style.display = 'flex';
 
-                        // Check if running on local environment to bypass Razorpay
-                        const isLocalEnv = {{ env('APP_VERIFY') === 'local' ? 'true' : 'false' }};
-
-                        if (isLocalEnv) {
-                            fetch("{{ route('place_order') }}", {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                    },
-                                    body: JSON.stringify({
-                                        razorpay_payment_id: 'local_test_' + Date.now(),
-                                        payment_method: 'local_test'
-                                    })
-                                })
-                                .then(res => {
-                                    if (!res.ok) {
-                                        throw new Error('Order placement server error.');
-                                    }
-                                    return res.json();
-                                })
-                                .then(result => {
-                                    if (mainLoader) mainLoader.style.display = 'none';
-                                    if (result.success) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Success (Local Mode)',
-                                            text: result.message || 'Order placed successfully!',
-                                            timer: 2000,
-                                            showConfirmButton: false,
-                                            showClass: {
-                                                popup: 'animate__animated animate__fadeIn animate__slow'
-                                            },
-                                            hideClass: {
-                                                popup: 'animate__animated animate__fadeOut animate__faster'
-                                            }
-                                        }).then(() => {
-                                            window.location.href = "{{ route('home') }}";
-                                        });
-                                    } else {
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Error',
-                                            text: result.message || 'Order placement failed!',
-                                            showClass: {
-                                                popup: 'animate__animated animate__fadeIn animate__slow'
-                                            },
-                                            hideClass: {
-                                                popup: 'animate__animated animate__fadeOut animate__faster'
-                                            }
-                                        });
-                                    }
-                                })
-                                .catch(err => {
-                                    if (mainLoader) mainLoader.style.display = 'none';
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Error',
-                                        text: err.message || 'Order placement failed.',
-                                    });
-                                });
-                            return;
-                        }
-
                         // Step 1: Create Razorpay Order
                         fetch("{{ route('razorpay.create_order') }}", {
-                                method: 'GET',
+                                method: 'POST',
+                                headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                             })
-                            .then(response => {
+                            .then(async response => {
+                                const data = await response.json();
                                 if (!response.ok) {
-                                    return response.json().then(errData => {
-                                        throw new Error(errData.error || 'Server returned status ' + response.status);
-                                    }).catch(() => {
-                                        throw new Error('Server returned an invalid response with status ' + response.status);
-                                    });
+                                    throw new Error(data.error || 'Unable to prepare your order.');
                                 }
-                                return response.json();
+                                return data;
                             })
                             .then(order => {
                                 if (!order.id) {
@@ -713,116 +647,30 @@
                                     "name": "Magentick Photo Frames",
                                     "description": "Order Payment",
                                     "order_id": order.id,
-                                    "handler": function(response) {
+                                    "handler": async function(response) {
                                         if (mainLoader) mainLoader.style.display = 'flex';
-                                        // Step 2: Verify payment
-                                        fetch("{{ route('razorpay.verify_payment') }}", {
+                                        try {
+                                            const res = await fetch("{{ route('razorpay.verify_payment') }}", {
                                                 method: 'POST',
                                                 headers: {
-                                                    'Content-Type': 'application/json',
-                                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                                    'Content-Type': 'application/json', 'Accept': 'application/json',
+                                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
                                                 },
-                                                body: JSON.stringify({
-                                                    razorpay_payment_id: response
-                                                        .razorpay_payment_id,
-                                                    razorpay_order_id: response
-                                                        .razorpay_order_id,
-                                                    razorpay_signature: response
-                                                        .razorpay_signature
-                                                })
-                                            })
-                                            .then(res => {
-                                                if (!res.ok) {
-                                                    throw new Error('Payment verification server error.');
-                                                }
-                                                return res.json();
-                                            })
-                                            .then(data => {
-                                                if (data.success) {
-                                                    const method = data.method;
-                                                    // Step 3: Place order in Laravel
-                                                    fetch("{{ route('place_order') }}", {
-                                                            method: 'POST',
-                                                            headers: {
-                                                                'Content-Type': 'application/json',
-                                                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                                            },
-                                                            body: JSON.stringify({
-                                                                razorpay_payment_id: response.razorpay_payment_id,
-                                                                payment_method: method, // <-- Send actual method here
-                                                                payment: data.payment    // Full payment details if you want to log it
-                                                            })
-                                                        })
-                                                        .then(res => {
-                                                            if (!res.ok) {
-                                                                throw new Error('Order placement server error.');
-                                                            }
-                                                            return res.json();
-                                                        })
-                                                        .then(result => {
-                                                            if (result.success) {
-                                                                if (mainLoader) mainLoader.style.display = 'none';
-                                                                Swal.fire({
-                                                                    icon: 'success',
-                                                                    title: 'Success',
-                                                                    text: 'Order placed successfully!',
-                                                                    timer: 2000,
-                                                                    showConfirmButton: false,
-                                                                    showClass: {
-                                                                        popup: 'animate__animated animate__fadeIn animate__slow'
-                                                                    },
-                                                                    hideClass: {
-                                                                        popup: 'animate__animated animate__fadeOut animate__faster'
-                                                                    }
-                                                                }).then(() => {
-                                                                    window.location.href = "{{ route('home') }}";
-                                                                });
-                                                            } else {
-                                                                if (mainLoader) mainLoader.style.display = 'none';
-                                                                Swal.fire({
-                                                                    icon: 'error',
-                                                                    title: 'Error',
-                                                                    text: result.message || 'Order placement failed!',
-                                                                    showClass: {
-                                                                        popup: 'animate__animated animate__fadeIn animate__slow'
-                                                                    },
-                                                                    hideClass: {
-                                                                        popup: 'animate__animated animate__fadeOut animate__faster'
-                                                                    }
-                                                                });
-                                                            }
-                                                        })
-                                                        .catch(err => {
-                                                            if (mainLoader) mainLoader.style.display = 'none';
-                                                            Swal.fire({
-                                                                icon: 'error',
-                                                                title: 'Error',
-                                                                text: err.message || 'Order placement failed.',
-                                                            });
-                                                        });
-                                                } else {
-                                                    if (mainLoader) mainLoader.style.display = 'none';
-                                                    Swal.fire({
-                                                        icon: 'error',
-                                                        title: 'Error',
-                                                        text: data.error || 'Payment verification failed!',
-                                                        showClass: {
-                                                            popup: 'animate__animated animate__fadeIn animate__slow'
-                                                        },
-                                                        hideClass: {
-                                                            popup: 'animate__animated animate__fadeOut animate__faster'
-                                                        }
-                                                    });
-                                                }
-                                            })
-                                            .catch(err => {
-                                                if (mainLoader) mainLoader.style.display = 'none';
-                                                Swal.fire({
-                                                    icon: 'error',
-                                                    title: 'Error',
-                                                    text: err.message || 'Payment verification failed.',
-                                                });
+                                                body: JSON.stringify(response)
                                             });
+                                            const data = await res.json();
+                                            if (!res.ok || !data.success) {
+                                                throw new Error(data.error || 'Payment confirmation pending. Please do not pay again; contact support.');
+                                            }
+                                            if (mainLoader) mainLoader.style.display = 'none';
+                                            await Swal.fire({ icon: 'success', title: 'Order confirmed', text: 'Order #' + data.order_id + ' placed successfully!' });
+                                            window.location.href = "{{ route('home') }}";
+                                        } catch (err) {
+                                            if (mainLoader) mainLoader.style.display = 'none';
+                                            Swal.fire({ icon: 'info', title: 'Check payment status', text: err.message || 'Your order is saved. Please contact support before paying again.' });
+                                        } finally {
+                                            if (mainLoader) mainLoader.style.display = 'none';
+                                        }
                                     },
                                     "modal": {
                                         "ondismiss": function () {
@@ -842,7 +690,8 @@
                                     },
                                     "prefill": {
                                         "name": order.customer_name ?? "",
-                                        "email": order.customer_email ?? ""
+                                        "email": order.customer_email ?? "",
+                                        "contact": order.customer_contact ?? ""
                                     },
                                     "theme": {
                                         "color": "#3399cc"

@@ -1033,168 +1033,27 @@ class MainController extends Controller
             'discount' => 0
         ]);
 
+        if (empty($cart)) {
+            return redirect()->route('cart')->with('error', 'Your cart is empty.');
+        }
+        $totals = app(\App\Services\CheckoutService::class)->totals($cart, $appliedCoupon);
+        $cartGrandTotal = round($totals['subtotal']);
+        $shipping = $totals['shipping'];
+        $appliedCoupon = ['code' => $totals['code'], 'discount' => $totals['discount']];
+
         return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon', 'shipping_address', 'shipping'));
     }
 
     public function place_order(Request $request)
     {
-        $get_address = session('user_address');
-        $get_city = City::find($get_address['city']);
-
-        // Fetch cart items (assuming cart stored in session)
-        $cart = session()->get('cart', []);
-        if (empty($cart)) {
-            return redirect()->back()->with('error', 'Cart is empty!');
+        // Compatibility endpoint: order creation now happens before Razorpay checkout.
+        $order = Order::find(session('checkout_order_id'));
+        if (!$order || !$order->paid_at) {
+            return response()->json(['success' => false, 'message' => 'Payment confirmation pending. Please do not pay again.'], 409);
         }
-
-        // Calculate total price
-        $subTotal = 0;
-        foreach ($cart as $product) {
-            $subTotal += $product['price'] * $product['quantity'];
-        }
-
-        // Apply coupon if exists
-        $couponDiscount = 0;
-        if (Session::has('applied_coupon')) {
-            $coupon = Session::get('applied_coupon');
-            $couponDiscount = $coupon['discount'] ?? 0;
-            $code = $coupon['code'];
-        }else{
-            $code = null;
-            $couponDiscount = null;
-        }
-
-        // Gift Card (optional, if you are using it)
-        $giftCardDiscount = session()->get('gift_card', 0);
-
-        $shipping = $request->input('shipping') ?? 0;
-        if ($shipping == null) {
-            $shipping = $get_city->shipping;
-        }
-
-        // Grand Total Calculation
-        $grandTotal = ($subTotal + $giftCardDiscount + $shipping) - $couponDiscount;
-
-        $user = User::where('email', $get_address['email'])->first();
-
-        if(Auth::check()){
-            $user = auth()->user();
-        }
-
-        if ($user) {
-            // Update existing user
-            // $user->name = $get_address['full_name'];
-            // $user->phone = $get_address['phone_number'];
-            // $user->save();
-        } else {
-            // Create new user
-            $user = new User();
-            $user->name = $get_address['full_name'];
-            $user->email = $get_address['email'];
-            $user->phone = $get_address['phone_number'];
-            $user->password = bcrypt($get_address['password']);  // Set default password (optional)
-            $user->status = 0; // Assuming 1 is for active
-            $user->role = 'user'; // Assuming you have a role column
-            $user->save();
-
-            do {
-                $otp = rand(100000, 999999);
-                $exists = User::where('otp', $otp)->exists();
-            } while ($exists);
-
-            // Save OTP with expiration time
-            $user->otp = $otp;
-            $user->otp_expires_at = Carbon::now()->addMinutes(10);
-            $user->save();
-
-            try {
-                Mail::to($user->email)->send(new OtpMail($otp, $user->name));
-            } catch (\Exception $e) {
-                \Log::warning('OTP mail sending failed: ' . $e->getMessage());
-            }
-        }
-
-
-        // Create order
-        $order = new Order();
-        $order->user_id = $user->id;  // or $request->user_id if guest user
-        $order->status = 'ordered';
-        $order->total_amount = $grandTotal;
-        $order->payment_method = $request->input('payment_method', 'cod');
-        $order->payment_id = $request->input('razorpay_payment_id'); // Save this
-        $order->coupon = $code;
-        $order->discount = $couponDiscount;
-        $order->shipping = $shipping;
-        $order->gift = $giftCardDiscount;
-        $order->save();
-
-        $address = new Address();
-        $address->order_id = $order->id;
-        $address->user_id = $user->id;
-        $address->full_name = $get_address['full_name'];
-        $address->phone_number = $get_address['phone_number'];
-        $address->email = $get_address['email'];
-        $address->pincode = $get_address['pincode'];
-        $address->address_line1 = $get_address['address_line1'];
-        $address->address_line2 = $get_address['address_line2'];
-        $address->city = $get_city->name;
-        $address->alternate_phone_number = $get_address['alternate_phone_number'];
-        $address->save();
-
-        ShippingAddress::where('user_id', $user->id)->update(['default_address' => 0]);
-
-        $shippingAddress = ShippingAddress::updateOrCreate(
-            ['email' => $get_address['email']], // Search condition
-            [
-                'user_id' => $user->id,
-                'recipient_name' => $get_address['full_name'],
-                'phone' => $get_address['phone_number'],
-                'pin_code' => $get_address['pincode'],
-                'address_line1' => $get_address['address_line1'],
-                'address_line2' => $get_address['address_line2'],
-                'city' => $get_address['city'],
-                'state' => $get_address['state'],
-                'alt_phone' => $get_address['alternate_phone_number'],
-                'default_address' => 1,
-            ]
-        );
-
-        // Store each cart item into order_items
-        foreach ($cart as $productId => $product) {
-            $orderItem = new OrderItems();
-            $orderItem->order_id = $order->id;
-            $orderItem->product_id = $product['product_id'];
-            $orderItem->quantity = $product['quantity'];
-            $orderItem->price = $product['price'];
-            $orderItem->save();
-
-        }
-
-        $order = Order::with(['orderItems.product', 'user', 'address'])->findOrFail($order->id);
-        $admin_email = get_setting('contact_email', 'support@magentickphotoframes.com');
-
-        try {
-            // Send order confirmation to user
-            Mail::to($user->email)->send(new OrderPlacedUserMail($order));
-
-            // Send order notification to admin
-            if (env('MAIL_USERNAME')) {
-                Mail::to(env('MAIL_USERNAME'))->send(new OrderPlacedAdminMail($order));
-            }
-        } catch (\Exception $e) {
-            \Log::warning('Order confirmation mail sending failed: ' . $e->getMessage());
-        }
-
-        // Clear cart and session items after order placed
         session()->forget(['cart', 'applied_coupon', 'gift_card_applied', 'user_address']);
-
-        $deleted = SessionImage::where('session_id', session()->getId())
-            ->delete();
-
-        // return redirect()->route('home')->with('success', 'Order placed successfully!');
-        return response()->json(['success' => true, 'message' => 'Order placed successfully!']);
+        return response()->json(['success' => true, 'order_id' => $order->id, 'message' => 'Order placed successfully!']);
     }
-
 
     public function add_address(Request $request)
     {
