@@ -32,6 +32,7 @@ class AdminController extends Controller
 
     public function getData()
     {
+        abort_unless(Auth::check() && in_array(Auth::user()->role, ['admin', 'super_admin'], true), 403);
         $query = User::query();
 
         // Exclude super_admin role for all users
@@ -58,11 +59,17 @@ class AdminController extends Controller
                 return $row->status == 1 ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-secondary">Inactive</span>';
             })
             ->addColumn('login_as', function ($user) {
-                if (Auth::user()->role === 'super_admin' && $user->status == 1) {
-                    $route = route('admin.login.as', ['id' => $user->id]);
-                    return '<a href="'.$route.'" class="btn btn-sm btn-info">Login As</a>';
+                if (Auth::user()->role !== 'super_admin') {
+                    return '';
                 }
-                return '';
+                if ((int) $user->status !== 1) {
+                    return '<button type="button" class="btn btn-sm btn-outline-secondary" disabled title="Account is inactive">Login As</button>';
+                }
+                $route = e(route('admin.login.as', ['id' => $user->id]));
+                $token = e(csrf_token());
+                return '<form method="POST" action="'.$route.'" class="m-0">'
+                    .'<input type="hidden" name="_token" value="'.$token.'">'
+                    .'<button type="submit" class="btn btn-sm btn-brand-dark">Login As</button></form>';
             })
             ->addColumn('action', function ($user) {
                 return '<button class="btn btn-sm btn-brand-dark edit-user" data-id="'.$user->id.'">Edit</button>
@@ -168,22 +175,64 @@ class AdminController extends Controller
         }
     }
 
-    public function loginAsUser($id)
+    public function loginAsUser(Request $request, $id)
     {
-        if (Auth::user()->role !== 'super_admin') {
-            abort(403);
+        $original = Auth::user();
+        abort_unless($original && $original->role === 'super_admin' && (int) $original->status === 1, 403);
+        abort_if($request->session()->has('impersonation'), 403, 'Return to your account before switching again.');
+
+        $target = User::findOrFail($id);
+        abort_unless(in_array($target->role, ['admin', 'user'], true), 403);
+        if ((int) $target->status !== 1) {
+            return redirect()->route('admin.index')->with('error', 'Cannot login as inactive user.');
         }
 
-        $user = User::findOrFail($id);
+        // Preserve the original account's session without sharing its cart,
+        // address, Google identity or checkout state with the target account.
+        $originalSession = $request->session()->except([
+            '_token', Auth::guard('web')->getName(), 'impersonation',
+        ]);
+        $impersonation = [
+            'original_id' => $original->id,
+            'target_id' => $target->id,
+            'password_fingerprint' => hash('sha256', $original->getAuthPassword()),
+            'original_session' => $originalSession,
+        ];
 
-        if ($user->status != 1) {
-            return redirect()->back()->with('error', 'Cannot login as inactive user.');
-        }
+        Auth::guard('web')->logoutCurrentDevice();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        Auth::guard('web')->login($target, false);
+        $request->session()->put('impersonation', $impersonation);
 
-        Auth::logout(); // logout current super_admin
-        Auth::login($user); // login as selected user
+        \Illuminate\Support\Facades\Log::info('Super admin impersonation started', [
+            'original_id' => $original->id, 'target_id' => $target->id,
+        ]);
 
-        return redirect()->route('profile'); // change to whatever route you want to redirect to
+        return redirect()->route('profile');
     }
 
+    public function returnToSuperAdmin(Request $request)
+    {
+        $impersonation = $request->session()->get('impersonation');
+        abort_unless(is_array($impersonation)
+            && (int) ($impersonation['target_id'] ?? 0) === (int) Auth::id(), 403);
+
+        $original = User::find($impersonation['original_id'] ?? null);
+        abort_unless($original && $original->role === 'super_admin' && (int) $original->status === 1
+            && hash_equals($impersonation['password_fingerprint'] ?? '', hash('sha256', $original->getAuthPassword())),
+            403, 'The original super-admin account is no longer available. Please sign in again.');
+
+        Auth::guard('web')->logoutCurrentDevice();
+        $request->session()->invalidate();
+        $request->session()->put($impersonation['original_session'] ?? []);
+        $request->session()->regenerateToken();
+        Auth::guard('web')->login($original, false);
+
+        \Illuminate\Support\Facades\Log::info('Super admin impersonation ended', [
+            'original_id' => $original->id, 'target_id' => $impersonation['target_id'],
+        ]);
+
+        return redirect()->route('admin.index')->with('success', 'You are back in your super-admin account.');
+    }
 }

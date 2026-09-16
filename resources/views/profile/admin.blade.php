@@ -41,7 +41,9 @@
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Status</th>
-                                    <th class="d-none">Login As</th>
+                                    @if (Auth::user()->role === 'super_admin')
+                                        <th>Login As</th>
+                                    @endif
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -270,13 +272,14 @@
                         data: 'status_label',
                         name: 'status'
                     },
+                    @if (Auth::user()->role === 'super_admin')
                     {
                         data: 'login_as',
                         name: 'login_as',
                         orderable: false,
-                        searchable: false,
-                        visible: false
+                        searchable: false
                     },
+                    @endif
                     {
                         data: 'action',
                         name: 'action',

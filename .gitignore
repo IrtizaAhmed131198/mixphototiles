@@ -27,3 +27,4 @@ public/assets/banner-video/Banner-video.mp4
 defualt.php
 public/assets/banner-video/Banner-video-old.mp4
 .htaccess
+tests/Feature/ImpersonationTest.php

@@ -103,6 +103,7 @@
     </div>
     <div>
         @include('partials.header')
+        @include('partials.impersonation-banner')
 
         @yield('content')
 

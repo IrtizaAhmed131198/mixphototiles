@@ -254,7 +254,8 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        Session::forget('google_user');
+        Session::invalidate();
+        Session::regenerateToken();
         return redirect()->route('home')->with('success', 'Logged out successfully!');
     }
 }

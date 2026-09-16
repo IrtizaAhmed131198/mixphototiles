@@ -195,7 +195,8 @@ Route::post('/admin/store', [AdminController::class, 'store'])->name('admin.stor
 Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
 Route::post('/admin/update/{id}', [AdminController::class, 'update'])->name('admin.update');
 Route::delete('/admin/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
-Route::get('/admin/login-as/{id}', [AdminController::class, 'loginAsUser'])->name('admin.login.as');
+Route::post('/admin/login-as/{id}', [AdminController::class, 'loginAsUser'])->middleware('auth')->name('admin.login.as');
+Route::post('/admin/return-to-super-admin', [AdminController::class, 'returnToSuperAdmin'])->middleware('auth')->name('admin.impersonation.stop');
 
 /*
 |--------------------------------------------------------------------------
