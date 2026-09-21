@@ -1,72 +1,107 @@
 @extends('components.layouts.app')
 
-@section('title', 'Magnetic Photo Frames for Walls | No Nails, No Damage, No Wall Marks')
+@section('title', 'Magnetic Photo Frames India | No Nails, No Wall Damage')
 
-@section('description', 'Magnetic photo frames for walls with no nails, no drilling, and no wall damage. Reposition
-    anytime. Design custom photo frames online. Made in India.')
+@section('description', 'Design premium magnetic photo frames online in India. Display and reposition your favourite photos without nails, drilling, wall marks or paint damage.')
 
 @section('keywords', 'magnetic photo frames, photo frames without nails, no drill photo frames, wall frames no damage,
-    light weight photo frames, stylish photo frames, modern photo frames, no marks on walls photo frames')
+    light weight photo frames, stylish photo frames, modern photo frames, no marks on walls, No wall damage photo frames')
 
 @section('canonical', url('/'))
 
 
 @push('css')
     <style>
-        .hero-clarity-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.20);
-            z-index: 2;
-            text-align: center;
-        }
+.hero-clarity-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
 
-        .hero-clarity-overlay h1 {
-            font-size: 4.2rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 2rem;
-            margin-top: 5vh;
-        }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
+    padding: 24px;
+    text-align: center;
+    color: #ffffff;
 
+    background: rgba(0, 0, 0, 0.35);
+}
 
-        /* Make buttons clickable even if you later decide to disable pointer events */
-        .hero-clarity-overlay .btn {
-            pointer-events: auto;
-        }
+.hero-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    object-fit: cover;
+}
 
+.hero-clarity-overlay h1 {
+    max-width: 1100px;
+    margin: 5vh auto 16px;
 
-        .hero-checks span {
-            position: relative;
-            padding-left: 22px;
-            margin-right: 16px;
-            display: inline-block;
-            font-weight: 500;
-        }
+    font-size: clamp(2rem, 4vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.12;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
 
-        .hero-checks span::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: #EB2371;
-            font-weight: 700;
-        }
+.hero-subtitle {
+    max-width: 850px;
+    margin: 0 auto 12px;
 
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    font-weight: 400;
+    line-height: 1.6;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
 
-        /* Responsive sizing for mobile */
-        @media (max-width: 768px) {
-            .hero-clarity-overlay h1 {
-                font-size: 1.6rem;
-            }
+.hero-usp {
+    margin: 0 auto 25px;
 
-        }
+    font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-actions .btn {
+    pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+    .hero-video {
+        min-height: 540px;
+    }
+
+    .hero-clarity-overlay {
+        padding: 20px 18px;
+    }
+
+    .hero-clarity-overlay h1 {
+        margin-top: 0;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-actions .btn {
+        width: min(100%, 280px);
+        margin-left: 0 !important;
+    }
+}
 
 
         /* =========================
@@ -129,7 +164,7 @@
             }
         }
 
-        26px
+
         /* =========================
            SECOND SECTION UNDER BANNER VIDEO
         ========================= */
@@ -386,39 +421,68 @@
 
 
 
-    {{-- HERO (VIDEO) + CLARITY OVERLAY --}}
-    <section class="custom-hero-slider-section">
-        <div class="container-fluid p-0">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-12 p-0">
-                    <div class="banner-video position-relative">
+{{-- HERO: PREMIUM MAGNETIC PHOTO FRAMES --}}
+<section class="custom-hero-slider-section">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <div class="col-12 p-0">
+                <div class="banner-video position-relative">
 
-                        <video width="100%" height="100%" autoplay muted loop playsinline>
-                            <source src="{{ asset('assets/banner-video/Banner-video.mp4') }}" type="video/mp4">
-                        </video>
+                    <video
+                        class="hero-video"
+                        width="100%"
+                        height="100%"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="metadata"
+                        aria-label="Magnetic photo frames displayed on walls"
+                    >
+                        {{ asset('assets/banner-video/Banner-video.mp4') }}
+                        Your browser does not support the video element.
+                    </video>
 
-                        <!-- ✅ HERO CLARITY OVERLAY -->
-                        <div class="hero-clarity-overlay text-white">
-                            <h1>
-                                No Nails, No Stickers, No Wall Marks
-                            </h1>
+                    <div class="hero-clarity-overlay text-white">
 
-                            <div>
-                                <a href="{{ route('design') }}" class="btn custom-btn">
-                                    Design Your Frame
-                                </a>
+                        <h1>
+                            Premium Magnetic Photo Frames for Walls
+                        </h1>
 
-                                <a href="{{ route('collections') }}" class="btn custom-btn ms-3">
-                                    Your Collections
-                                </a>
-                            </div>
+                        <p class="hero-subtitle">
+                            Turn your favourite memories into beautiful wall décor
+                            with custom magnetic photo frames.
+                        </p>
+
+                        <p class="hero-usp">
+                            No Nails <span aria-hidden="true">•</span>
+                            No Drilling <span aria-hidden="true">•</span>
+                            No Wall Marks <span aria-hidden="true">•</span>
+                            No Paint Damage
+                        </p>
+
+                        <div class="hero-actions">
+                             }}"
+                                class="btn custom-btn"
+                                aria-label="Design your custom magnetic photo frame"
+                            >
+                                Design Your Frame
+                            </a>
+
+                             }}"
+                                class="btn custom-btn ms-3"
+                                aria-label="Explore magnetic photo frame collections"
+                            >
+                                Explore Collections
+                            </a>
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
 
 
@@ -494,11 +558,12 @@
                 <!-- LEFT: Text -->
                 <div class="col-lg-5">
                     <div class="photo-moments-content">
-                        <h2>Decorate your wall with life’s special moments.</h2>
+                        <h2>Create Custom Magnetic Photo Frames Online</h2>
 
                         <p>
-                            Upload your favorite photos and choose a frame style you love.
-                            We’ll print, frame, and deliver. Ready to hang without nails or wall damage.
+                        Turn your favourite photos into premium magnetic wall frames.
+                        Choose your size, colour and frame style online, and we’ll print,
+                        frame and deliver them ready to display without nails or drilling.
                         </p>
 
                         <a href="{{ route('design') }}" class="btn photo-moments-btn">
@@ -511,7 +576,7 @@
                 <div class="col-lg-7">
                     <div class="photo-moments-image">
                         <img src="{{ asset('assets/images/my-collage-banner-1.png') }}"
-                            alt="Decorate your wall with moments" loading="lazy">
+                            alt="Custom magnetic photo frames arranged as a family wall gallery" loading="lazy">
                     </div>
                 </div>
 
@@ -526,7 +591,7 @@
                 <div class="col-lg-3 col-md-3 col-12">
                     <div class="custom-tabs-content">
                         <h2 class="heading-3">
-                            Your Phone Photos to Magnetick<span> Hanging</span>
+                            From Phone Photos to <span>Magnetic Wall Frames</span>
                         </h2>
                         <div class="d-flex align-items-start nails-tabs">
                             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
@@ -596,7 +661,7 @@
                 <div class="col-lg-12 col-md-12 col-12 main-video">
                     <div class="mobile-tabs-video">
                         <h2 class="heading-3" style=" font-size: 41px; ">
-                            No Nail - Magentick <span>Hanging</span>
+                            Magnetic Photo Frames Without Nails
                         </h2>
                         <div class="custom-tabs-content">
                             <div class="peel_stick">
@@ -780,14 +845,14 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <h1 class="main-title">
+                        <h2 class="main-title">
                             <span class="heading-2">
                                 Turn your photos into a masterpiece
                             </span>
                             <span class="heading-1">
                                 let your walls tell your story
                             </span>
-                        </h1>
+                        </h2>
 
                         <button type="button" class="btn design-btn filled"
                             onclick="window.location.href='{{ route('design') }}';">
@@ -906,8 +971,8 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
                     <div class="AboutSliderParent p-3 h-100">
-                        <h5><b>Super light weight & Premium</b></h5>
-                        <p>Even kids can carry it. No damage, when dropped</p>
+                        <h5><b>Lightweight and Premium</b></h5>
+                        <p>Even kids can carry it. Lightweight and easy to handle</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
@@ -984,7 +1049,7 @@
                             <div class="HomeFrameSlider_frameCard fr-md card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="sea image" loading="lazy" class="img-fluid"
+                                        <img alt="Pet photo displayed in a custom wall frame" loading="lazy" class="img-fluid"
                                             src="{{ asset('assets/images/Dog_1.webp') }}">
                                     </div>
                                     <p>Dog</p>
@@ -1143,13 +1208,13 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseOne" aria-expanded="false"
                                     aria-controls="flush-collapseOne">
-                                    What does Magentick Photo Frames have to offer?
+                                    What does Magnetick Photo Frames offer?
                                 </button>
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    Magentick Photo Frames offers you to create your own masterpiece with our customizable
+                                    Magnetick Photo Frames offers you to create your own masterpiece with our customizable
                                     photo frames.
                                     Simply upload your images. We’ll print, frame, and deliver them right to your doorstep.
                                 </div>
@@ -1182,8 +1247,7 @@
                             <div id="flush-collapseThree" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    Nope. No marks, no residues. Your walls remains
-                                    the same as it was before.
+                                    Nope. No marks, no residues. Your wall remains clean when the mounting system is installed and removed according to the instructions.
                                 </div>
                             </div>
                         </div>
@@ -1198,7 +1262,7 @@
                             <div id="flush-collapseFour" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    Magentick Photo Frames is the first ever shop to offer low-cost premium branded photo
+                                    Magnetick Photo Frames is the first ever shop to offer low-cost premium branded photo
                                     frames,
                                     so every class of people could afford. Our mission is simple to make beautiful,
                                     personalized
@@ -1224,7 +1288,7 @@
                             </h2>
                             <div id="flush-collapseFive" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">We offer sizes ranges from 8"X 8" to 12" X 12", plus customized
+                                <div class="accordion-body">Our standard sizes ranges from 8"X 8" to 12" X 12", plus customized
                                     options until 27X36 based on pre-orders.
                                     Available in various frame colours, including frameless option.
                                 </div>
@@ -1244,7 +1308,7 @@
         <div class="container">
             <div class="text-center text-lg-start HomeEnquire_homeEnquireContent">
                 <div class="newframeimg">
-                    <h3 class="heading-4">For Business Inquiries, <span class="d-block">Retails or Bulk Ordering,</span>
+                    <h3 class="heading-4">For Business Inquiries, <span class="d-block">Retail or Bulk Orders,</span>
                     </h3>
                     <button type="button" class="btn design-btn filled"
                         onclick="window.location.href='{{ route('contact') }}'">
