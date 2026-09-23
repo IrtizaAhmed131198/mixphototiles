@@ -2,9 +2,11 @@
 
 @section('title', 'Magnetic Photo Frames India | No Nails, No Wall Damage')
 
-@section('description', 'Design premium magnetic photo frames online in India. Display and reposition your favourite photos without nails, drilling, wall marks or paint damage.')
+@section('description', 'Design premium magnetic photo frames online in India. Display and reposition your favourite
+    photos without nails, drilling, wall marks or paint damage.')
 
-@section('keywords', 'magnetic photo frames, photo frames without nails, no drill photo frames, wall frames no damage,
+@section('keywords',
+    'magnetic photo frames, photo frames without nails, no drill photo frames, wall frames no damage,
     light weight photo frames, stylish photo frames, modern photo frames, no marks on walls, No wall damage photo frames')
 
 @section('canonical', url('/'))
@@ -12,101 +14,101 @@
 
 @push('css')
     <style>
-.hero-clarity-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
+        .hero-clarity-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
-    padding: 24px;
-    text-align: center;
-    color: #ffffff;
+            padding: 24px;
+            text-align: center;
+            color: #ffffff;
 
-    background: rgba(0, 0, 0, 0.35);
-}
+            background: rgba(0, 0, 0, 0.35);
+        }
 
-.hero-video {
-    display: block;
-    width: 100%;
-    height: 100%;
-    min-height: 600px;
-    object-fit: cover;
-}
+        .hero-video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 600px;
+            object-fit: cover;
+        }
 
-.hero-clarity-overlay h1 {
-    max-width: 1100px;
-    margin: 5vh auto 16px;
+        .hero-clarity-overlay h1 {
+            max-width: 1100px;
+            margin: 5vh auto 16px;
 
-    font-size: clamp(2rem, 4vw, 4.2rem);
-    font-weight: 700;
-    line-height: 1.12;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
-}
+            font-size: clamp(2rem, 4vw, 4.2rem);
+            font-weight: 700;
+            line-height: 1.12;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+        }
 
-.hero-subtitle {
-    max-width: 850px;
-    margin: 0 auto 12px;
+        .hero-subtitle {
+            max-width: 850px;
+            margin: 0 auto 12px;
 
-    font-size: clamp(1rem, 1.5vw, 1.3rem);
-    font-weight: 400;
-    line-height: 1.6;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
-}
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+            font-weight: 400;
+            line-height: 1.6;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+        }
 
-.hero-usp {
-    margin: 0 auto 25px;
+        .hero-usp {
+            margin: 0 auto 25px;
 
-    font-size: clamp(0.9rem, 1.3vw, 1.1rem);
-    font-weight: 600;
-    line-height: 1.6;
-    letter-spacing: 0.3px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
-}
+            font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+            font-weight: 600;
+            line-height: 1.6;
+            letter-spacing: 0.3px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+        }
 
-.hero-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-}
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
 
-.hero-actions .btn {
-    pointer-events: auto;
-}
+        .hero-actions .btn {
+            pointer-events: auto;
+        }
 
-@media (max-width: 768px) {
-    .hero-video {
-        min-height: 540px;
-    }
+        @media (max-width: 768px) {
+            .hero-video {
+                min-height: 540px;
+            }
 
-    .hero-clarity-overlay {
-        padding: 20px 18px;
-    }
+            .hero-clarity-overlay {
+                padding: 20px 18px;
+            }
 
-    .hero-clarity-overlay h1 {
-        margin-top: 0;
-    }
+            .hero-clarity-overlay h1 {
+                margin-top: 0;
+            }
 
-    .hero-actions {
-        flex-direction: column;
-        width: 100%;
-    }
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
 
-    .hero-actions .btn {
-        width: min(100%, 280px);
-        margin-left: 0 !important;
-    }
-}
+            .hero-actions .btn {
+                width: min(100%, 280px);
+                margin-left: 0 !important;
+            }
+        }
 
 
         /* =========================
-       FIRST SECTION UNDER THE BANNER VIDEO (under hero video)
-    ========================= */
+           FIRST SECTION UNDER THE BANNER VIDEO (under hero video)
+        ========================= */
         .benefit-strip {
             background: #ffffff;
             padding: 100px 0;
@@ -166,8 +168,8 @@
 
 
         /* =========================
-           SECOND SECTION UNDER BANNER VIDEO
-        ========================= */
+               SECOND SECTION UNDER BANNER VIDEO
+            ========================= */
 
         .photo-moments-section {
             background: #f6f6f3;
@@ -240,7 +242,7 @@
         }
 
 
- 
+
 
         /* Mobile tuning */
         @media (max-width: 768px) {
@@ -252,75 +254,433 @@
                 padding: 40px 26px 32px;
             }
         }
-        
-        
-    /* =========================
-    ICON CARD TRUST SECTION (IMAGE BASED)
-    ========================= */
-    
-    .trust-card-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 28px;
-        margin-top: 50px;
-    }
-    
-    .trust-card {
-        background: rgb(251, 246, 246);
-        border-radius: 18px;
-        padding: 32px 26px;
-        text-align: center;
-    }
-    
-    .trust-icon {
-        width: 105px;
-        height: 105px;
-        margin: 0 auto 18px;
-        border-radius: 50%;
-        background: rgba(235, 35, 113, 0.08);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .trust-icon img {
-        width: 65px;
-        height: 65px;
-        object-fit: contain;
-    }
-    
-    .trust-card h4 {
-        font-size: 1.05rem;
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-    
-    .trust-card p {
-        font-size: 0.95rem;
-        line-height: 1.6;
-        color: #444;
-        margin: 0;
-    }
-    
-    .trust-cta {
-        margin-top: 40px;
-    }
-    
-    /* Tablet */
-    @media (max-width: 991px) {
-        .trust-card-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 22px;
-        }
-    }
-    
-    /* Mobile */
-    @media (max-width: 576px) {
-        .trust-card-grid {
-            grid-template-columns: 1fr;
-        }
-    }
 
+
+        /* =========================
+        ICON CARD TRUST SECTION (IMAGE BASED)
+        ========================= */
+
+        .trust-card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 50px;
+        }
+
+        .trust-card {
+            background: rgb(251, 246, 246);
+            border-radius: 18px;
+            padding: 32px 26px;
+            text-align: center;
+        }
+
+        .trust-icon {
+            width: 105px;
+            height: 105px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: rgba(235, 35, 113, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trust-icon img {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+        }
+
+        .trust-card h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .trust-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #444;
+            margin: 0;
+        }
+
+        .trust-cta {
+            margin-top: 40px;
+        }
+
+        /* Tablet */
+        @media (max-width: 991px) {
+            .trust-card-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 22px;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 576px) {
+            .trust-card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .customer-reviews-section {
+            background: linear-gradient(180deg, #faf8f5 0%, #fffbfd 100%);
+            padding: 85px 0 95px 0;
+            position: relative;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+
+        .customer-reviews-section *:not(i):not([class*="fa"]):not(svg):not(path) {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+
+        .customer-reviews-section i.fa,
+        .customer-reviews-section i.fas,
+        .customer-reviews-section i.fa-solid,
+        .customer-reviews-section i[class*="fa-"] {
+            font-family: "Font Awesome 6 Free" !important;
+            font-weight: 900 !important;
+            font-style: normal !important;
+            display: inline-block;
+        }
+
+        .reviews-badge-pill {
+            background: #fdf2f6;
+            color: #eb2371;
+            border: 1px solid #f8c3d9;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .reviews-title {
+            font-size: clamp(2.1rem, 3.4vw, 2.85rem);
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .reviews-subtitle {
+            font-size: clamp(1rem, 1.3vw, 1.15rem);
+            color: #64748b;
+            margin: 0 auto;
+            max-width: 620px;
+        }
+
+        .featured-review-card {
+            background: #ffffff;
+            border: 1.5px solid #f1e2ea;
+            border-radius: 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(235, 35, 113, 0.03);
+            padding: 24px;
+            height: 100%;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 24px !important;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .featured-review-card:hover {
+            border-color: #f8c3d9;
+            box-shadow: 0 12px 35px rgba(235, 35, 113, 0.09);
+        }
+
+        .featured-review-image {
+            width: 44%;
+            height: 380px;
+            border-radius: 16px;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+        }
+
+        .featured-review-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-pill {
+            background: #fdf2f6;
+            color: #eb2371;
+            border: 1px solid #f8c3d9;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            margin-bottom: 14px;
+        }
+
+        .review-stars {
+            display: flex;
+            gap: 4px;
+            color: #ffaa00;
+            font-size: 19px;
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .featured-review-quote {
+            font-size: clamp(1.15rem, 1.5vw, 1.45rem);
+            font-weight: 700;
+            line-height: 1.4;
+            color: #111827;
+            margin-bottom: 20px;
+            letter-spacing: -0.2px;
+        }
+
+        .featured-review-author {
+            font-size: 15px;
+            color: #111827;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .verified-badge {
+            background: #eefdf3;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Right column vertical slider wrapper */
+        .standard-slider-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .slider-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+
+        .slider-header-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slider-header-title i {
+            color: #eb2371;
+        }
+
+        .reviews-slider-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .reviews-nav-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1.5px solid #f1e2ea;
+            color: #eb2371;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 12px;
+            padding: 0;
+        }
+
+        .reviews-nav-btn:hover {
+            background: #eb2371;
+            color: #ffffff;
+            border-color: #eb2371;
+            box-shadow: 0 4px 12px rgba(235, 35, 113, 0.25);
+        }
+
+        .reviews-nav-btn svg {
+            width: 13px;
+            height: 13px;
+            stroke: currentColor;
+            display: block;
+            transition: stroke 0.2s ease, transform 0.2s ease;
+        }
+
+        .reviews-nav-btn:hover svg {
+            stroke: #ffffff;
+        }
+
+        /* Vertical Swiper Container */
+        .reviews-vertical-swiper {
+            height: 395px !important;
+            overflow: hidden !important;
+            position: relative !important;
+            border-radius: 18px;
+            display: block !important;
+        }
+
+        .reviews-vertical-swiper .swiper-wrapper {
+            height: 100% !important;
+        }
+
+        .reviews-vertical-swiper .swiper-slide {
+            height: calc((395px - 28px) / 3) !important;
+            display: flex !important;
+            box-sizing: border-box !important;
+        }
+
+        .standard-review-card {
+            background: #ffffff;
+            border: 1.5px solid #f1e2ea;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            transition: all 0.25s ease;
+        }
+
+        .standard-review-card:hover {
+            border-color: #eb2371;
+            box-shadow: 0 6px 20px rgba(235, 35, 113, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .standard-review-avatar {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #f8c3d9;
+        }
+
+        .standard-review-avatar-placeholder {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            border-radius: 50%;
+            background: #fdf2f6;
+            color: #eb2371;
+            border: 2px solid #f8c3d9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .standard-review-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .standard-review-stars {
+            display: flex;
+            gap: 2px;
+            color: #ffaa00;
+            font-size: 13px;
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+
+        .standard-review-quote {
+            font-size: 13px;
+            line-height: 1.4;
+            color: #374151;
+            margin-bottom: 4px;
+            font-weight: 500;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .standard-review-author {
+            font-size: 12.5px;
+            color: #111827;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        @media (max-width: 991px) {
+            .featured-review-card {
+                flex-direction: column !important;
+                text-align: center;
+                gap: 20px !important;
+                margin-bottom: 24px;
+            }
+
+            .featured-review-image {
+                width: 100%;
+                height: 280px;
+            }
+
+            .featured-review-card .review-stars,
+            .featured-review-author {
+                justify-content: center;
+            }
+
+            .featured-pill {
+                margin: 0 auto 12px auto;
+            }
+
+            .reviews-vertical-swiper {
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            .reviews-vertical-swiper .swiper-slide {
+                height: auto !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .customer-reviews-section {
+                padding: 55px 0 65px 0;
+            }
+
+            .featured-review-card {
+                padding: 18px;
+            }
+
+            .standard-review-card {
+                padding: 12px 14px;
+                gap: 12px;
+            }
+        }
     </style>
 @endpush
 
@@ -421,74 +781,65 @@
 
 
 
-{{-- HERO: PREMIUM MAGNETIC PHOTO FRAMES --}}
-<section class="custom-hero-slider-section">
-    <div class="container-fluid p-0">
-        <div class="row g-0">
-            <div class="col-12 p-0">
-                <div class="banner-video position-relative">
+    {{-- HERO: PREMIUM MAGNETIC PHOTO FRAMES --}}
+    <section class="custom-hero-slider-section">
+        <div class="container-fluid p-0">
+            <div class="row g-0">
+                <div class="col-12 p-0">
+                    <div class="banner-video position-relative">
 
-                    <video
-                        class="hero-video"
-                        width="100%"
-                        height="100%"
-                        autoplay
-                        muted
-                        loop
-                        playsinline
-                        preload="metadata"
-                        aria-label="Magnetic photo frames displayed on walls"
-                    >
-                        {{ asset('assets/banner-video/Banner-video.mp4') }}
-                        Your browser does not support the video element.
-                    </video>
+                        <video class="hero-video" width="100%" height="100%" autoplay muted loop playsinline
+                            preload="metadata" aria-label="Magnetic photo frames displayed on walls">
+                            {{ asset('assets/banner-video/Banner-video.mp4') }}
+                            Your browser does not support the video element.
+                        </video>
 
-                    <div class="hero-clarity-overlay text-white">
+                        <div class="hero-clarity-overlay text-white">
 
-                        <h1>
-                            Premium Magnetic Photo Frames for Walls
-                        </h1>
+                            <h1>
+                                Premium Magnetic Photo Frames for Walls
+                            </h1>
 
-                        <p class="hero-subtitle">
-                            Turn your favourite memories into beautiful wall décor
-                            with custom magnetic photo frames.
-                        </p>
+                            <p class="hero-subtitle">
+                                Turn your favourite memories into beautiful wall décor
+                                with custom magnetic photo frames.
+                            </p>
 
-                        <p class="hero-usp">
-                            No Nails <span aria-hidden="true">•</span>
-                            No Drilling <span aria-hidden="true">•</span>
-                            No Wall Marks <span aria-hidden="true">•</span>
-                            No Paint Damage
-                        </p>
+                            <p class="hero-usp">
+                                No Nails <span aria-hidden="true">•</span>
+                                No Drilling <span aria-hidden="true">•</span>
+                                No Wall Marks <span aria-hidden="true">•</span>
+                                No Paint Damage
+                            </p>
 
-                        <div class="hero-actions">
-                             }}"
+                            <div class="hero-actions">
+                                }}"
                                 class="btn custom-btn"
                                 aria-label="Design your custom magnetic photo frame"
-                            >
+                                >
                                 Design Your Frame
-                            </a>
+                                </a>
 
-                             }}"
+                                }}"
                                 class="btn custom-btn ms-3"
                                 aria-label="Explore magnetic photo frame collections"
-                            >
+                                >
                                 Explore Collections
-                            </a>
-                        </div>
+                                </a>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 
     <!-- =========================
-    FIRST SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
-    ========================= -->
+        FIRST SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
+        ========================= -->
 
     <section class="benefit-strip">
         <div class="container">
@@ -516,13 +867,12 @@
                         <p class="benefit-subtitle">Leaves no marks</p>
                     </div>
                 </div>
-                
+
                 <!-- 3) Made in US -->
                 <div class="col-lg-3 col-md-3 col-12">
                     <div class="benefit-item">
                         <div class="benefit-icon">
-                            <img src="{{ asset('assets/icons/made-in-us.jpg') }}" alt="Made in US"
-                                class="benefit-icon-img">
+                            <img src="{{ asset('assets/icons/made-in-us.jpg') }}" alt="Made in US" class="benefit-icon-img">
                         </div>
                         <div class="benefit-title">American standard</div>
                         <p class="benefit-subtitle">US &amp; Euro standard finishing</p>
@@ -549,8 +899,8 @@
 
 
     <!-- =========================
-    SECOND SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
-    ========================= -->
+        SECOND SECTION UNDER BANNER VIDEO (UNDER HERO VIDEO)
+        ========================= -->
     <section class="photo-moments-section">
         <div class="container">
             <div class="row align-items-center">
@@ -561,9 +911,9 @@
                         <h2>Create Custom Magnetic Photo Frames Online</h2>
 
                         <p>
-                        Turn your favourite photos into premium magnetic wall frames.
-                        Choose your size, colour and frame style online, and we’ll print,
-                        frame and deliver them ready to display without nails or drilling.
+                            Turn your favourite photos into premium magnetic wall frames.
+                            Choose your size, colour and frame style online, and we’ll print,
+                            frame and deliver them ready to display without nails or drilling.
                         </p>
 
                         <a href="{{ route('design') }}" class="btn photo-moments-btn">
@@ -695,8 +1045,8 @@
         </div>
     </section>
 
- 
-    
+
+
 
     <section class="clusters-section">
         <div class="container-fluid">
@@ -775,50 +1125,47 @@
             </div>
         </div>
     </section>
-    
-    
-       <!-- =========================
-    CENTERED TRUST SECTION
-    ========================= -->
+
+
+    <!-- =========================
+        CENTERED TRUST SECTION
+        ========================= -->
 
     <section class="premium-trust-section">
         <div class="container">
-    
+
             <div class="text-center">
                 <h2 class="trust-title">We’ve Got You Covered</h2>
             </div>
-    
+
             <!-- ICON CARDS -->
             <div class="trust-card-grid">
-    
+
                 <div class="trust-card">
                     <div class="trust-icon">
-                        <img src="{{ asset('assets/icons/magnet.png') }}"
-                             alt="Magnetic mounting system">
+                        <img src="{{ asset('assets/icons/magnet.png') }}" alt="Magnetic mounting system">
                     </div>
                     <h4>Magnetic Mounting System</h4>
                     <p>
-                        A refined, calibrated magnetic system 
+                        A refined, calibrated magnetic system
                         provides lifetime stability.
                     </p>
                 </div>
-                
-    
+
+
                 <div class="trust-card">
                     <div class="trust-icon">
-                        <img src="{{ asset('assets/icons/rental-safe.png') }}"
-                             alt="Rental home safe">
+                        <img src="{{ asset('assets/icons/rental-safe.png') }}" alt="Rental home safe">
                     </div>
                     <h4>Rental‑Home Safe</h4>
                     <p>
                         Designed to hold frames securely while keeping your walls untouched.
                     </p>
                 </div>
-    
+
                 <div class="trust-card">
                     <div class="trust-icon">
-                        <img src="{{ asset('assets/icons/indian-wall.png') }}"
-                             alt="Built for Indian walls">
+                        <img src="{{ asset('assets/icons/indian-wall.png') }}" alt="Built for Indian walls">
                     </div>
                     <h4>Built for Indian Walls</h4>
                     <p>
@@ -826,19 +1173,19 @@
                         for Indian painted walls.
                     </p>
                 </div>
-    
+
             </div>
-    
+
             <!-- CTA -->
             <div class="text-center trust-cta">
                 <a href="{{ route('design') }}" class="btn design-btn filled">
                     Design Your Frame
                 </a>
             </div>
-    
+
         </div>
     </section>
-    
+
     <!-- ✅ MOBILE-ONLY MAIN BANNER (correct mobile position) -->
     <section class="main-banner-section d-block d-md-none">
         <div class="container">
@@ -877,15 +1224,15 @@
                         <button type="button" class="btn design-btn filled"
                             onclick="window.location.href='{{ route('design') }}';">
                             <!-- <svg width="26.122" height="26.849" class="w-em h-em me-2 ttl-26 mb-0"
-                                    viewBox="0 0 26.122 26.849" xmlns="http://www.w3.org/2000/svg">
-                                    <g transform="translate(-858.42 -842.908)">
-                                        <path fill="currentColor" transform="translate(866.746 842.818)"
-                                            d="M16.622.112c-.067,0-.089.045-.134.067L8.121,6.114a1.558,1.558,0,0,0-.29.357l-.29.558a5.119,5.119,0,0,1,3.347,3.347l.558-.29A1.457,1.457,0,0,0,11.8,9.8l5.935-8.367c.067-.112.089-.2,0-.29L16.756.157A.193.193,0,0,0,16.622.09ZM5.957,8.97a2.947,2.947,0,0,0-2.923,2.99,5.983,5.983,0,0,1-2.99,5.154,6.135,6.135,0,0,0,2.99.759,5.918,5.918,0,0,0,5.935-5.935,3,3,0,0,0-2.99-2.99Z">
-                                        </path>
-                                        <path fill="currentColor" transform="translate(859.67 845.317)"
-                                            d="M23.511,24.441H-1.25V-1.25H14.126V1.2H1.2v20.8H21.064V8.171h2.447Z"></path>
-                                    </g>
-                                </svg> -->
+                                        viewBox="0 0 26.122 26.849" xmlns="http://www.w3.org/2000/svg">
+                                        <g transform="translate(-858.42 -842.908)">
+                                            <path fill="currentColor" transform="translate(866.746 842.818)"
+                                                d="M16.622.112c-.067,0-.089.045-.134.067L8.121,6.114a1.558,1.558,0,0,0-.29.357l-.29.558a5.119,5.119,0,0,1,3.347,3.347l.558-.29A1.457,1.457,0,0,0,11.8,9.8l5.935-8.367c.067-.112.089-.2,0-.29L16.756.157A.193.193,0,0,0,16.622.09ZM5.957,8.97a2.947,2.947,0,0,0-2.923,2.99,5.983,5.983,0,0,1-2.99,5.154,6.135,6.135,0,0,0,2.99.759,5.918,5.918,0,0,0,5.935-5.935,3,3,0,0,0-2.99-2.99Z">
+                                            </path>
+                                            <path fill="currentColor" transform="translate(859.67 845.317)"
+                                                d="M23.511,24.441H-1.25V-1.25H14.126V1.2H1.2v20.8H21.064V8.171h2.447Z"></path>
+                                        </g>
+                                    </svg> -->
                             Design your frame
                         </button>
                     </div>
@@ -986,11 +1333,11 @@
                         <button type="button" class="btn design-btn filled"
                             onclick="window.location.href='{{ route('design') }}';">
                             <!-- <svg width="20" height="20" viewBox="0 0 20 20" class="w-em h-em me-1 ttl-20 mb-0"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="currentColor" transform="translate(-2 -2)"
-                                        d="M10,16.5,16,12,10,7.5ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z">
-                                    </path>
-                                </svg> -->
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="currentColor" transform="translate(-2 -2)"
+                                            d="M10,16.5,16,12,10,7.5ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z">
+                                        </path>
+                                    </svg> -->
                             Design your frame
                         </button>
                     </div>
@@ -1049,8 +1396,8 @@
                             <div class="HomeFrameSlider_frameCard fr-md card">
                                 <div class="card-body">
                                     <div class="HomeFrameSlider_frameImg ratio">
-                                        <img alt="Pet photo displayed in a custom wall frame" loading="lazy" class="img-fluid"
-                                            src="{{ asset('assets/images/Dog_1.webp') }}">
+                                        <img alt="Pet photo displayed in a custom wall frame" loading="lazy"
+                                            class="img-fluid" src="{{ asset('assets/images/Dog_1.webp') }}">
                                     </div>
                                     <p>Dog</p>
                                 </div>
@@ -1190,6 +1537,129 @@
         </div>
     </section>
 
+    @if (isset($featuredTestimonial) || (isset($standardTestimonials) && count($standardTestimonials) > 0))
+        <section class="customer-reviews-section">
+            <div class="container">
+                <div class="reviews-header">
+                    <span class="reviews-badge-pill">
+                        Customer Experiences
+                    </span>
+                    <h2 class="reviews-title">Loved by our customers</h2>
+                    <p class="reviews-subtitle">Real words from people who transformed their walls with Magnetick.</p>
+                </div>
+
+                <div class="row g-4 align-items-stretch">
+                    @if (isset($featuredTestimonial))
+                        <div class="col-lg-7 col-md-12">
+                            <div class="featured-review-card">
+                                @php
+                                    $featuredImg =
+                                        $featuredTestimonial->product_image ?:
+                                        ($featuredTestimonial->avatar ?:
+                                        'uploads/testimonials/featured_frame.png');
+                                @endphp
+                                <img src="{{ asset($featuredImg) }}" alt="{{ $featuredTestimonial->name }}"
+                                    class="featured-review-image" loading="lazy">
+                                <div class="featured-review-content">
+                                    <div class="featured-pill">
+                                        Featured Story
+                                    </div>
+                                    <div class="review-stars">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <span
+                                                style="color: {{ $i <= $featuredTestimonial->rating ? '#ffaa00' : '#e2e8f0' }};">★</span>
+                                        @endfor
+                                    </div>
+                                    <div class="featured-review-quote">
+                                        “{{ $featuredTestimonial->review }}”
+                                    </div>
+                                    <div class="featured-review-author">
+                                        — {{ $featuredTestimonial->name }}
+                                        <span class="verified-badge ms-2">
+                                            {{ $featuredTestimonial->designation ?? 'Verified Buyer' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if (isset($standardTestimonials) && count($standardTestimonials) > 0)
+                        <div class="{{ isset($featuredTestimonial) ? 'col-lg-5 col-md-12' : 'col-12' }}">
+                            <div class="standard-slider-container">
+                                <div class="slider-header-bar">
+                                    <div class="slider-header-title">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eb2371" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
+                                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                        </svg>
+                                        Wall Stories
+                                    </div>
+                                    <div class="reviews-slider-nav">
+                                        <button class="reviews-nav-btn reviews-btn-prev" type="button"
+                                            aria-label="Slide up" title="Previous review">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="18 15 12 9 6 15"></polyline>
+                                            </svg>
+                                        </button>
+                                        <button class="reviews-nav-btn reviews-btn-next" type="button"
+                                            aria-label="Slide down" title="Next review">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Vertical Swiper: exactly 3 reviews show, slides up/down -->
+                                <div class="swiper reviews-vertical-swiper">
+                                    <div class="swiper-wrapper">
+                                        @foreach ($standardTestimonials as $item)
+                                            <div class="swiper-slide">
+                                                <div class="standard-review-card">
+                                                    @if (!empty($item->avatar) && file_exists(public_path($item->avatar)))
+                                                        <img src="{{ asset($item->avatar) }}" alt="{{ $item->name }}"
+                                                            class="standard-review-avatar" loading="lazy">
+                                                    @else
+                                                        <div class="standard-review-avatar-placeholder">
+                                                            {{ strtoupper(substr($item->name, 0, 1)) }}
+                                                        </div>
+                                                    @endif
+                                                    <div class="standard-review-content">
+                                                        <div
+                                                            class="d-flex align-items-center justify-content-between mb-1">
+                                                            <div class="standard-review-stars">
+                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                    <span
+                                                                        style="color: {{ $i <= $item->rating ? '#ffaa00' : '#e2e8f0' }};">★</span>
+                                                                @endfor
+                                                            </div>
+                                                            <i class="fa fa-quote-right"
+                                                                style="color: #fce7f3; font-size: 13px;"></i>
+                                                        </div>
+                                                        <p class="standard-review-quote">
+                                                            “{{ $item->review }}”
+                                                        </p>
+                                                        <div class="standard-review-author">
+                                                            — {{ $item->name }}
+                                                            <span class="verified-badge ms-1"
+                                                                style="font-size: 10.5px; padding: 1px 6px;">
+                                                                <i class="fa fa-check-circle me-1"></i>Verified
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </section>
+    @endif
+
     <section class="faqSection py">
         <div class="container">
 
@@ -1247,7 +1717,8 @@
                             <div id="flush-collapseThree" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    Nope. No marks, no residues. Your wall remains clean when the mounting system is installed and removed according to the instructions.
+                                    Nope. No marks, no residues. Your wall remains clean when the mounting system is
+                                    installed and removed according to the instructions.
                                 </div>
                             </div>
                         </div>
@@ -1288,7 +1759,8 @@
                             </h2>
                             <div id="flush-collapseFive" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">Our standard sizes ranges from 8"X 8" to 12" X 12", plus customized
+                                <div class="accordion-body">Our standard sizes ranges from 8"X 8" to 12" X 12", plus
+                                    customized
                                     options until 27X36 based on pre-orders.
                                     Available in various frame colours, including frameless option.
                                 </div>
@@ -1377,6 +1849,55 @@
                 const initialTarget = activeBtn.getAttribute("data-bs-target");
                 resetAllTabVideos();
                 playVideoInPane(initialTarget);
+            }
+
+            // 6) Customer Reviews Vertical Swiper (3 visible, slides up/down)
+            const reviewsEl = document.querySelector('.reviews-vertical-swiper');
+            if (typeof Swiper !== 'undefined' && reviewsEl) {
+                let reviewsSwiperInstance = null;
+
+                function createReviewsSwiper() {
+                    if (reviewsSwiperInstance) {
+                        reviewsSwiperInstance.destroy(true, true);
+                    }
+                    const isMobile = window.innerWidth < 992;
+                    reviewsSwiperInstance = new Swiper('.reviews-vertical-swiper', {
+                        direction: isMobile ? 'horizontal' : 'vertical',
+                        slidesPerView: isMobile ? (window.innerWidth < 576 ? 1.15 : 2) : 3,
+                        spaceBetween: 14,
+                        loop: true,
+                        speed: 600,
+                        autoplay: {
+                            delay: 3500,
+                            disableOnInteraction: false,
+                            pauseOnMouseEnter: true,
+                        },
+                        navigation: {
+                            nextEl: '.reviews-btn-next',
+                            prevEl: '.reviews-btn-prev',
+                        },
+                        mousewheel: !isMobile ? {
+                            forceToAxis: true,
+                            releaseOnEdges: true,
+                        } : false,
+                    });
+                }
+
+                createReviewsSwiper();
+
+                let resizeTimeout;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(function() {
+                        const isMobile = window.innerWidth < 992;
+                        const currentDir = reviewsSwiperInstance ? reviewsSwiperInstance.params
+                            .direction : null;
+                        const targetDir = isMobile ? 'horizontal' : 'vertical';
+                        if (currentDir !== targetDir) {
+                            createReviewsSwiper();
+                        }
+                    }, 200);
+                });
             }
         });
     </script>
