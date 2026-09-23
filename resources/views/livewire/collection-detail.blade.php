@@ -319,21 +319,33 @@
                                 <h5>
                                     @php
                                         $discountAmount = ($product->price * $product->discount) / 100;
-                                        $finalPrice = $product->price - $discountAmount;
+                                        $europeanFinalPrice = $product->price - $discountAmount;
+
+                                        // Indian price: if specified on product, use it; otherwise ~60% of base price
+                                        $indianBase = $product->indian_price ?? round($product->price * 0.60);
+                                        $indianDiscountAmount = ($indianBase * $product->discount) / 100;
+                                        $indianFinalPrice = $indianBase - $indianDiscountAmount;
+
+                                        $defaultColType = 'indian';
+                                        $defaultFrameType = $defaultFrameType ?? 'indian';
+                                        $initialBasePrice = $indianFinalPrice;
                                     @endphp
                                     @if ($total_price != null)
                                         <span class="currency" data-base="{{ $total_price }}"
                                             data-val="{{ $total_price }}">₹{{ number_format($total_price, 0) }}</span>
                                     @else
-                                        <span class="currency" data-base="{{ $finalPrice }}"
-                                            data-val="{{ $finalPrice }}">₹{{ number_format($finalPrice, 0) }}</span>
+                                        <span class="currency" data-base="{{ $initialBasePrice }}"
+                                            data-val="{{ $initialBasePrice }}">₹{{ number_format($initialBasePrice, 0) }}</span>
                                     @endif
                                 </h5>
                                 <p class="discount">
                                     {{ $product->discount }}% OFF
                                 </p>
-                                @if (!empty($product->frame_note))
-                                    <span class="frameNote ms-2" style="font-size: 15px; color: #555; font-weight: 500;">{{ $product->frame_note }}</span>
+                                @php
+                                    $initialNote = !empty($product->indian_frame_note) ? $product->indian_frame_note : ($product->frame_note ?? 'Standard Indian wall sizes');
+                                @endphp
+                                @if (!empty($initialNote))
+                                    <span class="frameNote ms-2" style="font-size: 15px; color: #555; font-weight: 500;">{{ $initialNote }}</span>
                                 @endif
                             </div>
                             <p class="noted">
@@ -341,11 +353,116 @@
                             </p>
                         </div>
 
-                        <div class="parentaccording">
+                        <!-- Frame Features & Comparison Card -->
+                        <div class="card my-3 border-0 rounded-4 p-3 frame-feature-card" style="background: #fff; border: 1px solid #f1e2ea !important; box-shadow: 0 4px 15px rgba(0,0,0,0.03); font-family: 'Plus Jakarta Sans', sans-serif;">
+                            <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom" style="border-color: #f7eaf0 !important;">
+                                <span class="fw-bold fs-14 text-dark d-flex align-items-center" id="col-feature-card-title">
+                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #eb2371; margin-right: 8px;" id="col-feature-card-dot"></span>
+                                    <span id="col-feature-card-heading" style="font-weight: 700; color: #1a1a1a;">Indian Standard Frames</span>
+                                </span>
+                            </div>
+                            <div id="col-feature-indian-content">
+                                <ul class="list-unstyled mb-0 fs-13 text-secondary ps-0">
+                                    <li class="mb-1 d-flex align-items-start">
+                                        <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                        <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Budget Friendly:</strong> Cost-effective pricing with magnetic mount.</span>
+                                    </li>
+                                    <li class="mb-1 d-flex align-items-start">
+                                        <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                        <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Standard Sizes:</strong> 6"x8", 8"x12", 12"x15" popular Indian ratios.</span>
+                                    </li>
+                                    <li class="d-flex align-items-start">
+                                        <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                        <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Damage-Free:</strong> Reusable magnetic peel & stick, zero nails needed.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="col-feature-european-content" style="display: none;">
+                                <ul class="list-unstyled mb-0 fs-13 text-secondary ps-0">
+                                    <li class="mb-1 d-flex align-items-start">
+                                        <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                        <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Silk Finish:</strong> Premium imported European silk texture profile.</span>
+                                    </li>
+                                    <li class="mb-1 d-flex align-items-start">
+                                        <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                        <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">3D Depth:</strong> Deep beveled edge with rich shadow outline.</span>
+                                    </li>
+                                    <li class="d-flex align-items-start">
+                                        <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                        <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Damage-Free:</strong> Reusable magnetic peel & stick, zero nails needed.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="parentaccording" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                             <h3 class="heading-6">
                                 Customise your wall
                             </h3>
                             <div class="accordion accordion-flush" id="customizedoptions">
+
+                                <!-- Frame Type Accordion -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapse-frame-type"
+                                            aria-expanded="true" aria-controls="flush-collapse-frame-type">
+                                            <span class="customTilename">Frame Type</span>
+                                            <span class="badge ms-2" id="collection-frame-type-badge"
+                                                  style="background: #fdf2f6; color: #eb2371; border: 1px solid #f8c3d9; font-weight: 700; font-size: 11px; border-radius: 12px; padding: 3px 10px;">
+                                                Indian Frames
+                                            </span>
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapse-frame-type" class="accordion-collapse collapse show"
+                                        data-bs-parent="#customizedoptions">
+                                        <div class="accordion-body py-3">
+                                            <div class="row g-2 select-frame-type">
+                                                <div class="col-6">
+                                                    <div class="parentProperties frame-type-btn cursor-pointer transition-all {{ $defaultFrameType == 'indian' ? 'active' : '' }}"
+                                                        data-type="indian" data-name="Indian Standard Frames"
+                                                        data-base-price="{{ $indianFinalPrice }}"
+                                                        data-note="{{ $product->indian_frame_note ?? 'Standard Indian wall sizes' }}"
+                                                        id="col-btn-indian"
+                                                        style="cursor: pointer; border-radius: 14px; transition: all 0.25s ease; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; text-align: center !important; padding: 16px 10px !important; margin-bottom: 0 !important; width: 100%; {{ $defaultFrameType == 'indian' ? 'border: 2px solid #eb2371 !important; background: #fff !important; box-shadow: 0 4px 16px rgba(235, 35, 113, 0.12) !important;' : 'border: 1.5px solid #e2e8f0 !important; background: #fcfcfc !important;' }}">
+                                                        <figure class="mb-2 mx-auto" id="col-icon-indian"
+                                                                style="width: 46px; height: 46px; border-radius: 50%; background: {{ $defaultFrameType == 'indian' ? '#fdf2f6' : '#f8fafc' }}; border: 1px solid {{ $defaultFrameType == 'indian' ? '#f8c3d9' : '#e2e8f0' }}; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px auto; transition: all 0.2s;">
+                                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{ $defaultFrameType == 'indian' ? '#eb2371' : '#64748b' }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="col-svg-indian">
+                                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                                                <polyline points="21 15 16 10 5 21"></polyline>
+                                                            </svg>
+                                                        </figure>
+                                                        <p class="propertyName mb-1 w-100 text-center" id="col-title-indian" style="font-size: 13.5px; font-weight: 700; margin: 0 0 3px 0; color: {{ $defaultFrameType == 'indian' ? '#eb2371' : '#1a1a1a' }};">Indian Frames</p>
+                                                        <span class="d-block text-muted mb-2 w-100 text-center" style="font-size: 11px; margin: 0 0 6px 0;">Standard Sizes</span>
+                                                        <div class="fw-bold w-100 text-center" style="font-size: 16px; font-weight: 800; color: #eb2371; line-height: 1;">₹{{ number_format($indianFinalPrice, 0) }}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="parentProperties frame-type-btn cursor-pointer transition-all {{ $defaultFrameType == 'european' ? 'active' : '' }}"
+                                                        data-type="european" data-name="European Style Frames"
+                                                        data-base-price="{{ $europeanFinalPrice }}"
+                                                        data-note="{{ $product->frame_note ?? 'Each frame @rs489' }}"
+                                                        id="col-btn-european"
+                                                        style="cursor: pointer; border-radius: 14px; transition: all 0.25s ease; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; text-align: center !important; padding: 16px 10px !important; margin-bottom: 0 !important; width: 100%; {{ $defaultFrameType == 'european' ? 'border: 2px solid #eb2371 !important; background: #fff !important; box-shadow: 0 4px 16px rgba(235, 35, 113, 0.12) !important;' : 'border: 1.5px solid #e2e8f0 !important; background: #fcfcfc !important;' }}">
+                                                        <figure class="mb-2 mx-auto" id="col-icon-european"
+                                                                style="width: 46px; height: 46px; border-radius: 50%; background: {{ $defaultFrameType == 'european' ? '#fdf2f6' : '#f8fafc' }}; border: 1px solid {{ $defaultFrameType == 'european' ? '#f8c3d9' : '#e2e8f0' }}; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px auto; transition: all 0.2s;">
+                                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{ $defaultFrameType == 'european' ? '#eb2371' : '#64748b' }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="col-svg-european">
+                                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                                                <line x1="9" y1="21" x2="9" y2="9"></line>
+                                                            </svg>
+                                                        </figure>
+                                                        <p class="propertyName mb-1 w-100 text-center" id="col-title-european" style="font-size: 13.5px; font-weight: 700; margin: 0 0 3px 0; color: {{ $defaultFrameType == 'european' ? '#eb2371' : '#1a1a1a' }};">European Style</p>
+                                                        <span class="d-block text-muted mb-2 w-100 text-center" style="font-size: 11px; margin: 0 0 6px 0;">Premium Silk Finish</span>
+                                                        <div class="fw-bold w-100 text-center" style="font-size: 16px; font-weight: 800; color: #eb2371; line-height: 1;">₹{{ number_format($europeanFinalPrice, 0) }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 @if (get_setting('finish') == 1)
                                     <div class="accordion-item">
@@ -1031,6 +1148,15 @@
 
         function updateSelectedConfig() {
 
+            // Get the active frame type
+            let activeFrameType = document.querySelector(".select-frame-type .parentProperties.active");
+            if (activeFrameType) {
+                selectedConfig.frame_type = {
+                    type: activeFrameType.getAttribute("data-type"),
+                    name: activeFrameType.getAttribute("data-name"),
+                };
+            }
+
             // Get the active finish
             let activeFinish = document.querySelector(".select-finish .parentProperties.active");
             if (activeFinish) {
@@ -1524,6 +1650,124 @@
             currencyElement.setAttribute('data-val', finalPrice.toFixed(2));
         }
 
+        // Handle Frame Type selection (Indian vs European)
+        document.querySelectorAll('.select-frame-type .parentProperties.frame-type-btn').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.select-frame-type .parentProperties.frame-type-btn').forEach(li => li.classList.remove('active'));
+                this.classList.add('active');
+
+                let type = this.getAttribute('data-type');
+                let basePrice = parseFloat(this.getAttribute('data-base-price')) || 0;
+                let note = this.getAttribute('data-note') || '';
+
+                // Update currency base price
+                let currencyElement = document.querySelector('.currency');
+                if (currencyElement) {
+                    currencyElement.setAttribute('data-base', basePrice);
+                }
+
+                // Update frame type badge
+                let badge = document.getElementById('collection-frame-type-badge');
+                if (badge) {
+                    if (type === 'european') {
+                        badge.textContent = 'European Style';
+                        badge.style.background = '#f1f5f9';
+                        badge.style.color = '#475569';
+                        badge.style.border = '1px solid #cbd5e1';
+                    } else {
+                        badge.textContent = 'Indian Frames';
+                        badge.style.background = '#fdf2f6';
+                        badge.style.color = '#eb2371';
+                        badge.style.border = '1px solid #f8c3d9';
+                    }
+                }
+
+                // Update card styles
+                let btnIndian = document.getElementById('col-btn-indian');
+                let btnEuropean = document.getElementById('col-btn-european');
+                let titleIndian = document.getElementById('col-title-indian');
+                let titleEuropean = document.getElementById('col-title-european');
+                let iconIndian = document.getElementById('col-icon-indian');
+                let iconEuropean = document.getElementById('col-icon-european');
+                let svgIndian = document.getElementById('col-svg-indian');
+                let svgEuropean = document.getElementById('col-svg-european');
+
+                if (type === 'indian') {
+                    if (btnIndian) {
+                        btnIndian.style.setProperty('border', '2px solid #eb2371', 'important');
+                        btnIndian.style.setProperty('background', '#fff', 'important');
+                        btnIndian.style.setProperty('box-shadow', '0 4px 16px rgba(235, 35, 113, 0.12)', 'important');
+                    }
+                    if (titleIndian) titleIndian.style.color = '#eb2371';
+                    if (iconIndian) {
+                        iconIndian.style.background = '#fdf2f6';
+                        iconIndian.style.borderColor = '#f8c3d9';
+                    }
+                    if (svgIndian) svgIndian.setAttribute('stroke', '#eb2371');
+
+                    if (btnEuropean) {
+                        btnEuropean.style.setProperty('border', '1.5px solid #e2e8f0', 'important');
+                        btnEuropean.style.setProperty('background', '#fcfcfc', 'important');
+                        btnEuropean.style.setProperty('box-shadow', 'none', 'important');
+                    }
+                    if (titleEuropean) titleEuropean.style.color = '#1a1a1a';
+                    if (iconEuropean) {
+                        iconEuropean.style.background = '#f8fafc';
+                        iconEuropean.style.borderColor = '#e2e8f0';
+                    }
+                    if (svgEuropean) svgEuropean.setAttribute('stroke', '#64748b');
+                } else {
+                    if (btnEuropean) {
+                        btnEuropean.style.setProperty('border', '2px solid #eb2371', 'important');
+                        btnEuropean.style.setProperty('background', '#fff', 'important');
+                        btnEuropean.style.setProperty('box-shadow', '0 4px 16px rgba(235, 35, 113, 0.12)', 'important');
+                    }
+                    if (titleEuropean) titleEuropean.style.color = '#eb2371';
+                    if (iconEuropean) {
+                        iconEuropean.style.background = '#fdf2f6';
+                        iconEuropean.style.borderColor = '#f8c3d9';
+                    }
+                    if (svgEuropean) svgEuropean.setAttribute('stroke', '#eb2371');
+
+                    if (btnIndian) {
+                        btnIndian.style.setProperty('border', '1.5px solid #e2e8f0', 'important');
+                        btnIndian.style.setProperty('background', '#fcfcfc', 'important');
+                        btnIndian.style.setProperty('box-shadow', 'none', 'important');
+                    }
+                    if (titleIndian) titleIndian.style.color = '#1a1a1a';
+                    if (iconIndian) {
+                        iconIndian.style.background = '#f8fafc';
+                        iconIndian.style.borderColor = '#e2e8f0';
+                    }
+                    if (svgIndian) svgIndian.setAttribute('stroke', '#64748b');
+                }
+
+                // Update frame note
+                let frameNoteEl = document.querySelector('.frameNote');
+                if (frameNoteEl) {
+                    frameNoteEl.textContent = note;
+                }
+
+                // Update features card
+                let colHeading = document.getElementById('col-feature-card-heading');
+                let colIndContent = document.getElementById('col-feature-indian-content');
+                let colEurContent = document.getElementById('col-feature-european-content');
+
+                if (colHeading) colHeading.textContent = (type === 'european') ? 'European Style Frames' : 'Indian Standard Frames';
+                if (colIndContent && colEurContent) {
+                    if (type === 'indian') {
+                        colIndContent.style.display = 'block';
+                        colEurContent.style.display = 'none';
+                    } else {
+                        colIndContent.style.display = 'none';
+                        colEurContent.style.display = 'block';
+                    }
+                }
+
+                updatePrice();
+                updateSelectedConfig();
+            });
+        });
 
         document.querySelectorAll('.select-frame .parentProperties.frame-change').forEach(item => {
             item.addEventListener('click', function() {

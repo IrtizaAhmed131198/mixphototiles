@@ -87,13 +87,18 @@ define('D_MAX',       0.20);  // 20% — maximum total discount allowed
 /**
  * Calculate bundle price for multiple frames.
  *
- * @param  float  $subtotal   Sum of individual frame prices
- * @param  int    $n          Total number of frames
- * @return array  [bundleTotal, perFrame, saving, discount, grandTotal]
+ * @param  float   $subtotal    Sum of individual frame prices
+ * @param  int     $n           Total number of frames
+ * @param  string  $frame_type  'european' or 'indian'
+ * @return array   [bundleTotal, perFrame, saving, discount, grandTotal]
  */
-function calculateBundlePrice($subtotal, $n) {
+function calculateBundlePrice($subtotal, $n, $frame_type = 'european') {
     $delivery_cost = floatval(get_setting('delivery_cost') ?? 0);
-    $floor_price   = floatval(get_setting('floor_price')   ?? 485);
+    if ($frame_type === 'indian') {
+        $floor_price = floatval(get_setting('indian_floor_price') ?? 295);
+    } else {
+        $floor_price = floatval(get_setting('floor_price') ?? 489);
+    }
     $d_step        = floatval(get_setting('d_step')        ?? 5) / 100;   // convert % to decimal
     $d_max         = floatval(get_setting('d_max')         ?? 20) / 100;  // convert % to decimal
 

@@ -14,6 +14,7 @@ class Sizes extends Model
         'width',
         'height',
         'price',
-        'status'
+        'status',
+        'frame_type'
     ];
 }

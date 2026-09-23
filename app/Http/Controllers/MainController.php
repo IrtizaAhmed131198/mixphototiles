@@ -457,10 +457,10 @@ class MainController extends Controller
         }
 
         foreach ($sessionImages as $sessionImage) {
-            // Build product name using frame configuration details (assume frame_configuration has JSON data)
-            $frameConfig = json_decode($sessionImage->frame_configuration, true);
+            $frameType = $frameConfig['frame_type']['type'] ?? ($frameConfig['frame_type'] ?? 'indian');
+            $frameTypeName = $frameType === 'european' ? 'European' : 'Indian';
 
-            $name = $frameConfig['design']['displayText'] . " Frame (" .
+            $name = $frameTypeName . " " . $frameConfig['design']['displayText'] . " Frame (" .
                     $frameConfig['color']['color_name'] . ", " .
                     $frameConfig['size']['frameSizeText'] . ", " .
                     $frameConfig['finish']['frameFinishText'];
@@ -472,24 +472,8 @@ class MainController extends Controller
             // Slug (make unique slug from name)
             $slug = Str::slug($name . '-' . time(). '-'.$sessionImage['id']);
 
-            //price
-            // $price =
-            //     (float) ($frameConfig['led']['price'] ?? 0) +
-            //     (float) ($frameConfig['size']['frame_price'] ?? 0) +
-            //     (float) ($frameConfig['color']['color_price'] ?? 0) +
-            //     (float) ($frameConfig['design']['design_price'] ?? 0) +
-            //     (float) ($frameConfig['finish']['finish_price'] ?? 0);
-
-            //     // dd($frameConfig);
-            // if ($price == 0) {
-            //     $sellingPrice = calculateFrameCost($quantity);
-            //     $price = $sellingPrice / $quantity;
-            //     $price = round($price, 2);
-            // }
-            // dd($price);
-
-            // Apply new bundle pricing formula
-            $bundleResult = calculateBundlePrice($subtotal, $quantity);
+            // Apply new bundle pricing formula with frameType
+            $bundleResult = calculateBundlePrice($subtotal, $quantity, $frameType);
 
             // Per frame price after bundle discount
             $price = round($bundleResult['perFrame'], 2);
@@ -601,6 +585,9 @@ class MainController extends Controller
         $config = json_decode($request->input('configuration'), true);
         if ($config) {
             $details = [];
+            if (!empty($config['frame_type']['name'])) {
+                $details[] = $config['frame_type']['name'];
+            }
             if (!empty($config['color']['name'])) {
                 $details[] = $config['color']['name'];
             }
@@ -1209,14 +1196,20 @@ class MainController extends Controller
         return response()->json(['success' => true, 'data' => $cities]);
     }
 
-    public function getFrameDefaults()
+    public function getFrameDefaults(Request $request = null)
     {
+        $frame_type = request('frame_type', 'indian');
         $finish = Finish::where('status', '1')->first();
         $led = Led::where('status', '1')->first();
         $color = CustomColor::where('status', 1)->first();
-        $size = Sizes::where('status', '1')->first();
+        $size = Sizes::where('status', '1')->where('frame_type', $frame_type)->first()
+                ?? Sizes::where('status', '1')->first();
 
         $defaults = [
+            'frame_type' => [
+                'type' => $frame_type,
+                'name' => $frame_type === 'european' ? 'European Style Frames' : 'Indian Standard Frames',
+            ],
             'design' => [
                 'designClass' => 'classic-card-design',
                 'displayText' => 'Border',

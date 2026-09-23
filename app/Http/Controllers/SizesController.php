@@ -36,17 +36,24 @@ class SizesController extends Controller
                 return $counter;
             })
             ->addColumn('image', function ($row) {
-                // Return the full image URL for the image
-                return '<img src="' . asset($row->image) . '" alt="Image" style="max-width: 100px;">';
+                if (!empty($row->image) && file_exists(public_path($row->image))) {
+                    return '<img src="' . asset($row->image) . '" alt="' . htmlspecialchars($row->label) . '" style="max-width: 50px; max-height: 50px; object-fit: contain;">';
+                }
+                return '<span class="text-muted" style="font-size: 12px;">No Image</span>';
             })
             ->addColumn('price', function ($row) {
                 return (int) round($row->price);
+            })
+            ->addColumn('frame_type', function ($row) {
+                return ($row->frame_type ?? 'european') === 'indian'
+                    ? '<span class="badge bg-success">Indian</span>'
+                    : '<span class="badge bg-primary">European</span>';
             })
             ->addColumn('action', function ($sizes) {
                 return '<button class="btn btn-sm btn-brand-dark edit-sizes" data-id="'.$sizes->id.'">Edit</button>
                         <button class="btn btn-sm btn-brand-dark delete-sizes" data-id="'.$sizes->id.'">Delete</button>';
             })
-            ->rawColumns(['id', 'action', 'image']) // Add 'img' and 'image' to rawColumns
+            ->rawColumns(['id', 'action', 'image', 'frame_type'])
             ->make(true);
     }
 
@@ -82,6 +89,7 @@ class SizesController extends Controller
         $sizes->price = $request->price;
         $sizes->image = $sizeImgFullPath ?? null;
         $sizes->status = $request->status;
+        $sizes->frame_type = $request->frame_type ?? 'european';
         $sizes->width = $request->width;
         $sizes->height = $request->height;
         $sizes->save();
@@ -136,6 +144,9 @@ class SizesController extends Controller
         $sizes->label = $request->label;
         $sizes->price = $request->price;
         $sizes->status = $request->status;
+        if ($request->has('frame_type')) {
+            $sizes->frame_type = $request->frame_type;
+        }
         $sizes->width = $request->width;
         $sizes->height = $request->height;
 

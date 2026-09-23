@@ -20,19 +20,16 @@ let average_cost  = parseFloat($("#average_cost").val())  || 0;
 let base_margin   = parseFloat($("#base_margin").val())   || 0;
 
 // ============================================================
-// NEW PRICING CONSTANTS (from Pricing_Calculator_final.pdf)
+// PRICING CONSTANTS
 // ============================================================
-const FLOOR_PRICE = parseFloat($("#floor_price").val()) || 599;
-const D_STEP      = (parseFloat($("#d_step").val()) || 5)  / 100;  // convert % to decimal
-const D_MAX       = (parseFloat($("#d_max").val())  || 20) / 100;  // convert % to decimal
+const FLOOR_PRICE        = parseFloat($("#floor_price").val()) || 489;
+const INDIAN_FLOOR_PRICE = parseFloat($("#indian_floor_price").val()) || 295;
+const D_STEP             = (parseFloat($("#d_step").val()) || 5)  / 100;  // convert % to decimal
+const D_MAX              = (parseFloat($("#d_max").val())  || 20) / 100;  // convert % to decimal
+let currentFrameType     = $("#active_frame_type").val() || "indian";
 
 /**
- * NEW Bundle Pricing Formula
- *
- * BundleTotal = MAX(
- *     N × F,
- *     Subtotal × (1 − MIN(Dmax, Dstep × (N − 1)))
- * )
+ * Bundle Pricing Formula with Frame Type Floor Check
  *
  * @param {number} subtotal  - sum of individual frame prices
  * @param {number} n         - total number of frames
@@ -53,14 +50,15 @@ function calculateBundlePrice(subtotal, n) {
         };
     }
 
-    // Step 1: discount percentage for multi-frame bundle (5% discount from Excel calculator)
+    // Step 1: discount percentage for multi-frame bundle (5% discount)
     const discount = D_STEP;
 
     // Step 2: apply discount to subtotal
     const discounted = subtotal * (1 - discount);
 
-    // Step 3: floor check — never go below FLOOR_PRICE × N
-    const floorCheck = n * FLOOR_PRICE;
+    // Step 3: floor check based on active frame type
+    const activeFloor = (currentFrameType === "european") ? FLOOR_PRICE : INDIAN_FLOOR_PRICE;
+    const floorCheck = n * activeFloor;
 
     // Step 4: final bundle total
     const bundleTotal = Math.max(floorCheck, discounted);
@@ -572,6 +570,15 @@ async function processAndUploadImages(files, mainLoader) {
                 showClass: { popup: "animate__animated animate__fadeIn animate__slow" },
                 hideClass: { popup: "animate__animated animate__fadeOut animate__faster" },
             });
+
+            // Prompt user with Frame Type Selection Modal
+            setTimeout(() => {
+                const modalEl = document.getElementById("frameTypeChoiceModal");
+                if (modalEl) {
+                    const modalInstance = new bootstrap.Modal(modalEl);
+                    modalInstance.show();
+                }
+            }, 400);
         }
     } catch (err) {
         console.error("Image upload failed", err);
@@ -1074,6 +1081,155 @@ hangOptions.forEach((option) => {
         saveFrameConfigToDatabase({ price, value, framehangText }, "led");
         setTimeout(() => { updateFramePrice(get_active_config); }, 500);
     });
+});
+
+// ============================================================
+// FRAME TYPE (INDIAN VS EUROPEAN) SWITCHING LOGIC
+// ============================================================
+window.chooseFrameType = function(type) {
+    currentFrameType = type;
+    $("#active_frame_type").val(type);
+
+    // Update modal cards and buttons styling
+    const cardIndian = document.getElementById("card-choice-indian");
+    const cardEuropean = document.getElementById("card-choice-european");
+    const btnIndian = document.getElementById("btn-choice-indian");
+    const btnEuropean = document.getElementById("btn-choice-european");
+
+    if (type === "indian") {
+        if (cardIndian) {
+            cardIndian.style.setProperty("border", "2px solid #eb2371", "important");
+            cardIndian.style.setProperty("box-shadow", "0 8px 24px rgba(235, 35, 113, 0.12)", "important");
+            cardIndian.style.setProperty("background", "#ffffff", "important");
+        }
+        if (cardEuropean) {
+            cardEuropean.style.setProperty("border", "1.5px solid #e2e8f0", "important");
+            cardEuropean.style.setProperty("box-shadow", "none", "important");
+            cardEuropean.style.setProperty("background", "#fcfcfc", "important");
+        }
+        if (btnIndian) {
+            btnIndian.style.background = "#eb2371";
+            btnIndian.style.color = "#ffffff";
+            btnIndian.style.border = "1.5px solid #eb2371";
+            btnIndian.innerHTML = "✓ Selected";
+        }
+        if (btnEuropean) {
+            btnEuropean.style.background = "#ffffff";
+            btnEuropean.style.color = "#1a1a1a";
+            btnEuropean.style.border = "1.5px solid #cbd5e1";
+            btnEuropean.innerHTML = "Select European Frames";
+        }
+    } else {
+        if (cardEuropean) {
+            cardEuropean.style.setProperty("border", "2px solid #eb2371", "important");
+            cardEuropean.style.setProperty("box-shadow", "0 8px 24px rgba(235, 35, 113, 0.12)", "important");
+            cardEuropean.style.setProperty("background", "#ffffff", "important");
+        }
+        if (cardIndian) {
+            cardIndian.style.setProperty("border", "1.5px solid #e2e8f0", "important");
+            cardIndian.style.setProperty("box-shadow", "none", "important");
+            cardIndian.style.setProperty("background", "#fcfcfc", "important");
+        }
+        if (btnEuropean) {
+            btnEuropean.style.background = "#eb2371";
+            btnEuropean.style.color = "#ffffff";
+            btnEuropean.style.border = "1.5px solid #eb2371";
+            btnEuropean.innerHTML = "✓ Selected";
+        }
+        if (btnIndian) {
+            btnIndian.style.background = "#ffffff";
+            btnIndian.style.color = "#1a1a1a";
+            btnIndian.style.border = "1.5px solid #cbd5e1";
+            btnIndian.innerHTML = "Select Indian Frames";
+        }
+    }
+
+    // Update dropdown in toolbar
+    document.querySelectorAll(".frame-type-change").forEach(item => {
+        item.classList.remove("li-border-color");
+        if (item.getAttribute("data-type") === type) {
+            item.classList.add("li-border-color");
+        }
+    });
+
+    // Update summary card type label
+    const typeLabel = (type === "european") ? "European" : "Indian";
+    const typeHeading = (type === "european") ? "European Style Frames" : "Indian Standard Frames";
+
+    const frameTypeShow = document.getElementById("frame-type-show");
+    if (frameTypeShow) frameTypeShow.textContent = typeLabel;
+
+    const featureHeading = document.getElementById("feature-card-heading");
+    if (featureHeading) featureHeading.textContent = typeHeading;
+
+    // Toggle feature advantages content
+    const indianContent = document.getElementById("feature-indian-content");
+    const europeanContent = document.getElementById("feature-european-content");
+    if (indianContent && europeanContent) {
+        if (type === "indian") {
+            indianContent.style.display = "block";
+            europeanContent.style.display = "none";
+        } else {
+            indianContent.style.display = "none";
+            europeanContent.style.display = "block";
+        }
+    }
+
+    // Filter available sizes in size dropdown
+    let firstMatchingSize = null;
+    document.querySelectorAll(".frame-size").forEach(sizeItem => {
+        const itemType = sizeItem.getAttribute("data-frame-type") || "european";
+        if (itemType === type) {
+            sizeItem.style.display = "flex";
+            if (!firstMatchingSize) firstMatchingSize = sizeItem;
+        } else {
+            sizeItem.style.display = "none";
+        }
+    });
+
+    // Auto-select first matching size for this frame type
+    if (firstMatchingSize) {
+        firstMatchingSize.click();
+    }
+
+    // Save frame_type to active config
+    try {
+        const activeConfigInput = document.getElementById("active_config");
+        if (activeConfigInput && activeConfigInput.value) {
+            let get_active_config = JSON.parse(activeConfigInput.value);
+            let frameConfig = typeof get_active_config.frame_configuration === "string"
+                ? JSON.parse(get_active_config.frame_configuration)
+                : get_active_config.frame_configuration;
+            frameConfig.frame_type = {
+                type: type,
+                name: typeHeading
+            };
+            get_active_config.frame_configuration = JSON.stringify(frameConfig);
+            activeConfigInput.value = JSON.stringify(get_active_config);
+
+            saveFrameConfigToDatabase({ type: type, name: typeHeading }, "frame_type");
+        }
+    } catch(e) {
+        console.error("Error updating frame_type in config:", e);
+    }
+
+    // Close modal if open
+    const modalEl = document.getElementById("frameTypeChoiceModal");
+    if (modalEl) {
+        const modalInstance = bootstrap.Modal.getInstance(modalEl);
+        if (modalInstance) modalInstance.hide();
+    }
+
+    // Recalculate grand total
+    setTimeout(() => {
+        updateGrandTotal();
+    }, 400);
+};
+
+// Bind click on frame-type-change in sidebar dropdown
+$(document).on("click", ".frame-type-change", function () {
+    const type = $(this).attr("data-type");
+    if (type) chooseFrameType(type);
 });
 
 function saveFrameConfigToDatabase(frameConfig, type) {

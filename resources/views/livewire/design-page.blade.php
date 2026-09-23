@@ -171,6 +171,55 @@
                     <div class="mobile-toolbar-container">
                         <div class="grid-1">
                             <ul class="LeftSidebar_designTool">
+                                <!-- Frame Type Dropdown -->
+                                <li class="designToolPropertiesChild btn-group dropend">
+                                    <button type="button" class="" data-bs-toggle="dropdown" aria-expanded="false" title="Choose Indian or European Frame Type">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-em h-em LeftSidebar_designIcon__3UjGH">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                            <polyline points="21 15 16 10 5 21"></polyline>
+                                        </svg>
+                                        <p class="para">Type</p>
+                                    </button>
+                                    <ul class="designToolPropertiesLists dropdown-menu frame-type-tab design_type">
+                                        <div class="menuParent">
+                                            <p class="propertyTitle">
+                                                Select Frame Type
+                                            </p>
+                                        </div>
+                                        <li type="button"
+                                            class="parentProperties frame-type-change dropdown-item {{ $defaultFrameType == 'indian' ? 'li-border-color' : '' }}"
+                                            data-type="indian" data-name="Indian Standard Frames" style="cursor: pointer;">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="Indian Frames" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset('assets/images/1704186592728.png') }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <div>
+                                                    <p class="propertyName">Indian Frames</p>
+                                                    <small class="text-muted d-block" style="font-size: 10.5px; line-height: 1.2;">6x8, 8x12, 12x15</small>
+                                                </div>
+                                                <p class="propertyPrize" style="color: #eb2371; font-weight: 600;">₹299</p>
+                                            </div>
+                                        </li>
+                                        <li type="button"
+                                            class="parentProperties frame-type-change dropdown-item {{ $defaultFrameType == 'european' ? 'li-border-color' : '' }}"
+                                            data-type="european" data-name="European Style Frames" style="cursor: pointer;">
+                                            <figure class="PropertiesleftChild">
+                                                <img alt="European Frames" width="72" height="72" class="LeftSidebar"
+                                                    src="{{ asset('assets/images/1704186603681.png') }}">
+                                            </figure>
+                                            <div class="PropertiesRightChild">
+                                                <div>
+                                                    <p class="propertyName">European Style</p>
+                                                    <small class="text-muted d-block" style="font-size: 10.5px; line-height: 1.2;">8x8, 8x11, 12x12</small>
+                                                </div>
+                                                <p class="propertyPrize" style="color: #eb2371; font-weight: 600;">₹489</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+
                                 <!-- 1 dropdown -->
                                 <li class="designToolPropertiesChild btn-group dropend">
 
@@ -352,19 +401,33 @@
                                             </p>
                                         </div>
 
+                                        @php
+                                            $firstActiveFound = false;
+                                        @endphp
                                         @foreach ($sizes as $key => $val)
+                                            @php
+                                                $sType = $val->frame_type ?? 'european';
+                                                $isVisible = ($sType === $defaultFrameType);
+                                                $isFirstActive = false;
+                                                if ($isVisible && !$firstActiveFound) {
+                                                    $isFirstActive = true;
+                                                    $firstActiveFound = true;
+                                                }
+                                            @endphp
                                             <li type="button"
-                                                class="parentProperties dropdown-item frame-size {{ $key == 0 ? 'li-border-color' : '' }}"
+                                                class="parentProperties dropdown-item frame-size {{ $isFirstActive ? 'li-border-color' : '' }}"
+                                                data-frame-type="{{ $sType }}"
                                                 data-height="{{ $val->height }}px" data-width="{{ $val->width }}px"
                                                 data-max-width="500px" data-price="{{ $val->price }}"
-                                                data-val='{{ $val->label }}'>
+                                                data-val='{{ $val->label }}'
+                                                style="display: {{ $isVisible ? 'flex' : 'none' }};">
                                                 <figure class="PropertiesleftChild">
                                                     <img alt="drawer" width="72" height="72"
-                                                        class="LeftSidebar" src="{{ asset($val->image) }}">
+                                                        class="LeftSidebar" src="{{ asset($val->image ?? 'assets/images/1701851447650.png') }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
                                                     <p class="propertyName">{{ $val->label }}</p>
-                                                    {{-- <p class="propertyPrize">Rs.{{ $val->price }}</p> --}}
+                                                    <p class="propertyPrize">₹{{ round($val->price, 0) }}</p>
                                                 </div>
                                             </li>
                                         @endforeach
@@ -743,6 +806,21 @@
                                     <div class="card-body">
                                         <ul class="list-unstyled mb-0 row g-4">
                                             <li class="col-6">
+                                                <div class="d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-em h-em ttl-22 mb-0">
+                                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                                    </svg>
+                                                    <div class="frame-detail">
+                                                        <p class="para frame">Type</p>
+                                                        <h6 class="heading-4" id="frame-type-show">
+                                                            {{ $defaultFrameType == 'european' ? 'European' : 'Indian' }}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="col-6">
                                                 <div class="d-flex align-items-center"><svg
                                                         xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                                         viewBox="0 0 22 22" class="w-em h-em ttl-22 mb-0">
@@ -948,6 +1026,60 @@
                                         <input type="hidden" name="quantity" id="quantity" value="1">
                                     </div>
                                 </div>
+
+                                <!-- Frame Features & Comparison Card -->
+                                <div class="card mt-3 border-0 rounded-4 p-3 frame-feature-card" style="background: #fff; border: 1px solid #f1e2ea !important; box-shadow: 0 4px 15px rgba(0,0,0,0.03); font-family: 'Plus Jakarta Sans', sans-serif;">
+                                    <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom" style="border-color: #f7eaf0 !important;">
+                                        <span class="fw-bold fs-14 text-dark d-flex align-items-center" id="feature-card-title">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #eb2371; margin-right: 8px;" id="feature-card-dot"></span>
+                                            <span id="feature-card-heading" style="font-weight: 700; color: #1a1a1a;">{{ $defaultFrameType == 'european' ? 'European Style Frames' : 'Indian Standard Frames' }}</span>
+                                        </span>
+                                        <button type="button" class="btn btn-sm" id="switch-frame-type-btn" style="background: #fdf2f6; color: #eb2371; border: 1px solid #f8c3d9; border-radius: 20px; font-size: 11px; font-weight: 700; padding: 2px 10px; transition: all 0.2s;" data-bs-toggle="modal" data-bs-target="#frameTypeChoiceModal">
+                                            Change
+                                        </button>
+                                    </div>
+                                    <div id="feature-indian-content" style="display: {{ $defaultFrameType == 'indian' ? 'block' : 'none' }};">
+                                        <ul class="list-unstyled mb-0 fs-13 text-secondary ps-0">
+                                            <li class="mb-1 d-flex align-items-start">
+                                                <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                                <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Budget Friendly:</strong> Quality frames starting from ₹299.</span>
+                                            </li>
+                                            <li class="mb-1 d-flex align-items-start">
+                                                <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                                <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Standard Sizes:</strong> 6"x8", 8"x12", 12"x15" popular ratios.</span>
+                                            </li>
+                                            <li class="mb-1 d-flex align-items-start">
+                                                <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                                <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Damage-Free:</strong> Reusable magnetic wall mount, no nails.</span>
+                                            </li>
+                                            <li class="d-flex align-items-start">
+                                                <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                                <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Lightweight & Clean:</strong> Ideal for gallery walls on a budget.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div id="feature-european-content" style="display: {{ $defaultFrameType == 'european' ? 'block' : 'none' }};">
+                                        <ul class="list-unstyled mb-0 fs-13 text-secondary ps-0">
+                                            <li class="mb-1 d-flex align-items-start">
+                                                <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                                <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Silk Finish:</strong> Premium imported European silk texture profile.</span>
+                                            </li>
+                                            <li class="mb-1 d-flex align-items-start">
+                                                <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                                <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">3D Depth:</strong> Elegant beveled edge shadow design.</span>
+                                            </li>
+                                            <li class="mb-1 d-flex align-items-start">
+                                                <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                                <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Square & Portrait:</strong> Modern 8"x8", 8"x11", 12"x12" dimensions.</span>
+                                            </li>
+                                            <li class="d-flex align-items-start">
+                                                <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
+                                                <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Damage-Free:</strong> Magnetic stick & slide system with no drilling.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
                                 <div class="Right-Sidebar-footer view-grand-total-2">
                                     <div class="GrandTotal">
                                         <div class="d-flex justify-content-between w-100 mb-1">
@@ -1035,7 +1167,11 @@
                                 <input type="hidden" name="item_price" id="item_price"
                                     value="{{ $item_price ?? 0 }}">
                                 <input type="hidden" name="floor_price" id="floor_price"
-                                    value="{{ get_setting('floor_price') ?? 599 }}">
+                                    value="{{ get_setting('floor_price') ?? 489 }}">
+                                <input type="hidden" name="indian_floor_price" id="indian_floor_price"
+                                    value="{{ get_setting('indian_floor_price') ?? 295 }}">
+                                <input type="hidden" name="active_frame_type" id="active_frame_type"
+                                    value="{{ $defaultFrameType ?? 'indian' }}">
                                 <input type="hidden" name="d_step" id="d_step"
                                     value="{{ get_setting('d_step') ?? 5 }}">
                                 <input type="hidden" name="d_max" id="d_max"
@@ -1047,6 +1183,90 @@
                 </div>
             </div>
         </section>
+
+        <!-- Frame Type Selection Modal -->
+        <div class="modal fade" id="frameTypeChoiceModal" tabindex="-1" aria-labelledby="frameTypeChoiceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 780px;">
+                <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden; font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <div class="modal-header border-0 py-3 px-4" style="background: #fafafa; border-bottom: 1px solid #f0f0f0 !important;">
+                        <div>
+                            <h5 class="modal-title fw-bold mb-1 text-dark" id="frameTypeChoiceModalLabel" style="font-size: 20px; font-weight: 700; color: #1a1a1a;">Choose Your Frame Style</h5>
+                            <p class="text-muted fs-14 mb-0" style="font-size: 13.5px; color: #64748b;">Select Indian Standard Frames or European Style Frames for your photos.</p>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4" style="background: #ffffff;">
+                        <div class="row g-3">
+                            <!-- Option 1: Indian Frames -->
+                            <div class="col-md-6 col-12">
+                                <div class="card h-100 p-3 card-choice-item"
+                                     id="card-choice-indian"
+                                     style="border-radius: 16px; cursor: pointer; transition: all 0.25s ease; {{ $defaultFrameType == 'indian' ? 'border: 2px solid #eb2371 !important; box-shadow: 0 8px 24px rgba(235, 35, 113, 0.12) !important; background: #fff !important;' : 'border: 1.5px solid #e2e8f0 !important; background: #fcfcfc !important;' }}"
+                                     onclick="chooseFrameType('indian')">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="badge px-2 py-1" style="background: #fdf2f6; color: #eb2371; border: 1px solid #f9cadf; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; border-radius: 20px;">BUDGET FRIENDLY</span>
+                                        <span class="text-dark" style="font-size: 20px; font-weight: 800;">₹299 <small class="text-muted fw-normal" style="font-size: 12px;">starting</small></span>
+                                    </div>
+                                    <h5 class="mb-1" style="font-size: 17px; font-weight: 700; color: #1a1a1a;">Indian Standard Frames</h5>
+                                    <p class="mb-3" style="font-size: 13px; line-height: 1.5; color: #64748b;">Popular standard dimensions tailored for Indian home decor with damage-free magnetic mount.</p>
+                                    <div class="p-2 rounded-3 mb-3" style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                        <div style="font-size: 11px; font-weight: 700; color: #64748b; letter-spacing: 0.5px; margin-bottom: 6px;">AVAILABLE SIZES:</div>
+                                        <div class="d-flex gap-2">
+                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">6" X 8"</span>
+                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">8" X 12"</span>
+                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">12" X 15"</span>
+                                        </div>
+                                    </div>
+                                    <ul class="list-unstyled mb-3 ps-0" style="font-size: 13px; color: #475569;">
+                                        <li class="mb-1 d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> High quality, cost-effective pricing</li>
+                                        <li class="mb-1 d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> No nails, no wall marks</li>
+                                        <li class="d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> Magnetic peel & stick reusable tiles</li>
+                                    </ul>
+                                    <button type="button" class="btn w-100 fw-bold frame-choice-btn mt-auto" id="btn-choice-indian"
+                                            style="{{ $defaultFrameType == 'indian' ? 'background: #eb2371; color: #fff; border: 1.5px solid #eb2371;' : 'background: #fff; color: #1a1a1a; border: 1.5px solid #cbd5e1;' }} border-radius: 25px; padding: 10px 16px; font-size: 14px; font-weight: 700; transition: all 0.2s;"
+                                            onclick="chooseFrameType('indian')">
+                                        {{ $defaultFrameType == 'indian' ? '✓ Selected' : 'Select Indian Frames' }}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Option 2: European Frames -->
+                            <div class="col-md-6 col-12">
+                                <div class="card h-100 p-3 card-choice-item"
+                                     id="card-choice-european"
+                                     style="border-radius: 16px; cursor: pointer; transition: all 0.25s ease; {{ $defaultFrameType == 'european' ? 'border: 2px solid #eb2371 !important; box-shadow: 0 8px 24px rgba(235, 35, 113, 0.12) !important; background: #fff !important;' : 'border: 1.5px solid #e2e8f0 !important; background: #fcfcfc !important;' }}"
+                                     onclick="chooseFrameType('european')">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="badge px-2 py-1" style="background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; border-radius: 20px;">PREMIUM SILK FINISH</span>
+                                        <span class="text-dark" style="font-size: 20px; font-weight: 800;">₹489 <small class="text-muted fw-normal" style="font-size: 12px;">starting</small></span>
+                                    </div>
+                                    <h5 class="mb-1" style="font-size: 17px; font-weight: 700; color: #1a1a1a;">European Style Frames</h5>
+                                    <p class="mb-3" style="font-size: 13px; line-height: 1.5; color: #64748b;">Deep 3D beveled edge profile with elegant European silk texture and seamless corners.</p>
+                                    <div class="p-2 rounded-3 mb-3" style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                        <div style="font-size: 11px; font-weight: 700; color: #64748b; letter-spacing: 0.5px; margin-bottom: 6px;">AVAILABLE SIZES:</div>
+                                        <div class="d-flex gap-2">
+                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">8" X 8"</span>
+                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">8" X 11"</span>
+                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">12" X 12"</span>
+                                        </div>
+                                    </div>
+                                    <ul class="list-unstyled mb-3 ps-0" style="font-size: 13px; color: #475569;">
+                                        <li class="mb-1 d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> Premium European silk texture finish</li>
+                                        <li class="mb-1 d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> Deep 3D beveled shadow border</li>
+                                        <li class="d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> Magnetic peel & stick reusable tiles</li>
+                                    </ul>
+                                    <button type="button" class="btn w-100 fw-bold frame-choice-btn mt-auto" id="btn-choice-european"
+                                            style="{{ $defaultFrameType == 'european' ? 'background: #eb2371; color: #fff; border: 1.5px solid #eb2371;' : 'background: #fff; color: #1a1a1a; border: 1.5px solid #cbd5e1;' }} border-radius: 25px; padding: 10px 16px; font-size: 14px; font-weight: 700; transition: all 0.2s;"
+                                            onclick="chooseFrameType('european')">
+                                        {{ $defaultFrameType == 'european' ? '✓ Selected' : 'Select European Frames' }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {{-- SEO Content Block for Google --}}
         <section class="design-seo-content py-5">
