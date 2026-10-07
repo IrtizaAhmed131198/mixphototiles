@@ -157,7 +157,7 @@ class MainController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
-            $timestamp = time();
+            $timestamp = now()->format('YmdHisv') . '_' . Str::random(6);
 
             // Define file names
             $processedFileName = $timestamp . '.' . $extension;
@@ -195,7 +195,7 @@ class MainController extends Controller
             return response()->json([
                 'success' => true,
                 'file_url' => 'uploads/' . $processedFileName,
-                'filename' => $processedFileName,
+                'filename' => $session_images->filename,
             ]);
         }
 
@@ -441,9 +441,19 @@ class MainController extends Controller
         $productsAdded = [];
 
         $subtotal = 0;
+        $pricingItems = [];
 
         foreach ($sessionImages as $sessionImage) {
             $frameConfig = json_decode($sessionImage->frame_configuration, true);
+            $frameType = $frameConfig['frame_type']['type'] ?? ($frameConfig['frame_type'] ?? 'indian');
+            $designName = strtolower((string) ($frameConfig['design']['displayText'] ?? ''));
+            $sizeName = strtolower((string) ($frameConfig['size']['frameSizeText'] ?? ''));
+            $isFrameless = str_contains($designName, 'frameless');
+
+            if (($frameType === 'luxury_tiles' && (!$isFrameless || !str_contains($sizeName, '8.4')))
+                || ($frameType !== 'luxury_tiles' && $isFrameless)) {
+                return response()->json(['success' => false, 'message' => 'This frame option is not available for the selected collection.'], 422);
+            }
 
             $sizePrice   = (float) ($frameConfig['size']['frame_price'] ?? 0);
             $finishPrice = (float) ($frameConfig['finish']['finish_price'] ?? 0);
@@ -454,11 +464,18 @@ class MainController extends Controller
                 : (float) get_setting('average_cost') + $finishPrice + $ledPrice;
 
             $subtotal += $unitPrice;
+            $pricingItems[] = [
+                'price' => $unitPrice,
+                'frame_type' => $frameType,
+            ];
         }
 
-        foreach ($sessionImages as $sessionImage) {
+        $bundleResult = calculateMixedBundlePrice($pricingItems);
+
+        foreach ($sessionImages as $index => $sessionImage) {
+            $frameConfig = json_decode($sessionImage->frame_configuration, true);
             $frameType = $frameConfig['frame_type']['type'] ?? ($frameConfig['frame_type'] ?? 'indian');
-            $frameTypeName = $frameType === 'european' ? 'European' : 'Indian';
+            $frameTypeName = frame_collection_name($frameType);
 
             $name = $frameTypeName . " " . $frameConfig['design']['displayText'] . " Frame (" .
                     $frameConfig['color']['color_name'] . ", " .
@@ -471,12 +488,8 @@ class MainController extends Controller
 
             // Slug (make unique slug from name)
             $slug = Str::slug($name . '-' . time(). '-'.$sessionImage['id']);
-
-            // Apply new bundle pricing formula with frameType
-            $bundleResult = calculateBundlePrice($subtotal, $quantity, $frameType);
-
-            // Per frame price after bundle discount
-            $price = round($bundleResult['perFrame'], 2);
+            // Each collection keeps its own floor price in a mixed bundle.
+            $price = $bundleResult['itemPrices'][$index];
 
             // Create product in `products` table
             $product = Product::create([
@@ -584,6 +597,18 @@ class MainController extends Controller
         // Build product name with customization details
         $config = json_decode($request->input('configuration'), true);
         if ($config) {
+            $frameType = $config['frame_type']['type'] ?? 'indian';
+            $frameName = strtolower((string) ($config['frame']['name'] ?? ''));
+            $isFrameless = $frameName === 'frameless';
+            if (($frameType === 'luxury_tiles' && !$isFrameless) || ($frameType !== 'luxury_tiles' && $isFrameless)) {
+                return response()->json(['success' => false, 'message' => 'This frame option is not available for the selected collection.'], 422);
+            }
+
+            $config['frame_type']['name'] = frame_collection_name($frameType);
+            if (!empty($config['finish']['name'])) {
+                $config['finish']['name'] = finish_display_name($config['finish']['name']);
+            }
+
             $details = [];
             if (!empty($config['frame_type']['name'])) {
                 $details[] = $config['frame_type']['name'];
@@ -843,6 +868,7 @@ class MainController extends Controller
         // Step 4: recalc subtotal first (only for manual items)
         $subtotal = 0;
         $manualItemsCount = 0;
+        $pricingItems = [];
 
         foreach ($updatedCart as $item) {
             if (isset($item['type']) && $item['type'] == 'collection') {
@@ -866,15 +892,20 @@ class MainController extends Controller
                     : (float) get_setting('average_cost') + $finishPrice + $ledPrice;
 
                 $subtotal += $unitPrice;
+                $pricingItems[] = [
+                    'price' => $unitPrice,
+                    'frame_type' => $frameConfig['frame_type']['type'] ?? ($frameConfig['frame_type'] ?? 'indian'),
+                ];
                 $manualItemsCount++;
             }
         }
 
         // Apply SAME bundle logic (only if there are remaining manual items)
         if ($manualItemsCount > 0) {
-            $bundleResult = calculateBundlePrice($subtotal, $manualItemsCount);
+            $bundleResult = calculateMixedBundlePrice($pricingItems);
 
             // Step 5: update per item price (only for manual items)
+            $pricingIndex = 0;
             foreach ($updatedCart as &$item) {
                 if (isset($item['type']) && $item['type'] == 'collection') {
                     continue;
@@ -886,13 +917,14 @@ class MainController extends Controller
                         continue;
                     }
 
-                    $price = round($bundleResult['perFrame'], 2);
+                    $price = $bundleResult['itemPrices'][$pricingIndex];
 
                     $item['price'] = $price;
                     $item['total'] = $bundleResult['bundleTotal'] + (float)(get_setting('delivery_cost') ?? 0);
 
                     $product->price = $price;
                     $product->save();
+                    $pricingIndex++;
                 }
             }
         }
@@ -1061,7 +1093,7 @@ class MainController extends Controller
             'alternate_phone_number' => ['nullable', 'regex:/^\+?[0-9]{10,15}$/'],
         ]);
 
-        // 🔹 Handle "Other" for State
+        // ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Â¹ Handle "Other" for State
         if ($request->state === 'other') {
             if (!$request->filled('state_name')) {
                 return response()->json([
@@ -1075,7 +1107,7 @@ class MainController extends Controller
             $validated['state'] = $state->id;
         }
 
-        // 🔹 Handle "Other" for City
+        // ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Â¹ Handle "Other" for City
         if ($request->city === 'other') {
             if (!$request->filled('city_name')) {
                 return response()->json([
@@ -1208,7 +1240,7 @@ class MainController extends Controller
         $defaults = [
             'frame_type' => [
                 'type' => $frame_type,
-                'name' => $frame_type === 'european' ? 'European Style Frames' : 'Indian Standard Frames',
+                'name' => frame_collection_name($frame_type),
             ],
             'design' => [
                 'designClass' => 'classic-card-design',
@@ -1230,7 +1262,7 @@ class MainController extends Controller
             ],
             'finish' => [
                 'finish_price' => $finish->price,
-                'frameFinishText' => $finish->label,
+                'frameFinishText' => finish_display_name($finish->label),
             ],
             'led' => [
                 'price' => $led->price,

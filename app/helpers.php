@@ -153,4 +153,52 @@ function calculateFrameCost($quantity = 1, $sizePriceOverride = null) {
     return $result['grandTotal'];
 }
 
+
+
+function calculateMixedBundlePrice(array $items, ?float $discount = null, ?float $signatureFloor = null, ?float $premiumFloor = null): array {
+    $discount = $discount ?? (floatval(get_setting('d_step') ?? 5) / 100);
+    $signatureFloor = $signatureFloor ?? floatval(get_setting('indian_floor_price') ?? 295);
+    $premiumFloor = $premiumFloor ?? floatval(get_setting('floor_price') ?? 489);
+
+    if (count($items) === 0) {
+        return ['bundleTotal' => 0.0, 'itemPrices' => [], 'saving' => 0.0, 'discount' => 0.0];
+    }
+
+    $appliedDiscount = count($items) > 1 ? $discount : 0.0;
+    $subtotal = 0.0;
+    $itemPrices = [];
+
+    foreach ($items as $item) {
+        $price = (float) ($item['price'] ?? 0);
+        $type = $item['frame_type'] ?? 'indian';
+        $floor = $type === 'indian' ? $signatureFloor : $premiumFloor;
+        $subtotal += $price;
+        $itemPrices[] = round(max($floor, $price * (1 - $appliedDiscount)), 2);
+    }
+
+    $bundleTotal = round(array_sum($itemPrices), 2);
+
+    return [
+        'bundleTotal' => $bundleTotal,
+        'itemPrices' => $itemPrices,
+        'perFrame' => round($bundleTotal / count($items), 2),
+        'saving' => round(max(0, $subtotal - $bundleTotal), 2),
+        'discount' => $appliedDiscount,
+    ];
+}
+function frame_collection_name(?string $type): string {
+    return match ($type) {
+        'european' => 'European Collection',
+        'luxury_tiles' => 'Luxury Tiles',
+        default => 'Signature Collection',
+    };
+}
+
+function finish_display_name(?string $label): string {
+    $label = (string) $label;
+    $normalized = strtolower($label);
+    if (str_contains($normalized, 'matte')) { return 'Rich Museum Quality Matte'; }
+    if (str_contains($normalized, 'gloss')) { return 'Rich Museum Quality Glossy'; }
+    return $label;
+}
 ?>

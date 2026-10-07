@@ -45,9 +45,11 @@ class SizesController extends Controller
                 return (int) round($row->price);
             })
             ->addColumn('frame_type', function ($row) {
-                return ($row->frame_type ?? 'european') === 'indian'
-                    ? '<span class="badge bg-success">Indian</span>'
-                    : '<span class="badge bg-primary">European</span>';
+                return match ($row->frame_type ?? 'european') {
+                    'indian' => '<span class="badge bg-success">Signature Collection</span>',
+                    'luxury_tiles' => '<span class="badge bg-warning text-dark">Luxury Tiles</span>',
+                    default => '<span class="badge bg-primary">European Collection</span>',
+                };
             })
             ->addColumn('action', function ($sizes) {
                 return '<button class="btn btn-sm btn-brand-dark edit-sizes" data-id="'.$sizes->id.'">Edit</button>
@@ -69,6 +71,7 @@ class SizesController extends Controller
             'width' => 'required|string',
             'height' => 'required|string',
             'image' => 'required|mimes:jpeg,png,jpg,gif,webp|max:2048', // Max 2MB
+            'frame_type' => 'required|in:indian,european,luxury_tiles',
         ]);
 
         if ($validator->fails()) {
@@ -117,6 +120,7 @@ class SizesController extends Controller
             'width' => 'required|string',
             'height' => 'required|string',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,webp|max:2048', // Max 2MB
+            'frame_type' => 'required|in:indian,european,luxury_tiles',
         ]);
 
         if ($validator->fails()) {

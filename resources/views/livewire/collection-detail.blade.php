@@ -56,81 +56,8 @@
             border-image-outset: 0;
             border-image-repeat: stretch;
         } */
-
-        .frameinner {
-            padding: 14px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 100%;
-            width: 100%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .frameinner-pad {
-            padding: 4px !important;
-        }
-
-        .frameinner-less {
-            padding: 0 !important;
-        }
-
-        .bold-image-width {
-            border-image-width: 4px !important;
-            border-image-slice: 30 fill !important;
-            border-image-repeat: round !important;
-            /* border: 4px solid !important; */
-        }
-
-        .selected {
-            border: 3px solid red;
-            cursor: pointer;
-        }
-
-        .fs-14px.fw-semibold.cursor-pointer.list-group-item {
-            padding: 28px;
-            cursor: pointer;
-        }
-
-        button.btn-close.position-absolute.top-0.end-0.m-3 {
-            z-index: 1;
-        }
-
-        .productdeatailslist .ClusterDetails_detailsList {
-            padding: 0;
-        }
-
-        .productdeatailslist .ClusterDetails_detailsList ul {
-            padding-left: 1rem;
-        }
-
-        .swal2-show-custom {
-            animation: swal2-fade-in 1s ease-out;
-        }
-
-        @keyframes swal2-fade-in {
-            0% {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-
-        @media(max-width:768px) {
-            section.productDetailSection .col-lg-7.col-md-7.col-12 {
-                width: 100%;
-            }
-        }
     </style>
+    <link href="{{ asset('assets/css/collection-detail.css') }}" rel="stylesheet" />
 
     @foreach ($custom_color as $val)
         @php
@@ -204,6 +131,7 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
 
+                                <p class="text-center text-muted mb-2" style="font-size: 13px;">Click on a photo to adjust your picture</p>
                                 <div class="Parentframe" id="zoomContainer">
                                     <figure class="frameBackground">
                                         <img id="zoomImage" src="{{ asset($product->no_coordinates_image) }}"
@@ -358,7 +286,7 @@
                             <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom" style="border-color: #f7eaf0 !important;">
                                 <span class="fw-bold fs-14 text-dark d-flex align-items-center" id="col-feature-card-title">
                                     <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #eb2371; margin-right: 8px;" id="col-feature-card-dot"></span>
-                                    <span id="col-feature-card-heading" style="font-weight: 700; color: #1a1a1a;">Indian Standard Frames</span>
+                                    <span id="col-feature-card-heading" style="font-weight: 700; color: #1a1a1a;">Signature Collection</span>
                                 </span>
                             </div>
                             <div id="col-feature-indian-content">
@@ -404,61 +332,146 @@
                                 <!-- Frame Type Accordion -->
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#flush-collapse-frame-type"
-                                            aria-expanded="true" aria-controls="flush-collapse-frame-type">
+                                        <button class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapse-frame-type"
+                                            aria-expanded="true"
+                                            aria-controls="flush-collapse-frame-type">
+
                                             <span class="customTilename">Frame Type</span>
-                                            <span class="badge ms-2" id="collection-frame-type-badge"
-                                                  style="background: #fdf2f6; color: #eb2371; border: 1px solid #f8c3d9; font-weight: 700; font-size: 11px; border-radius: 12px; padding: 3px 10px;">
-                                                Indian Frames
+
+                                            <span class="badge ms-2 collection-badge"
+                                                id="collection-frame-type-badge">
+                                                Signature Collection
                                             </span>
                                         </button>
                                     </h2>
-                                    <div id="flush-collapse-frame-type" class="accordion-collapse collapse show"
+
+                                    <div id="flush-collapse-frame-type"
+                                        class="accordion-collapse collapse show"
                                         data-bs-parent="#customizedoptions">
+
                                         <div class="accordion-body py-3">
                                             <div class="row g-2 select-frame-type">
-                                                <div class="col-6">
-                                                    <div class="parentProperties frame-type-btn cursor-pointer transition-all {{ $defaultFrameType == 'indian' ? 'active' : '' }}"
-                                                        data-type="indian" data-name="Indian Standard Frames"
+
+                                                {{-- Signature Collection --}}
+                                                <div class="col-4">
+                                                    <div
+                                                        class="parentProperties frame-type-btn {{ $defaultFrameType == 'indian' ? 'active' : '' }}"
+                                                        data-type="indian"
+                                                        data-name="Signature Collection"
                                                         data-base-price="{{ $indianFinalPrice }}"
                                                         data-note="{{ $product->indian_frame_note ?? 'Standard Indian wall sizes' }}"
-                                                        id="col-btn-indian"
-                                                        style="cursor: pointer; border-radius: 14px; transition: all 0.25s ease; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; text-align: center !important; padding: 16px 10px !important; margin-bottom: 0 !important; width: 100%; {{ $defaultFrameType == 'indian' ? 'border: 2px solid #eb2371 !important; background: #fff !important; box-shadow: 0 4px 16px rgba(235, 35, 113, 0.12) !important;' : 'border: 1.5px solid #e2e8f0 !important; background: #fcfcfc !important;' }}">
-                                                        <figure class="mb-2 mx-auto" id="col-icon-indian"
-                                                                style="width: 46px; height: 46px; border-radius: 50%; background: {{ $defaultFrameType == 'indian' ? '#fdf2f6' : '#f8fafc' }}; border: 1px solid {{ $defaultFrameType == 'indian' ? '#f8c3d9' : '#e2e8f0' }}; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px auto; transition: all 0.2s;">
-                                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{ $defaultFrameType == 'indian' ? '#eb2371' : '#64748b' }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="col-svg-indian">
+                                                        id="col-btn-indian">
+
+                                                        <figure class="frame-type-icon" id="col-icon-indian">
+                                                            <svg
+                                                                width="22"
+                                                                height="22"
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke-width="1.8"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                id="col-svg-indian">
+
                                                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                                                                 <circle cx="8.5" cy="8.5" r="1.5"></circle>
                                                                 <polyline points="21 15 16 10 5 21"></polyline>
                                                             </svg>
                                                         </figure>
-                                                        <p class="propertyName mb-1 w-100 text-center" id="col-title-indian" style="font-size: 13.5px; font-weight: 700; margin: 0 0 3px 0; color: {{ $defaultFrameType == 'indian' ? '#eb2371' : '#1a1a1a' }};">Indian Frames</p>
-                                                        <span class="d-block text-muted mb-2 w-100 text-center" style="font-size: 11px; margin: 0 0 6px 0;">Standard Sizes</span>
-                                                        <div class="fw-bold w-100 text-center" style="font-size: 16px; font-weight: 800; color: #eb2371; line-height: 1;">₹{{ number_format($indianFinalPrice, 0) }}</div>
+
+                                                        <p class="propertyName frame-type-title" id="col-title-indian">
+                                                            Signature Collection
+                                                        </p>
+
+                                                        <span class="text-muted frame-type-description">
+                                                            Standard Sizes
+                                                        </span>
+
+                                                        <div class="frame-type-price">
+                                                            ₹{{ number_format($indianFinalPrice, 0) }}
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
-                                                    <div class="parentProperties frame-type-btn cursor-pointer transition-all {{ $defaultFrameType == 'european' ? 'active' : '' }}"
-                                                        data-type="european" data-name="European Style Frames"
+
+                                                {{-- European Collection --}}
+                                                <div class="col-4">
+                                                    <div
+                                                        class="parentProperties frame-type-btn {{ $defaultFrameType == 'european' ? 'active' : '' }}"
+                                                        data-type="european"
+                                                        data-name="European Collection"
                                                         data-base-price="{{ $europeanFinalPrice }}"
                                                         data-note="{{ $product->frame_note ?? 'Each frame @rs489' }}"
-                                                        id="col-btn-european"
-                                                        style="cursor: pointer; border-radius: 14px; transition: all 0.25s ease; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; text-align: center !important; padding: 16px 10px !important; margin-bottom: 0 !important; width: 100%; {{ $defaultFrameType == 'european' ? 'border: 2px solid #eb2371 !important; background: #fff !important; box-shadow: 0 4px 16px rgba(235, 35, 113, 0.12) !important;' : 'border: 1.5px solid #e2e8f0 !important; background: #fcfcfc !important;' }}">
-                                                        <figure class="mb-2 mx-auto" id="col-icon-european"
-                                                                style="width: 46px; height: 46px; border-radius: 50%; background: {{ $defaultFrameType == 'european' ? '#fdf2f6' : '#f8fafc' }}; border: 1px solid {{ $defaultFrameType == 'european' ? '#f8c3d9' : '#e2e8f0' }}; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px auto; transition: all 0.2s;">
-                                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{ $defaultFrameType == 'european' ? '#eb2371' : '#64748b' }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="col-svg-european">
+                                                        id="col-btn-european">
+
+                                                        <figure class="frame-type-icon" id="col-icon-european">
+                                                            <svg
+                                                                width="22"
+                                                                height="22"
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke-width="1.8"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                id="col-svg-european">
+
                                                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                                                                 <line x1="3" y1="9" x2="21" y2="9"></line>
                                                                 <line x1="9" y1="21" x2="9" y2="9"></line>
                                                             </svg>
                                                         </figure>
-                                                        <p class="propertyName mb-1 w-100 text-center" id="col-title-european" style="font-size: 13.5px; font-weight: 700; margin: 0 0 3px 0; color: {{ $defaultFrameType == 'european' ? '#eb2371' : '#1a1a1a' }};">European Style</p>
-                                                        <span class="d-block text-muted mb-2 w-100 text-center" style="font-size: 11px; margin: 0 0 6px 0;">Premium Silk Finish</span>
-                                                        <div class="fw-bold w-100 text-center" style="font-size: 16px; font-weight: 800; color: #eb2371; line-height: 1;">₹{{ number_format($europeanFinalPrice, 0) }}</div>
+
+                                                        <p class="propertyName frame-type-title" id="col-title-european">
+                                                            European Collection
+                                                            <span class="recommended-star">★</span>
+
+                                                            <small class="d-block text-muted">
+                                                                Most Recommended
+                                                            </small>
+                                                        </p>
+
+                                                        <span class="text-muted frame-type-description">
+                                                            Premium Silk Finish
+                                                        </span>
+
+                                                        <div class="frame-type-price">
+                                                            ₹{{ number_format($europeanFinalPrice, 0) }}
+                                                        </div>
                                                     </div>
                                                 </div>
+
+
+                                                {{-- Luxury Tiles --}}
+                                                <div class="col-4">
+                                                    <div
+                                                        class="parentProperties frame-type-btn"
+                                                        data-type="luxury_tiles"
+                                                        data-name="Luxury Tiles"
+                                                        data-base-price="{{ $europeanFinalPrice }}"
+                                                        data-note="Frameless tile · 8.4 x 8.4 in"
+                                                        id="col-btn-luxury_tiles">
+
+                                                        <figure class="frame-type-icon luxury-icon">
+                                                            ◆
+                                                        </figure>
+
+                                                        <p class="propertyName frame-type-title">
+                                                            Luxury Tiles
+                                                        </p>
+
+                                                        <span class="text-muted frame-type-description">
+                                                            Frameless · 8.4 x 8.4 in
+                                                        </span>
+
+                                                        <div class="frame-type-price">
+                                                            ₹{{ number_format($europeanFinalPrice, 0) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -495,7 +508,7 @@
                                                     @foreach ($finish as $key => $val)
                                                         <li type="button"
                                                             class="parentProperties frame-change {{ $key == 0 ? 'active' : '' }}"
-                                                            data-name="{{ $val->label }}"
+                                                            data-name="{{ finish_display_name($val->label) }}"
                                                             data-price="{{ $val->price }}">
                                                             <figure class="PropertiesleftChild">
                                                                 <img alt="drawer" width="72" height="72"
@@ -503,7 +516,7 @@
                                                                     src="{{ asset('assets/images/1704186592728.png') }}">
                                                             </figure>
                                                             <div class="PropertiesRightChild">
-                                                                <p class="propertyName">{{ $val->label }}</p>
+                                                                <p class="propertyName">{{ finish_display_name($val->label) }}</p>
                                                             </div>
                                                         </li>
                                                     @endforeach
@@ -618,7 +631,7 @@
                                             aria-expanded="false" aria-controls="flush-collapse3">
 
                                             <span class="customTilename">Frame</span>
-                                            <span class="text-body-tertiary">(3)</span>
+                                            <span class="text-body-tertiary" id="collection-frame-count">(2)</span>
 
 
                                         </button>
@@ -654,7 +667,7 @@
                                                     </div>
                                                 </li>
 
-                                                <li type="button" class="parentProperties frame-change"
+                                                <li type="button" class="parentProperties frame-change" style="display: none;"
                                                     data-name="frameless" data-class="frameless-image-width">
                                                     <figure class="PropertiesleftChild">
                                                         <img alt="drawer" width="72" height="72"
@@ -1524,16 +1537,19 @@
         let $uploadCrop, rawImg;
 
         document.getElementById("crop-image").addEventListener("click", function() {
-            const selectedCluster = document.querySelector(".clusterFrameWrp.selected");
+            const selectedCluster = document.querySelector(".clusterFrameWrp.selected") ||
+                (selectedClusterId ? document.getElementById(`cluster-block-${selectedClusterId}`) : null);
             if (!selectedCluster) {
                 alert("Please select an image first.");
                 return;
             }
 
-            selectedClusterId = selectedCluster.getAttribute("data-cluster-id");
+            selectedClusterId = selectedCluster.getAttribute("data-cluster-id") ||
+                selectedCluster.id.replace("cluster-block-", "");
 
             const previewImg = document.getElementById(`preview-${selectedClusterId}`);
-            if (!previewImg || !previewImg.src) {
+            const previewSource = previewImg ? previewImg.getAttribute("src") : '';
+            if (!previewImg || !previewSource || previewImg.classList.contains('d-none')) {
                 alert("No image to crop.");
                 return;
             }
@@ -1592,8 +1608,19 @@
                 }
             });
 
-            // Show the crop modal
-            $('#cropImagePop').modal('show');
+            // Close the actions modal first, then open Crop for the same selected photo.
+            const actionsModalElement = document.getElementById('editphotolayoutmodal');
+            const actionsModal = bootstrap.Modal.getInstance(actionsModalElement);
+            const showCropModal = () => bootstrap.Modal.getOrCreateInstance(
+                document.getElementById('cropImagePop')
+            ).show();
+
+            if (actionsModalElement.classList.contains('show') && actionsModal) {
+                actionsModalElement.addEventListener('hidden.bs.modal', showCropModal, { once: true });
+                actionsModal.hide();
+            } else {
+                showCropModal();
+            }
         });
 
         // Handle the crop and set preview image
@@ -1621,12 +1648,13 @@
 
 
 
-        // Select a cluster when clicking
+        // Keep the clicked photo selected while the Crop / Swap / Remove modal is open.
         document.querySelectorAll(".clusterFrameWrp").forEach((cluster) => {
             cluster.addEventListener("click", function() {
                 document.querySelectorAll(".clusterFrameWrp").forEach((el) => el.classList.remove(
                     "selected"));
                 this.classList.add("selected");
+                selectedClusterId = this.getAttribute("data-cluster-id") || this.id.replace("cluster-block-", "");
             });
         });
 
@@ -1650,127 +1678,46 @@
             currencyElement.setAttribute('data-val', finalPrice.toFixed(2));
         }
 
-        // Handle Frame Type selection (Indian vs European)
-        document.querySelectorAll('.select-frame-type .parentProperties.frame-type-btn').forEach(item => {
+        // Handle collection selection
+        document.querySelectorAll('.select-frame-type .frame-type-btn').forEach(item => {
             item.addEventListener('click', function() {
-                document.querySelectorAll('.select-frame-type .parentProperties.frame-type-btn').forEach(li => li.classList.remove('active'));
-                this.classList.add('active');
+                const type = this.getAttribute('data-type');
+                const labels = { indian: 'Signature Collection', european: 'European Collection ★ Most Recommended', luxury_tiles: 'Luxury Tiles' };
+                document.querySelectorAll('.select-frame-type .frame-type-btn').forEach(card => {
+                    const active = card === this;
+                    card.classList.toggle('active', active);
+                    card.style.setProperty('border', active ? '2px solid #eb2371' : '1.5px solid #e2e8f0', 'important');
+                    card.style.setProperty('background', active ? '#fff' : '#fcfcfc', 'important');
+                    card.style.setProperty('box-shadow', active ? '0 4px 16px rgba(235,35,113,.12)' : 'none', 'important');
+                });
 
-                let type = this.getAttribute('data-type');
-                let basePrice = parseFloat(this.getAttribute('data-base-price')) || 0;
-                let note = this.getAttribute('data-note') || '';
+                const currency = document.querySelector('.currency');
+                if (currency) currency.setAttribute('data-base', parseFloat(this.getAttribute('data-base-price')) || 0);
+                const badge = document.getElementById('collection-frame-type-badge');
+                if (badge) badge.textContent = labels[type] || labels.indian;
+                const note = document.querySelector('.frameNote');
+                if (note) note.textContent = this.getAttribute('data-note') || '';
+                const heading = document.getElementById('col-feature-card-heading');
+                if (heading) heading.textContent = labels[type] || labels.indian;
 
-                // Update currency base price
-                let currencyElement = document.querySelector('.currency');
-                if (currencyElement) {
-                    currencyElement.setAttribute('data-base', basePrice);
-                }
-
-                // Update frame type badge
-                let badge = document.getElementById('collection-frame-type-badge');
-                if (badge) {
-                    if (type === 'european') {
-                        badge.textContent = 'European Style';
-                        badge.style.background = '#f1f5f9';
-                        badge.style.color = '#475569';
-                        badge.style.border = '1px solid #cbd5e1';
-                    } else {
-                        badge.textContent = 'Indian Frames';
-                        badge.style.background = '#fdf2f6';
-                        badge.style.color = '#eb2371';
-                        badge.style.border = '1px solid #f8c3d9';
-                    }
-                }
-
-                // Update card styles
-                let btnIndian = document.getElementById('col-btn-indian');
-                let btnEuropean = document.getElementById('col-btn-european');
-                let titleIndian = document.getElementById('col-title-indian');
-                let titleEuropean = document.getElementById('col-title-european');
-                let iconIndian = document.getElementById('col-icon-indian');
-                let iconEuropean = document.getElementById('col-icon-european');
-                let svgIndian = document.getElementById('col-svg-indian');
-                let svgEuropean = document.getElementById('col-svg-european');
-
-                if (type === 'indian') {
-                    if (btnIndian) {
-                        btnIndian.style.setProperty('border', '2px solid #eb2371', 'important');
-                        btnIndian.style.setProperty('background', '#fff', 'important');
-                        btnIndian.style.setProperty('box-shadow', '0 4px 16px rgba(235, 35, 113, 0.12)', 'important');
-                    }
-                    if (titleIndian) titleIndian.style.color = '#eb2371';
-                    if (iconIndian) {
-                        iconIndian.style.background = '#fdf2f6';
-                        iconIndian.style.borderColor = '#f8c3d9';
-                    }
-                    if (svgIndian) svgIndian.setAttribute('stroke', '#eb2371');
-
-                    if (btnEuropean) {
-                        btnEuropean.style.setProperty('border', '1.5px solid #e2e8f0', 'important');
-                        btnEuropean.style.setProperty('background', '#fcfcfc', 'important');
-                        btnEuropean.style.setProperty('box-shadow', 'none', 'important');
-                    }
-                    if (titleEuropean) titleEuropean.style.color = '#1a1a1a';
-                    if (iconEuropean) {
-                        iconEuropean.style.background = '#f8fafc';
-                        iconEuropean.style.borderColor = '#e2e8f0';
-                    }
-                    if (svgEuropean) svgEuropean.setAttribute('stroke', '#64748b');
-                } else {
-                    if (btnEuropean) {
-                        btnEuropean.style.setProperty('border', '2px solid #eb2371', 'important');
-                        btnEuropean.style.setProperty('background', '#fff', 'important');
-                        btnEuropean.style.setProperty('box-shadow', '0 4px 16px rgba(235, 35, 113, 0.12)', 'important');
-                    }
-                    if (titleEuropean) titleEuropean.style.color = '#eb2371';
-                    if (iconEuropean) {
-                        iconEuropean.style.background = '#fdf2f6';
-                        iconEuropean.style.borderColor = '#f8c3d9';
-                    }
-                    if (svgEuropean) svgEuropean.setAttribute('stroke', '#eb2371');
-
-                    if (btnIndian) {
-                        btnIndian.style.setProperty('border', '1.5px solid #e2e8f0', 'important');
-                        btnIndian.style.setProperty('background', '#fcfcfc', 'important');
-                        btnIndian.style.setProperty('box-shadow', 'none', 'important');
-                    }
-                    if (titleIndian) titleIndian.style.color = '#1a1a1a';
-                    if (iconIndian) {
-                        iconIndian.style.background = '#f8fafc';
-                        iconIndian.style.borderColor = '#e2e8f0';
-                    }
-                    if (svgIndian) svgIndian.setAttribute('stroke', '#64748b');
-                }
-
-                // Update frame note
-                let frameNoteEl = document.querySelector('.frameNote');
-                if (frameNoteEl) {
-                    frameNoteEl.textContent = note;
-                }
-
-                // Update features card
-                let colHeading = document.getElementById('col-feature-card-heading');
-                let colIndContent = document.getElementById('col-feature-indian-content');
-                let colEurContent = document.getElementById('col-feature-european-content');
-
-                if (colHeading) colHeading.textContent = (type === 'european') ? 'European Style Frames' : 'Indian Standard Frames';
-                if (colIndContent && colEurContent) {
-                    if (type === 'indian') {
-                        colIndContent.style.display = 'block';
-                        colEurContent.style.display = 'none';
-                    } else {
-                        colIndContent.style.display = 'none';
-                        colEurContent.style.display = 'block';
-                    }
-                }
+                const choices = document.querySelectorAll('.select-frame .frame-change');
+                let target = null;
+                choices.forEach(choice => {
+                    const frameless = choice.getAttribute('data-name') === 'frameless';
+                    const allowed = type === 'luxury_tiles' ? frameless : !frameless;
+                    choice.style.display = allowed ? 'flex' : 'none';
+                    if (allowed && (type === 'luxury_tiles' ? frameless : choice.getAttribute('data-name') === 'border')) target = choice;
+                });
+                const count = document.getElementById('collection-frame-count');
+                if (count) count.textContent = type === 'luxury_tiles' ? '(1)' : '(2)';
+                if (target) target.click();
 
                 updatePrice();
                 updateSelectedConfig();
             });
         });
 
-        document.querySelectorAll('.select-frame .parentProperties.frame-change').forEach(item => {
-            item.addEventListener('click', function() {
+        document.querySelectorAll('.select-frame .parentProperties.frame-change').forEach(item => {            item.addEventListener('click', function() {
                 document.querySelectorAll('.select-frame .parentProperties.frame-change').forEach(li => li
                     .classList.remove('active'));
                 this.classList.add('active');

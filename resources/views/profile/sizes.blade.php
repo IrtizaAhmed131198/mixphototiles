@@ -107,8 +107,9 @@
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <select name="frame_type" class="form-control" required>
-                                            <option value="indian">Indian Frames</option>
-                                            <option value="european">European Style</option>
+                                            <option value="indian">Signature Collection</option>
+                                            <option value="european">European Collection</option>
+                                            <option value="luxury_tiles">Luxury Tiles (8.4 x 8.4 in)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -194,8 +195,9 @@
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <select name="frame_type" id="edit_frame_type" class="form-control" required>
-                                            <option value="indian">Indian Frames</option>
-                                            <option value="european">European Style</option>
+                                            <option value="indian">Signature Collection</option>
+                                            <option value="european">European Collection</option>
+                                            <option value="luxury_tiles">Luxury Tiles (8.4 x 8.4 in)</option>
                                         </select>
                                     </div>
                                 </div>

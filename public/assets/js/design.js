@@ -35,38 +35,24 @@ let currentFrameType     = $("#active_frame_type").val() || "indian";
  * @param {number} n         - total number of frames
  * @returns {object}         - { bundleTotal, perFrame, saving, discount }
  */
-function calculateBundlePrice(subtotal, n) {
-    if (n <= 0 || subtotal <= 0) {
-        return { bundleTotal: 0, perFrame: 0, saving: 0, discount: 0 };
-    }
+function calculateMixedBundlePrice(items) {
+    if (!items.length) return { bundleTotal: 0, perFrame: 0, saving: 0, discount: 0 };
 
-    if (n === 1) {
-        // Single frame — show price directly, no discount
-        return {
-            bundleTotal: subtotal,
-            perFrame: subtotal,
-            saving: 0,
-            discount: 0
-        };
-    }
+    const discount = items.length > 1 ? D_STEP : 0;
+    const subtotal = items.reduce((total, item) => total + item.price, 0);
+    const itemPrices = items.map(item => {
+        const floor = item.frameType === 'indian' ? INDIAN_FLOOR_PRICE : FLOOR_PRICE;
+        return Math.max(floor, item.price * (1 - discount));
+    });
+    const bundleTotal = itemPrices.reduce((total, price) => total + price, 0);
 
-    // Step 1: discount percentage for multi-frame bundle (5% discount)
-    const discount = D_STEP;
-
-    // Step 2: apply discount to subtotal
-    const discounted = subtotal * (1 - discount);
-
-    // Step 3: floor check based on active frame type
-    const activeFloor = (currentFrameType === "european") ? FLOOR_PRICE : INDIAN_FLOOR_PRICE;
-    const floorCheck = n * activeFloor;
-
-    // Step 4: final bundle total
-    const bundleTotal = Math.max(floorCheck, discounted);
-
-    const perFrame = Math.round(bundleTotal / n);
-    const saving   = Math.round(subtotal - bundleTotal);
-
-    return { bundleTotal, perFrame, saving, discount };
+    return {
+        bundleTotal,
+        itemPrices,
+        perFrame: Math.round(bundleTotal / items.length),
+        saving: Math.round(Math.max(0, subtotal - bundleTotal)),
+        discount
+    };
 }
 
 let allFrameConfigurations = {};
@@ -88,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         renderSliderImages([imageObj]);
+        applyInitialFrameType(imageObj);
         applyInitialFrameDesign(imageObj);
         applyInitialFrameColor(imageObj);
         applyInitialFrameSize(imageObj);
@@ -99,18 +86,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-function fetchAndRenderSessionImages() {
-    fetch(get_session_images)
+function fetchAndRenderSessionImages(preferredFilename = null) {
+    return fetch(get_session_images)
         .then((response) => response.json())
         .then((images) => {
             if (images.length > 0) {
-                renderSliderImages(images);
-                applyInitialFrameDesign(images[0]);
-                applyInitialFrameColor(images[0]);
-                applyInitialFrameSize(images[0]);
-                applyInitialFrameFinish(images[0]);
-                applyInitialFrameLED(images[0]);
-                updateFramePrice(images[0]);
+                const selectedImage = images.find(image => String(image.filename) === String(preferredFilename)) || images[0];
+                renderSliderImages(images, selectedImage.filename);
+                applyInitialFrameType(selectedImage);
+                applyInitialFrameDesign(selectedImage);
+                applyInitialFrameColor(selectedImage);
+                applyInitialFrameSize(selectedImage);
+                applyInitialFrameFinish(selectedImage);
+                applyInitialFrameLED(selectedImage);
+                updateFramePrice(selectedImage);
             } else {
                 document.querySelector(".file-uploadSection").style.display = "flex";
                 document.querySelector(".FrameDesignSection").style.display = "none";
@@ -121,7 +110,7 @@ function fetchAndRenderSessionImages() {
 
 document.addEventListener("DOMContentLoaded", fetchAndRenderSessionImages);
 
-function renderSliderImages(imagesArray) {
+function renderSliderImages(imagesArray, selectedFilename = null) {
     const swiperWrapper = document.querySelector(".Images-frame-slider .swiper-wrapper");
     swiperWrapper.innerHTML = "";
 
@@ -129,6 +118,7 @@ function renderSliderImages(imagesArray) {
         const imgSrc = imageObj.file_url;
         const slide = document.createElement("div");
         slide.classList.add("swiper-slide");
+        if (String(imageObj.filename) === String(selectedFilename)) slide.classList.add("swiper-slide-active");
 
         slide.innerHTML = `
             <div class="box">
@@ -153,10 +143,25 @@ function renderSliderImages(imagesArray) {
     });
 
     if (imagesArray.length > 0) {
-        document.getElementById("uploaded-image").src = imagesArray[0].file_url;
-        let set_active_config = JSON.stringify(imagesArray[0]);
-        document.getElementById("active_config").value = set_active_config;
+        const selectedImage = imagesArray.find(image => String(image.filename) === String(selectedFilename)) || imagesArray[0];
+        document.getElementById("uploaded-image").src = selectedImage.file_url;
+        document.getElementById("active_config").value = JSON.stringify(selectedImage);
+        if (typeof swiper !== "undefined") {
+            swiper.update();
+            const selectedIndex = imagesArray.indexOf(selectedImage);
+            swiper.slideTo(selectedIndex, 0);
+        }
     }
+}
+
+function applyInitialFrameType(imageObj) {
+    if (!imageObj || !imageObj.frame_configuration) return;
+
+    const frameConfig = typeof imageObj.frame_configuration === 'string'
+        ? JSON.parse(imageObj.frame_configuration)
+        : imageObj.frame_configuration;
+    const savedType = frameConfig.frame_type?.type || frameConfig.frame_type || 'indian';
+    chooseFrameType(savedType, true);
 }
 
 function applyInitialFrameDesign(imageObj) {
@@ -205,15 +210,7 @@ function applyInitialFrameDesign(imageObj) {
         colorOptionsTemp.forEach((colorOption) => { colorOption.style.display = "flex"; });
     }
 
-    const sizeOptionsTemp = document.querySelectorAll(".frame-size");
-    if (initialDesignClass === "frameless-card-design") {
-        sizeOptionsTemp.forEach((sizeOption) => {
-            const sizeText = sizeOption.querySelector(".propertyName").textContent.trim();
-            sizeOption.style.display = sizeText === '8" X 8"' ? "flex" : "none";
-        });
-    } else {
-        sizeOptionsTemp.forEach((sizeOption) => { sizeOption.style.display = "flex"; });
-    }
+
 }
 
 function applyInitialFrameColor(imageObj) {
@@ -365,6 +362,7 @@ function updateGrandTotal() {
 
                 // Build subtotal: sum of each frame's individual price
                 let subtotal = 0;
+                const pricingItems = [];
                 sessionImages.forEach((sessionImage) => {
                     const frameConfig  = sessionImage.frame_configuration;
                     const sizePrice    = parseFloat(frameConfig?.size?.frame_price) || 0;
@@ -378,11 +376,15 @@ function updateGrandTotal() {
                         : item_price + finishPrice + ledPrice;
 
                     subtotal += frameUnitPrice;
+                    pricingItems.push({
+                        price: frameUnitPrice,
+                        frameType: frameConfig?.frame_type?.type || frameConfig?.frame_type || 'indian'
+                    });
                 });
 
                 // Apply new bundle formula
                 // console.log(subtotal, n);
-                const result = calculateBundlePrice(subtotal, n);
+                const result = calculateMixedBundlePrice(pricingItems);
 
                 // Update quantity hidden input
                 document.getElementById("quantity").value = n;
@@ -506,7 +508,7 @@ function uploadImageToServer(file, newFileName) {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    return { name: newFileName, url: data.file_url };
+                    return { filename: data.filename, url: data.file_url };
                 } else {
                     throw new Error("Image upload failed");
                 }
@@ -543,20 +545,22 @@ async function processAndUploadImages(files, mainLoader) {
         const newFileName = `${baseName}_${timestamp}.${extension}`;
 
         uploadPromises.push(
-            uploadImageToServer(file, newFileName).then(() => {
+            uploadImageToServer(file, newFileName).then((uploadedImage) => {
                 uploadedCount++;
                 progressBar.style.width = `${(uploadedCount / files.length) * 100}%`;
+                return uploadedImage;
             })
         );
     }
 
     try {
-        await Promise.all(uploadPromises);
+        const uploadedImages = await Promise.all(uploadPromises);
         if (uploadPromises.length > 0) {
             progressBar.style.width = "100%";
             document.querySelector(".file-uploadSection").style.display = "none";
             document.querySelector(".FrameDesignSection").style.display = "block";
-            fetchAndRenderSessionImages();
+            const newestImage = uploadedImages[uploadedImages.length - 1];
+            await fetchAndRenderSessionImages(newestImage?.filename);
 
             setTimeout(() => {
                 progressBarContainer.style.display = "none";
@@ -828,6 +832,8 @@ function updateActiveImage() {
                         .then((response) => response.json())
                         .then((data) => {
                             if (data.success) {
+                                document.getElementById("active_config").value = JSON.stringify(data.frame_configuration);
+                                applyInitialFrameType(data.frame_configuration);
                                 applyInitialFrameDesign(data.frame_configuration);
                                 applyInitialFrameColor(data.frame_configuration);
                                 applyInitialFrameSize(data.frame_configuration);
@@ -870,6 +876,8 @@ document.querySelector(".Images-frame-slider .swiper-wrapper").addEventListener(
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
+                        document.getElementById("active_config").value = JSON.stringify(data.frame_configuration);
+                        applyInitialFrameType(data.frame_configuration);
                         applyInitialFrameDesign(data.frame_configuration);
                         applyInitialFrameColor(data.frame_configuration);
                         applyInitialFrameSize(data.frame_configuration);
@@ -929,19 +937,14 @@ designOptions.forEach((option) => {
         }
 
         const sizeOptionsTemp = document.querySelectorAll(".frame-size");
-        if (designClass === "frameless-card-design") {
-            sizeOptionsTemp.forEach((sizeOption) => {
-                const sizeText = sizeOption.querySelector(".propertyName").textContent.trim();
-                sizeOption.style.display = sizeText === '8" X 8"' ? "flex" : "none";
-            });
-
-            const eightByEight = Array.from(sizeOptionsTemp).find(
-                (s) => s.querySelector(".propertyName").textContent.trim() === '8" X 8"'
-            );
-            if (eightByEight) eightByEight.click();
-
-        } else {
-            sizeOptionsTemp.forEach((sizeOption) => { sizeOption.style.display = "flex"; });
+        let firstMatchingSize = null;
+        sizeOptionsTemp.forEach((sizeOption) => {
+            const matchesType = (sizeOption.getAttribute("data-frame-type") || "european") === currentFrameType;
+            sizeOption.style.display = matchesType ? "flex" : "none";
+            if (matchesType && !firstMatchingSize) firstMatchingSize = sizeOption;
+        });
+        if (designClass === "frameless-card-design" && firstMatchingSize) {
+            firstMatchingSize.click();
         }
 
         setTimeout(() => { updateFramePrice(get_active_config); }, 500);
@@ -1084,146 +1087,84 @@ hangOptions.forEach((option) => {
 });
 
 // ============================================================
-// FRAME TYPE (INDIAN VS EUROPEAN) SWITCHING LOGIC
+// FRAME COLLECTION SWITCHING LOGIC
 // ============================================================
-window.chooseFrameType = function(type) {
+window.chooseFrameType = function(type, preserveSelection = false) {
+    const collections = {
+        indian: { label: 'Signature Collection', button: 'Select Signature Collection' },
+        european: { label: 'European Collection', button: 'Select European Collection' },
+        luxury_tiles: { label: 'Luxury Tiles', button: 'Select Luxury Tiles' }
+    };
+    const selected = collections[type] || collections.indian;
     currentFrameType = type;
-    $("#active_frame_type").val(type);
+    $('#active_frame_type').val(type);
 
-    // Update modal cards and buttons styling
-    const cardIndian = document.getElementById("card-choice-indian");
-    const cardEuropean = document.getElementById("card-choice-european");
-    const btnIndian = document.getElementById("btn-choice-indian");
-    const btnEuropean = document.getElementById("btn-choice-european");
-
-    if (type === "indian") {
-        if (cardIndian) {
-            cardIndian.style.setProperty("border", "2px solid #eb2371", "important");
-            cardIndian.style.setProperty("box-shadow", "0 8px 24px rgba(235, 35, 113, 0.12)", "important");
-            cardIndian.style.setProperty("background", "#ffffff", "important");
+    Object.keys(collections).forEach(key => {
+        const card = document.getElementById('card-choice-' + key);
+        const button = document.getElementById('btn-choice-' + key);
+        const active = key === type;
+        if (card) {
+            card.classList.toggle('active-choice', active);
         }
-        if (cardEuropean) {
-            cardEuropean.style.setProperty("border", "1.5px solid #e2e8f0", "important");
-            cardEuropean.style.setProperty("box-shadow", "none", "important");
-            cardEuropean.style.setProperty("background", "#fcfcfc", "important");
-        }
-        if (btnIndian) {
-            btnIndian.style.background = "#eb2371";
-            btnIndian.style.color = "#ffffff";
-            btnIndian.style.border = "1.5px solid #eb2371";
-            btnIndian.innerHTML = "✓ Selected";
-        }
-        if (btnEuropean) {
-            btnEuropean.style.background = "#ffffff";
-            btnEuropean.style.color = "#1a1a1a";
-            btnEuropean.style.border = "1.5px solid #cbd5e1";
-            btnEuropean.innerHTML = "Select European Frames";
-        }
-    } else {
-        if (cardEuropean) {
-            cardEuropean.style.setProperty("border", "2px solid #eb2371", "important");
-            cardEuropean.style.setProperty("box-shadow", "0 8px 24px rgba(235, 35, 113, 0.12)", "important");
-            cardEuropean.style.setProperty("background", "#ffffff", "important");
-        }
-        if (cardIndian) {
-            cardIndian.style.setProperty("border", "1.5px solid #e2e8f0", "important");
-            cardIndian.style.setProperty("box-shadow", "none", "important");
-            cardIndian.style.setProperty("background", "#fcfcfc", "important");
-        }
-        if (btnEuropean) {
-            btnEuropean.style.background = "#eb2371";
-            btnEuropean.style.color = "#ffffff";
-            btnEuropean.style.border = "1.5px solid #eb2371";
-            btnEuropean.innerHTML = "✓ Selected";
-        }
-        if (btnIndian) {
-            btnIndian.style.background = "#ffffff";
-            btnIndian.style.color = "#1a1a1a";
-            btnIndian.style.border = "1.5px solid #cbd5e1";
-            btnIndian.innerHTML = "Select Indian Frames";
-        }
-    }
-
-    // Update dropdown in toolbar
-    document.querySelectorAll(".frame-type-change").forEach(item => {
-        item.classList.remove("li-border-color");
-        if (item.getAttribute("data-type") === type) {
-            item.classList.add("li-border-color");
+        if (button) {
+            button.classList.toggle('btn-selected', active);
+            button.classList.toggle('btn-unselected', !active);
+            button.textContent = active ? '✓ Selected' : collections[key].button;
         }
     });
 
-    // Update summary card type label
-    const typeLabel = (type === "european") ? "European" : "Indian";
-    const typeHeading = (type === "european") ? "European Style Frames" : "Indian Standard Frames";
+    document.querySelectorAll('.frame-type-change').forEach(item => {
+        item.classList.toggle('li-border-color', item.getAttribute('data-type') === type);
+    });
 
-    const frameTypeShow = document.getElementById("frame-type-show");
-    if (frameTypeShow) frameTypeShow.textContent = typeLabel;
+    const frameTypeShow = document.getElementById('frame-type-show');
+    if (frameTypeShow) frameTypeShow.textContent = selected.label;
+    const featureHeading = document.getElementById('feature-card-heading');
+    if (featureHeading) featureHeading.textContent = selected.label;
 
-    const featureHeading = document.getElementById("feature-card-heading");
-    if (featureHeading) featureHeading.textContent = typeHeading;
+    ['indian', 'european', 'luxury'].forEach(key => {
+        const content = document.getElementById('feature-' + key + '-content');
+        if (content) content.style.display = (key === (type === 'luxury_tiles' ? 'luxury' : type)) ? 'block' : 'none';
+    });
 
-    // Toggle feature advantages content
-    const indianContent = document.getElementById("feature-indian-content");
-    const europeanContent = document.getElementById("feature-european-content");
-    if (indianContent && europeanContent) {
-        if (type === "indian") {
-            indianContent.style.display = "block";
-            europeanContent.style.display = "none";
-        } else {
-            indianContent.style.display = "none";
-            europeanContent.style.display = "block";
-        }
-    }
-
-    // Filter available sizes in size dropdown
     let firstMatchingSize = null;
-    document.querySelectorAll(".frame-size").forEach(sizeItem => {
-        const itemType = sizeItem.getAttribute("data-frame-type") || "european";
-        if (itemType === type) {
-            sizeItem.style.display = "flex";
-            if (!firstMatchingSize) firstMatchingSize = sizeItem;
-        } else {
-            sizeItem.style.display = "none";
-        }
+    document.querySelectorAll('.frame-size').forEach(sizeItem => {
+        const matches = (sizeItem.getAttribute('data-frame-type') || 'european') === type;
+        sizeItem.style.display = matches ? 'flex' : 'none';
+        if (matches && !firstMatchingSize) firstMatchingSize = sizeItem;
     });
+    if (!preserveSelection && firstMatchingSize) firstMatchingSize.click();
 
-    // Auto-select first matching size for this frame type
-    if (firstMatchingSize) {
-        firstMatchingSize.click();
-    }
+    const frameChoices = document.querySelectorAll('.frame-tab .frame-change');
+    let requiredChoice = null;
+    frameChoices.forEach(choice => {
+        const frameless = choice.getAttribute('data-design') === 'frameless-card-design';
+        const allowed = type === 'luxury_tiles' ? frameless : !frameless;
+        choice.style.display = allowed ? 'flex' : 'none';
+        if (allowed && (type === 'luxury_tiles' ? frameless : choice.getAttribute('data-design') === 'classic-card-design')) requiredChoice = choice;
+    });
+    if (!preserveSelection && requiredChoice) requiredChoice.click();
 
-    // Save frame_type to active config
-    try {
-        const activeConfigInput = document.getElementById("active_config");
+    if (!preserveSelection) try {
+        const activeConfigInput = document.getElementById('active_config');
         if (activeConfigInput && activeConfigInput.value) {
-            let get_active_config = JSON.parse(activeConfigInput.value);
-            let frameConfig = typeof get_active_config.frame_configuration === "string"
-                ? JSON.parse(get_active_config.frame_configuration)
-                : get_active_config.frame_configuration;
-            frameConfig.frame_type = {
-                type: type,
-                name: typeHeading
-            };
-            get_active_config.frame_configuration = JSON.stringify(frameConfig);
-            activeConfigInput.value = JSON.stringify(get_active_config);
-
-            saveFrameConfigToDatabase({ type: type, name: typeHeading }, "frame_type");
+            const activeConfig = JSON.parse(activeConfigInput.value);
+            const frameConfig = typeof activeConfig.frame_configuration === 'string' ? JSON.parse(activeConfig.frame_configuration) : activeConfig.frame_configuration;
+            frameConfig.frame_type = { type, name: selected.label };
+            activeConfig.frame_configuration = JSON.stringify(frameConfig);
+            activeConfigInput.value = JSON.stringify(activeConfig);
+            saveFrameConfigToDatabase({ type, name: selected.label }, 'frame_type');
         }
-    } catch(e) {
-        console.error("Error updating frame_type in config:", e);
+    } catch (error) {
+        console.error('Error updating frame type in config:', error);
     }
 
-    // Close modal if open
-    const modalEl = document.getElementById("frameTypeChoiceModal");
-    if (modalEl) {
+    const modalEl = document.getElementById('frameTypeChoiceModal');
+    if (!preserveSelection && modalEl) {
         const modalInstance = bootstrap.Modal.getInstance(modalEl);
         if (modalInstance) modalInstance.hide();
     }
-
-    // Recalculate grand total
-    setTimeout(() => {
-        updateGrandTotal();
-    }, 400);
+    setTimeout(updateGrandTotal, 400);
 };
 
 // Bind click on frame-type-change in sidebar dropdown
@@ -1233,14 +1174,16 @@ $(document).on("click", ".frame-type-change", function () {
 });
 
 function saveFrameConfigToDatabase(frameConfig, type) {
-    const activeSlide = document.querySelector(".swiper-slide-active");
-    if (activeSlide) {
-        const activeImg = activeSlide.querySelector("img");
-        if (activeImg) {
-            const imageName = activeImg.getAttribute("data-frame-config") ||
-                activeImg.getAttribute("src").split("/").pop().split(".").slice(0, -1).join(".");
-            sendFrameConfigToServer(imageName, frameConfig, type);
+    const activeConfigInput = document.getElementById("active_config");
+    if (!activeConfigInput?.value) return;
+
+    try {
+        const activeConfig = JSON.parse(activeConfigInput.value);
+        if (activeConfig.filename) {
+            sendFrameConfigToServer(activeConfig.filename, frameConfig, type);
         }
+    } catch (error) {
+        console.error("Unable to identify the selected photo:", error);
     }
 }
 
@@ -1255,7 +1198,11 @@ async function sendFrameConfigToServer(imageName, frameConfig, type) {
 
     const result = await response.json();
     if (result.success) {
-        document.getElementById("active_config").value = JSON.stringify(result.data);
+        const activeConfigInput = document.getElementById("active_config");
+        const selectedImage = activeConfigInput?.value ? JSON.parse(activeConfigInput.value) : null;
+        if (String(selectedImage?.filename) === String(imageName)) {
+            activeConfigInput.value = JSON.stringify(result.data);
+        }
     } else {
         console.error("Failed to save frame configuration:", result.message);
     }
@@ -1364,6 +1311,11 @@ $(document).ready(function () {
         });
     }
 
+    $(document).on("click", "#uploaded-image", function () {
+        if (this.getAttribute("src")) {
+            $("#openCropModal").trigger("click");
+        }
+    });
     $("#openCropModal").on("click", function () {
         const rawSrc = getActiveOriginalImageSrc();
         if (!rawSrc) return;

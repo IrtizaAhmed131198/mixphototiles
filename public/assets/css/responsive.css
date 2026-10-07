@@ -1259,4 +1259,8 @@
     .frameinner {
         padding: 9px !important
     }
+
+    .frameinner.child-inherit-design.design-page-frameinner {
+        padding: 0 !important;
+    }
 }

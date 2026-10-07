@@ -10,95 +10,7 @@
 
 
 @push('css')
-    <style>
-        .ordered-list {
-            padding-left: 20px;
-            margin: 0;
-            list-style-type: decimal;
-            /* Numbers (1, 2, 3, ...) */
-        }
-
-        .ordered-list li {
-            margin-bottom: 5px;
-            /* Optional spacing between items */
-            font-size: 14px;
-            /* Optional - adjust font size */
-        }
-
-        /* @keyframes circle {
-                            0% {
-                                transform: rotate(0deg);
-                            }
-
-                            100% {
-                                transform: rotate(360deg);
-
-                            }
-                        } */
-
-        .progress-bar-container {
-            width: 100%;
-            height: 5px;
-            background-color: #ddd;
-            position: relative;
-            margin-top: 10px;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background-color: #4caf50;
-            transition: width 0.5s;
-        }
-
-        .frameinner img {
-            object-fit: cover !important;
-        }
-
-        .grid-2 {
-            height: unset;
-        }
-
-        .frameless-design {
-            padding: 0 !important;
-        }
-
-        .no-border-design {
-            padding: 18px !important;
-        }
-
-
-        .design-seo-content {
-            background: #ede4e4;
-        }
-
-
-        .brand-link {
-            color: #9d0b78; /* matches your accent color */
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .brand-link:hover {
-            text-decoration: underline;
-        }
-
-
-
-        @media(max-width:991) {
-            footer {
-                display: none;
-            }
-        }
-
-        .view-grand-total-2 .design-btn {
-            margin-left: 21px;
-        }
-
-        .view-grand-total-1 .design-btn {
-            width: 10rem !important;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('assets/css/design.css') }}">
 @endpush
 
 @section('content')
@@ -182,40 +94,18 @@
                                         <p class="para">Type</p>
                                     </button>
                                     <ul class="designToolPropertiesLists dropdown-menu frame-type-tab design_type">
-                                        <div class="menuParent">
-                                            <p class="propertyTitle">
-                                                Select Frame Type
-                                            </p>
-                                        </div>
-                                        <li type="button"
-                                            class="parentProperties frame-type-change dropdown-item {{ $defaultFrameType == 'indian' ? 'li-border-color' : '' }}"
-                                            data-type="indian" data-name="Indian Standard Frames" style="cursor: pointer;">
-                                            <figure class="PropertiesleftChild">
-                                                <img alt="Indian Frames" width="72" height="72" class="LeftSidebar"
-                                                    src="{{ asset('assets/images/1704186592728.png') }}">
-                                            </figure>
-                                            <div class="PropertiesRightChild">
-                                                <div>
-                                                    <p class="propertyName">Indian Frames</p>
-                                                    <small class="text-muted d-block" style="font-size: 10.5px; line-height: 1.2;">6x8, 8x12, 12x15</small>
-                                                </div>
-                                                <p class="propertyPrize" style="color: #eb2371; font-weight: 600;">₹299</p>
-                                            </div>
+                                        <div class="menuParent"><p class="propertyTitle">Select Collection</p></div>
+                                        <li type="button" class="parentProperties frame-type-change dropdown-item {{ $defaultFrameType == 'indian' ? 'li-border-color' : '' }}" data-type="indian" data-name="Signature Collection">
+                                            <figure class="PropertiesleftChild"><img alt="Signature Collection" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}"></figure>
+                                            <div class="PropertiesRightChild"><div><p class="propertyName">Signature Collection</p><small class="text-muted d-block">6x8, 8x12, 12x15</small></div></div>
                                         </li>
-                                        <li type="button"
-                                            class="parentProperties frame-type-change dropdown-item {{ $defaultFrameType == 'european' ? 'li-border-color' : '' }}"
-                                            data-type="european" data-name="European Style Frames" style="cursor: pointer;">
-                                            <figure class="PropertiesleftChild">
-                                                <img alt="European Frames" width="72" height="72" class="LeftSidebar"
-                                                    src="{{ asset('assets/images/1704186603681.png') }}">
-                                            </figure>
-                                            <div class="PropertiesRightChild">
-                                                <div>
-                                                    <p class="propertyName">European Style</p>
-                                                    <small class="text-muted d-block" style="font-size: 10.5px; line-height: 1.2;">8x8, 8x11, 12x12</small>
-                                                </div>
-                                                <p class="propertyPrize" style="color: #eb2371; font-weight: 600;">₹489</p>
-                                            </div>
+                                        <li type="button" class="parentProperties frame-type-change dropdown-item {{ $defaultFrameType == 'european' ? 'li-border-color' : '' }}" data-type="european" data-name="European Collection">
+                                            <figure class="PropertiesleftChild"><img alt="European Collection" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603681.png') }}"></figure>
+                                            <div class="PropertiesRightChild"><div><p class="propertyName">European Collection <span style="color:#d9a400;">★</span></p><small class="text-muted d-block">Most Recommended</small></div></div>
+                                        </li>
+                                        <li type="button" class="parentProperties frame-type-change dropdown-item {{ $defaultFrameType == 'luxury_tiles' ? 'li-border-color' : '' }}" data-type="luxury_tiles" data-name="Luxury Tiles">
+                                            <figure class="PropertiesleftChild"><img alt="Luxury Tiles" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603681.png') }}"></figure>
+                                            <div class="PropertiesRightChild"><div><p class="propertyName">Luxury Tiles</p><small class="text-muted d-block">8.4 x 8.4 in · Frameless</small></div></div>
                                         </li>
                                     </ul>
                                 </li>
@@ -277,7 +167,7 @@
                                             </div>
                                         </li>
 
-                                        <li type="button" class="parentProperties frame-change dropdown-item"
+                                        <li type="button" class="parentProperties frame-change dropdown-item" style="display: none;"
                                             data-design="frameless-card-design" data-price="0" data-text="Frameless">
                                             <figure class="PropertiesleftChild">
                                                 <img alt="drawer" width="72" height="72" class="LeftSidebar"
@@ -426,7 +316,7 @@
                                                         class="LeftSidebar" src="{{ asset($val->image ?? 'assets/images/1701851447650.png') }}">
                                                 </figure>
                                                 <div class="PropertiesRightChild">
-                                                    <p class="propertyName">{{ $val->label }}</p>
+                                                    <p class="propertyName">{{ finish_display_name($val->label) }}</p>
                                                     <p class="propertyPrize">₹{{ round($val->price, 0) }}</p>
                                                 </div>
                                             </li>
@@ -460,14 +350,14 @@
                                             @foreach ($finish as $key => $val)
                                                 <li type="button"
                                                     class="parentProperties dropdown-item frame-finish {{ $key == 0 ? 'li-border-color' : '' }}"
-                                                    data-price="{{ $val->price }}" data-val="{{ $val->label }}">
+                                                    data-price="{{ $val->price }}" data-val="{{ finish_display_name($val->label) }}">
                                                     <figure class="PropertiesleftChild">
                                                         <img alt="drawer" width="72" height="72"
                                                             class="LeftSidebar"
                                                             src="{{ asset('assets/images/1701851447650.png') }}">
                                                     </figure>
                                                     <div class="PropertiesRightChild">
-                                                        <p class="propertyName">{{ $val->label }}</p>
+                                                        <p class="propertyName">{{ finish_display_name($val->label) }}</p>
                                                         {{-- <p class="propertyPrize">Rs.{{ $val->price }}</p> --}}
                                                     </div>
                                                 </li>
@@ -730,14 +620,14 @@
                         </div>
 
                         <div class="grid-2">
-                            <span class="caption-crop">If needed, use the Crop button to adjust your pictures</span>
+                            <span class="caption-crop">Click on the photo to adjust your picture</span>
                             <div class="box frame-box">
                                 <div class="frame-main-wrap classic-card-design box-shadow-black frame-main-wrap-main"
                                     id="frameWrap">
                                     <div class="frameborder inherit-design" id="frameWrapChild">
-                                        <div class="frameinner child-inherit-design">
+                                        <div class="frameinner child-inherit-design design-page-frameinner">
                                             <!-- Placeholder for uploaded image -->
-                                            <img alt="Frame" class="img-fluid" id="uploaded-image" src="">
+                                            <img alt="Frame" class="img-fluid" id="uploaded-image" src="" style="cursor: pointer;" title="Click to adjust your picture">
                                         </div>
                                     </div>
                                 </div>
@@ -815,7 +705,7 @@
                                                     <div class="frame-detail">
                                                         <p class="para frame">Type</p>
                                                         <h6 class="heading-4" id="frame-type-show">
-                                                            {{ $defaultFrameType == 'european' ? 'European' : 'Indian' }}
+                                                            {{ $defaultFrameType == 'european' ? 'European Collection' : ($defaultFrameType == 'luxury_tiles' ? 'Luxury Tiles' : 'Signature Collection') }}
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -927,7 +817,7 @@
                                                         <div class="frame-detail">
                                                             <p class="para frame">Finish </p>
                                                             <h6 class="heading-4" id="finish-show">
-                                                                {{ $finish[0]->label }}
+                                                                {{ finish_display_name($finish[0]->label) }}
                                                             </h6>
                                                         </div>
                                                     </div>
@@ -1032,7 +922,7 @@
                                     <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom" style="border-color: #f7eaf0 !important;">
                                         <span class="fw-bold fs-14 text-dark d-flex align-items-center" id="feature-card-title">
                                             <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #eb2371; margin-right: 8px;" id="feature-card-dot"></span>
-                                            <span id="feature-card-heading" style="font-weight: 700; color: #1a1a1a;">{{ $defaultFrameType == 'european' ? 'European Style Frames' : 'Indian Standard Frames' }}</span>
+                                            <span id="feature-card-heading" style="font-weight: 700; color: #1a1a1a;">{{ $defaultFrameType == 'european' ? 'European Collection' : 'Signature Collection' }}</span>
                                         </span>
                                         <button type="button" class="btn btn-sm" id="switch-frame-type-btn" style="background: #fdf2f6; color: #eb2371; border: 1px solid #f8c3d9; border-radius: 20px; font-size: 11px; font-weight: 700; padding: 2px 10px; transition: all 0.2s;" data-bs-toggle="modal" data-bs-target="#frameTypeChoiceModal">
                                             Change
@@ -1186,79 +1076,98 @@
 
         <!-- Frame Type Selection Modal -->
         <div class="modal fade" id="frameTypeChoiceModal" tabindex="-1" aria-labelledby="frameTypeChoiceModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 780px;">
-                <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden; font-family: 'Plus Jakarta Sans', sans-serif;">
-                    <div class="modal-header border-0 py-3 px-4" style="background: #fafafa; border-bottom: 1px solid #f0f0f0 !important;">
+            <div class="modal-dialog modal-dialog-centered modal-lg modal-custom-width">
+                <div class="modal-content custom-modal-content">
+                    <div class="modal-header custom-modal-header">
                         <div>
-                            <h5 class="modal-title fw-bold mb-1 text-dark" id="frameTypeChoiceModalLabel" style="font-size: 20px; font-weight: 700; color: #1a1a1a;">Choose Your Frame Style</h5>
-                            <p class="text-muted fs-14 mb-0" style="font-size: 13.5px; color: #64748b;">Select Indian Standard Frames or European Style Frames for your photos.</p>
+                            <h5 class="modal-title custom-modal-title" id="frameTypeChoiceModalLabel">Choose Your Frame Style</h5>
+                            <p class="text-muted custom-modal-subtitle">Select Signature Collection, European Collection, or Luxury Tiles for your photos.</p>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body p-4" style="background: #ffffff;">
-                        <div class="row g-3">
-                            <!-- Option 1: Indian Frames -->
-                            <div class="col-md-6 col-12">
-                                <div class="card h-100 p-3 card-choice-item"
-                                     id="card-choice-indian"
-                                     style="border-radius: 16px; cursor: pointer; transition: all 0.25s ease; {{ $defaultFrameType == 'indian' ? 'border: 2px solid #eb2371 !important; box-shadow: 0 8px 24px rgba(235, 35, 113, 0.12) !important; background: #fff !important;' : 'border: 1.5px solid #e2e8f0 !important; background: #fcfcfc !important;' }}"
-                                     onclick="chooseFrameType('indian')">
+                    <div class="modal-body p-4 bg-white">
+                        <div class="row g-3 justify-content-center">
+                            <!-- Option 1: Signature Collection -->
+                            <div class="col-md-4 col-12 frame-choice-card">
+                                <div class="card h-100 p-3 card-choice-item {{ $defaultFrameType == 'indian' ? 'active-choice' : '' }}"
+                                    id="card-choice-indian"
+                                    onclick="chooseFrameType('indian')">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="badge px-2 py-1" style="background: #fdf2f6; color: #eb2371; border: 1px solid #f9cadf; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; border-radius: 20px;">BUDGET FRIENDLY</span>
-                                        <span class="text-dark" style="font-size: 20px; font-weight: 800;">₹299 <small class="text-muted fw-normal" style="font-size: 12px;">starting</small></span>
+                                        <span class="badge badge-budget">BUDGET FRIENDLY</span>
+                                        <span class="text-dark price-tag">₹299 <small class="text-muted fw-normal price-starting">starting</small></span>
                                     </div>
-                                    <h5 class="mb-1" style="font-size: 17px; font-weight: 700; color: #1a1a1a;">Indian Standard Frames</h5>
-                                    <p class="mb-3" style="font-size: 13px; line-height: 1.5; color: #64748b;">Popular standard dimensions tailored for Indian home decor with damage-free magnetic mount.</p>
-                                    <div class="p-2 rounded-3 mb-3" style="background: #f8fafc; border: 1px solid #e2e8f0;">
-                                        <div style="font-size: 11px; font-weight: 700; color: #64748b; letter-spacing: 0.5px; margin-bottom: 6px;">AVAILABLE SIZES:</div>
+                                    <h5 class="card-title-text">Signature Collection</h5>
+                                    <p class="card-desc-text">Classic proportions with a clean finish and damage-free magnetic mount.</p>
+                                    <div class="size-box mb-3">
+                                        <div class="size-box-title">AVAILABLE SIZES:</div>
                                         <div class="d-flex gap-2">
-                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">6" X 8"</span>
-                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">8" X 12"</span>
-                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">12" X 15"</span>
+                                            <span class="badge badge-size">6" X 8"</span>
+                                            <span class="badge badge-size">8" X 12"</span>
+                                            <span class="badge badge-size">12" X 15"</span>
                                         </div>
                                     </div>
-                                    <ul class="list-unstyled mb-3 ps-0" style="font-size: 13px; color: #475569;">
-                                        <li class="mb-1 d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> High quality, cost-effective pricing</li>
-                                        <li class="mb-1 d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> No nails, no wall marks</li>
-                                        <li class="d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> Magnetic peel & stick reusable tiles</li>
+                                    <ul class="list-unstyled mb-3 ps-0 list-features">
+                                        <li class="mb-1 d-flex align-items-center"><span class="check-icon">✓</span> High quality, cost-effective pricing</li>
+                                        <li class="mb-1 d-flex align-items-center"><span class="check-icon">✓</span> No nails, no wall marks</li>
+                                        <li class="d-flex align-items-center"><span class="check-icon">✓</span> Magnetic peel & stick reusable tiles</li>
                                     </ul>
-                                    <button type="button" class="btn w-100 fw-bold frame-choice-btn mt-auto" id="btn-choice-indian"
-                                            style="{{ $defaultFrameType == 'indian' ? 'background: #eb2371; color: #fff; border: 1.5px solid #eb2371;' : 'background: #fff; color: #1a1a1a; border: 1.5px solid #cbd5e1;' }} border-radius: 25px; padding: 10px 16px; font-size: 14px; font-weight: 700; transition: all 0.2s;"
+                                    <button type="button" class="btn w-100 frame-choice-btn mt-auto {{ $defaultFrameType == 'indian' ? 'btn-selected' : 'btn-unselected' }}"
+                                            id="btn-choice-indian"
                                             onclick="chooseFrameType('indian')">
-                                        {{ $defaultFrameType == 'indian' ? '✓ Selected' : 'Select Indian Frames' }}
+                                        {{ $defaultFrameType == 'indian' ? '✓ Selected' : 'Select Signature Collection' }}
                                     </button>
                                 </div>
                             </div>
 
                             <!-- Option 2: European Frames -->
-                            <div class="col-md-6 col-12">
-                                <div class="card h-100 p-3 card-choice-item"
-                                     id="card-choice-european"
-                                     style="border-radius: 16px; cursor: pointer; transition: all 0.25s ease; {{ $defaultFrameType == 'european' ? 'border: 2px solid #eb2371 !important; box-shadow: 0 8px 24px rgba(235, 35, 113, 0.12) !important; background: #fff !important;' : 'border: 1.5px solid #e2e8f0 !important; background: #fcfcfc !important;' }}"
-                                     onclick="chooseFrameType('european')">
+                            <div class="col-md-4 col-12 frame-choice-card">
+                                <div class="card h-100 p-3 card-choice-item {{ $defaultFrameType == 'european' ? 'active-choice' : '' }}"
+                                    id="card-choice-european"
+                                    onclick="chooseFrameType('european')">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="badge px-2 py-1" style="background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; border-radius: 20px;">PREMIUM SILK FINISH</span>
-                                        <span class="text-dark" style="font-size: 20px; font-weight: 800;">₹489 <small class="text-muted fw-normal" style="font-size: 12px;">starting</small></span>
+                                        <span class="badge badge-premium">PREMIUM SILK FINISH</span>
+                                        <span class="text-dark price-tag">₹489 <small class="text-muted fw-normal price-starting">starting</small></span>
                                     </div>
-                                    <h5 class="mb-1" style="font-size: 17px; font-weight: 700; color: #1a1a1a;">European Style Frames</h5>
-                                    <p class="mb-3" style="font-size: 13px; line-height: 1.5; color: #64748b;">Deep 3D beveled edge profile with elegant European silk texture and seamless corners.</p>
-                                    <div class="p-2 rounded-3 mb-3" style="background: #f8fafc; border: 1px solid #e2e8f0;">
-                                        <div style="font-size: 11px; font-weight: 700; color: #64748b; letter-spacing: 0.5px; margin-bottom: 6px;">AVAILABLE SIZES:</div>
+                                    <h5 class="card-title-text">European Collection <span class="star-rating">★</span> <small class="recommended-text">Most Recommended</small></h5>
+                                    <p class="card-desc-text">Deep 3D beveled edge profile with elegant European silk texture and seamless corners.</p>
+                                    <div class="size-box mb-3">
+                                        <div class="size-box-title">AVAILABLE SIZES:</div>
                                         <div class="d-flex gap-2">
-                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">8" X 8"</span>
-                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">8" X 11"</span>
-                                            <span class="badge" style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;">12" X 12"</span>
+                                            <span class="badge badge-size">8" X 8"</span>
+                                            <span class="badge badge-size">8" X 11"</span>
+                                            <span class="badge badge-size">12" X 12"</span>
                                         </div>
                                     </div>
-                                    <ul class="list-unstyled mb-3 ps-0" style="font-size: 13px; color: #475569;">
-                                        <li class="mb-1 d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> Premium European silk texture finish</li>
-                                        <li class="mb-1 d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> Deep 3D beveled shadow border</li>
-                                        <li class="d-flex align-items-center"><span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span> Magnetic peel & stick reusable tiles</li>
+                                    <ul class="list-unstyled mb-3 ps-0 list-features">
+                                        <li class="mb-1 d-flex align-items-center"><span class="check-icon">✓</span> Premium European silk texture finish</li>
+                                        <li class="mb-1 d-flex align-items-center"><span class="check-icon">✓</span> Deep 3D beveled shadow border</li>
+                                        <li class="d-flex align-items-center"><span class="check-icon">✓</span> Magnetic peel & stick reusable tiles</li>
                                     </ul>
-                                    <button type="button" class="btn w-100 fw-bold frame-choice-btn mt-auto" id="btn-choice-european"
-                                            style="{{ $defaultFrameType == 'european' ? 'background: #eb2371; color: #fff; border: 1.5px solid #eb2371;' : 'background: #fff; color: #1a1a1a; border: 1.5px solid #cbd5e1;' }} border-radius: 25px; padding: 10px 16px; font-size: 14px; font-weight: 700; transition: all 0.2s;"
+                                    <button type="button" class="btn w-100 frame-choice-btn mt-auto {{ $defaultFrameType == 'european' ? 'btn-selected' : 'btn-unselected' }}"
+                                            id="btn-choice-european"
                                             onclick="chooseFrameType('european')">
-                                        {{ $defaultFrameType == 'european' ? '✓ Selected' : 'Select European Frames' }}
+                                        {{ $defaultFrameType == 'european' ? '✓ Selected' : 'Select European Collection' }}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Option 3: Luxury Tiles -->
+                            <div class="col-md-4 col-12 frame-choice-card">
+                                <div class="card h-100 p-3 card-choice-item {{ $defaultFrameType == 'luxury_tiles' ? 'active-choice' : '' }}"
+                                    id="card-choice-luxury_tiles"
+                                    onclick="chooseFrameType('luxury_tiles')">
+                                    <div class="mb-2">
+                                        <span class="badge badge-frameless">FRAMELESS</span>
+                                    </div>
+                                    <h5 class="card-title-text mb-1">Luxury Tiles</h5>
+                                    <p class="card-desc-text mb-3">Minimal frameless magnetic photo tiles.</p>
+                                    <div class="size-box mb-3">
+                                        <strong>8.4 x 8.4 in</strong><br>
+                                        <small class="text-muted">Only available size</small>
+                                    </div>
+                                    <button type="button" class="btn w-100 frame-choice-btn mt-auto {{ $defaultFrameType == 'luxury_tiles' ? 'btn-selected' : 'btn-unselected' }}"
+                                            id="btn-choice-luxury_tiles">
+                                        {{ $defaultFrameType == 'luxury_tiles' ? '✓ Selected' : 'Select Luxury Tiles' }}
                                     </button>
                                 </div>
                             </div>
