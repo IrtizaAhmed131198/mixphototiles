@@ -17,6 +17,7 @@ class DesignController extends Controller
         $sizes        = Sizes::where('status', 1)->get();
         $indianSizes   = Sizes::where('status', 1)->where('frame_type', 'indian')->get();
         $europeanSizes = Sizes::where('status', 1)->where('frame_type', 'european')->get();
+        $luxuryTileSizes = Sizes::where('status', 1)->where('frame_type', 'luxury_tiles')->get();
         $finish       = Finish::where('status', 1)->get();
         $led          = Led::where('status', 1)->get();
 
@@ -37,7 +38,9 @@ class DesignController extends Controller
         }
 
         // Get default size based on frame type
-        if ($defaultFrameType === 'european') {
+        if ($defaultFrameType === 'luxury_tiles') {
+            $defaultSize = $luxuryTileSizes->first() ?? $europeanSizes->first() ?? $sizes->first();
+        } elseif ($defaultFrameType === 'european') {
             $defaultSize = $europeanSizes->first() ?? $sizes->first();
         } else {
             $defaultSize = $indianSizes->first() ?? $sizes->first();
@@ -60,7 +63,7 @@ class DesignController extends Controller
         }
 
         $item_price = round($item_price, 2);
-        $shipping   = get_setting('shipping_price') ?? 0;
+        $shipping   = $quantity >= 3 ? 0 : (get_setting('shipping_price', 80) ?? 80);
 
         return view('livewire.design-page', [
             'imageName'         => $imageName,

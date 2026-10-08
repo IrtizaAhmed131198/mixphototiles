@@ -66,7 +66,7 @@ class CheckoutSafetyTest extends TestCase
     {
         $order = $this->prepare();
         $this->assertSame('pending', $order->status);
-        $this->assertEquals(1, $order->total_amount);
+        $this->assertEquals(81, $order->total_amount);
         $this->assertNull($order->payment_id);
         $this->assertDatabaseHas('addresses', ['order_id' => $order->id]);
         $this->assertDatabaseHas('order_items', ['order_id' => $order->id, 'price' => '1.00']);
@@ -89,6 +89,16 @@ class CheckoutSafetyTest extends TestCase
         $this->assertDatabaseCount('orders', 0);
         $this->assertDatabaseCount('addresses', 0);
         $this->assertDatabaseCount('order_items', 0);
+    }
+
+    public function test_shipping_is_free_from_three_cart_items(): void
+    {
+        $totals = app(CheckoutService::class)->totals([
+            ['product_id' => 1, 'quantity' => 3],
+        ]);
+
+        $this->assertSame(0.0, $totals['shipping']);
+        $this->assertEquals(3, $totals['total']);
     }
 
     public function test_invalid_address_never_calls_razorpay(): void
@@ -148,7 +158,7 @@ class CheckoutSafetyTest extends TestCase
             $this->assertDatabaseCount('orders', 1);
             $this->assertDatabaseCount('addresses', 1);
             $this->assertDatabaseCount('order_items', 1);
-            $this->assertSame(100, $data['amount']);
+            $this->assertSame(8100, $data['amount']);
 
             return ['id' => 'order_test'];
         });
@@ -177,7 +187,7 @@ class CheckoutSafetyTest extends TestCase
                 $this->assertDatabaseHas('orders', ['payment_id' => 'pay_test', 'status' => 'pending']);
                 $this->assertDatabaseCount('addresses', 1);
                 $this->assertDatabaseCount('order_items', 1);
-                $this->assertSame(100, $data['amount']);
+                $this->assertSame(8100, $data['amount']);
 
                 return $captured;
             });
@@ -199,7 +209,7 @@ class CheckoutSafetyTest extends TestCase
         $order = $this->prepare();
         $order->razorpay_order_id = 'order_test';
         $order->save();
-        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 100, 'status' => 'authorized', 'method' => 'upi'], true);
+        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 8100, 'status' => 'authorized', 'method' => 'upi'], true);
         $method = new \ReflectionMethod(RazorpayController::class, 'reconcile');
         $result = $method->invoke($controller, $order, 'pay_test', app(CheckoutService::class));
         $this->assertNotNull($result->paid_at);
@@ -211,7 +221,7 @@ class CheckoutSafetyTest extends TestCase
         $order = $this->prepare();
         $order->razorpay_order_id = 'order_test';
         $order->save();
-        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 100, 'status' => 'authorized'], false);
+        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 8100, 'status' => 'authorized'], false);
         Order::saving(function () {
             throw new \RuntimeException('Simulated payment link failure');
         });
@@ -231,7 +241,7 @@ class CheckoutSafetyTest extends TestCase
         $order = $this->prepare();
         $order->razorpay_order_id = 'order_test';
         $order->save();
-        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 100, 'status' => 'captured'], false);
+        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 8100, 'status' => 'captured'], false);
         config(['services.razorpay.webhook_secret' => 'test_secret']);
         $body = json_encode(['event' => 'payment.captured', 'payload' => ['payment' => ['entity' => ['id' => 'pay_test', 'order_id' => 'order_test']]]]);
         $request = Request::create('/razorpay/webhook', 'POST', [], [], [], ['CONTENT_TYPE' => 'application/json', 'HTTP_X_RAZORPAY_SIGNATURE' => hash_hmac('sha256', $body, 'test_secret')], $body);

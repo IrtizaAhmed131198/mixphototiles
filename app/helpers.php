@@ -63,55 +63,56 @@ function get_setting($name, $default = null)
 //     return $selling_price;
 // }
 
-// ============================================================
-// NEW BUNDLE PRICING FORMULA
-// Based on: Pricing_Calculator_final.pdf
-//
-// Constants:
-//   F      = Floor price per frame (₹599) — never sell below this
-//   D_STEP = Extra discount per additional frame (5%)
-//   D_MAX  = Maximum total discount allowed (20%)
-//
-// Formula:
-//   Subtotal     = sum of individual frame prices
-//   Discount     = MIN(D_MAX, D_STEP × (N − 1))
-//   Discounted   = Subtotal × (1 − Discount)
-//   FloorCheck   = N × F
-//   BundleTotal  = MAX(FloorCheck, Discounted)
-// ============================================================
+function quantityDiscountRate(int $quantity): float
+{
+    if ($quantity <= 1) {
+        return 0.0;
+    }
+    if ($quantity === 2) {
+        return 0.02;
+    }
+    if ($quantity <= 5) {
+        return 0.03;
+    }
+    if ($quantity <= 9) {
+        return 0.05;
+    }
 
-define('FLOOR_PRICE', 599);   // F   — never sell below this per frame
-define('D_STEP',      0.05);  // 5%  — extra discount per additional frame
-define('D_MAX',       0.20);  // 20% — maximum total discount allowed
+    return 0.10;
+}
 
 /**
  * Calculate bundle price for multiple frames.
  *
  * @param  float   $subtotal    Sum of individual frame prices
  * @param  int     $n           Total number of frames
- * @param  string  $frame_type  'european' or 'indian'
+ * @param  string  $frame_type  'indian', 'european', or 'luxury_tiles'
  * @return array   [bundleTotal, perFrame, saving, discount, grandTotal]
  */
 function calculateBundlePrice($subtotal, $n, $frame_type = 'european') {
-    $delivery_cost = floatval(get_setting('delivery_cost') ?? 0);
+    $shipping_cost = floatval(get_setting('shipping_price', 80));
     if ($frame_type === 'indian') {
         $floor_price = floatval(get_setting('indian_floor_price') ?? 295);
     } else {
         $floor_price = floatval(get_setting('floor_price') ?? 489);
     }
-    $d_step        = floatval(get_setting('d_step')        ?? 5) / 100;   // convert % to decimal
-    $d_max         = floatval(get_setting('d_max')         ?? 20) / 100;  // convert % to decimal
 
     if ($n <= 0 || $subtotal <= 0) {
-        return ['bundleTotal' => 0, 'perFrame' => 0, 'saving' => 0, 'discount' => 0, 'grandTotal' => $delivery_cost];
+        return ['bundleTotal' => 0, 'perFrame' => 0, 'saving' => 0, 'discount' => 0, 'grandTotal' => 0];
     }
 
     if ($n === 1) {
-        return ['bundleTotal' => $subtotal, 'perFrame' => $subtotal, 'saving' => 0, 'discount' => 0, 'grandTotal' => $subtotal + $delivery_cost];
+        $unitPrice = max($floor_price, $subtotal);
+        return [
+            'bundleTotal' => $unitPrice,
+            'perFrame' => $unitPrice,
+            'saving' => max(0, $subtotal - $unitPrice),
+            'discount' => 0,
+            'grandTotal' => $unitPrice + $shipping_cost,
+        ];
     }
 
-    // Step 1: discount percentage for multi-frame bundle (5% discount)
-    $discount    = $d_step;
+    $discount    = quantityDiscountRate((int) $n);
     $discounted  = $subtotal * (1 - $discount);
     $floorCheck  = $n * $floor_price;
     $bundleTotal = max($floorCheck, $discounted);
@@ -119,9 +120,9 @@ function calculateBundlePrice($subtotal, $n, $frame_type = 'european') {
     return [
         'bundleTotal' => $bundleTotal,
         'perFrame'    => round($bundleTotal / $n, 2),
-        'saving'      => round($subtotal - $bundleTotal, 2),
+        'saving'      => round(max(0, $subtotal - $bundleTotal), 2),
         'discount'    => $discount,
-        'grandTotal'  => $bundleTotal + $delivery_cost,
+        'grandTotal'  => $bundleTotal + ($n <= 2 ? $shipping_cost : 0),
     ];
 }
 
@@ -135,7 +136,7 @@ function calculateBundlePrice($subtotal, $n, $frame_type = 'european') {
  * @return float
  */
 function calculateFrameCost($quantity = 1, $sizePriceOverride = null) {
-    $delivery_cost = floatval(get_setting('delivery_cost') ?? 0);
+    $delivery_cost = floatval(get_setting('shipping_price', 80));
     $average_cost  = floatval(get_setting('average_cost')  ?? 0);
 
     // Use size price override if provided, otherwise fall back to average_cost
@@ -156,7 +157,7 @@ function calculateFrameCost($quantity = 1, $sizePriceOverride = null) {
 
 
 function calculateMixedBundlePrice(array $items, ?float $discount = null, ?float $signatureFloor = null, ?float $premiumFloor = null): array {
-    $discount = $discount ?? (floatval(get_setting('d_step') ?? 5) / 100);
+    $discount = $discount ?? quantityDiscountRate(count($items));
     $signatureFloor = $signatureFloor ?? floatval(get_setting('indian_floor_price') ?? 295);
     $premiumFloor = $premiumFloor ?? floatval(get_setting('floor_price') ?? 489);
 
@@ -164,7 +165,7 @@ function calculateMixedBundlePrice(array $items, ?float $discount = null, ?float
         return ['bundleTotal' => 0.0, 'itemPrices' => [], 'saving' => 0.0, 'discount' => 0.0];
     }
 
-    $appliedDiscount = count($items) > 1 ? $discount : 0.0;
+    $appliedDiscount = $discount;
     $subtotal = 0.0;
     $itemPrices = [];
 

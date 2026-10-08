@@ -15,7 +15,8 @@ let add_to_cart = $("#add_to_cart").val();
 let cart_page = $("#cart_page").val();
 let reset_cropped_image = $("#reset_cropped_image").val();
 let getFrameDefaults = $("#getFrameDefaults").val();
-let delivery_cost = parseFloat($("#delivery_cost").val()) || 0;
+const configuredShippingPrice = parseFloat($("#shipping_price").val());
+let shipping_price = Number.isFinite(configuredShippingPrice) ? configuredShippingPrice : 80;
 let average_cost  = parseFloat($("#average_cost").val())  || 0;
 let base_margin   = parseFloat($("#base_margin").val())   || 0;
 
@@ -24,8 +25,6 @@ let base_margin   = parseFloat($("#base_margin").val())   || 0;
 // ============================================================
 const FLOOR_PRICE        = parseFloat($("#floor_price").val()) || 489;
 const INDIAN_FLOOR_PRICE = parseFloat($("#indian_floor_price").val()) || 295;
-const D_STEP             = (parseFloat($("#d_step").val()) || 5)  / 100;  // convert % to decimal
-const D_MAX              = (parseFloat($("#d_max").val())  || 20) / 100;  // convert % to decimal
 let currentFrameType     = $("#active_frame_type").val() || "indian";
 
 /**
@@ -38,19 +37,24 @@ let currentFrameType     = $("#active_frame_type").val() || "indian";
 function calculateMixedBundlePrice(items) {
     if (!items.length) return { bundleTotal: 0, perFrame: 0, saving: 0, discount: 0 };
 
-    const discount = items.length > 1 ? D_STEP : 0;
+    const quantity = items.length;
+    const discount = quantity === 2 ? 0.02
+        : quantity <= 1 ? 0
+        : quantity <= 5 ? 0.03
+        : quantity <= 9 ? 0.05
+        : 0.10;
     const subtotal = items.reduce((total, item) => total + item.price, 0);
     const itemPrices = items.map(item => {
         const floor = item.frameType === 'indian' ? INDIAN_FLOOR_PRICE : FLOOR_PRICE;
-        return Math.max(floor, item.price * (1 - discount));
+        return Math.round(Math.max(floor, item.price * (1 - discount)) * 100) / 100;
     });
-    const bundleTotal = itemPrices.reduce((total, price) => total + price, 0);
+    const bundleTotal = Math.round(itemPrices.reduce((total, price) => total + price, 0) * 100) / 100;
 
     return {
         bundleTotal,
         itemPrices,
-        perFrame: Math.round(bundleTotal / items.length),
-        saving: Math.round(Math.max(0, subtotal - bundleTotal)),
+        perFrame: Math.round((bundleTotal / items.length) * 100) / 100,
+        saving: Math.round(Math.max(0, subtotal - bundleTotal) * 100) / 100,
         discount
     };
 }
@@ -396,7 +400,18 @@ function updateGrandTotal() {
                 // console.log("2nd frame price updated to: ₹" + result.perFrame);
 
                 // Update grand total display
-                const grandTotal = Math.round(result.bundleTotal + delivery_cost);
+                const shipping = n >= 3 ? 0 : shipping_price;
+                const grandTotal = Math.round(result.bundleTotal + shipping);
+                ["shipping-show", "delivery-show-1", "delivery-show-2"].forEach((id) => {
+                    const shippingDisplay = document.getElementById(id);
+                    if (shippingDisplay) {
+                        shippingDisplay.textContent = shipping === 0
+                            ? (id === "shipping-show" ? "Free Delivery" : "Free Shipping")
+                            : `₹${Math.round(shipping)}`;
+                        shippingDisplay.classList.toggle("text-success", shipping === 0);
+                        shippingDisplay.classList.toggle("fw-bold", shipping === 0);
+                    }
+                });
                 document.getElementById("grand-total-1").textContent = "₹" + grandTotal;
                 document.getElementById("grand-total-2").textContent = "₹" + grandTotal;
                 document.getElementById("grand-total-1").setAttribute("data-val", grandTotal);
@@ -413,7 +428,7 @@ function updateGrandTotal() {
                 // console.log("Subtotal      : ₹" + subtotal);
                 // console.log("Discount      :", (result.discount * 100).toFixed(0) + "%");
                 // console.log("Bundle Total  : ₹" + result.bundleTotal);
-                // console.log("Delivery      : ₹" + delivery_cost);
+                // console.log("Shipping      : ₹" + shipping);
                 // console.log("Grand Total   : ₹" + grandTotal);
                 // console.log("Saving        : ₹" + result.saving);
                 // console.log("======================");
@@ -473,7 +488,7 @@ function calculateFrameCost_legacy(quantity = 1) {
     let frame_cost     = quantity * average_cost;
     let profit_margin  = (base_margin / Math.pow(quantity, 0.2)) / 100;
     let profit_per_sale = Math.floor(frame_cost * profit_margin);
-    let selling_price  = Math.floor(frame_cost + profit_per_sale) + delivery_cost;
+    let selling_price  = Math.floor(frame_cost + profit_per_sale) + shipping_price;
     return selling_price;
 }
 

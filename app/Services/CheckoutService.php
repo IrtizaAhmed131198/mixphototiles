@@ -29,12 +29,14 @@ class CheckoutService
             'cart.*.quantity' => 'required|integer|min:1|max:100',
         ])->validate();
         $subtotal = 0;
+        $quantity = 0;
         foreach ($cart as $item) {
             $product = Product::findOrFail($item['product_id']);
             if ((float) $product->price <= 0 || (int) $product->status !== 1) {
                 throw ValidationException::withMessages(['cart' => 'A cart product is unavailable.']);
             }
             $subtotal += (float) $product->price * $item['quantity'];
+            $quantity += $item['quantity'];
         }
         $discount = 0;
         $code = $coupon['code'] ?? null;
@@ -45,7 +47,7 @@ class CheckoutService
             }
             $discount = (float) $record->discount_amount;
         }
-        $shipping = max(0, (float) get_setting('shipping_price', 0));
+        $shipping = $quantity >= 3 ? 0 : max(0, (float) get_setting('shipping_price', 80));
         $total = round(round($subtotal) + $shipping - $discount);
         if ($total <= 0) {
             throw ValidationException::withMessages(['cart' => 'The checkout total must be positive.']);

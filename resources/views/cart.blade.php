@@ -84,7 +84,6 @@
 @section('content')
     @php
         $subtotal = 0;
-        $shipping = get_setting('shipping_price') ?? 0;
     @endphp
 
     {{-- <div class="loadermain">
@@ -104,7 +103,7 @@
                         <div class="parentCart">
                             <h4 class="">
                                 Your Cart
-                                <span class="itemsCount">({{ count($cartItems) ?? 0 }} Items)</span>
+                                <span class="itemsCount">({{ $cartQuantity }} Items)</span>
                                 {{-- <form action="{{ route('cart.clear') }}" method="POST" style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn design-btn filled">
@@ -119,7 +118,7 @@
                             @foreach ($cartItems as $item)
                                 @php
                                     $product = App\Models\Product::find($item['product_id']);
-                                    $subtotal += (float) $item['price'];
+                                    $subtotal += (float) $item['price'] * (int) ($item['quantity'] ?? 1);
                                 @endphp
                                 <div class="listGroup">
                                     <figure class="carditemimage">
@@ -415,6 +414,12 @@
                                                 </span>
                                             </li>
 
+                                            @if ($bundleSaving > 0)
+                                                <li>
+                                                    <p class="customTilename">Automatic bundle savings ({{ number_format($bundleDiscount * 100, 0) }}%)</p>
+                                                    <span>₹{{ number_format($bundleSaving, 2) }}</span>
+                                                </li>
+                                            @endif
                                             <li>
                                                 <p class="customTilename">Discount</p>
                                                 <span class="discounttag">

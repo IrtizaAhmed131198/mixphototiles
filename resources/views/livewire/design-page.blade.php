@@ -581,11 +581,9 @@
                                 </div>
                                 <div class="d-flex justify-content-between w-100 mb-1">
                                     <p class="mb-0">Delivery</p>
-                                    @if(get_setting('delivery_cost') == 0)
-                                        <p class="mb-0 text-success fw-bold">Free Shipping</p>
-                                    @else
-                                        <h6 class="mb-0" id="delivery-show-1">₹{{ get_setting('delivery_cost') }}</h6>
-                                    @endif
+                                    <h6 class="mb-0 {{ $shipping == 0 ? 'text-success fw-bold' : '' }}" id="delivery-show-1">
+                                        {{ $shipping == 0 ? 'Free Shipping' : '₹' . round($shipping) }}
+                                    </h6>
                                 </div>
                                 <hr class="my-2">
                                 <div class="d-flex justify-content-between w-100 mb-1">
@@ -922,7 +920,7 @@
                                     <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom" style="border-color: #f7eaf0 !important;">
                                         <span class="fw-bold fs-14 text-dark d-flex align-items-center" id="feature-card-title">
                                             <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #eb2371; margin-right: 8px;" id="feature-card-dot"></span>
-                                            <span id="feature-card-heading" style="font-weight: 700; color: #1a1a1a;">{{ $defaultFrameType == 'european' ? 'European Collection' : 'Signature Collection' }}</span>
+                                            <span id="feature-card-heading" style="font-weight: 700; color: #1a1a1a;">{{ $defaultFrameType == 'european' ? 'European Collection' : ($defaultFrameType == 'luxury_tiles' ? 'Luxury Tiles' : 'Signature Collection') }}</span>
                                         </span>
                                         <button type="button" class="btn btn-sm" id="switch-frame-type-btn" style="background: #fdf2f6; color: #eb2371; border: 1px solid #f8c3d9; border-radius: 20px; font-size: 11px; font-weight: 700; padding: 2px 10px; transition: all 0.2s;" data-bs-toggle="modal" data-bs-target="#frameTypeChoiceModal">
                                             Change
@@ -978,11 +976,9 @@
                                         </div>
                                         <div class="d-flex justify-content-between w-100 mb-1">
                                             <p class="mb-0">Delivery</p>
-                                            @if(get_setting('delivery_cost') == 0)
-                                                <p class="mb-0 text-success fw-bold">Free Shipping</p>
-                                            @else
-                                                <h6 class="mb-0" id="delivery-show-2">₹{{ get_setting('delivery_cost') }}</h6>
-                                            @endif
+                                            <h6 class="mb-0 {{ $shipping == 0 ? 'text-success fw-bold' : '' }}" id="delivery-show-2">
+                                                {{ $shipping == 0 ? 'Free Shipping' : '₹' . round($shipping) }}
+                                            </h6>
                                         </div>
                                         <hr class="my-2">
                                         <div class="d-flex justify-content-between w-100 mb-1">
@@ -1048,8 +1044,8 @@
                                     value="{{ route('reset_cropped_image') }}">
                                 <input type="hidden" name="getFrameDefaults" id="getFrameDefaults"
                                     value="{{ route('getFrameDefaults') }}">
-                                <input type="hidden" name="delivery_cost" id="delivery_cost"
-                                    value="{{ get_setting('delivery_cost') ?? 0 }}">
+                                <input type="hidden" name="shipping_price" id="shipping_price"
+                                    value="{{ get_setting('shipping_price', 80) ?? 80 }}">
                                 <input type="hidden" name="average_cost" id="average_cost"
                                     value="{{ get_setting('average_cost') ?? 0 }}">
                                 <input type="hidden" name="base_margin" id="base_margin"
@@ -1062,10 +1058,6 @@
                                     value="{{ get_setting('indian_floor_price') ?? 295 }}">
                                 <input type="hidden" name="active_frame_type" id="active_frame_type"
                                     value="{{ $defaultFrameType ?? 'indian' }}">
-                                <input type="hidden" name="d_step" id="d_step"
-                                    value="{{ get_setting('d_step') ?? 5 }}">
-                                <input type="hidden" name="d_max" id="d_max"
-                                    value="{{ get_setting('d_max') ?? 20 }}">
 
                             </div>
                         </div>
