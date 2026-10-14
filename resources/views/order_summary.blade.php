@@ -135,7 +135,7 @@
                                                         <input type="text" id="cityInput" name="city_name" class="form-control mt-2 d-none" placeholder="Enter City">
                                                     </div>
 
-                                                    <input type="hidden" name="shipping" id="shippingInput" value="0">
+                                                    <input type="hidden" name="shipping" id="shippingInput" value="{{ $shipping }}">
                                                     <div class="col-lg-6">
                                                         <div label="Alternative Phone Number">
                                                             <input placeholder="Alternative Phone Number" id="altPhoneInput"
@@ -202,7 +202,7 @@
                                     </figure>
                                     <div class="cardlistdetail">
                                         <p class="heading-6">{{ $item['name'] }}</p>
-                                        <h5>₹{{ round($item['total']) }}</h5>
+                                        <h5>₹{{ number_format((float) $item['total'], 2) }}</h5>
                                     </div>
                                 </div>
                             @endforeach
@@ -212,10 +212,51 @@
                                     <h5 class="pricedetails">Price Details</h5>
                                     <ul class="cartListpaymentdetails">
                                         <li>
-                                            <p class="customTilename">Sub Total</p>
-                                            <span>₹{{ round($cartGrandTotal) }}</span>
+                                            <p class="customTilename">Regular Product Total</p>
+                                            <span>₹{{ number_format($regularTotal, 2) }}</span>
+                                        </li>
+                                        <li>
+                                            <p class="customTilename">Bundle Product Total</p>
+                                            <span>₹{{ number_format($cartGrandTotal, 2) }}</span>
                                         </li>
 
+                                        @foreach (['indian' => 'Indian Frames', 'european' => 'European Frames'] as $category => $label)
+                                            @if (isset($pricingSummary['categories'][$category]))
+                                                @php
+                                                    $categoryPricing = $pricingSummary['categories'][$category];
+                                                    $nextTier = $categoryPricing['next_tier'];
+                                                @endphp
+                                                <li>
+                                                    <p class="customTilename">{{ $label }} — {{ number_format($categoryPricing['discount'] * 100, 0) }}% off ({{ $categoryPricing['quantity'] }} items)</p>
+                                                    <span>Product savings ₹{{ number_format($categoryPricing['product_savings'], 2) }}</span>
+                                                </li>
+                                                <li>
+                                                    <p class="customTilename">{{ $label }} — Next unlock</p>
+                                                    <span>{{ $nextTier['quantity'] ? 'Add ' . $nextTier['remaining'] . ' for ' . number_format($nextTier['discount'] * 100, 0) . '% off' : 'Maximum tier reached' }}</span>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                        @if ($shippingSavings > 0)
+                                            <li>
+                                                <p class="customTilename">Shipping Savings</p>
+                                                <span>₹{{ number_format($shippingSavings, 2) }}</span>
+                                            </li>
+                                        @endif
+                                        <li>
+                                            <p class="customTilename">Profit</p>
+                                            <span>{{ $pricingSummary['profit'] === null ? 'Unavailable for selected custom add-ons' : '₹' . number_format($pricingSummary['profit'], 2) }}</span>
+                                        </li>
+                                        <li>
+                                            <p class="customTilename">Overall Profit Margin</p>
+                                            <span>
+                                                @if ($pricingSummary['profit_margin'] === null)
+                                                    Unavailable
+                                                @else
+                                                    {{ number_format($pricingSummary['profit_margin'], 1) }}% —
+                                                    {{ $pricingSummary['margin_protected'] ? 'Protected: margin ≥28%' : 'Warning: below 28% target' }}
+                                                @endif
+                                            </span>
+                                        </li>
                                         @if ($appliedCoupon['code'])
                                             <li>
                                                 <p class="customTilename">Coupon Applied ({{ $appliedCoupon['code'] }})
@@ -236,17 +277,17 @@
                                                 @if($shipping == 0)
                                                     Free
                                                 @else
-                                                    ₹{{ round($shipping) }}
+                                                    ₹{{ number_format($shipping, 2) }}
                                                 @endif
                                             </span>
                                         </li>
 
                                         @php
-                                            $finalTotal = $cartGrandTotal + $shipping + $giftCard - $appliedCoupon['discount'];
+                                            $finalTotal = round($cartGrandTotal + $shipping + $giftCard - $appliedCoupon['discount'], 2);
                                         @endphp
                                         <li class="grandTotal">
                                             <p class="customTilename">Grand Total</p>
-                                            <span>₹{{ round($finalTotal) }}</span>
+                                            <span>₹{{ number_format($finalTotal, 2) }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -441,26 +482,6 @@
                 }
             });
 
-            // City shipping calculation
-            cityDropdown.addEventListener('change', function() {
-                const selectedOption = this.options[this.selectedIndex];
-                const shippingPrice = parseFloat(selectedOption.getAttribute('data-shipping')) || 0;
-
-                // Update UI
-                if (shippingPrice === 0) {
-                    document.querySelector('.shipping_total').textContent = 'Free';
-                } else {
-                    document.querySelector('.shipping_total').textContent = `₹${Math.round(shippingPrice)}`;
-                }
-
-                // input me bhi integer bhejo
-                document.querySelector('#shippingInput').value = Math.round(shippingPrice);
-
-                // Grand Total
-                const newGrandTotal = (cartGrandTotal + giftCard + shippingPrice) - discount;
-
-                document.querySelector('.grandTotal span').textContent = `₹${Math.round(newGrandTotal)}`;
-            });
         });
 
         $('#saveAddressBtn').on('click', function() {

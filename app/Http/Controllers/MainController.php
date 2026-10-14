@@ -138,67 +138,73 @@ class MainController extends Controller
             $itemQuantity = max(1, (int) ($item['quantity'] ?? 1));
             $quantity += $itemQuantity;
 
-            if (!in_array($item['type'] ?? null, ['manual', 'collection'], true)) {
-                continue;
-            }
-
             $product = Product::find($item['product_id'] ?? 0);
-            if (!$product) {
-                continue;
-            }
+            $config = $product ? (json_decode((string) $product->frame_config, true) ?: []) : [];
+            $basePrice = (float) ($item['regular_price'] ?? $item['price'] ?? 0);
+            $addonPrice = 0.0;
+            $frameType = $config['frame_type']['type'] ?? ($config['frame_type'] ?? null);
+            $sizeLabel = $config['size']['frameSizeText'] ?? null;
 
-            $config = json_decode((string) $product->frame_config, true) ?: [];
-            $basePrice = (float) $product->price;
-
-            if (($item['type'] ?? null) === 'collection') {
+            if (($item['type'] ?? null) === 'collection' && $product) {
                 $sessionCollection = SessionCollection::where('session_id', session()->getId())
                     ->where('product_id', $product->id)
                     ->latest('id')
                     ->first();
                 if ($sessionCollection) {
                     $config = json_decode((string) $sessionCollection->configuration, true) ?: $config;
-                    $basePrice = (float) $sessionCollection->price;
+                    $frameType = $config['frame_type']['type'] ?? ($config['frame_type'] ?? $frameType);
+                    $sizeLabel = $config['size']['frameSizeText'] ?? $sizeLabel;
+                    $sizePrice = (float) ($config['size']['frame_price'] ?? 0);
+                    if ($sizePrice > 0) {
+                        $basePrice = $sizePrice;
+                        $addonPrice = (float) ($config['finish']['finish_price'] ?? 0)
+                            + (float) ($config['led']['price'] ?? 0);
+                    } else {
+                        $basePrice = (float) $sessionCollection->price;
+                    }
+                }
+            } elseif ($product && in_array($item['type'] ?? null, ['manual', 'collection'], true)) {
+                $sizePrice = (float) ($config['size']['frame_price'] ?? 0);
+                $addonPrice = (float) ($config['finish']['finish_price'] ?? 0)
+                    + (float) ($config['led']['price'] ?? 0);
+                if ($sizePrice > 0) {
+                    $basePrice = $sizePrice;
                 }
             } else {
-                $sizePrice = (float) ($config['size']['frame_price'] ?? 0);
-                $finishPrice = (float) ($config['finish']['finish_price'] ?? 0);
-                $ledPrice = (float) ($config['led']['price'] ?? 0);
-                if ($sizePrice > 0) {
-                    $basePrice = $sizePrice + $finishPrice + $ledPrice;
-                }
+                $frameType = null;
             }
 
-            $frameType = $config['frame_type']['type'] ?? ($config['frame_type'] ?? 'indian');
+            $details = framePricingDetails(
+                $frameType,
+                $sizeLabel,
+                $basePrice,
+                $addonPrice,
+                $addonPrice > 0
+            );
+            $cart[$cartIndex]['regular_price'] = $details['retail_price'];
             $itemRanges[$cartIndex] = [
                 'start' => count($pricingItems),
                 'quantity' => $itemQuantity,
-                'product' => $product,
             ];
             for ($unit = 0; $unit < $itemQuantity; $unit++) {
-                $pricingItems[] = [
-                    'price' => $basePrice,
-                    'frame_type' => $frameType,
-                ];
+                $pricingItems[] = $details;
             }
         }
 
-        $bundleResult = calculateMixedBundlePrice($pricingItems);
+        $bundleResult = calculateAutomaticQuantityPricing($pricingItems);
         foreach ($itemRanges as $cartIndex => $range) {
-            $price = $bundleResult['itemPrices'][$range['start']];
+            $price = $bundleResult['items'][$range['start']];
             $cart[$cartIndex]['price'] = $price;
             $cart[$cartIndex]['total'] = $price * $range['quantity'];
-            $range['product']->price = $price;
-            $range['product']->save();
         }
 
         $cart = array_values($cart);
         session()->put('cart', $cart);
-
         return [
             'cart' => $cart,
             'quantity' => $quantity,
-            'bundleSaving' => $bundleResult['saving'],
-            'bundleDiscount' => $bundleResult['discount'],
+            'pricingSummary' => $bundleResult,
+            'shippingSavings' => $quantity >= 3 ? 80.0 : 0.0,
         ];
     }
 
@@ -208,7 +214,7 @@ class MainController extends Controller
         $cartItems = $pricing['cart'];
         $cartQuantity = $pricing['quantity'];
         $discount = (float) get_setting('discount') ?? 0;
-        $shipping_price = $pricing['quantity'] >= 3 ? 0 : (float) (get_setting('shipping_price') ?? 80);
+        $shipping_price = quantityShippingCharge($pricing['quantity']);
         $gift = 30;
         $today = Carbon::today()->format('Y-m-d');
         $coupons = DB::table('coupon')
@@ -223,9 +229,9 @@ class MainController extends Controller
             ->map(function ($amount) {
                 return (float) $amount;
             });
-        $bundleSaving = $pricing['bundleSaving'];
-        $bundleDiscount = $pricing['bundleDiscount'];
-        return view('cart', compact('cartItems', 'cartQuantity', 'discount', 'gift', 'coupons', 'couponsSelect', 'shipping_price', 'bundleSaving', 'bundleDiscount'));
+        $pricingSummary = $pricing['pricingSummary'];
+        $shippingSavings = $pricing['shippingSavings'];
+        return view('cart', compact('cartItems', 'cartQuantity', 'discount', 'gift', 'coupons', 'couponsSelect', 'shipping_price', 'pricingSummary', 'shippingSavings'));
     }
 
     public function upload_image(Request $request)
@@ -462,7 +468,9 @@ class MainController extends Controller
     public function get_grand_total()
     {
         $sessionId = session()->getId();
-        $sessionImages = SessionImage::where('session_id', $sessionId)->select('frame_configuration')->get();
+        $sessionImages = SessionImage::where('session_id', $sessionId)
+            ->select('filename', 'frame_configuration')
+            ->get();
 
         // Decode frame_configuration if stored as JSON
         foreach ($sessionImages as $image) {
@@ -518,7 +526,6 @@ class MainController extends Controller
 
         $productsAdded = [];
 
-        $subtotal = 0;
         $pricingItems = [];
 
         foreach ($sessionImages as $sessionImage) {
@@ -537,18 +544,16 @@ class MainController extends Controller
             $finishPrice = (float) ($frameConfig['finish']['finish_price'] ?? 0);
             $ledPrice    = (float) ($frameConfig['led']['price'] ?? 0);
 
-            $unitPrice = $sizePrice > 0
-                ? $sizePrice + $finishPrice + $ledPrice
-                : (float) get_setting('average_cost') + $finishPrice + $ledPrice;
-
-            $subtotal += $unitPrice;
-            $pricingItems[] = [
-                'price' => $unitPrice,
-                'frame_type' => $frameType,
-            ];
+            $pricingItems[] = framePricingDetails(
+                $frameType,
+                $sizeName,
+                $sizePrice > 0 ? $sizePrice : (float) get_setting('average_cost'),
+                $finishPrice + $ledPrice,
+                ($finishPrice + $ledPrice) > 0
+            );
         }
 
-        $bundleResult = calculateMixedBundlePrice($pricingItems);
+        $bundleResult = calculateAutomaticQuantityPricing($pricingItems);
 
         foreach ($sessionImages as $index => $sessionImage) {
             $frameConfig = json_decode($sessionImage->frame_configuration, true);
@@ -567,14 +572,14 @@ class MainController extends Controller
             // Slug (make unique slug from name)
             $slug = Str::slug($name . '-' . time(). '-'.$sessionImage['id']);
             // Each collection keeps its own floor price in a mixed bundle.
-            $price = $bundleResult['itemPrices'][$index];
+            $price = $bundleResult['items'][$index];
 
             // Create product in `products` table
             $product = Product::create([
                 'name' => $name,
                 'slug' => $slug,
                 'description' => 'Custom frame product', // You can adjust
-                'price' => $price, // Assuming price is in frame_configuration
+                'price' => $pricingItems[$index]['retail_price'],
                 'discount' => 0,
                 'stock' => 1,
                 'image' => $sessionImage->file_url,
@@ -597,6 +602,7 @@ class MainController extends Controller
                 'image_name' => $sessionImage->filename,
                 'quantity'   => 1,
                 'price'      => $price,
+                'regular_price' => $pricingItems[$index]['retail_price'],
                 'total'      => $price,
                 'type'       => 'manual',
                 'slug'       => ''
@@ -945,71 +951,7 @@ class MainController extends Controller
             return $item['product_id'] != $productId;
         });
 
-        // Step 4: recalc subtotal first (only for manual items)
-        $subtotal = 0;
-        $manualItemsCount = 0;
-        $pricingItems = [];
-
-        foreach ($updatedCart as $item) {
-            if (isset($item['type']) && $item['type'] == 'collection') {
-                continue;
-            }
-
-            $product = Product::find($item['product_id']);
-            if ($product) {
-                if ($product->type == 'collection' || $product->type == 'manual_collection') {
-                    continue;
-                }
-
-                $frameConfig = json_decode($product->frame_config, true);
-
-                $sizePrice   = (float) ($frameConfig['size']['frame_price'] ?? 0);
-                $finishPrice = (float) ($frameConfig['finish']['finish_price'] ?? 0);
-                $ledPrice    = (float) ($frameConfig['led']['price'] ?? 0);
-
-                $unitPrice = $sizePrice > 0
-                    ? $sizePrice + $finishPrice + $ledPrice
-                    : (float) get_setting('average_cost') + $finishPrice + $ledPrice;
-
-                $subtotal += $unitPrice;
-                $pricingItems[] = [
-                    'price' => $unitPrice,
-                    'frame_type' => $frameConfig['frame_type']['type'] ?? ($frameConfig['frame_type'] ?? 'indian'),
-                ];
-                $manualItemsCount++;
-            }
-        }
-
-        // Apply SAME bundle logic (only if there are remaining manual items)
-        if ($manualItemsCount > 0) {
-            $bundleResult = calculateMixedBundlePrice($pricingItems);
-
-            // Step 5: update per item price (only for manual items)
-            $pricingIndex = 0;
-            foreach ($updatedCart as &$item) {
-                if (isset($item['type']) && $item['type'] == 'collection') {
-                    continue;
-                }
-
-                $product = Product::find($item['product_id']);
-                if ($product) {
-                    if ($product->type == 'collection' || $product->type == 'manual_collection') {
-                        continue;
-                    }
-
-                    $price = $bundleResult['itemPrices'][$pricingIndex];
-
-                    $item['price'] = $price;
-                    $item['total'] = $bundleResult['bundleTotal'] + (float)(get_setting('delivery_cost') ?? 0);
-
-                    $product->price = $price;
-                    $product->save();
-                    $pricingIndex++;
-                }
-            }
-        }
-
-        // Save updated cart back to session
+        // Recalculate all category prices and shipping after removal.
         $this->recalculateBundleCart(array_values($updatedCart));
 
         // dd($updatedCart, $removedItems);
@@ -1102,7 +1044,7 @@ class MainController extends Controller
         $cartGrandTotal = floatval(session()->get('cart_grand_total', 0)); // Total price
         $giftCard = 0; // Gift card (optional)
         // $giftCard = session()->get('gift_card_applied', 0); // Gift card (optional)
-        $shipping = floatval(get_setting('shipping_price')) ?? 0; // Gift card (optional)
+        $shipping = 0.0;
 
         $shipping_address = ShippingAddress::where('user_id', Auth::user()->id ?? null)
             ->where('default_address', 1)
@@ -1136,11 +1078,14 @@ class MainController extends Controller
             return redirect()->route('cart')->with('error', 'Your cart is empty.');
         }
         $totals = app(\App\Services\CheckoutService::class)->totals($cart, $appliedCoupon);
-        $cartGrandTotal = round($totals['subtotal']);
+        $cartGrandTotal = $totals['subtotal'];
         $shipping = $totals['shipping'];
+        $pricingSummary = $totals['pricing'];
+        $shippingSavings = $totals['shipping_savings'];
+        $regularTotal = $totals['regular_total'];
         $appliedCoupon = ['code' => $totals['code'], 'discount' => $totals['discount']];
 
-        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon', 'shipping_address', 'shipping'));
+        return view('order_summary', compact('cart', 'cartGrandTotal', 'giftCard', 'appliedCoupon', 'shipping_address', 'shipping', 'pricingSummary', 'shippingSavings', 'regularTotal'));
     }
 
     public function place_order(Request $request)

@@ -191,7 +191,7 @@
                                         </div>
                                     </div>
                                     <div class="cartPrice">
-                                        <h5>₹{{ round($item['price'], 0) }}</h5>
+                                        <h5>₹{{ number_format((float) $item['price'], 2) }}</h5>
                                     </div>
 
                                     <!-- Design Modal for Cart Item -->
@@ -408,18 +408,55 @@
                                         </h5>
                                         <ul class="cartListpaymentdetails">
                                             <li>
-                                                <p class="customTilename">Sub Total</p>
-                                                <span id="subtotal" data-val="{{ round($subtotal) }}">
-                                                    ₹{{ round($subtotal) }}
+                                                <p class="customTilename">Regular Product Total</p>
+                                                <span>
+                                                    ₹{{ number_format($pricingSummary['regular_total'], 2) }}
                                                 </span>
                                             </li>
 
-                                            @if ($bundleSaving > 0)
+                                            <li>
+                                                <p class="customTilename">Bundle Product Total</p>
+                                                <span id="subtotal" data-val="{{ number_format($pricingSummary['bundle_total'], 2, '.', '') }}">
+                                                    ₹{{ number_format($pricingSummary['bundle_total'], 2) }}
+                                                </span>
+                                            </li>
+                                            @foreach (['indian' => 'Indian Frames', 'european' => 'European Frames'] as $category => $label)
+                                                @if (isset($pricingSummary['categories'][$category]))
+                                                    @php
+                                                        $categoryPricing = $pricingSummary['categories'][$category];
+                                                        $nextTier = $categoryPricing['next_tier'];
+                                                    @endphp
+                                                    <li>
+                                                        <p class="customTilename">{{ $label }} — {{ number_format($categoryPricing['discount'] * 100, 0) }}% off ({{ $categoryPricing['quantity'] }} items)</p>
+                                                        <span>Product savings ₹{{ number_format($categoryPricing['product_savings'], 2) }}</span>
+                                                    </li>
+                                                    <li>
+                                                        <p class="customTilename">{{ $label }} — Next unlock</p>
+                                                        <span>{{ $nextTier['quantity'] ? 'Add ' . $nextTier['remaining'] . ' for ' . number_format($nextTier['discount'] * 100, 0) . '% off' : 'Maximum tier reached' }}</span>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                            @if ($shippingSavings > 0)
                                                 <li>
-                                                    <p class="customTilename">Automatic bundle savings ({{ number_format($bundleDiscount * 100, 0) }}%)</p>
-                                                    <span>₹{{ number_format($bundleSaving, 2) }}</span>
+                                                    <p class="customTilename">Shipping Savings</p>
+                                                    <span>₹{{ number_format($shippingSavings, 2) }}</span>
                                                 </li>
                                             @endif
+                                            <li>
+                                                <p class="customTilename">Profit</p>
+                                                <span>{{ $pricingSummary['profit'] === null ? 'Unavailable for selected custom add-ons' : '₹' . number_format($pricingSummary['profit'], 2) }}</span>
+                                            </li>
+                                            <li>
+                                                <p class="customTilename">Overall Profit Margin</p>
+                                                <span>
+                                                    @if ($pricingSummary['profit_margin'] === null)
+                                                        Unavailable
+                                                    @else
+                                                        {{ number_format($pricingSummary['profit_margin'], 1) }}% —
+                                                        {{ $pricingSummary['margin_protected'] ? 'Protected: margin ≥28%' : 'Warning: below 28% target' }}
+                                                    @endif
+                                                </span>
+                                            </li>
                                             <li>
                                                 <p class="customTilename">Discount</p>
                                                 <span class="discounttag">
@@ -448,10 +485,10 @@
                                             <li class="grandTotal">
                                                 <p class="customTilename">Grand Total</p>
                                                 @php
-                                                    $grandTotal = (int) round((float)$subtotal + (float)$shipping_price);
+                                                    $grandTotal = round((float)$subtotal + (float)$shipping_price, 2);
                                                 @endphp
-                                                <span id="grand_total" data-val="{{ $grandTotal }}">
-                                                    ₹{{ $grandTotal }}
+                                                <span id="grand_total" data-val="{{ number_format($grandTotal, 2, '.', '') }}">
+                                                    ₹{{ number_format($grandTotal, 2) }}
                                                 </span>
                                             </li>
                                         </ul>
@@ -681,7 +718,7 @@
 
                 const grandTotalElement = document.getElementById('grand_total');
                 grandTotalElement.setAttribute('data-val', grandTotal);
-                grandTotalElement.innerText = `₹${Math.round(grandTotal)}`;
+                grandTotalElement.innerText = `₹${grandTotal.toFixed(2)}`;
             }
         });
 
@@ -726,19 +763,19 @@
             function applyCoupon(couponCode) {
                 const discountPercent = staticCoupons[couponCode];
                 const discountAmount = (subTotal * discountPercent) / 100;
-                const discountedPrice = Math.round(discountAmount);
+                const discountedPrice = discountAmount.toFixed(2);
 
                 const discountSpan = document.querySelector('.discounttag');
                 if (discountSpan) {
-                    discountSpan.textContent = `-₹${Math.round(discountAmount)}`;
+                    discountSpan.textContent = `-₹${discountAmount.toFixed(2)}`;
                 }
 
                 const grandTotalElement = document.getElementById('grand_total');
                 if (grandTotalElement) {
                     const originalGrandTotal = parseFloat(grandTotalElement.getAttribute('data-val'));
-                    const newGrandTotal = Math.round(originalGrandTotal - discountAmount);
+                    const newGrandTotal = originalGrandTotal - discountAmount;
 
-                    grandTotalElement.textContent = `₹${newGrandTotal}`;
+                    grandTotalElement.textContent = `₹${newGrandTotal.toFixed(2)}`;
                 }
 
 
@@ -836,7 +873,7 @@
                         if (grandTotalElement) {
                             const originalGrandTotal = parseFloat(grandTotalElement.getAttribute(
                                 'data-val'));
-                            grandTotalElement.textContent = `₹${Math.round(originalGrandTotal)}`;
+                            grandTotalElement.textContent = `₹${originalGrandTotal.toFixed(2)}`;
                         }
 
                         removeCouponFromSession();
@@ -887,15 +924,15 @@
                             couponContainer.innerHTML = appliedCouponHTML;
                             const discountSpan = document.querySelector('.discounttag');
                             if (discountSpan) {
-                                discountSpan.textContent = `-₹${Math.round(data.coupon.discount)}`;
+                                discountSpan.textContent = `-₹${Number(data.coupon.discount).toFixed(2)}`;
                             }
 
                             const grandTotalElement = document.getElementById('grand_total');
                             if (grandTotalElement) {
                                 const originalGrandTotal = parseFloat(grandTotalElement.getAttribute(
                                     'data-val'));
-                                const newGrandTotal = Math.round(originalGrandTotal - data.coupon.discount);
-                                grandTotalElement.textContent = `₹${newGrandTotal}`;
+                                const newGrandTotal = originalGrandTotal - data.coupon.discount;
+                                grandTotalElement.textContent = `₹${newGrandTotal.toFixed(2)}`;
                             }
                             attachRemoveCouponListener();
                         } else {
@@ -922,7 +959,7 @@
                             if (grandTotalElement) {
                                 const originalGrandTotal = parseFloat(grandTotalElement.getAttribute(
                                     'data-val'));
-                                grandTotalElement.textContent = `₹${Math.round(originalGrandTotal)}`;
+                                grandTotalElement.textContent = `₹${originalGrandTotal.toFixed(2)}`;
                             }
                         }
                     })

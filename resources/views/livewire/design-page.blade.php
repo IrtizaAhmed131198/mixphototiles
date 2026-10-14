@@ -14,6 +14,13 @@
 @endpush
 
 @section('content')
+    @php
+        $pricingCategories = $pricingSummary['categories'] ?? [];
+        $indianPricing = $pricingCategories['indian'] ?? null;
+        $europeanPricing = $pricingCategories['european'] ?? null;
+        $marginIsKnown = $pricingSummary['profit_margin'] !== null;
+        $marginProtected = $pricingSummary['margin_protected'] ?? false;
+    @endphp
 
     <style>
         /* Hide the editing section initially */
@@ -576,8 +583,45 @@
                         <div class="Right-Sidebar-footer view-grand-total-1">
                             <div class="GrandTotal">
                                 <div class="d-flex justify-content-between w-100 mb-1">
+                                    <p class="mb-0">Regular Product Total</p>
+                                    <h6 class="mb-0" id="regular-total-1">₹{{ number_format($pricingSummary['regular_total'], 2) }}</h6>
+                                </div>
+                                <div class="d-flex justify-content-between w-100 mb-1">
+                                    <p class="mb-0">Product Savings</p>
+                                    <h6 class="mb-0" id="product-savings-1">₹{{ number_format($pricingSummary['product_savings'], 2) }}</h6>
+                                </div>
+                                <div id="category-indian-1" class="d-flex justify-content-between w-100 mb-1" style="{{ $indianPricing ? '' : 'display:none' }}">
+                                    <p class="mb-0">Indian Frames Tier</p>
+                                    <h6 class="mb-0" id="tier-indian-1">{{ $indianPricing ? $indianPricing['quantity'] . ' item · ' . number_format($indianPricing['discount'] * 100, 0) . '%' : '' }}</h6>
+                                </div>
+                                <p id="next-indian-1" class="mb-1 small text-muted">
+                                    {{ $indianPricing && $indianPricing['next_tier']['quantity'] ? 'Add ' . $indianPricing['next_tier']['remaining'] . ' for ' . number_format($indianPricing['next_tier']['discount'] * 100, 0) . '% off' : '' }}
+                                </p>
+                                <div id="category-european-1" class="d-flex justify-content-between w-100 mb-1" style="{{ $europeanPricing ? '' : 'display:none' }}">
+                                    <p class="mb-0">European Frames Tier</p>
+                                    <h6 class="mb-0" id="tier-european-1">{{ $europeanPricing ? $europeanPricing['quantity'] . ' item · ' . number_format($europeanPricing['discount'] * 100, 0) . '%' : '' }}</h6>
+                                </div>
+                                <p id="next-european-1" class="mb-1 small text-muted">
+                                    {{ $europeanPricing && $europeanPricing['next_tier']['quantity'] ? 'Add ' . $europeanPricing['next_tier']['remaining'] . ' for ' . number_format($europeanPricing['next_tier']['discount'] * 100, 0) . '% off' : '' }}
+                                </p>
+                                <div class="d-flex justify-content-between w-100 mb-1">
+                                    <p class="mb-0">Shipping Savings</p>
+                                    <h6 class="mb-0" id="shipping-savings-1">₹{{ number_format($shippingSavings, 2) }}</h6>
+                                </div>
+                                <div class="d-flex justify-content-between w-100 mb-1">
+                                    <p class="mb-0">Profit</p>
+                                    <h6 class="mb-0" id="profit-1">{{ $marginIsKnown ? '₹' . number_format($pricingSummary['profit'], 2) : 'Unavailable' }}</h6>
+                                </div>
+                                <div class="d-flex justify-content-between w-100 mb-1">
+                                    <p class="mb-0">Profit Margin</p>
+                                    <h6 class="mb-0" id="profit-margin-1">{{ $marginIsKnown ? number_format($pricingSummary['profit_margin'], 1) . '%' : 'Unavailable' }}</h6>
+                                </div>
+                                <p id="profit-status-1" class="mb-1 {{ !$marginIsKnown ? 'text-warning' : ($marginProtected ? 'text-success' : 'text-danger') }}">
+                                    {{ !$marginIsKnown ? 'Production cost unavailable for selected add-ons' : ($marginProtected ? 'Protected: margin ≥28%' : 'Warning: margin below 28% target') }}
+                                </p>
+                                <div class="d-flex justify-content-between w-100 mb-1">
                                     <p class="mb-0">Bundle Total</p>
-                                    <h6 class="mb-0" id="bundle-total-1">₹0</h6>
+                                    <h6 class="mb-0" id="bundle-total-1">₹{{ number_format($pricingSummary['bundle_total'], 2) }}</h6>
                                 </div>
                                 <div class="d-flex justify-content-between w-100 mb-1">
                                     <p class="mb-0">Delivery</p>
@@ -588,7 +632,7 @@
                                 <hr class="my-2">
                                 <div class="d-flex justify-content-between w-100 mb-1">
                                     <p class="mb-0 fw-bold">Grand Total</p>
-                                    <h6 class="mb-0" id="grand-total-1" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
+                                    <h6 class="mb-0" id="grand-total-1" data-val="{{ number_format($pricingSummary['bundle_total'] + $shipping, 2, '.', '') }}">₹{{ number_format($pricingSummary['bundle_total'] + $shipping, 2) }}</h6>
                                 </div>
                                 <div class="w-100 mt-1">
                                     <p class="saving-message mb-0" style="display:none; color:#28a745; font-size:12px; font-weight:600;"></p>
@@ -971,8 +1015,45 @@
                                 <div class="Right-Sidebar-footer view-grand-total-2">
                                     <div class="GrandTotal">
                                         <div class="d-flex justify-content-between w-100 mb-1">
+                                            <p class="mb-0">Regular Product Total</p>
+                                            <h6 class="mb-0" id="regular-total-2">₹{{ number_format($pricingSummary['regular_total'], 2) }}</h6>
+                                        </div>
+                                        <div class="d-flex justify-content-between w-100 mb-1">
+                                            <p class="mb-0">Product Savings</p>
+                                            <h6 class="mb-0" id="product-savings-2">₹{{ number_format($pricingSummary['product_savings'], 2) }}</h6>
+                                        </div>
+                                        <div id="category-indian-2" class="d-flex justify-content-between w-100 mb-1" style="{{ $indianPricing ? '' : 'display:none' }}">
+                                            <p class="mb-0">Indian Frames Tier</p>
+                                            <h6 class="mb-0" id="tier-indian-2">{{ $indianPricing ? $indianPricing['quantity'] . ' item · ' . number_format($indianPricing['discount'] * 100, 0) . '%' : '' }}</h6>
+                                        </div>
+                                        <p id="next-indian-2" class="mb-1 small text-muted">
+                                            {{ $indianPricing && $indianPricing['next_tier']['quantity'] ? 'Add ' . $indianPricing['next_tier']['remaining'] . ' for ' . number_format($indianPricing['next_tier']['discount'] * 100, 0) . '% off' : '' }}
+                                        </p>
+                                        <div id="category-european-2" class="d-flex justify-content-between w-100 mb-1" style="{{ $europeanPricing ? '' : 'display:none' }}">
+                                            <p class="mb-0">European Frames Tier</p>
+                                            <h6 class="mb-0" id="tier-european-2">{{ $europeanPricing ? $europeanPricing['quantity'] . ' item · ' . number_format($europeanPricing['discount'] * 100, 0) . '%' : '' }}</h6>
+                                        </div>
+                                        <p id="next-european-2" class="mb-1 small text-muted">
+                                            {{ $europeanPricing && $europeanPricing['next_tier']['quantity'] ? 'Add ' . $europeanPricing['next_tier']['remaining'] . ' for ' . number_format($europeanPricing['next_tier']['discount'] * 100, 0) . '% off' : '' }}
+                                        </p>
+                                        <div class="d-flex justify-content-between w-100 mb-1">
+                                            <p class="mb-0">Shipping Savings</p>
+                                            <h6 class="mb-0" id="shipping-savings-2">₹{{ number_format($shippingSavings, 2) }}</h6>
+                                        </div>
+                                        <div class="d-flex justify-content-between w-100 mb-1">
+                                            <p class="mb-0">Profit</p>
+                                            <h6 class="mb-0" id="profit-2">{{ $marginIsKnown ? '₹' . number_format($pricingSummary['profit'], 2) : 'Unavailable' }}</h6>
+                                        </div>
+                                        <div class="d-flex justify-content-between w-100 mb-1">
+                                            <p class="mb-0">Profit Margin</p>
+                                            <h6 class="mb-0" id="profit-margin-2">{{ $marginIsKnown ? number_format($pricingSummary['profit_margin'], 1) . '%' : 'Unavailable' }}</h6>
+                                        </div>
+                                        <p id="profit-status-2" class="mb-1 {{ !$marginIsKnown ? 'text-warning' : ($marginProtected ? 'text-success' : 'text-danger') }}">
+                                            {{ !$marginIsKnown ? 'Production cost unavailable for selected add-ons' : ($marginProtected ? 'Protected: margin ≥28%' : 'Warning: margin below 28% target') }}
+                                        </p>
+                                        <div class="d-flex justify-content-between w-100 mb-1">
                                             <p class="mb-0">Bundle Total</p>
-                                            <h6 class="mb-0" id="bundle-total-2">₹0</h6>
+                                            <h6 class="mb-0" id="bundle-total-2">₹{{ number_format($pricingSummary['bundle_total'], 2) }}</h6>
                                         </div>
                                         <div class="d-flex justify-content-between w-100 mb-1">
                                             <p class="mb-0">Delivery</p>
@@ -983,7 +1064,7 @@
                                         <hr class="my-2">
                                         <div class="d-flex justify-content-between w-100 mb-1">
                                             <p class="mb-0 fw-bold">Grand Total</p>
-                                            <h6 class="mb-0" id="grand-total-2" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
+                                            <h6 class="mb-0" id="grand-total-2" data-val="{{ number_format($pricingSummary['bundle_total'] + $shipping, 2, '.', '') }}">₹{{ number_format($pricingSummary['bundle_total'] + $shipping, 2) }}</h6>
                                         </div>
                                         <div class="w-100 mt-1">
                                             <p class="saving-message mb-0" style="display:none; color:#28a745; font-size:12px; font-weight:600;"></p>
@@ -1045,7 +1126,9 @@
                                 <input type="hidden" name="getFrameDefaults" id="getFrameDefaults"
                                     value="{{ route('getFrameDefaults') }}">
                                 <input type="hidden" name="shipping_price" id="shipping_price"
-                                    value="{{ get_setting('shipping_price', 80) ?? 80 }}">
+                                    value="80">
+                                <input type="hidden" name="pricing_catalog" id="pricing_catalog"
+                                    value="{{ e(json_encode($pricingCatalog)) }}">
                                 <input type="hidden" name="average_cost" id="average_cost"
                                     value="{{ get_setting('average_cost') ?? 0 }}">
                                 <input type="hidden" name="base_margin" id="base_margin"

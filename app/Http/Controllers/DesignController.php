@@ -45,25 +45,47 @@ class DesignController extends Controller
         } else {
             $defaultSize = $indianSizes->first() ?? $sizes->first();
         }
-        $defaultSizePrice = $defaultSize ? floatval($defaultSize->price) : floatval(get_setting('average_cost') ?? 0);
-
-        $quantity = $images->count();
-        if ($quantity == 0) {
-            $quantity = 1;
+        $pricingItems = [];
+        foreach ($images as $image) {
+            $config = json_decode((string) $image->frame_configuration, true) ?: [];
+            $frameConfig = $config['frame_configuration'] ?? $config;
+            if (is_string($frameConfig)) {
+                $frameConfig = json_decode($frameConfig, true) ?: [];
+            }
+            $frameType = $frameConfig['frame_type']['type'] ?? ($frameConfig['frame_type'] ?? $defaultFrameType);
+            $sizeLabel = $frameConfig['size']['frameSizeText'] ?? null;
+            $sizePrice = (float) ($frameConfig['size']['frame_price'] ?? 0);
+            $addonPrice = (float) ($frameConfig['finish']['finish_price'] ?? 0)
+                + (float) ($frameConfig['led']['price'] ?? 0);
+            $pricingItems[] = framePricingDetails(
+                $frameType,
+                $sizeLabel ?? $defaultSize?->label,
+                $sizePrice > 0 ? $sizePrice : (float) ($defaultSize?->price ?? 0),
+                $addonPrice,
+                $addonPrice > 0
+            );
         }
 
-        if ($quantity === 1) {
-            // Single frame — show size price directly, no formula
-            $item_price = $defaultSizePrice;
-        } else {
-            // Multiple frames — run bundle formula with size price as base
-            $subtotal     = $defaultSizePrice * $quantity;
-            $bundleResult = calculateBundlePrice($subtotal, $quantity, $defaultFrameType);
-            $item_price   = $bundleResult['perFrame'];
+        if (!$pricingItems) {
+            $pricingItems[] = framePricingDetails(
+                $defaultFrameType,
+                $defaultSize?->label,
+                (float) ($defaultSize?->price ?? get_setting('average_cost', 0))
+            );
         }
 
-        $item_price = round($item_price, 2);
-        $shipping   = $quantity >= 3 ? 0 : (get_setting('shipping_price', 80) ?? 80);
+        $pricingSummary = calculateAutomaticQuantityPricing($pricingItems);
+        $quantity = $pricingSummary['quantity'];
+        $item_price = $quantity > 0
+            ? round($pricingSummary['bundle_total'] / $quantity, 2)
+            : 0.0;
+        $shipping = quantityShippingCharge($quantity);
+        $shippingSavings = $quantity >= 3 ? 80.0 : 0.0;
+        $pricingCatalog = framePricingCatalog();
+        $pricingCatalog['_fallback_floors'] = [
+            'indian' => (float) get_setting('indian_floor_price', 0),
+            'european' => (float) get_setting('floor_price', 0),
+        ];
 
         return view('livewire.design-page', [
             'imageName'         => $imageName,
@@ -77,6 +99,9 @@ class DesignController extends Controller
             'led'               => $led,
             'item_price'        => $item_price,
             'shipping'          => $shipping,
+            'pricingSummary'    => $pricingSummary,
+            'shippingSavings'   => $shippingSavings,
+            'pricingCatalog'    => $pricingCatalog,
         ]);
     }
 }

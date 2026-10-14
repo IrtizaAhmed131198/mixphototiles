@@ -20,42 +20,104 @@ let shipping_price = Number.isFinite(configuredShippingPrice) ? configuredShippi
 let average_cost  = parseFloat($("#average_cost").val())  || 0;
 let base_margin   = parseFloat($("#base_margin").val())   || 0;
 
-// ============================================================
-// PRICING CONSTANTS
-// ============================================================
-const FLOOR_PRICE        = parseFloat($("#floor_price").val()) || 489;
-const INDIAN_FLOOR_PRICE = parseFloat($("#indian_floor_price").val()) || 295;
 let currentFrameType     = $("#active_frame_type").val() || "indian";
+const pricingCatalog = JSON.parse($("#pricing_catalog").val() || "{}");
 
-/**
- * Bundle Pricing Formula with Frame Type Floor Check
- *
- * @param {number} subtotal  - sum of individual frame prices
- * @param {number} n         - total number of frames
- * @returns {object}         - { bundleTotal, perFrame, saving, discount }
- */
 function calculateMixedBundlePrice(items) {
-    if (!items.length) return { bundleTotal: 0, perFrame: 0, saving: 0, discount: 0 };
-
-    const quantity = items.length;
-    const discount = quantity === 2 ? 0.02
-        : quantity <= 1 ? 0
-        : quantity <= 5 ? 0.03
-        : quantity <= 9 ? 0.05
-        : 0.10;
-    const subtotal = items.reduce((total, item) => total + item.price, 0);
-    const itemPrices = items.map(item => {
-        const floor = item.frameType === 'indian' ? INDIAN_FLOOR_PRICE : FLOOR_PRICE;
-        return Math.round(Math.max(floor, item.price * (1 - discount)) * 100) / 100;
+    const normalizedItems = items.map((item) => {
+        const frameType = item.frameType || "unclassified";
+        const category = frameType === "european" || frameType === "luxury_tiles"
+            ? "european"
+            : frameType === "indian" ? "indian" : "unclassified";
+        const dimensions = (String(item.sizeLabel || "").match(/\d+(?:\.\d+)?/g) || []).join("x");
+        const catalogEntry = pricingCatalog[frameType]?.[dimensions];
+        const addonPrice = item.addonPrice || 0;
+        return {
+            category,
+            retailPrice: (catalogEntry?.retail_price ?? item.price ?? 0) + addonPrice,
+            productionCost: catalogEntry?.production_cost,
+            minimumFloor: catalogEntry?.minimum_floor === undefined
+                ? (pricingCatalog._fallback_floors?.[category] || null)
+                : catalogEntry.minimum_floor + addonPrice,
+            costKnown: Boolean(catalogEntry) && !item.hasUncostedAddons,
+            hasUncostedAddons: Boolean(item.hasUncostedAddons)
+        };
     });
-    const bundleTotal = Math.round(itemPrices.reduce((total, price) => total + price, 0) * 100) / 100;
-
+    const quantities = {};
+    normalizedItems.forEach(({ category }) => {
+        quantities[category] = (quantities[category] || 0) + 1;
+    });
+    const discountForQuantity = (quantity) => quantity <= 1 ? 0
+        : quantity === 2 ? 0.02
+        : quantity <= 5 ? 0.03
+        : quantity <= 9 ? 0.05 : 0.10;
+    const categories = {};
+    const itemPrices = normalizedItems.map((item) => {
+        const quantity = quantities[item.category];
+        const discount = item.category === "unclassified" ? 0 : discountForQuantity(quantity);
+        const price = Math.round(Math.max(
+            item.minimumFloor ?? 0,
+            item.retailPrice * (1 - discount)
+        ) * 100) / 100;
+        if (!categories[item.category]) {
+            categories[item.category] = {
+                quantity,
+                discount,
+                regularTotal: 0,
+                bundleTotal: 0,
+                productionCost: 0,
+                costKnown: true
+            };
+        }
+        const summary = categories[item.category];
+        summary.regularTotal += item.retailPrice;
+        summary.bundleTotal += price;
+        if (!item.costKnown || item.productionCost === undefined) {
+            summary.costKnown = false;
+        } else {
+            summary.productionCost += item.productionCost;
+        }
+        return price;
+    });
+    let regularTotal = 0;
+    let bundleTotal = 0;
+    let productionCost = 0;
+    let allCostsKnown = true;
+    Object.values(categories).forEach((summary) => {
+        summary.regularTotal = Math.round(summary.regularTotal * 100) / 100;
+        summary.bundleTotal = Math.round(summary.bundleTotal * 100) / 100;
+        summary.productSavings = Math.round(Math.max(0, summary.regularTotal - summary.bundleTotal) * 100) / 100;
+        summary.nextTier = [2, 3, 6, 10].find((threshold) => summary.quantity < threshold) || null;
+        summary.nextDiscount = summary.nextTier ? discountForQuantity(summary.nextTier) : null;
+        summary.profit = summary.costKnown ? summary.bundleTotal - summary.productionCost : null;
+        summary.profitMargin = summary.costKnown && summary.bundleTotal > 0
+            ? Math.round((summary.profit / summary.bundleTotal) * 1000) / 10
+            : null;
+        summary.marginProtected = summary.profitMargin === null ? null : summary.profitMargin >= 28;
+        regularTotal += summary.regularTotal;
+        bundleTotal += summary.bundleTotal;
+        if (summary.costKnown) {
+            productionCost += summary.productionCost;
+        } else {
+            allCostsKnown = false;
+        }
+    });
+    bundleTotal = Math.round(bundleTotal * 100) / 100;
+    regularTotal = Math.round(regularTotal * 100) / 100;
+    const profit = allCostsKnown ? bundleTotal - productionCost : null;
+    const profitMargin = allCostsKnown && bundleTotal > 0
+        ? Math.round((profit / bundleTotal) * 1000) / 10
+        : null;
     return {
         bundleTotal,
         itemPrices,
-        perFrame: Math.round((bundleTotal / items.length) * 100) / 100,
-        saving: Math.round(Math.max(0, subtotal - bundleTotal) * 100) / 100,
-        discount
+        perFrame: items.length ? Math.round((bundleTotal / items.length) * 100) / 100 : 0,
+        regularTotal,
+        saving: Math.round(Math.max(0, regularTotal - bundleTotal) * 100) / 100,
+        categories,
+        profit,
+        profitMargin,
+        marginProtected: profitMargin === null ? null : profitMargin >= 28
     };
 }
 
@@ -363,9 +425,8 @@ function updateGrandTotal() {
             if (data.success) {
                 const sessionImages = data.data;
                 const n = sessionImages.length; // total number of frames
+                if (n === 0) return;
 
-                // Build subtotal: sum of each frame's individual price
-                let subtotal = 0;
                 const pricingItems = [];
                 sessionImages.forEach((sessionImage) => {
                     const frameConfig  = sessionImage.frame_configuration;
@@ -379,15 +440,15 @@ function updateGrandTotal() {
                         ? sizePrice + finishPrice + ledPrice
                         : item_price + finishPrice + ledPrice;
 
-                    subtotal += frameUnitPrice;
                     pricingItems.push({
-                        price: frameUnitPrice,
-                        frameType: frameConfig?.frame_type?.type || frameConfig?.frame_type || 'indian'
+                        price: frameUnitPrice - finishPrice - ledPrice,
+                        frameType: frameConfig?.frame_type?.type || frameConfig?.frame_type || 'indian',
+                        sizeLabel: frameConfig?.size?.frameSizeText || "",
+                        addonPrice: finishPrice + ledPrice,
+                        hasUncostedAddons: finishPrice + ledPrice > 0
                     });
                 });
 
-                // Apply new bundle formula
-                // console.log(subtotal, n);
                 const result = calculateMixedBundlePrice(pricingItems);
 
                 // Update quantity hidden input
@@ -395,44 +456,36 @@ function updateGrandTotal() {
 
                 // Update per-frame price display
                 // console.log(result.perFrame);
-                document.getElementById("price-show").textContent = "₹" + result.perFrame;
-                document.getElementById("price-show").setAttribute("data-val", result.perFrame);
-                // console.log("2nd frame price updated to: ₹" + result.perFrame);
+                const activeConfig = JSON.parse($("#active_config").val() || "{}");
+                const activeIndex = sessionImages.findIndex((image) =>
+                    image.filename && image.filename === activeConfig.filename
+                );
+                const selectedItemPrice = result.itemPrices[activeIndex >= 0 ? activeIndex : 0] || 0;
+                document.getElementById("price-show").textContent = `₹${selectedItemPrice.toFixed(2)}`;
+                document.getElementById("price-show").setAttribute("data-val", selectedItemPrice.toFixed(2));
 
                 // Update grand total display
                 const shipping = n >= 3 ? 0 : shipping_price;
-                const grandTotal = Math.round(result.bundleTotal + shipping);
+                const grandTotal = Math.round((result.bundleTotal + shipping) * 100) / 100;
                 ["shipping-show", "delivery-show-1", "delivery-show-2"].forEach((id) => {
                     const shippingDisplay = document.getElementById(id);
                     if (shippingDisplay) {
                         shippingDisplay.textContent = shipping === 0
                             ? (id === "shipping-show" ? "Free Delivery" : "Free Shipping")
-                            : `₹${Math.round(shipping)}`;
+                            : `₹${shipping.toFixed(2)}`;
                         shippingDisplay.classList.toggle("text-success", shipping === 0);
                         shippingDisplay.classList.toggle("fw-bold", shipping === 0);
                     }
                 });
-                document.getElementById("grand-total-1").textContent = "₹" + grandTotal;
-                document.getElementById("grand-total-2").textContent = "₹" + grandTotal;
-                document.getElementById("grand-total-1").setAttribute("data-val", grandTotal);
-                document.getElementById("grand-total-2").setAttribute("data-val", grandTotal);
+                document.getElementById("grand-total-1").textContent = `₹${grandTotal.toFixed(2)}`;
+                document.getElementById("grand-total-2").textContent = `₹${grandTotal.toFixed(2)}`;
+                document.getElementById("grand-total-1").setAttribute("data-val", grandTotal.toFixed(2));
+                document.getElementById("grand-total-2").setAttribute("data-val", grandTotal.toFixed(2));
                 // Bundle total
-                document.getElementById("bundle-total-1").textContent = "₹" + Math.round(result.bundleTotal);
-                document.getElementById("bundle-total-2").textContent = "₹" + Math.round(result.bundleTotal);
+                document.getElementById("bundle-total-1").textContent = `₹${formatMoney(result.bundleTotal)}`;
+                document.getElementById("bundle-total-2").textContent = `₹${formatMoney(result.bundleTotal)}`;
 
-                // Show saving message if applicable
-                updateSavingMessage(result.saving, result.discount);
-
-                // console.log("=== Bundle Pricing ===");
-                // console.log("N (frames)    :", n);
-                // console.log("Subtotal      : ₹" + subtotal);
-                // console.log("Discount      :", (result.discount * 100).toFixed(0) + "%");
-                // console.log("Bundle Total  : ₹" + result.bundleTotal);
-                // console.log("Shipping      : ₹" + shipping);
-                // console.log("Grand Total   : ₹" + grandTotal);
-                // console.log("Saving        : ₹" + result.saving);
-                // console.log("======================");
-
+                updatePricingSummaryDisplay(result, shipping);
             } else {
                 console.error("Failed to fetch frame configurations");
             }
@@ -440,16 +493,43 @@ function updateGrandTotal() {
         .catch((error) => console.error("Error fetching data:", error));
 }
 
-/**
- * Show saving message on the UI if user is saving money
- */
-function updateSavingMessage(saving) {
-    document.querySelectorAll(".saving-message").forEach((el) => {
-        if (saving > 0) {
-            el.textContent = "You are saving ₹" + Math.round(saving) + " on this order!";
-            el.style.display = "block";
+function updatePricingSummaryDisplay(result, shipping) {
+    const formatMoney = (amount) => `₹${Number(amount || 0).toFixed(2)}`;
+    ["1", "2"].forEach((suffix) => {
+        document.getElementById(`regular-total-${suffix}`).textContent = formatMoney(result.regularTotal);
+        document.getElementById(`product-savings-${suffix}`).textContent = formatMoney(result.saving);
+        document.getElementById(`shipping-savings-${suffix}`).textContent =
+            formatMoney(shipping === 0 && result.bundleTotal > 0 ? shipping_price : 0);
+
+        ["indian", "european"].forEach((category) => {
+            const summary = result.categories[category];
+            const tier = document.getElementById(`tier-${category}-${suffix}`);
+            const next = document.getElementById(`next-${category}-${suffix}`);
+            const row = document.getElementById(`category-${category}-${suffix}`);
+            row.style.display = summary ? "" : "none";
+            if (!summary) return;
+
+            tier.textContent = `${summary.quantity} item${summary.quantity === 1 ? "" : "s"} · ${(summary.discount * 100).toFixed(0)}%`;
+            next.textContent = summary.nextTier
+                ? `Add ${summary.nextTier - summary.quantity} for ${(summary.nextDiscount * 100).toFixed(0)}% off`
+                : "Maximum tier reached";
+        });
+
+        const margin = document.getElementById(`profit-margin-${suffix}`);
+        const profit = document.getElementById(`profit-${suffix}`);
+        const status = document.getElementById(`profit-status-${suffix}`);
+        if (result.profitMargin === null) {
+            profit.textContent = "Unavailable";
+            margin.textContent = "Unavailable";
+            status.textContent = "Production cost unavailable for selected add-ons";
+            status.className = "mb-0 text-warning";
         } else {
-            el.style.display = "none";
+            profit.textContent = formatMoney(result.profit);
+            margin.textContent = `${result.profitMargin.toFixed(1)}%`;
+            status.textContent = result.marginProtected
+                ? "Protected: margin ≥28%"
+                : "Warning: margin below 28% target";
+            status.className = result.marginProtected ? "mb-0 text-success" : "mb-0 text-danger";
         }
     });
 }
@@ -460,36 +540,21 @@ function updateSavingMessage(saving) {
 function updateFramePrice(frameConfig) {
     if (!frameConfig) return;
 
-    let frame_config = JSON.parse(frameConfig.frame_configuration);
-
-    const sizePrice   = parseFloat(frame_config.size?.frame_price)     || 0;
-    const finishPrice = parseFloat(frame_config.finish?.finish_price)   || 0;
-    const ledPrice    = parseFloat(frame_config.led?.price)             || 0;
-    // Use size price as base; fallback to item_price if size not set
-    let unitPrice = sizePrice > 0
-        ? sizePrice + finishPrice + ledPrice
-        : item_price + finishPrice + ledPrice;
-
-    unitPrice = parseFloat(Math.round(unitPrice));
-
-    // console.log(unitPrice);
-    document.getElementById("price-show").textContent = "₹" + unitPrice;
-    document.getElementById("price-show").setAttribute("data-val", unitPrice);
-    // console.log("1st frame price updated to: ₹" + unitPrice);
-
+    const config = typeof frameConfig.frame_configuration === "string"
+        ? JSON.parse(frameConfig.frame_configuration)
+        : frameConfig.frame_configuration || {};
+    const finishPrice = parseFloat(config.finish?.finish_price) || 0;
+    const ledPrice = parseFloat(config.led?.price) || 0;
+    const selectedPrice = calculateMixedBundlePrice([{
+        frameType: config.frame_type?.type || config.frame_type || currentFrameType,
+        sizeLabel: config.size?.frameSizeText || "",
+        price: parseFloat(config.size?.frame_price) || item_price,
+        addonPrice: finishPrice + ledPrice,
+        hasUncostedAddons: finishPrice + ledPrice > 0
+    }]).itemPrices[0];
+    document.getElementById("price-show").textContent = `₹${selectedPrice.toFixed(2)}`;
+    document.getElementById("price-show").setAttribute("data-val", selectedPrice.toFixed(2));
     updateGrandTotal();
-}
-
-// ============================================================
-// The old calculateFrameCost is kept but NO LONGER USED
-// for pricing. It remains only if needed elsewhere.
-// ============================================================
-function calculateFrameCost_legacy(quantity = 1) {
-    let frame_cost     = quantity * average_cost;
-    let profit_margin  = (base_margin / Math.pow(quantity, 0.2)) / 100;
-    let profit_per_sale = Math.floor(frame_cost * profit_margin);
-    let selling_price  = Math.floor(frame_cost + profit_per_sale) + shipping_price;
-    return selling_price;
 }
 
 // ============================================================

@@ -11,6 +11,7 @@ use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Product;
+use App\Models\SessionCollection;
 use App\Models\ShippingAddress;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -28,16 +29,67 @@ class CheckoutService
             'cart.*.product_id' => 'required|integer|exists:products,id',
             'cart.*.quantity' => 'required|integer|min:1|max:100',
         ])->validate();
-        $subtotal = 0;
+        $pricingItems = [];
+        $itemRanges = [];
         $quantity = 0;
-        foreach ($cart as $item) {
+        foreach ($cart as $index => $item) {
             $product = Product::findOrFail($item['product_id']);
             if ((float) $product->price <= 0 || (int) $product->status !== 1) {
                 throw ValidationException::withMessages(['cart' => 'A cart product is unavailable.']);
             }
-            $subtotal += (float) $product->price * $item['quantity'];
-            $quantity += $item['quantity'];
+            $quantity += (int) $item['quantity'];
+
+            $config = json_decode((string) $product->frame_config, true) ?: [];
+            $frameType = $config['frame_type']['type'] ?? ($config['frame_type'] ?? null);
+            $sizeLabel = $config['size']['frameSizeText'] ?? null;
+            $retailPrice = (float) ($item['regular_price'] ?? $product->price);
+            $addonPrice = 0.0;
+            if (($item['type'] ?? null) === 'collection') {
+                $sessionCollection = SessionCollection::where('session_id', session()->getId())
+                    ->where('product_id', $product->id)
+                    ->latest('id')
+                    ->first();
+                if ($sessionCollection) {
+                    $config = json_decode((string) $sessionCollection->configuration, true) ?: $config;
+                    $frameType = $config['frame_type']['type'] ?? ($config['frame_type'] ?? $frameType);
+                    $sizeLabel = $config['size']['frameSizeText'] ?? $sizeLabel;
+                    $sizePrice = (float) ($config['size']['frame_price'] ?? 0);
+                    if ($sizePrice > 0) {
+                        $retailPrice = $sizePrice;
+                        $addonPrice = (float) ($config['finish']['finish_price'] ?? 0)
+                            + (float) ($config['led']['price'] ?? 0);
+                    } else {
+                        $retailPrice = (float) $sessionCollection->price;
+                    }
+                }
+            } else {
+                $sizePrice = (float) ($config['size']['frame_price'] ?? 0);
+                $addonPrice = (float) ($config['finish']['finish_price'] ?? 0)
+                    + (float) ($config['led']['price'] ?? 0);
+                if ($sizePrice > 0) {
+                    $retailPrice = $sizePrice;
+                }
+            }
+
+            $details = framePricingDetails(
+                $frameType,
+                $sizeLabel,
+                $retailPrice,
+                $addonPrice,
+                $addonPrice > 0
+            );
+            $itemRanges[$index] = count($pricingItems);
+            for ($unit = 0; $unit < (int) $item['quantity']; $unit++) {
+                $pricingItems[] = $details;
+            }
         }
+
+        $pricing = calculateAutomaticQuantityPricing($pricingItems);
+        $itemPrices = [];
+        foreach ($itemRanges as $index => $start) {
+            $itemPrices[$index] = $pricing['items'][$start];
+        }
+        $subtotal = $pricing['bundle_total'];
         $discount = 0;
         $code = $coupon['code'] ?? null;
         if ($code) {
@@ -47,13 +99,25 @@ class CheckoutService
             }
             $discount = (float) $record->discount_amount;
         }
-        $shipping = $quantity >= 3 ? 0 : max(0, (float) get_setting('shipping_price', 80));
-        $total = round(round($subtotal) + $shipping - $discount);
+        $shipping = quantityShippingCharge($quantity);
+        $total = round($subtotal + $shipping - $discount, 2);
         if ($total <= 0) {
             throw ValidationException::withMessages(['cart' => 'The checkout total must be positive.']);
         }
 
-        return compact('subtotal', 'shipping', 'discount', 'code', 'total');
+        return [
+            'subtotal' => $subtotal,
+            'regular_total' => $pricing['regular_total'],
+            'product_savings' => $pricing['product_savings'],
+            'shipping_savings' => $quantity >= 3 ? 80.0 : 0.0,
+            'quantity' => $quantity,
+            'pricing' => $pricing,
+            'item_prices' => $itemPrices,
+            'shipping' => $shipping,
+            'discount' => $discount,
+            'code' => $code,
+            'total' => $total,
+        ];
     }
 
     public function prepare(array $cart, array $address, ?User $customer, array $coupon = []): Order
@@ -110,12 +174,12 @@ class CheckoutService
                 'address_line1' => $address['address_line1'], 'address_line2' => $address['address_line2'] ?? null,
                 'city' => $city->name, 'alternate_phone_number' => $address['alternate_phone_number'] ?? null,
             ]);
-            foreach ($cart as $entry) {
+            foreach ($cart as $index => $entry) {
                 $item = new OrderItems;
                 $item->order_id = $order->id;
                 $item->product_id = $entry['product_id'];
                 $item->quantity = $entry['quantity'];
-                $item->price = Product::findOrFail($entry['product_id'])->price;
+                $item->price = $totals['item_prices'][$index];
                 $item->save();
             }
             ShippingAddress::where('user_id', $customer->id)->update(['default_address' => 0]);
