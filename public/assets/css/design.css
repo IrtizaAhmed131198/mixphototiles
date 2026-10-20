@@ -54,6 +54,30 @@
     padding: 18px !important;
 }
 
+/* Signature frames have a wider rim than European frames. */
+#frameWrap[data-frame-type="indian"].classic-card-design {
+    border-image-width: 18px;
+}
+
+#frameWrap[data-frame-type="indian"].bold-card-design {
+    border-image-width: 28px;
+}
+
+/* Soften the right and bottom depth on both framed collections. */
+#frameWrap:is([data-frame-type="indian"], [data-frame-type="european"])::before {
+    right: -5px;
+    top: 2.5px;
+    width: 5px;
+    opacity: 0.8;
+}
+
+#frameWrap:is([data-frame-type="indian"], [data-frame-type="european"])::after {
+    height: 5px;
+    bottom: -5px;
+    left: 2.5px;
+    opacity: 0.8;
+}
+
 
 .design-seo-content {
     background: #ede4e4;

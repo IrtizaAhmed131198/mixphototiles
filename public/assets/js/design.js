@@ -1178,6 +1178,8 @@ window.chooseFrameType = function(type, preserveSelection = false) {
     const selected = collections[type] || collections.indian;
     currentFrameType = type;
     $('#active_frame_type').val(type);
+    const framePreview = document.getElementById('frameWrap');
+    if (framePreview) framePreview.dataset.frameType = type;
 
     Object.keys(collections).forEach(key => {
         const card = document.getElementById('card-choice-' + key);

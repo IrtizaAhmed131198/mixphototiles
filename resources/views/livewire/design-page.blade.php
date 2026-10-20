@@ -104,7 +104,7 @@
                                         <div class="menuParent"><p class="propertyTitle">Select Collection</p></div>
                                         <li type="button" class="parentProperties frame-type-change dropdown-item {{ $defaultFrameType == 'indian' ? 'li-border-color' : '' }}" data-type="indian" data-name="Signature Collection">
                                             <figure class="PropertiesleftChild"><img alt="Signature Collection" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186592728.png') }}"></figure>
-                                            <div class="PropertiesRightChild"><div><p class="propertyName">Signature Collection</p><small class="text-muted d-block">6x8, 8x12, 12x15</small></div></div>
+                                            <div class="PropertiesRightChild"><div><p class="propertyName">Signature Collection</p></div></div>
                                         </li>
                                         <li type="button" class="parentProperties frame-type-change dropdown-item {{ $defaultFrameType == 'european' ? 'li-border-color' : '' }}" data-type="european" data-name="European Collection">
                                             <figure class="PropertiesleftChild"><img alt="European Collection" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603681.png') }}"></figure>
@@ -112,7 +112,7 @@
                                         </li>
                                         <li type="button" class="parentProperties frame-type-change dropdown-item {{ $defaultFrameType == 'luxury_tiles' ? 'li-border-color' : '' }}" data-type="luxury_tiles" data-name="Luxury Tiles">
                                             <figure class="PropertiesleftChild"><img alt="Luxury Tiles" width="72" height="72" class="LeftSidebar" src="{{ asset('assets/images/1704186603681.png') }}"></figure>
-                                            <div class="PropertiesRightChild"><div><p class="propertyName">Luxury Tiles</p><small class="text-muted d-block">8.4 x 8.4 in · Frameless</small></div></div>
+                                            <div class="PropertiesRightChild"><div><p class="propertyName">Luxury Tiles</p><small class="text-muted d-block">Frameless</small></div></div>
                                         </li>
                                     </ul>
                                 </li>
@@ -665,7 +665,7 @@
                             <span class="caption-crop">Click on the photo to adjust your picture</span>
                             <div class="box frame-box">
                                 <div class="frame-main-wrap classic-card-design box-shadow-black frame-main-wrap-main"
-                                    id="frameWrap">
+                                    id="frameWrap" data-frame-type="{{ $defaultFrameType }}">
                                     <div class="frameborder inherit-design" id="frameWrapChild">
                                         <div class="frameinner child-inherit-design design-page-frameinner">
                                             <!-- Placeholder for uploaded image -->
@@ -1128,7 +1128,7 @@
                                 <input type="hidden" name="shipping_price" id="shipping_price"
                                     value="80">
                                 <input type="hidden" name="pricing_catalog" id="pricing_catalog"
-                                    value="{{ e(json_encode($pricingCatalog)) }}">
+                                    value="{{ json_encode($pricingCatalog) }}">
                                 <input type="hidden" name="average_cost" id="average_cost"
                                     value="{{ get_setting('average_cost') ?? 0 }}">
                                 <input type="hidden" name="base_margin" id="base_margin"
