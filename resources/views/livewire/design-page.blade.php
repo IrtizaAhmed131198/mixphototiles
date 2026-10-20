@@ -364,7 +364,7 @@
                                                             src="{{ asset('assets/images/1701851447650.png') }}">
                                                     </figure>
                                                     <div class="PropertiesRightChild">
-                                                        <p class="propertyName">{{ finish_display_name($val->label) }}</p>
+                                                        <p class="propertyName finish-name">{{ finish_display_name($val->label) }}</p>
                                                         {{-- <p class="propertyPrize">Rs.{{ $val->price }}</p> --}}
                                                     </div>
                                                 </li>
@@ -569,12 +569,19 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div id="upload-demo" class="mx-auto"></div>
+                                    <div class="crop-preview-stage" aria-busy="true">
+                                        <div id="upload-demo" class="mx-auto"></div>
+                                        <div id="crop-image-status" class="crop-image-status" role="status" aria-live="polite">
+                                            <span id="crop-image-spinner" class="spinner-border" aria-hidden="true"></span>
+                                            <p id="crop-image-message">Loading your photo… Please wait.</p>
+                                            <button type="button" id="crop-image-retry" class="btn btn-light" hidden>Try again</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer mt-4">
                                     <button type="button" class="btn design-btn filled"
                                         data-bs-dismiss="modal">Close</button>
-                                    <button type="button" id="cropImageBtn" class="btn design-btn filled">Crop</button>
+                                    <button type="button" id="cropImageBtn" class="btn design-btn filled" disabled>Crop</button>
                                 </div>
                             </div>
                         </div>

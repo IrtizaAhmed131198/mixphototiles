@@ -1361,6 +1361,76 @@ function getActiveOriginalImageSrc() {
 
 $(document).ready(function () {
     let $uploadCrop = null;
+    let cropLoadVersion = 0;
+    let cropSlowTimer = null;
+    let cropReady = false;
+
+    function showCropLoading() {
+        cropReady = false;
+        $('#cropImageBtn').prop('disabled', true);
+        $('.crop-preview-stage').attr('aria-busy', 'true');
+        $('#crop-image-status, #crop-image-spinner').show();
+        $('#crop-image-retry').prop('hidden', true);
+        $('#crop-image-message').text('Loading your photo… Please wait.');
+    }
+
+    async function loadCropImage() {
+        const version = ++cropLoadVersion;
+        clearTimeout(cropSlowTimer);
+        showCropLoading();
+        cropSlowTimer = setTimeout(() => {
+            if (version === cropLoadVersion) {
+                $('#crop-image-message').text('Your photo is taking a little longer to load. Please keep this window open.');
+            }
+        }, 8000);
+        try {
+            const rawSrc = getActiveOriginalImageSrc();
+            if (!rawSrc || !$uploadCrop) throw new Error('Photo unavailable');
+            // Detect network errors before Croppie binds (its bind can stay pending on failure).
+            await new Promise((resolve, reject) => {
+                const photo = new Image();
+                const timeout = setTimeout(() => {
+                    photo.onload = photo.onerror = null;
+                    reject(new Error('Photo loading timed out'));
+                }, 60000);
+                photo.onload = () => { clearTimeout(timeout); resolve(); };
+                photo.onerror = () => { clearTimeout(timeout); reject(new Error('Photo failed to load')); };
+                photo.src = rawSrc;
+            });
+            if (version !== cropLoadVersion) return;
+            const crop = $uploadCrop;
+            let bindTimeout;
+            try {
+                await Promise.race([
+                    crop.croppie('bind', { url: rawSrc, zoom: 0 }),
+                    new Promise((resolve, reject) => {
+                        bindTimeout = setTimeout(() => reject(new Error('Photo preparation timed out')), 60000);
+                    })
+                ]);
+            } finally {
+                clearTimeout(bindTimeout);
+            }
+            if (version !== cropLoadVersion || crop !== $uploadCrop) return;
+            const minZoom = $('#upload-demo .cr-slider').attr('min') || 0;
+            $('#upload-demo .cr-slider').val(minZoom).trigger('input');
+            crop.croppie('setZoom', minZoom);
+            cropReady = true;
+            $('#crop-image-status').hide();
+            $('#cropImageBtn').prop('disabled', false);
+        } catch (error) {
+            if (version !== cropLoadVersion) return;
+            $('#crop-image-spinner').hide();
+            $('#crop-image-message').text('We couldn’t load your photo. Please check your connection and try again.');
+            $('#crop-image-retry').prop('hidden', false);
+        } finally {
+            if (version === cropLoadVersion) {
+                clearTimeout(cropSlowTimer);
+                $('.crop-preview-stage').attr('aria-busy', 'false');
+            }
+        }
+    }
+
+    $('#crop-image-retry').on('click', loadCropImage);
 
     function initializeCroppie(targetWidth, targetHeight) {
         if ($uploadCrop) {
@@ -1404,24 +1474,21 @@ $(document).ready(function () {
 
         const dims = getActiveFrameDimensions();
         initializeCroppie(dims.width, dims.height);
+        showCropLoading();
 
         $("#cropImagePop").modal("show");
     });
 
     $("#cropImagePop").off("shown.bs.modal").on("shown.bs.modal", function () {
         $(".LeftSidebar_designTool").addClass("blurred");
-        const rawSrc = getActiveOriginalImageSrc();
-        if (!rawSrc || !$uploadCrop) return;
+        loadCropImage();
+    });
 
-        $uploadCrop.croppie("bind", { url: rawSrc, zoom: 0 }).then(function () {
-            setTimeout(() => {
-                let minZoom = $("#upload-demo .cr-slider").attr("min") || 0;
-                $("#upload-demo .cr-slider").val(minZoom).trigger("input");
-                if ($uploadCrop) {
-                    $uploadCrop.croppie("setZoom", minZoom);
-                }
-            }, 100);
-        });
+    $('#cropImagePop').on('hide.bs.modal', function () {
+        ++cropLoadVersion;
+        clearTimeout(cropSlowTimer);
+        cropReady = false;
+        $('#cropImageBtn').prop('disabled', true);
     });
 
     $("#cropImagePop").off("hidden.bs.modal").on("hidden.bs.modal", function () {
@@ -1433,7 +1500,7 @@ $(document).ready(function () {
     });
 
     $("#cropImageBtn").on("click", function () {
-        if (!$uploadCrop) return;
+        if (!$uploadCrop || !cropReady) return;
 
         const dims = getActiveFrameDimensions();
         // High-resolution export maintaining the exact same aspect ratio
