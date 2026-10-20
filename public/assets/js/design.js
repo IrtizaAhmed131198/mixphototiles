@@ -123,7 +123,20 @@ function calculateMixedBundlePrice(items) {
 
 let allFrameConfigurations = {};
 
+function fitFramePreview() {
+    const preview = document.querySelector('.main-design-blade .grid-2');
+    const frameBox = preview?.querySelector('.frame-box');
+    const frame = document.getElementById('frameWrap');
+    if (!preview || !frameBox || !frame || !preview.clientWidth) return;
+    const styles = getComputedStyle(preview);
+    const availableWidth = preview.clientWidth - parseFloat(styles.paddingLeft)
+        - parseFloat(styles.paddingRight) - 16;
+    frameBox.style.zoom = Math.min(1, Math.max(0.1, availableWidth / frame.offsetWidth));
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    const preview = document.querySelector('.main-design-blade .grid-2');
+    if (preview) new ResizeObserver(fitFramePreview).observe(preview);
     const urlParams = new URLSearchParams(window.location.search);
     const imageName = urlParams.get("image_name");
 
@@ -336,6 +349,7 @@ function applyInitialFrameSize(imageObj) {
         frameBox.style.width  = initialSize.width;
         frameBox.style.height = initialSize.height;
     }
+    fitFramePreview();
 
     const frameSizeShow = document.getElementById("size-show");
     if (frameSizeShow) frameSizeShow.textContent = initialSize.frameSizeText;
@@ -1097,6 +1111,7 @@ sizeOptions.forEach((option) => {
             frameBox.style.width  = width;
             frameBox.style.height = height;
         }
+        fitFramePreview();
 
         sizeOptions.forEach((item) => item.classList.remove("li-border-color"));
         this.classList.add("li-border-color");
