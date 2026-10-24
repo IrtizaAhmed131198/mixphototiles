@@ -7,6 +7,11 @@ function get_setting($name, $default = null)
     return \App\Models\Settings::where('name', $name)->value('value') ?? $default;
 }
 
+function quantityShippingCharge(int $quantity): float
+{
+    return $quantity > 0 && $quantity < 3 ? 80.0 : 0.0;
+}
+
 // function calculateFrameCost($quantity = 1) {
 
 //     $delivery_cost = floatval(get_setting('delivery_cost') ?? 0);

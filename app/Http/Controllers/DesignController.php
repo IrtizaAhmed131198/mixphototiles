@@ -60,7 +60,7 @@ class DesignController extends Controller
         }
 
         $item_price = round($item_price, 2);
-        $shipping   = get_setting('shipping_price') ?? 0;
+        $shipping   = quantityShippingCharge($quantity);
 
         return view('livewire.design-page', [
             'imageName'         => $imageName,

@@ -52,6 +52,22 @@ class CheckoutSafetyTest extends TestCase
         $this->actingAs(User::create(['name' => 'Customer', 'email' => 'customer@example.com', 'password' => 'password', 'role' => 'user', 'status' => 1]));
     }
 
+    public function test_shipping_is_charged_below_three_frames_even_with_zero_setting(): void
+    {
+        DB::table('settings')->insert(['name' => 'shipping_price', 'value' => '0']);
+        $checkout = app(CheckoutService::class);
+        foreach ([1 => 80.0, 2 => 80.0, 3 => 0.0, 4 => 0.0] as $quantity => $expected) {
+            $totals = $checkout->totals([['product_id' => 1, 'quantity' => $quantity]]);
+            $this->assertSame($expected, $totals['shipping']);
+            $this->assertEquals($quantity + $expected, $totals['total']);
+        }
+        $mixed = $checkout->totals([
+            ['product_id' => 1, 'quantity' => 1],
+            ['product_id' => 1, 'quantity' => 2],
+        ]);
+        $this->assertSame(0.0, $mixed['shipping']);
+    }
+
     private function address(): array
     {
         return ['full_name' => 'Customer', 'email' => 'customer@example.com', 'phone_number' => '9999999999', 'pincode' => '110001', 'address_line1' => 'Test address', 'city' => 1, 'state' => 1];
@@ -66,7 +82,7 @@ class CheckoutSafetyTest extends TestCase
     {
         $order = $this->prepare();
         $this->assertSame('pending', $order->status);
-        $this->assertEquals(1, $order->total_amount);
+        $this->assertEquals(81, $order->total_amount);
         $this->assertNull($order->payment_id);
         $this->assertDatabaseHas('addresses', ['order_id' => $order->id]);
         $this->assertDatabaseHas('order_items', ['order_id' => $order->id, 'price' => '1.00']);
@@ -108,7 +124,7 @@ class CheckoutSafetyTest extends TestCase
         $order = $this->prepare();
         $order->razorpay_order_id = 'order_test';
         $order->save();
-        $payment = ['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 100, 'status' => 'captured', 'method' => 'upi'];
+        $payment = ['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 8100, 'status' => 'captured', 'method' => 'upi'];
         $service = app(CheckoutService::class);
         $order = $service->recordPayment($order, $payment);
         $this->assertSame('ordered', $order->status);
@@ -148,7 +164,7 @@ class CheckoutSafetyTest extends TestCase
             $this->assertDatabaseCount('orders', 1);
             $this->assertDatabaseCount('addresses', 1);
             $this->assertDatabaseCount('order_items', 1);
-            $this->assertSame(100, $data['amount']);
+            $this->assertSame(8100, $data['amount']);
 
             return ['id' => 'order_test'];
         });
@@ -177,7 +193,7 @@ class CheckoutSafetyTest extends TestCase
                 $this->assertDatabaseHas('orders', ['payment_id' => 'pay_test', 'status' => 'pending']);
                 $this->assertDatabaseCount('addresses', 1);
                 $this->assertDatabaseCount('order_items', 1);
-                $this->assertSame(100, $data['amount']);
+                $this->assertSame(8100, $data['amount']);
 
                 return $captured;
             });
@@ -199,7 +215,7 @@ class CheckoutSafetyTest extends TestCase
         $order = $this->prepare();
         $order->razorpay_order_id = 'order_test';
         $order->save();
-        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 100, 'status' => 'authorized', 'method' => 'upi'], true);
+        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 8100, 'status' => 'authorized', 'method' => 'upi'], true);
         $method = new \ReflectionMethod(RazorpayController::class, 'reconcile');
         $result = $method->invoke($controller, $order, 'pay_test', app(CheckoutService::class));
         $this->assertNotNull($result->paid_at);
@@ -211,7 +227,7 @@ class CheckoutSafetyTest extends TestCase
         $order = $this->prepare();
         $order->razorpay_order_id = 'order_test';
         $order->save();
-        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 100, 'status' => 'authorized'], false);
+        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 8100, 'status' => 'authorized'], false);
         Order::saving(function () {
             throw new \RuntimeException('Simulated payment link failure');
         });
@@ -231,7 +247,7 @@ class CheckoutSafetyTest extends TestCase
         $order = $this->prepare();
         $order->razorpay_order_id = 'order_test';
         $order->save();
-        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 100, 'status' => 'captured'], false);
+        $controller = $this->paymentController(['id' => 'pay_test', 'order_id' => 'order_test', 'currency' => 'INR', 'amount' => 8100, 'status' => 'captured'], false);
         config(['services.razorpay.webhook_secret' => 'test_secret']);
         $body = json_encode(['event' => 'payment.captured', 'payload' => ['payment' => ['entity' => ['id' => 'pay_test', 'order_id' => 'order_test']]]]);
         $request = Request::create('/razorpay/webhook', 'POST', [], [], [], ['CONTENT_TYPE' => 'application/json', 'HTTP_X_RAZORPAY_SIGNATURE' => hash_hmac('sha256', $body, 'test_secret')], $body);

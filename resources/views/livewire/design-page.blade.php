@@ -691,11 +691,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between w-100 mb-1">
                                     <p class="mb-0">Delivery</p>
-                                    @if(get_setting('delivery_cost') == 0)
-                                        <p class="mb-0 text-success fw-bold">Free Shipping</p>
-                                    @else
-                                        <h6 class="mb-0" id="delivery-show-1">₹{{ get_setting('delivery_cost') }}</h6>
-                                    @endif
+                                    <h6 class="mb-0" id="delivery-show-1">{{ $shipping == 0 ? 'Free Shipping' : '₹' . $shipping }}</h6>
                                 </div>
                                 <hr class="my-2">
                                 <div class="d-flex justify-content-between w-100 mb-1">
@@ -1088,11 +1084,7 @@
                                         </div>
                                         <div class="d-flex justify-content-between w-100 mb-1">
                                             <p class="mb-0">Delivery</p>
-                                            @if(get_setting('delivery_cost') == 0)
-                                                <p class="mb-0 text-success fw-bold">Free Shipping</p>
-                                            @else
-                                                <h6 class="mb-0" id="delivery-show-2">₹{{ get_setting('delivery_cost') }}</h6>
-                                            @endif
+                                            <h6 class="mb-0" id="delivery-show-2">{{ $shipping == 0 ? 'Free Shipping' : '₹' . $shipping }}</h6>
                                         </div>
                                         <hr class="my-2">
                                         <div class="d-flex justify-content-between w-100 mb-1">

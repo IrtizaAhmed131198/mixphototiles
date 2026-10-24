@@ -394,7 +394,12 @@ function updateGrandTotal() {
                 // console.log("2nd frame price updated to: ₹" + result.perFrame);
 
                 // Update grand total display
-                const grandTotal = Math.round(result.bundleTotal + delivery_cost);
+                const shipping = n > 0 && n < 3 ? 80 : 0;
+                ['delivery-show-1', 'delivery-show-2', 'shipping-show'].forEach((id) => {
+                    const element = document.getElementById(id);
+                    if (element) element.textContent = shipping === 0 ? 'Free Shipping' : '₹' + shipping;
+                });
+                const grandTotal = Math.round(result.bundleTotal + shipping);
                 document.getElementById("grand-total-1").textContent = "₹" + grandTotal;
                 document.getElementById("grand-total-2").textContent = "₹" + grandTotal;
                 document.getElementById("grand-total-1").setAttribute("data-val", grandTotal);
