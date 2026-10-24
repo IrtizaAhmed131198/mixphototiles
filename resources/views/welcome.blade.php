@@ -439,7 +439,8 @@
                         preload="metadata"
                         aria-label="Magnetic photo frames displayed on walls"
                     >
-                        {{ asset('assets/banner-video/Banner-video.mp4') }}
+                        <source src="{{ asset('assets/banner-video/Banner-video.mp4') }}" type="video/mp4">
+                    
                         Your browser does not support the video element.
                     </video>
 
@@ -462,18 +463,18 @@
                         </p>
 
                         <div class="hero-actions">
-                             }}"
-                                class="btn custom-btn"
-                                aria-label="Design your custom magnetic photo frame"
+                            <a href="{{ route('design') }}"
+                            class="btn custom-btn"
+                            aria-label="Design your custom magnetic photo frame"
                             >
-                                Design Your Frame
+                            Design Your Frame
                             </a>
 
-                             }}"
-                                class="btn custom-btn ms-3"
-                                aria-label="Explore magnetic photo frame collections"
+                            <a href="{{ route('collections') }}"
+                            class="btn custom-btn ms-3"
+                            aria-label="Explore magnetic photo frame collections"
                             >
-                                Explore Collections
+                            Explore Collections
                             </a>
                         </div>
 

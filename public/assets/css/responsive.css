@@ -703,7 +703,7 @@
     section.custom-tabs-section.py {
         padding-left: 18px
     }
-    .frameinner {
+    .frameinner:not(#frameWrap .frameinner):not(.frame-main-wrap-main .frameinner) {
         padding: 9px !important
     }
 }
@@ -991,7 +991,7 @@
     ul.designToolPropertiesLists.design_5.show {
         transform: translate(-257px, -128px) !important
     }
-    .frameinner {
+    .frameinner:not(#frameWrap .frameinner):not(.frame-main-wrap-main .frameinner) {
         padding: 9px !important
     }
     .hang-icon svg {
@@ -1256,7 +1256,7 @@
         transform: translate(-182px, -106px) !important;
         width: 420px
     }
-    .frameinner {
+    .frameinner:not(#frameWrap .frameinner):not(.frame-main-wrap-main .frameinner) {
         padding: 9px !important
     }
 }
