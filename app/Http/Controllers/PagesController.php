@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\Product;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use App\Mail\ContactUserMail;
 use App\Mail\ContactAdminMail;
@@ -17,7 +18,25 @@ class PagesController extends Controller
             ->where('status', 1)
             ->where('coordinates', '!=', null)
             ->get();
-        return view('welcome', compact('products'));
+
+        $featuredTestimonial = Testimonial::where('status', 1)
+            ->where('is_featured', 1)
+            ->orderBy('sort_order', 'asc')
+            ->first();
+
+        if (!$featuredTestimonial) {
+            $featuredTestimonial = Testimonial::where('status', 1)->orderBy('sort_order', 'asc')->first();
+        }
+
+        $standardTestimonials = Testimonial::where('status', 1)
+            ->when($featuredTestimonial, function ($q) use ($featuredTestimonial) {
+                return $q->where('id', '!=', $featuredTestimonial->id);
+            })
+            ->orderBy('sort_order', 'asc')
+            ->take(20)
+            ->get();
+
+        return view('welcome', compact('products', 'featuredTestimonial', 'standardTestimonials'));
     }
 
     public function privacy()
@@ -39,7 +58,7 @@ class PagesController extends Controller
     {
         return view('terms');
     }
-    
+
     public function noNails()
     {
         return view('no-nails');

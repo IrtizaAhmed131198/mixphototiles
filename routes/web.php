@@ -50,6 +50,7 @@ use App\Http\Controllers\StatesController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RazorpayController;
+use App\Http\Controllers\TestimonialController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
 /*
@@ -284,6 +285,14 @@ Route::post('/city/store', [CityController::class, 'store'])->name('city.store')
 Route::get('/city/edit/{id}', [CityController::class, 'edit'])->name('city.edit');
 Route::post('/city/update/{id}', [CityController::class, 'update'])->name('city.update');
 Route::delete('/city/delete/{id}', [CityController::class, 'destroy'])->name('city.destroy');
+
+// Testimonials management
+Route::get('/admin/testimonials', [TestimonialController::class, 'index'])->name('testimonial.index');
+Route::get('/admin/testimonials/data', [TestimonialController::class, 'getData'])->name('testimonial.data');
+Route::post('/admin/testimonials/store', [TestimonialController::class, 'store'])->name('testimonial.store');
+Route::get('/admin/testimonials/edit/{id}', [TestimonialController::class, 'edit'])->name('testimonial.edit');
+Route::post('/admin/testimonials/update/{id}', [TestimonialController::class, 'update'])->name('testimonial.update');
+Route::post('/admin/testimonials/delete', [TestimonialController::class, 'destroy'])->name('testimonial.delete');
 
 /*
 |--------------------------------------------------------------------------

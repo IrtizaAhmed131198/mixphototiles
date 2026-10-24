@@ -36,6 +36,7 @@
                                     <th>Id</th>
                                     <th>Label</th>
                                     <th>Price</th>
+                                    <th>Frame Type</th>
                                     <th>Image</th>
                                     <th>Width</th>
                                     <th>Height</th>
@@ -101,6 +102,14 @@
                                         @error('height')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <select name="frame_type" class="form-control" required>
+                                            <option value="indian">Indian Frames</option>
+                                            <option value="european">European Style</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -184,6 +193,14 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group label-hover">
+                                        <select name="frame_type" id="edit_frame_type" class="form-control" required>
+                                            <option value="indian">Indian Frames</option>
+                                            <option value="european">European Style</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
                                         <select name="status" id="status" class="form-control" required>
                                             <option value="1">Active</option>
                                             <option value="0">Inactive</option>
@@ -220,6 +237,7 @@
                 { data: 'id', name: 'id' },
                 { data: 'label', name: 'label' },
                 { data: 'price', name: 'price' },
+                { data: 'frame_type', name: 'frame_type' },
                 { data: 'image', name: 'image', orderable: false, searchable: false },
                 { data: 'width', name: 'width' },
                 { data: 'height', name: 'height' },
@@ -310,6 +328,7 @@
                         $('#status').val(response.sizes.status);
                         $('#width').val(response.sizes.width);
                         $('#height').val(response.sizes.height);
+                        $('#edit_frame_type').val(response.sizes.frame_type || 'european');
 
                         // Set image values (for preview)
                         if (response.sizes.image) {

@@ -24,7 +24,8 @@ class RazorpayController extends Controller
                 $cart = $request->session()->get('cart', []);
                 $address = $request->session()->get('user_address', []);
                 $coupon = $request->session()->get('applied_coupon', []);
-                $fingerprint = hash('sha256', json_encode([$cart, $address, $coupon, auth()->id()]));
+                $totals = $checkout->totals($cart, $coupon);
+                $fingerprint = hash('sha256', json_encode([$cart, $address, $coupon, auth()->id(), $totals]));
                 $order = Order::find($request->session()->get('checkout_order_id'));
                 if (! $order || $request->session()->get('checkout_fingerprint') !== $fingerprint) {
                     $order = $checkout->prepare($cart, $address, auth()->user(), $coupon);

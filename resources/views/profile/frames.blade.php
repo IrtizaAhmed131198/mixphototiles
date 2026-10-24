@@ -113,8 +113,17 @@
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" class="form-control" name="price" placeholder="Price" required value="{{ old('price') }}">
+                                        <input type="number" class="form-control" name="price" placeholder="European Price (₹)" required value="{{ old('price') }}">
                                         @error('price')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <input type="number" class="form-control" name="indian_price" placeholder="Indian Price (₹) (e.g. ₹299)" value="{{ old('indian_price') }}">
+                                        @error('indian_price')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -129,10 +138,19 @@
                                     </div>
                                 </div>
 
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <input type="text" class="form-control" name="frame_note" placeholder="European Note (e.g. Each frame @rs489)" value="{{ old('frame_note') }}">
+                                        @error('frame_note')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <div class="col-12">
                                     <div class="form-group label-hover">
-                                        <input type="text" class="form-control" name="frame_note" placeholder="Frame Note (e.g. Each frame @rs485)" value="{{ old('frame_note') }}">
-                                        @error('frame_note')
+                                        <input type="text" class="form-control" name="indian_frame_note" placeholder="Indian Note (e.g. Each frame @rs299)" value="{{ old('indian_frame_note') }}">
+                                        @error('indian_frame_note')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -235,7 +253,13 @@
 
                                 <div class="col-6">
                                     <div class="form-group label-hover">
-                                        <input type="number" class="form-control" name="price" placeholder="Price" required>
+                                        <input type="number" class="form-control" name="price" placeholder="European Price (₹)" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <input type="number" class="form-control" name="indian_price" placeholder="Indian Price (₹)">
                                     </div>
                                 </div>
 
@@ -245,9 +269,15 @@
                                     </div>
                                 </div>
 
+                                <div class="col-6">
+                                    <div class="form-group label-hover">
+                                        <input type="text" class="form-control" name="frame_note" placeholder="European Note (e.g. Each frame @rs489)">
+                                    </div>
+                                </div>
+
                                 <div class="col-12">
                                     <div class="form-group label-hover">
-                                        <input type="text" class="form-control" name="frame_note" placeholder="Frame Note (e.g. Each frame @rs485)">
+                                        <input type="text" class="form-control" name="indian_frame_note" placeholder="Indian Note (e.g. Each frame @rs299)">
                                     </div>
                                 </div>
 
@@ -408,7 +438,9 @@
                 $('[name="slug"]').val(data.slug);
                 $('[name="description"]').text(data.description);
                 $('[name="price"]').val(data.price);
+                $('[name="indian_price"]').val(data.indian_price || '');
                 $('[name="frame_note"]').val(data.frame_note || '');
+                $('[name="indian_frame_note"]').val(data.indian_frame_note || '');
                 $('[name="discount"]').val(data.discount);
                 $('[name="status"]').val(data.status);
 

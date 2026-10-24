@@ -126,8 +126,13 @@
                                         <img src="{{ asset($item['image']) }}" class="img-fluid" alt="{{ $item['name'] }}">
                                     </figure>
                                     <div class="cardlistdetail">
-                                        <p class="heading-6">
+                                        <p class="heading-6 d-flex align-items-center flex-wrap gap-1">
                                             {{ $item['name'] }}
+                                            @if(stripos($item['name'], 'Indian') !== false)
+                                                <span class="badge ms-1" style="background: #fdf2f6; color: #eb2371; border: 1px solid #f9cadf; font-size: 11px; font-weight: 700; border-radius: 12px; padding: 3px 8px; font-family: 'Plus Jakarta Sans', sans-serif;">Indian Frame</span>
+                                            @elseif(stripos($item['name'], 'European') !== false)
+                                                <span class="badge ms-1" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; font-size: 11px; font-weight: 700; border-radius: 12px; padding: 3px 8px; font-family: 'Plus Jakarta Sans', sans-serif;">European Style</span>
+                                            @endif
                                         </p>
                                         <div class="cardlistaction">
                                             <button type="button" class="CartListItem_action remove-item"
