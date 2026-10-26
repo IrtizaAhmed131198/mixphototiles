@@ -12,6 +12,66 @@ function quantityShippingCharge(int $quantity): float
     return $quantity > 0 && $quantity < 3 ? 80.0 : 0.0;
 }
 
+function framePricingCatalog(): array
+{
+    return [
+        'indian' => [
+            '8x8' => [294, 286], '8x12' => [379, 359],
+            '12x15' => [699, 659], '12x18' => [729, 709],
+        ],
+        'european' => [
+            '8x8' => [399, 374], '8x11' => [489, 469], '12x12' => [799, 739],
+        ],
+        'luxury_tiles' => ['8x8' => [399, 384], '8.4x8.4' => [399, 384]],
+    ];
+}
+
+function quantityDiscountRate(int $quantity): float
+{
+    return match (true) {
+        $quantity <= 1 => 0.0,
+        $quantity === 2 => 0.02,
+        $quantity <= 5 => 0.03,
+        $quantity <= 9 => 0.05,
+        default => 0.10,
+    };
+}
+
+function frameQuantityPricing(array $entries): array
+{
+    $quantity = 0;
+    foreach ($entries as $entry) {
+        $quantity += (int) ($entry['quantity'] ?? 1);
+    }
+    $discount = quantityDiscountRate($quantity);
+    $prices = [];
+    $regular = 0.0;
+    $bundle = 0.0;
+    foreach ($entries as $key => $entry) {
+        $config = $entry['config'] ?? [];
+        if (is_string($config)) $config = json_decode($config, true) ?: [];
+        $type = $config['frame_type']['type'] ?? ($config['frame_type'] ?? '');
+        preg_match_all('/\d+(?:\.\d+)?/', $config['size']['frameSizeText'] ?? '', $dimensions);
+        $catalog = framePricingCatalog()[$type][implode('x', $dimensions[0])] ?? null;
+        $addons = (float) ($config['finish']['finish_price'] ?? 0) + (float) ($config['led']['price'] ?? 0);
+        $retail = $catalog ? $catalog[0] + $addons : (float) ($entry['fallback'] ?? 0);
+        $floor = $catalog ? $catalog[1] + $addons : $retail;
+        $price = round(max($retail * (1 - $discount), $floor), 2);
+        $prices[$key] = $price;
+        $count = (int) ($entry['quantity'] ?? 1);
+        $regular += $retail * $count;
+        $bundle += $price * $count;
+    }
+    $shipping = quantityShippingCharge($quantity);
+    return [
+        'version' => 'quantity-ladder-2026-10-26',
+        'quantity' => $quantity, 'discount' => $discount, 'item_prices' => $prices,
+        'regular_total' => round($regular, 2), 'subtotal' => round($bundle, 2),
+        'saving' => round($regular - $bundle, 2), 'shipping' => $shipping,
+        'total' => round($bundle + $shipping, 2),
+    ];
+}
+
 // function calculateFrameCost($quantity = 1) {
 
 //     $delivery_cost = floatval(get_setting('delivery_cost') ?? 0);
@@ -116,7 +176,7 @@ function calculateBundlePrice($subtotal, $n, $frame_type = 'european') {
     }
 
     // Step 1: discount percentage for multi-frame bundle (5% discount)
-    $discount    = $d_step;
+    $discount    = quantityDiscountRate((int) $n);
     $discounted  = $subtotal * (1 - $discount);
     $floorCheck  = $n * $floor_price;
     $bundleTotal = max($floorCheck, $discounted);

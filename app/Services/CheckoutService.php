@@ -30,6 +30,7 @@ class CheckoutService
         ])->validate();
         $subtotal = 0;
         $quantity = 0;
+        $pricingEntries = [];
         foreach ($cart as $item) {
             $product = Product::findOrFail($item['product_id']);
             if ((float) $product->price <= 0 || (int) $product->status !== 1) {
@@ -37,7 +38,11 @@ class CheckoutService
             }
             $subtotal += (float) $product->price * $item['quantity'];
             $quantity += (int) $item['quantity'];
+            $pricingEntries[] = ['config' => $product->frame_config, 'quantity' => $item['quantity'], 'fallback' => (float) $product->price];
         }
+        $pricing = frameQuantityPricing($pricingEntries);
+        $subtotal = $pricing['subtotal'];
+        $itemPrices = $pricing['item_prices'];
         $discount = 0;
         $code = $coupon['code'] ?? null;
         if ($code) {
@@ -48,12 +53,12 @@ class CheckoutService
             $discount = (float) $record->discount_amount;
         }
         $shipping = quantityShippingCharge($quantity);
-        $total = round(round($subtotal) + $shipping - $discount);
+        $total = round($subtotal + $shipping - $discount, 2);
         if ($total <= 0) {
             throw ValidationException::withMessages(['cart' => 'The checkout total must be positive.']);
         }
 
-        return compact('subtotal', 'shipping', 'discount', 'code', 'total');
+        return compact('subtotal', 'shipping', 'discount', 'code', 'total', 'itemPrices');
     }
 
     public function prepare(array $cart, array $address, ?User $customer, array $coupon = []): Order
@@ -110,12 +115,12 @@ class CheckoutService
                 'address_line1' => $address['address_line1'], 'address_line2' => $address['address_line2'] ?? null,
                 'city' => $city->name, 'alternate_phone_number' => $address['alternate_phone_number'] ?? null,
             ]);
-            foreach ($cart as $entry) {
+            foreach (array_values($cart) as $index => $entry) {
                 $item = new OrderItems;
                 $item->order_id = $order->id;
                 $item->product_id = $entry['product_id'];
                 $item->quantity = $entry['quantity'];
-                $item->price = Product::findOrFail($entry['product_id'])->price;
+                $item->price = $totals['itemPrices'][$index];
                 $item->save();
             }
             ShippingAddress::where('user_id', $customer->id)->update(['default_address' => 0]);

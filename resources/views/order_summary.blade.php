@@ -202,7 +202,7 @@
                                     </figure>
                                     <div class="cardlistdetail">
                                         <p class="heading-6">{{ $item['name'] }}</p>
-                                        <h5>₹{{ round($item['total']) }}</h5>
+                                        <h5>₹{{ round($item['total'], 2) }}</h5>
                                     </div>
                                 </div>
                             @endforeach
@@ -213,7 +213,7 @@
                                     <ul class="cartListpaymentdetails">
                                         <li>
                                             <p class="customTilename">Sub Total</p>
-                                            <span>₹{{ round($cartGrandTotal) }}</span>
+                                            <span>₹{{ round($cartGrandTotal, 2) }}</span>
                                         </li>
 
                                         @if ($appliedCoupon['code'])
@@ -246,7 +246,7 @@
                                         @endphp
                                         <li class="grandTotal">
                                             <p class="customTilename">Grand Total</p>
-                                            <span>₹{{ round($finalTotal) }}</span>
+                                            <span>₹{{ round($finalTotal, 2) }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -459,7 +459,7 @@
                 // Grand Total
                 const newGrandTotal = (cartGrandTotal + giftCard + shippingPrice) - discount;
 
-                document.querySelector('.grandTotal span').textContent = `₹${Math.round(newGrandTotal)}`;
+                document.querySelector('.grandTotal span').textContent = `₹${Number((newGrandTotal).toFixed(2))}`;
             });
         });
 

@@ -131,6 +131,15 @@ class MainController extends Controller
     public function cart()
     {
         $cartItems = session()->get('cart', []);
+        if ($cartItems) {
+            $totals = app(\App\Services\CheckoutService::class)->totals($cartItems);
+            foreach ($cartItems as $index => &$cartItem) {
+                $cartItem['price'] = $totals['itemPrices'][$index];
+                $cartItem['total'] = round($cartItem['price'] * $cartItem['quantity'], 2);
+            }
+            unset($cartItem);
+            session()->put('cart', $cartItems);
+        }
         $discount = (float) get_setting('discount') ?? 0;
         $shipping_price = quantityShippingCharge((int) collect($cartItems)->sum('quantity'));
         $gift = 30;
@@ -395,6 +404,10 @@ class MainController extends Controller
             'success' => true,
             'message' => 'Get Frame Config.',
             'data' => $sessionImages,
+            'pricing' => frameQuantityPricing($sessionImages->map(fn ($image) => [
+                'config' => $image->frame_configuration,
+                'fallback' => (float) get_setting('average_cost'),
+            ])->all()),
         ]);
     }
 
@@ -456,7 +469,12 @@ class MainController extends Controller
             $subtotal += $unitPrice;
         }
 
-        foreach ($sessionImages as $sessionImage) {
+        $pricing = frameQuantityPricing($sessionImages->map(fn ($image) => [
+            'config' => $image->frame_configuration,
+            'fallback' => (float) get_setting('average_cost'),
+        ])->all());
+        foreach ($sessionImages as $imageIndex => $sessionImage) {
+            $frameConfig = json_decode($sessionImage->frame_configuration, true);
             $frameType = $frameConfig['frame_type']['type'] ?? ($frameConfig['frame_type'] ?? 'indian');
             $frameTypeName = $frameType === 'european' ? 'European' : 'Indian';
 
@@ -473,10 +491,7 @@ class MainController extends Controller
             $slug = Str::slug($name . '-' . time(). '-'.$sessionImage['id']);
 
             // Apply new bundle pricing formula with frameType
-            $bundleResult = calculateBundlePrice($subtotal, $quantity, $frameType);
-
-            // Per frame price after bundle discount
-            $price = round($bundleResult['perFrame'], 2);
+            $price = $pricing['item_prices'][$imageIndex];
 
             // Create product in `products` table
             $product = Product::create([
@@ -506,7 +521,7 @@ class MainController extends Controller
                 'image_name' => $sessionImage->filename,
                 'quantity'   => 1,
                 'price'      => $price,
-                'total'      => $bundleResult['bundleTotal'] + (float)(get_setting('delivery_cost') ?? 0), // grand total with delivery
+                'total'      => $price,
                 'type'       => 'manual',
                 'slug'       => ''
             ];
@@ -870,33 +885,6 @@ class MainController extends Controller
             }
         }
 
-        // Apply SAME bundle logic (only if there are remaining manual items)
-        if ($manualItemsCount > 0) {
-            $bundleResult = calculateBundlePrice($subtotal, $manualItemsCount);
-
-            // Step 5: update per item price (only for manual items)
-            foreach ($updatedCart as &$item) {
-                if (isset($item['type']) && $item['type'] == 'collection') {
-                    continue;
-                }
-
-                $product = Product::find($item['product_id']);
-                if ($product) {
-                    if ($product->type == 'collection' || $product->type == 'manual_collection') {
-                        continue;
-                    }
-
-                    $price = round($bundleResult['perFrame'], 2);
-
-                    $item['price'] = $price;
-                    $item['total'] = $bundleResult['bundleTotal'] + (float)(get_setting('delivery_cost') ?? 0);
-
-                    $product->price = $price;
-                    $product->save();
-                }
-            }
-        }
-
         // Save updated cart back to session
         session()->put('cart', array_values($updatedCart));
 
@@ -1024,7 +1012,11 @@ class MainController extends Controller
             return redirect()->route('cart')->with('error', 'Your cart is empty.');
         }
         $totals = app(\App\Services\CheckoutService::class)->totals($cart, $appliedCoupon);
-        $cartGrandTotal = round($totals['subtotal']);
+        foreach (array_values($cart) as $index => $entry) {
+            $cart[$index]['price'] = $totals['itemPrices'][$index];
+            $cart[$index]['total'] = round($totals['itemPrices'][$index] * $entry['quantity'], 2);
+        }
+        $cartGrandTotal = $totals['subtotal'];
         $shipping = $totals['shipping'];
         $appliedCoupon = ['code' => $totals['code'], 'discount' => $totals['discount']];
 

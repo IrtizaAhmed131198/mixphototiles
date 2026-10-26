@@ -60,6 +60,12 @@ class DesignController extends Controller
         }
 
         $item_price = round($item_price, 2);
+        $entries = $images->map(fn ($image) => ['config' => $image->frame_configuration, 'fallback' => $defaultSizePrice])->all();
+        if (!$entries) {
+            $entries[] = ['config' => ['frame_type' => $defaultFrameType, 'size' => ['frameSizeText' => $defaultSize?->label]], 'fallback' => $defaultSizePrice];
+        }
+        $pricing = frameQuantityPricing($entries);
+        $item_price = round($pricing['subtotal'] / $pricing['quantity'], 2);
         $shipping   = quantityShippingCharge($quantity);
 
         return view('livewire.design-page', [

@@ -51,7 +51,7 @@ function calculateBundlePrice(subtotal, n) {
     }
 
     // Step 1: discount percentage for multi-frame bundle (5% discount)
-    const discount = D_STEP;
+    const discount = n === 2 ? 0.02 : n <= 5 ? 0.03 : n <= 9 ? 0.05 : 0.10;
 
     // Step 2: apply discount to subtotal
     const discounted = subtotal * (1 - discount);
@@ -355,35 +355,24 @@ function getDefaultFrameConfig() {
 // ============================================================
 // UPDATED updateGrandTotal — uses new bundle pricing formula
 // ============================================================
+let pricingRequestVersion = 0;
 function updateGrandTotal() {
-    fetch(get_grand_total)
+    const version = ++pricingRequestVersion;
+    return fetch(get_grand_total)
         .then((response) => response.json())
         .then((data) => {
+            if (version !== pricingRequestVersion) return;
             if (data.success) {
-                const sessionImages = data.data;
-                const n = sessionImages.length; // total number of frames
-
-                // Build subtotal: sum of each frame's individual price
-                let subtotal = 0;
-                sessionImages.forEach((sessionImage) => {
-                    const frameConfig  = sessionImage.frame_configuration;
-                    const sizePrice    = parseFloat(frameConfig?.size?.frame_price) || 0;
-                    const finishPrice  = parseFloat(frameConfig?.finish?.finish_price) || 0;
-                    const ledPrice     = parseFloat(frameConfig?.led?.price) || 0;
-
-                    // Per-frame price: use size price as base (client requirement)
-                    // finish & led are addons on top of size price
-                    const frameUnitPrice = sizePrice > 0
-                        ? sizePrice + finishPrice + ledPrice
-                        : item_price + finishPrice + ledPrice;
-
-                    subtotal += frameUnitPrice;
-                });
-
-                // Apply new bundle formula
-                // console.log(subtotal, n);
-                const result = calculateBundlePrice(subtotal, n);
-
+                const pricing = data.pricing;
+                const n = pricing.quantity;
+                const result = {
+                    bundleTotal: pricing.subtotal,
+                    perFrame: n ? Number((pricing.subtotal / n).toFixed(2)) : 0,
+                    saving: pricing.saving,
+                    discount: pricing.discount
+                };
+                // Inspect this response in Network > get-grand-total to verify live pricing.
+                console.debug('Pricing verification', pricing);
                 // Update quantity hidden input
                 document.getElementById("quantity").value = n;
 
@@ -391,7 +380,7 @@ function updateGrandTotal() {
                 // console.log(result.perFrame);
                 document.getElementById("price-show").textContent = "₹" + result.perFrame;
                 document.getElementById("price-show").setAttribute("data-val", result.perFrame);
-                // console.log("2nd frame price updated to: ₹" + result.perFrame);
+                console.log("2nd frame price updated to: ₹" + result.perFrame);
 
                 // Update grand total display
                 const shipping = n > 0 && n < 3 ? 80 : 0;
@@ -399,14 +388,14 @@ function updateGrandTotal() {
                     const element = document.getElementById(id);
                     if (element) element.textContent = shipping === 0 ? 'Free Shipping' : '₹' + shipping;
                 });
-                const grandTotal = Math.round(result.bundleTotal + shipping);
+                const grandTotal = pricing.total;
                 document.getElementById("grand-total-1").textContent = "₹" + grandTotal;
                 document.getElementById("grand-total-2").textContent = "₹" + grandTotal;
                 document.getElementById("grand-total-1").setAttribute("data-val", grandTotal);
                 document.getElementById("grand-total-2").setAttribute("data-val", grandTotal);
                 // Bundle total
-                document.getElementById("bundle-total-1").textContent = "₹" + Math.round(result.bundleTotal);
-                document.getElementById("bundle-total-2").textContent = "₹" + Math.round(result.bundleTotal);
+                document.getElementById("bundle-total-1").textContent = "₹" + result.bundleTotal;
+                document.getElementById("bundle-total-2").textContent = "₹" + result.bundleTotal;
 
                 // Show saving message if applicable
                 updateSavingMessage(result.saving, result.discount);
@@ -443,29 +432,11 @@ function updateSavingMessage(saving) {
 }
 
 // ============================================================
-// UPDATED updateFramePrice — uses size price as base (1 frame)
+// Refresh the displayed price from the complete bundle calculation.
 // ============================================================
 function updateFramePrice(frameConfig) {
     if (!frameConfig) return;
-
-    let frame_config = JSON.parse(frameConfig.frame_configuration);
-
-    const sizePrice   = parseFloat(frame_config.size?.frame_price)     || 0;
-    const finishPrice = parseFloat(frame_config.finish?.finish_price)   || 0;
-    const ledPrice    = parseFloat(frame_config.led?.price)             || 0;
-    // Use size price as base; fallback to item_price if size not set
-    let unitPrice = sizePrice > 0
-        ? sizePrice + finishPrice + ledPrice
-        : item_price + finishPrice + ledPrice;
-
-    unitPrice = parseFloat(Math.round(unitPrice));
-
-    // console.log(unitPrice);
-    document.getElementById("price-show").textContent = "₹" + unitPrice;
-    document.getElementById("price-show").setAttribute("data-val", unitPrice);
-    // console.log("1st frame price updated to: ₹" + unitPrice);
-
-    updateGrandTotal();
+    return updateGrandTotal();
 }
 
 // ============================================================

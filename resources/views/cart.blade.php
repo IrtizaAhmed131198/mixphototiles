@@ -119,7 +119,7 @@
                             @foreach ($cartItems as $item)
                                 @php
                                     $product = App\Models\Product::find($item['product_id']);
-                                    $subtotal += (float) $item['price'];
+                                    $subtotal += (float) $item['price'] * (int) $item['quantity'];
                                 @endphp
                                 <div class="listGroup">
                                     <figure class="carditemimage">
@@ -192,7 +192,7 @@
                                         </div>
                                     </div>
                                     <div class="cartPrice">
-                                        <h5>₹{{ round($item['price'], 0) }}</h5>
+                                        <h5>₹{{ round($item['price'], 2) }}</h5>
                                     </div>
 
                                     <!-- Design Modal for Cart Item -->
@@ -410,8 +410,8 @@
                                         <ul class="cartListpaymentdetails">
                                             <li>
                                                 <p class="customTilename">Sub Total</p>
-                                                <span id="subtotal" data-val="{{ round($subtotal) }}">
-                                                    ₹{{ round($subtotal) }}
+                                                <span id="subtotal" data-val="{{ round($subtotal, 2) }}">
+                                                    ₹{{ round($subtotal, 2) }}
                                                 </span>
                                             </li>
 
@@ -443,7 +443,7 @@
                                             <li class="grandTotal">
                                                 <p class="customTilename">Grand Total</p>
                                                 @php
-                                                    $grandTotal = (int) round((float)$subtotal + (float)$shipping_price);
+                                                    $grandTotal = round((float)$subtotal + (float)$shipping_price, 2);
                                                 @endphp
                                                 <span id="grand_total" data-val="{{ $grandTotal }}">
                                                     ₹{{ $grandTotal }}
@@ -676,7 +676,7 @@
 
                 const grandTotalElement = document.getElementById('grand_total');
                 grandTotalElement.setAttribute('data-val', grandTotal);
-                grandTotalElement.innerText = `₹${Math.round(grandTotal)}`;
+                grandTotalElement.innerText = `₹${Number((grandTotal).toFixed(2))}`;
             }
         });
 
@@ -731,7 +731,7 @@
                 const grandTotalElement = document.getElementById('grand_total');
                 if (grandTotalElement) {
                     const originalGrandTotal = parseFloat(grandTotalElement.getAttribute('data-val'));
-                    const newGrandTotal = Math.round(originalGrandTotal - discountAmount);
+                    const newGrandTotal = Number((originalGrandTotal - discountAmount).toFixed(2));
 
                     grandTotalElement.textContent = `₹${newGrandTotal}`;
                 }
@@ -831,7 +831,7 @@
                         if (grandTotalElement) {
                             const originalGrandTotal = parseFloat(grandTotalElement.getAttribute(
                                 'data-val'));
-                            grandTotalElement.textContent = `₹${Math.round(originalGrandTotal)}`;
+                            grandTotalElement.textContent = `₹${Number((originalGrandTotal).toFixed(2))}`;
                         }
 
                         removeCouponFromSession();
@@ -889,7 +889,7 @@
                             if (grandTotalElement) {
                                 const originalGrandTotal = parseFloat(grandTotalElement.getAttribute(
                                     'data-val'));
-                                const newGrandTotal = Math.round(originalGrandTotal - data.coupon.discount);
+                                const newGrandTotal = Number((originalGrandTotal - data.coupon.discount).toFixed(2));
                                 grandTotalElement.textContent = `₹${newGrandTotal}`;
                             }
                             attachRemoveCouponListener();
@@ -917,7 +917,7 @@
                             if (grandTotalElement) {
                                 const originalGrandTotal = parseFloat(grandTotalElement.getAttribute(
                                     'data-val'));
-                                grandTotalElement.textContent = `₹${Math.round(originalGrandTotal)}`;
+                                grandTotalElement.textContent = `₹${Number((originalGrandTotal).toFixed(2))}`;
                             }
                         }
                     })

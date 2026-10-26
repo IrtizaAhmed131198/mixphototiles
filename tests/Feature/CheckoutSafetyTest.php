@@ -68,6 +68,18 @@ class CheckoutSafetyTest extends TestCase
         $this->assertSame(0.0, $mixed['shipping']);
     }
 
+    public function test_checkout_persists_excel_prices_and_totals_instead_of_old_product_price(): void
+    {
+        Schema::table('products', fn (Blueprint $table) => $table->text('frame_config')->nullable());
+        DB::table('products')->where('id', 1)->update([
+            'frame_config' => json_encode(['frame_type' => ['type' => 'european'], 'size' => ['frameSizeText' => '8x11']]),
+        ]);
+        $order = app(CheckoutService::class)->prepare([['product_id' => 1, 'quantity' => 4]], $this->address(), auth()->user());
+        $this->assertEquals(1897.32, (float) $order->total_amount);
+        $this->assertEquals(0, (float) $order->shipping);
+        $this->assertEquals(474.33, (float) $order->orderItems()->first()->price);
+    }
+
     private function address(): array
     {
         return ['full_name' => 'Customer', 'email' => 'customer@example.com', 'phone_number' => '9999999999', 'pincode' => '110001', 'address_line1' => 'Test address', 'city' => 1, 'state' => 1];
@@ -85,7 +97,7 @@ class CheckoutSafetyTest extends TestCase
         $this->assertEquals(81, $order->total_amount);
         $this->assertNull($order->payment_id);
         $this->assertDatabaseHas('addresses', ['order_id' => $order->id]);
-        $this->assertDatabaseHas('order_items', ['order_id' => $order->id, 'price' => '1.00']);
+        $this->assertEquals(1.0, (float) $order->orderItems()->first()->price);
         Mail::assertNothingSent();
     }
 
