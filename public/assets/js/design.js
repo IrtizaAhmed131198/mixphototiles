@@ -1222,11 +1222,20 @@ function saveFrameConfigToDatabase(frameConfig, type) {
 
 async function sendFrameConfigToServer(imageName, frameConfig, type) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+    const selected = document.querySelector('.frame-size.li-border-color');
+    const selectedSize = selected ? {
+        width: selected.getAttribute('data-width'),
+        height: selected.getAttribute('data-height'),
+        max_width: selected.getAttribute('data-max-width'),
+        frame_price: Number(selected.getAttribute('data-price')),
+        frameSizeText: selected.querySelector('.propertyName').textContent.trim()
+    } : null;
 
     const response = await fetch(config_url, {
         method: "POST",
         headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": csrfToken },
-        body: JSON.stringify({ image_name: imageName, frame_config: frameConfig, type: type }),
+        body: JSON.stringify({ image_name: imageName, frame_config: frameConfig, type: type,
+            collection_type: currentFrameType, selected_size: selectedSize }),
     });
 
     const result = await response.json();

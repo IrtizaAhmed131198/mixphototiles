@@ -28,6 +28,14 @@ class DesignController extends Controller
                     ->get();
 
         // Determine default frame type
+        foreach ($images as $image) {
+            $config = json_decode((string) $image->frame_configuration, true) ?: [];
+            $normalized = normalizeDesignerConfiguration($config);
+            if ($config !== $normalized) {
+                $image->frame_configuration = json_encode($normalized);
+                $image->save();
+            }
+        }
         $defaultFrameType = 'indian';
         if ($images->isNotEmpty() && !empty($images->first()->frame_configuration)) {
             $firstConfig = json_decode($images->first()->frame_configuration, true);

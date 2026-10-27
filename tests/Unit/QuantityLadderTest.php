@@ -17,6 +17,7 @@ class QuantityLadderTest extends TestCase
         Schema::create('settings', function (Blueprint $table) { $table->string('name'); $table->string('value'); });
         Schema::create('sizes', function (Blueprint $table) {
             $table->id(); $table->string('label'); $table->string('frame_type'); $table->decimal('price', 10, 2); $table->integer('status');
+            $table->string('width')->default('300'); $table->string('height')->default('360');
         });
         DB::table('settings')->insert([['name' => 'indian_floor_price', 'value' => '295'], ['name' => 'floor_price', 'value' => '489']]);
         DB::table('sizes')->insert([
@@ -55,5 +56,18 @@ class QuantityLadderTest extends TestCase
         $this->assertSame(1256.0, frameQuantityPricing($entries)['total']);
         DB::table('settings')->where('name', 'indian_floor_price')->update(['value' => 595]);
         $this->assertSame(1270.0, frameQuantityPricing($entries)['total']);
+    }
+
+    public function test_collection_switch_recovers_mismatched_and_legacy_sizes(): void
+    {
+        $config = normalizeDesignerConfiguration(['frame_type' => ['type' => 'european'], 'size' => ['frameSizeText' => '6x8']]);
+        $this->assertSame('8x11', $config['size']['frameSizeText']);
+        $this->assertSame(559.0, frameQuantityPricing([['config' => $config]])['subtotal']);
+        $config['frame_type'] = ['type' => 'indian'];
+        $config = normalizeDesignerConfiguration($config);
+        $this->assertSame('6" X 8"', $config['size']['frameSizeText']);
+        $this->assertSame(299.0, frameQuantityPricing([['config' => $config]])['subtotal']);
+        $legacy = normalizeDesignerConfiguration(['size' => ['frameSizeText' => '6x8']]);
+        $this->assertSame('indian', $legacy['frame_type']['type']);
     }
 }

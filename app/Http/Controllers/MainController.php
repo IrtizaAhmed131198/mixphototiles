@@ -65,6 +65,15 @@ class MainController extends Controller
 
         // Update the specified type (key) only
         $frameConfig[$type] = $newConfigPart;
+        if (in_array($type, ['size', 'frame_type'], true)) {
+            if ($request->filled('collection_type')) {
+                $frameConfig['frame_type'] = ['type' => $request->input('collection_type')];
+            }
+            if (is_array($request->input('selected_size'))) {
+                $frameConfig['size'] = $request->input('selected_size');
+            }
+            $frameConfig = normalizeDesignerConfiguration($frameConfig);
+        }
 
         // Save the updated frame_configuration back to the database
         $sessionImage->frame_configuration = json_encode($frameConfig, JSON_UNESCAPED_SLASHES);

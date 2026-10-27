@@ -41,6 +41,28 @@ function quantityDiscountRate(int $quantity): float
     };
 }
 
+function normalizeDesignerConfiguration(array $config): array
+{
+    $sizes = \App\Models\Sizes::where('status', 1)->where('price', '>', 0)->get();
+    $type = $config['frame_type']['type'] ?? ($config['frame_type'] ?? null);
+    preg_match_all('/\d+(?:\.\d+)?/', $config['size']['frameSizeText'] ?? '', $matches);
+    $label = implode('x', $matches[0]);
+    $matching = $sizes->filter(function ($size) use ($label) {
+        preg_match_all('/\d+(?:\.\d+)?/', $size->label, $dimensions);
+        return implode('x', $dimensions[0]) === $label;
+    });
+    $type ??= $matching->first()?->frame_type ?? 'indian';
+    $size = $matching->firstWhere('frame_type', $type) ?? $sizes->firstWhere('frame_type', $type);
+    if (!$size) return $config;
+    $config['frame_type'] = ['type' => $type, 'name' => $type === 'indian' ? 'Indian Standard Frames' : 'European Style Frames'];
+    $config['size'] = array_merge($config['size'] ?? [], [
+        'width' => rtrim((string) $size->width, 'px') . 'px',
+        'height' => rtrim((string) $size->height, 'px') . 'px',
+        'frameSizeText' => $size->label, 'frame_price' => (float) $size->price,
+    ]);
+    return $config;
+}
+
 function frameQuantityPricing(array $entries): array
 {
     $quantity = 0;
