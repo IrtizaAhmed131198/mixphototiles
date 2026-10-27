@@ -194,7 +194,9 @@ class MainController extends Controller
             // For now, just copy the original file as "processed"
             copy($uploadPath . '/' . $originalFileName, $uploadPath . '/' . $processedFileName);
 
-            $frameConfiguration = $request->input('frame_configuration');
+            $frameConfiguration = json_encode(normalizeDesignerConfiguration(
+                json_decode((string) $request->input('frame_configuration'), true) ?: []
+            ));
 
             // Save to database
             $session_images = new SessionImage();

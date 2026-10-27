@@ -102,6 +102,12 @@
 @endpush
 
 @section('content')
+    @php
+        $indianStartingPrice = $sizes->where('frame_type', 'indian')->where('price', '>', 0)->min('price');
+        $europeanStartingPrice = $sizes->where('frame_type', 'european')->where('price', '>', 0)->min('price');
+        $indianPriceLabel = $indianStartingPrice !== null ? '₹' . number_format((float) $indianStartingPrice, 0) : 'Unavailable';
+        $europeanPriceLabel = $europeanStartingPrice !== null ? '₹' . number_format((float) $europeanStartingPrice, 0) : 'Unavailable';
+    @endphp
 
     <style>
         /* Hide the editing section initially */
@@ -199,7 +205,7 @@
                                                     <p class="propertyName">Indian Frames</p>
                                                     <small class="text-muted d-block" style="font-size: 10.5px; line-height: 1.2;">6x8, 8x12, 12x15</small>
                                                 </div>
-                                                <p class="propertyPrize" style="color: #eb2371; font-weight: 600;">₹299</p>
+                                                <p class="propertyPrize" style="color: #eb2371; font-weight: 600;">{{ $indianPriceLabel }}</p>
                                             </div>
                                         </li>
                                         <li type="button"
@@ -214,7 +220,7 @@
                                                     <p class="propertyName">European Style</p>
                                                     <small class="text-muted d-block" style="font-size: 10.5px; line-height: 1.2;">8x8, 8x11, 12x12</small>
                                                 </div>
-                                                <p class="propertyPrize" style="color: #eb2371; font-weight: 600;">₹489</p>
+                                                <p class="propertyPrize" style="color: #eb2371; font-weight: 600;">{{ $europeanPriceLabel }}</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -1038,7 +1044,7 @@
                                         <ul class="list-unstyled mb-0 fs-13 text-secondary ps-0">
                                             <li class="mb-1 d-flex align-items-start">
                                                 <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
-                                                <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Budget Friendly:</strong> Quality frames starting from ₹299.</span>
+                                                <span style="font-size: 12.5px; color: #475569;"><strong style="color: #1a1a1a;">Budget Friendly:</strong> Quality frames starting from {{ $indianPriceLabel }}.</span>
                                             </li>
                                             <li class="mb-1 d-flex align-items-start">
                                                 <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
@@ -1197,7 +1203,7 @@
                                      onclick="chooseFrameType('indian')">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="badge px-2 py-1" style="background: #fdf2f6; color: #eb2371; border: 1px solid #f9cadf; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; border-radius: 20px;">BUDGET FRIENDLY</span>
-                                        <span class="text-dark" style="font-size: 20px; font-weight: 800;">₹299 <small class="text-muted fw-normal" style="font-size: 12px;">starting</small></span>
+                                        <span class="text-dark" style="font-size: 20px; font-weight: 800;">{{ $indianPriceLabel }} <small class="text-muted fw-normal" style="font-size: 12px;">starting</small></span>
                                     </div>
                                     <h5 class="mb-1" style="font-size: 17px; font-weight: 700; color: #1a1a1a;">Indian Standard Frames</h5>
                                     <p class="mb-3" style="font-size: 13px; line-height: 1.5; color: #64748b;">Popular standard dimensions tailored for Indian home decor with damage-free magnetic mount.</p>
@@ -1230,7 +1236,7 @@
                                      onclick="chooseFrameType('european')">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="badge px-2 py-1" style="background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; font-weight: 700; font-size: 11px; letter-spacing: 0.3px; border-radius: 20px;">PREMIUM SILK FINISH</span>
-                                        <span class="text-dark" style="font-size: 20px; font-weight: 800;">₹489 <small class="text-muted fw-normal" style="font-size: 12px;">starting</small></span>
+                                        <span class="text-dark" style="font-size: 20px; font-weight: 800;">{{ $europeanPriceLabel }} <small class="text-muted fw-normal" style="font-size: 12px;">starting</small></span>
                                     </div>
                                     <h5 class="mb-1" style="font-size: 17px; font-weight: 700; color: #1a1a1a;">European Style Frames</h5>
                                     <p class="mb-3" style="font-size: 13px; line-height: 1.5; color: #64748b;">Deep 3D beveled edge profile with elegant European silk texture and seamless corners.</p>

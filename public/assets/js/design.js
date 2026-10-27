@@ -313,10 +313,16 @@ function applyInitialFrameLED(imageObj) {
 }
 
 function getDefaultFrameConfig() {
-    return fetch(getFrameDefaults)
-        .then((response) => response.json())
+    const defaultsUrl = new URL(getFrameDefaults, window.location.href);
+    defaultsUrl.searchParams.set('frame_type', currentFrameType);
+    return fetch(defaultsUrl, { cache: 'no-store' })
+        .then((response) => {
+            if (!response.ok) throw new Error('Unable to load frame defaults');
+            return response.json();
+        })
         .then((data) => {
             return {
+                frame_type: data.frame_type,
                 design: {
                     designClass:  data.design.designClass,
                     displayText:  data.design.displayText,
@@ -348,7 +354,7 @@ function getDefaultFrameConfig() {
         })
         .catch((error) => {
             console.error("Failed to load frame defaults:", error);
-            return {};
+            throw error;
         });
 }
 
