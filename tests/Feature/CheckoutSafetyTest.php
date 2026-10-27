@@ -71,13 +71,17 @@ class CheckoutSafetyTest extends TestCase
     public function test_checkout_persists_excel_prices_and_totals_instead_of_old_product_price(): void
     {
         Schema::table('products', fn (Blueprint $table) => $table->text('frame_config')->nullable());
+        Schema::create('sizes', function (Blueprint $table) {
+            $table->id(); $table->string('label'); $table->string('frame_type'); $table->decimal('price', 10, 2); $table->integer('status');
+        });
+        DB::table('sizes')->insert(['label' => '8x11', 'frame_type' => 'european', 'price' => 559, 'status' => 1]);
         DB::table('products')->where('id', 1)->update([
             'frame_config' => json_encode(['frame_type' => ['type' => 'european'], 'size' => ['frameSizeText' => '8x11']]),
         ]);
         $order = app(CheckoutService::class)->prepare([['product_id' => 1, 'quantity' => 4]], $this->address(), auth()->user());
-        $this->assertEquals(1897.32, (float) $order->total_amount);
+        $this->assertEquals(2168.92, (float) $order->total_amount);
         $this->assertEquals(0, (float) $order->shipping);
-        $this->assertEquals(474.33, (float) $order->orderItems()->first()->price);
+        $this->assertEquals(542.23, (float) $order->orderItems()->first()->price);
     }
 
     private function address(): array

@@ -1,44 +1,45 @@
-# Quantity ladder verification
+# Dynamic size pricing verification
 
-Version: `quantity-ladder-2026-10-26`.
+Version: `dynamic-size-ladder-2026-10-27`.
 
-Prices and per-size floors come from the supplied Indian and European workbooks.
-The actual discount cells O5:O9/B14 are authoritative: 0%, 2%, 3%, 5%, 10%
-at quantities 1, 2, 3â€“5, 6â€“9, 10+. The inconsistent B13 labels and the European
-H5 hardcoded 355 are not used. Each unit is rounded to two decimals after
-MAX(retail Ã— (1 âˆ’ discount), size floor). Shipping is 80 for 1â€“2 units,
-zero for an empty cart or 3+ units. Quantities include all frames in the order.
-Unlisted products retain their stored price without an automatic discount.
-Existing finish/LED charges are added to both retail and floor.
+Retail prices come from active rows in the Sizes table, matched by collection
+and size label. Adding a size or changing its price in admin requires no code
+change. Saved browser prices and Excel example prices do not override Sizes.
+Indian frames use the indian_floor_price setting; European and Luxury Tiles
+use floor_price. A floor limits discounts and never increases the retail price.
 
-## Deploy
+Quantity tiers: 1 = 0%, 2 = 2%, 3–5 = 3%, 6–9 = 5%, 10+ = 10%.
+For multiple items: unit price = MIN(retail, MAX(retail × (1 - tier), floor)).
+Finish/LED add-ons are added to retail and floor. Round each unit to 2 decimals.
+Shipping: 80 for 1–2 frames; free for 3+. Quantities include all frames.
+Inactive, missing or zero-priced selected sizes cannot be checked out.
 
-Deploy the changed PHP, JavaScript and Blade files together on master, then run
-`php artisan optimize:clear`. No database migration is needed. Start a new
-incognito session and hard-refresh to load the updated JavaScript.
+## Live verification
 
-## Customer checks (no coupon, gift wrap, or paid add-ons)
+Deploy all changed files together and run `php artisan optimize:clear`.
+Start a fresh incognito session. Check current admin size prices and floor
+settings first: live values can differ from local values.
 
-| Collection / size | Quantity | Product total | Shipping | Final total |
-|---|---:|---:|---:|---:|
-| Indian 8x8 | 1 | 294.00 | 80 | 374.00 |
-| Indian 8x8 | 2 | 576.24 | 80 | 656.24 |
-| Indian 8x8 | 3 | 858.00 | 0 | 858.00 |
-| Indian 8x8 | 6 | 1716.00 | 0 | 1716.00 |
-| Indian 8x8 | 10 | 2860.00 | 0 | 2860.00 |
-| European 8x11 | 4 | 1897.32 | 0 | 1897.32 |
-| Indian 8x8 + Indian 12x18 | 1 each | 1002.54 | 80 | 1082.54 |
+With Indian 6x8 price 299 and Indian floor 295, no coupons or paid add-ons:
 
-Compare the designer bundle/grand total, cart, order summary, and Razorpay popup.
-The designer Item Price is the average unit price; individual mixed-size cart
-items keep their own prices. Remove a frame from a 3-frame cart and confirm
-the 2-item tier and 80 shipping return. Opening Razorpay creates a pending order;
-payment is not required to compare the displayed payable amount.
+| Quantity | Product total | Shipping | Final total |
+|---|---:|---:|---:|
+| 1 | 299 | 80 | 379 |
+| 2 | 590 | 80 | 670 |
+| 3 | 885 | 0 | 885 |
+| 6 | 1770 | 0 | 1770 |
+| 10 | 2950 | 0 | 2950 |
 
-In the same browser session, open `/get-grand-total` (or inspect that request in
-DevTools Network). The `pricing` object must include the version above, quantity,
-discount, individual item_prices, subtotal, shipping, saving and total. This proves
-which server calculation is serving the designer; also compare cart and checkout.
+For Indian 8x12 price 399 and floor 295, 2 frames cost
+399 × 0.98 × 2 + 80 = 862.04.
+
+Compare designer totals, cart, order summary, and Razorpay popup.
+In the same session open `/get-grand-total`: pricing.version must equal the
+version above; pricing includes quantity, discount, item_prices, subtotal,
+shipping and total. Remove one frame from a three-frame cart and verify the
+two-item discount and 80 shipping return.
 
 Local regression check:
 `php vendor/phpunit/phpunit/phpunit --filter "QuantityLadderTest|CheckoutSafetyTest"`
+Tests use in-memory SQLite and cover new sizes, admin price changes, changed
+floor settings, tier boundaries, mixed sizes and persisted checkout prices.

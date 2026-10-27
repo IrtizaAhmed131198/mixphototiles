@@ -14,16 +14,20 @@ function quantityShippingCharge(int $quantity): float
 
 function framePricingCatalog(): array
 {
-    return [
-        'indian' => [
-            '8x8' => [294, 286], '8x12' => [379, 359],
-            '12x15' => [699, 659], '12x18' => [729, 709],
-        ],
-        'european' => [
-            '8x8' => [399, 374], '8x11' => [489, 469], '12x12' => [799, 739],
-        ],
-        'luxury_tiles' => ['8x8' => [399, 384], '8.4x8.4' => [399, 384]],
+    $floors = [
+        'indian' => max(0, (float) get_setting('indian_floor_price', 295)),
+        'european' => max(0, (float) get_setting('floor_price', 489)),
     ];
+    $catalog = [];
+    foreach (\App\Models\Sizes::where('status', 1)->get() as $size) {
+        preg_match_all('/\d+(?:\.\d+)?/', (string) $size->label, $dimensions);
+        $type = $size->frame_type ?: 'european';
+        $catalog[$type][implode('x', $dimensions[0])] = [
+            (float) $size->price,
+            $floors[$type === 'indian' ? 'indian' : 'european'],
+        ];
+    }
+    return $catalog;
 }
 
 function quantityDiscountRate(int $quantity): float
@@ -47,16 +51,22 @@ function frameQuantityPricing(array $entries): array
     $prices = [];
     $regular = 0.0;
     $bundle = 0.0;
+    $catalogEntries = null;
     foreach ($entries as $key => $entry) {
         $config = $entry['config'] ?? [];
         if (is_string($config)) $config = json_decode($config, true) ?: [];
         $type = $config['frame_type']['type'] ?? ($config['frame_type'] ?? '');
         preg_match_all('/\d+(?:\.\d+)?/', $config['size']['frameSizeText'] ?? '', $dimensions);
-        $catalog = framePricingCatalog()[$type][implode('x', $dimensions[0])] ?? null;
+        if ($type && $dimensions[0]) $catalogEntries ??= framePricingCatalog();
+        $catalog = $catalogEntries[$type][implode('x', $dimensions[0])] ?? null;
+        if ($type && $dimensions[0] && (!$catalog || $catalog[0] <= 0)) {
+            throw \Illuminate\Validation\ValidationException::withMessages(['size' => 'The selected frame size is unavailable. Please choose an active size with a price.']);
+        }
         $addons = (float) ($config['finish']['finish_price'] ?? 0) + (float) ($config['led']['price'] ?? 0);
         $retail = $catalog ? $catalog[0] + $addons : (float) ($entry['fallback'] ?? 0);
         $floor = $catalog ? $catalog[1] + $addons : $retail;
-        $price = round(max($retail * (1 - $discount), $floor), 2);
+        // A floor limits discounts; it must never raise a price above retail.
+        $price = round($quantity <= 1 ? $retail : min($retail, max($retail * (1 - $discount), $floor)), 2);
         $prices[$key] = $price;
         $count = (int) ($entry['quantity'] ?? 1);
         $regular += $retail * $count;
@@ -64,7 +74,7 @@ function frameQuantityPricing(array $entries): array
     }
     $shipping = quantityShippingCharge($quantity);
     return [
-        'version' => 'quantity-ladder-2026-10-26',
+        'version' => 'dynamic-size-ladder-2026-10-27',
         'quantity' => $quantity, 'discount' => $discount, 'item_prices' => $prices,
         'regular_total' => round($regular, 2), 'subtotal' => round($bundle, 2),
         'saving' => round($regular - $bundle, 2), 'shipping' => $shipping,
