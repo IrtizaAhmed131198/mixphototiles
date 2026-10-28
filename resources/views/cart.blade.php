@@ -84,6 +84,9 @@
 @section('content')
     @php
         $subtotal = 0;
+        $frameQuantity = collect($cartItems)->sum('quantity');
+        $frameProductTotal = collect($cartItems)->sum(fn ($entry) => (float) $entry['price'] * (int) $entry['quantity']);
+        $averageFramePrice = $frameQuantity > 0 ? round($frameProductTotal / $frameQuantity, 2) : 0;
         $shipping = get_setting('shipping_price') ?? 0;
     @endphp
 
@@ -192,7 +195,7 @@
                                         </div>
                                     </div>
                                     <div class="cartPrice">
-                                        <h5>₹{{ round($item['price'], 2) }}</h5>
+                                        <h5>₹{{ $averageFramePrice }}</h5>
                                     </div>
 
                                     <!-- Design Modal for Cart Item -->

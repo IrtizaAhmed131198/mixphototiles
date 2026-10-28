@@ -27,6 +27,7 @@ const INDIAN_FLOOR_PRICE = parseFloat($("#indian_floor_price").val()) || 295;
 const D_STEP             = (parseFloat($("#d_step").val()) || 5)  / 100;  // convert % to decimal
 const D_MAX              = (parseFloat($("#d_max").val())  || 20) / 100;  // convert % to decimal
 let currentFrameType     = $("#active_frame_type").val() || "indian";
+const pendingFrameSaves = new Set();
 
 /**
  * Bundle Pricing Formula with Frame Type Floor Check
@@ -72,45 +73,30 @@ function calculateBundlePrice(subtotal, n) {
 let allFrameConfigurations = {};
 
 document.addEventListener("DOMContentLoaded", () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const imageName = urlParams.get("image_name");
-
-    if (imageName) {
-        const imageUrl = `/${imageName}`;
-
-        document.querySelector(".file-uploadSection").style.display = "none";
-        document.querySelector(".FrameDesignSection").style.display = "block";
-
-        const imageObj = {
-            file_url: imageUrl,
-            filename: imageName,
-            crop: 0,
-        };
-
-        renderSliderImages([imageObj]);
-        applyInitialFrameDesign(imageObj);
-        applyInitialFrameColor(imageObj);
-        applyInitialFrameSize(imageObj);
-        applyInitialFrameFinish(imageObj);
-        applyInitialFrameLED(imageObj);
-        updateFramePrice(imageObj);
-    } else {
-        fetchAndRenderSessionImages();
-    }
+    const imageName = new URLSearchParams(window.location.search).get('image_name');
+    fetchAndRenderSessionImages(imageName);
 });
 
-function fetchAndRenderSessionImages() {
-    fetch(get_session_images)
+function selectSessionImage(images, preferredImage) {
+    const path = (value) => new URL(value, window.location.href).pathname;
+    return images.find(image => image.filename === preferredImage
+        || (preferredImage && path(image.file_url) === path(preferredImage))) || images[0];
+}
+function fetchAndRenderSessionImages(preferredFilename = null) {
+    return fetch(get_session_images)
         .then((response) => response.json())
         .then((images) => {
             if (images.length > 0) {
-                renderSliderImages(images);
-                applyInitialFrameDesign(images[0]);
-                applyInitialFrameColor(images[0]);
-                applyInitialFrameSize(images[0]);
-                applyInitialFrameFinish(images[0]);
-                applyInitialFrameLED(images[0]);
-                updateFramePrice(images[0]);
+                const selected = selectSessionImage(images, preferredFilename);
+                document.querySelector('.file-uploadSection').style.display = 'none';
+                document.querySelector('.FrameDesignSection').style.display = 'block';
+                renderSliderImages(images, selected.filename);
+                applyInitialFrameDesign(selected);
+                applyInitialFrameColor(selected);
+                applyInitialFrameSize(selected);
+                applyInitialFrameFinish(selected);
+                applyInitialFrameLED(selected);
+                updateFramePrice(selected);
             } else {
                 document.querySelector(".file-uploadSection").style.display = "flex";
                 document.querySelector(".FrameDesignSection").style.display = "none";
@@ -119,9 +105,7 @@ function fetchAndRenderSessionImages() {
         .catch((err) => console.error("Failed to load session images:", err));
 }
 
-document.addEventListener("DOMContentLoaded", fetchAndRenderSessionImages);
-
-function renderSliderImages(imagesArray) {
+function renderSliderImages(imagesArray, selectedFilename = null) {
     const swiperWrapper = document.querySelector(".Images-frame-slider .swiper-wrapper");
     swiperWrapper.innerHTML = "";
 
@@ -153,16 +137,36 @@ function renderSliderImages(imagesArray) {
     });
 
     if (imagesArray.length > 0) {
-        document.getElementById("uploaded-image").src = imagesArray[0].file_url;
-        let set_active_config = JSON.stringify(imagesArray[0]);
+        const index = Math.max(0, imagesArray.findIndex(image => image.filename === selectedFilename));
+        const selected = imagesArray[index];
+        document.getElementById("uploaded-image").src = selected.file_url;
+        let set_active_config = JSON.stringify(selected);
         document.getElementById("active_config").value = set_active_config;
+        if (typeof swiper !== 'undefined' && swiper) {
+            swiper.update();
+            swiper.slideTo(index, 0, false);
+        }
     }
+}
+
+function filterFrameSizes(designClass) {
+    document.querySelectorAll('.frame-size').forEach((option) => {
+        const matchesType = (option.getAttribute('data-frame-type') || 'european') === currentFrameType;
+        const matchesDesign = designClass !== 'frameless-card-design'
+            || option.querySelector('.propertyName').textContent.trim() === '8" X 8"';
+        option.style.display = matchesType && matchesDesign ? 'flex' : 'none';
+    });
 }
 
 function applyInitialFrameDesign(imageObj) {
     if (!imageObj || !imageObj.frame_configuration) return;
 
     const frameConfig = JSON.parse(imageObj.frame_configuration);
+    currentFrameType = frameConfig.frame_type?.type || frameConfig.frame_type || currentFrameType;
+    $('#active_frame_type').val(currentFrameType);
+    document.querySelectorAll('.frame-type-change').forEach((option) => {
+        option.classList.toggle('li-border-color', option.getAttribute('data-type') === currentFrameType);
+    });
     const initialDesignClass = frameConfig.design?.designClass || "classic-card-design";
     const initialDisplayText = frameConfig.design?.displayText || "Border";
 
@@ -205,15 +209,7 @@ function applyInitialFrameDesign(imageObj) {
         colorOptionsTemp.forEach((colorOption) => { colorOption.style.display = "flex"; });
     }
 
-    const sizeOptionsTemp = document.querySelectorAll(".frame-size");
-    if (initialDesignClass === "frameless-card-design") {
-        sizeOptionsTemp.forEach((sizeOption) => {
-            const sizeText = sizeOption.querySelector(".propertyName").textContent.trim();
-            sizeOption.style.display = sizeText === '8" X 8"' ? "flex" : "none";
-        });
-    } else {
-        sizeOptionsTemp.forEach((sizeOption) => { sizeOption.style.display = "flex"; });
-    }
+    filterFrameSizes(initialDesignClass);
 }
 
 function applyInitialFrameColor(imageObj) {
@@ -497,6 +493,9 @@ function uploadImageToServer(file, newFileName) {
 }
 
 async function processAndUploadImages(files, mainLoader) {
+    const previousImage = document.querySelector('.Images-frame-slider .swiper-slide-active img');
+    const previousFilename = previousImage?.getAttribute('data-frame-config') || null;
+    const hadImages = Boolean(document.querySelector('.Images-frame-slider img[data-frame-config]'));
     const uploadPromises = [];
     const uploadInput = document.querySelector(".upload-photo");
     const progressBarContainer = document.querySelector(".progress-bar-container");
@@ -538,7 +537,8 @@ async function processAndUploadImages(files, mainLoader) {
             progressBar.style.width = "100%";
             document.querySelector(".file-uploadSection").style.display = "none";
             document.querySelector(".FrameDesignSection").style.display = "block";
-            fetchAndRenderSessionImages();
+            await Promise.all([...pendingFrameSaves]);
+            await fetchAndRenderSessionImages(previousFilename);
 
             setTimeout(() => {
                 progressBarContainer.style.display = "none";
@@ -556,7 +556,7 @@ async function processAndUploadImages(files, mainLoader) {
             // Prompt user with Frame Type Selection Modal
             setTimeout(() => {
                 const modalEl = document.getElementById("frameTypeChoiceModal");
-                if (modalEl) {
+                if (modalEl && !hadImages) {
                     const modalInstance = new bootstrap.Modal(modalEl);
                     modalInstance.show();
                 }
@@ -643,20 +643,22 @@ document.getElementById("remove-image").addEventListener("click", async function
             });
 
             if (confirmDelete.isConfirmed) {
-                const totalSlides = document.querySelectorAll(".swiper-slide img").length;
+                const totalSlides = document.querySelectorAll(".Images-frame-slider .swiper-slide img").length;
                 removeButton.disabled = true;
                 uploadInput.disabled = true;
                 progressBarContainer.style.display = "block";
                 progressBar.style.width = "0%";
 
-                await deleteImageFromDatabase(imageName, imageSrc);
+                const deleted = await deleteImageFromDatabase(imageName, imageSrc);
 
                 progressBar.style.width = "100%";
                 setTimeout(() => {
                     progressBarContainer.style.display = "none";
                     removeButton.disabled = false;
                     uploadInput.disabled = false;
-                    if (totalSlides === 1) location.reload();
+                    if (deleted && totalSlides === 1) {
+                        window.location.replace(window.location.pathname);
+                    }
                 }, 500);
             }
         }
@@ -688,6 +690,7 @@ async function deleteImageFromDatabase(imageName, imageSrc) {
                 showClass: { popup: "animate__animated animate__fadeIn animate__slow" },
                 hideClass: { popup: "animate__animated animate__fadeOut animate__faster" },
             });
+            return true;
         } else {
             throw new Error(result.message || "Failed to delete image");
         }
@@ -698,6 +701,7 @@ async function deleteImageFromDatabase(imageName, imageSrc) {
             showClass: { popup: "animate__animated animate__fadeIn animate__slow" },
             hideClass: { popup: "animate__animated animate__fadeOut animate__faster" },
         });
+        return false;
     }
 }
 
@@ -809,7 +813,8 @@ function updateActiveImage() {
                     })
                         .then((response) => response.json())
                         .then((data) => {
-                            if (data.success) {
+                            if (data.success && document.querySelector('.Images-frame-slider .swiper-slide-active img')?.getAttribute('data-frame-config') === filename) {
+                                document.getElementById('active_config').value = JSON.stringify(data.frame_configuration);
                                 applyInitialFrameDesign(data.frame_configuration);
                                 applyInitialFrameColor(data.frame_configuration);
                                 applyInitialFrameSize(data.frame_configuration);
@@ -851,7 +856,8 @@ document.querySelector(".Images-frame-slider .swiper-wrapper").addEventListener(
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    if (data.success) {
+                    if (data.success && document.querySelector('.Images-frame-slider .swiper-slide-active img')?.getAttribute('data-frame-config') === filename) {
+                        document.getElementById('active_config').value = JSON.stringify(data.frame_configuration);
                         applyInitialFrameDesign(data.frame_configuration);
                         applyInitialFrameColor(data.frame_configuration);
                         applyInitialFrameSize(data.frame_configuration);
@@ -919,6 +925,7 @@ designOptions.forEach((option) => {
 
             const eightByEight = Array.from(sizeOptionsTemp).find(
                 (s) => s.querySelector(".propertyName").textContent.trim() === '8" X 8"'
+                    && (s.getAttribute('data-frame-type') || 'european') === currentFrameType
             );
             if (eightByEight) eightByEight.click();
 
@@ -926,6 +933,7 @@ designOptions.forEach((option) => {
             sizeOptionsTemp.forEach((sizeOption) => { sizeOption.style.display = "flex"; });
         }
 
+        filterFrameSizes(designClass);
         setTimeout(() => { updateFramePrice(get_active_config); }, 500);
     });
 });
@@ -1221,7 +1229,13 @@ function saveFrameConfigToDatabase(frameConfig, type) {
         if (activeImg) {
             const imageName = activeImg.getAttribute("data-frame-config") ||
                 activeImg.getAttribute("src").split("/").pop().split(".").slice(0, -1).join(".");
-            sendFrameConfigToServer(imageName, frameConfig, type);
+            const save = sendFrameConfigToServer(imageName, frameConfig, type);
+            pendingFrameSaves.add(save);
+            save.then(() => pendingFrameSaves.delete(save), (error) => {
+                pendingFrameSaves.delete(save);
+                console.error('Unable to save frame configuration:', error);
+            });
+            return save;
         }
     }
 }
@@ -1246,7 +1260,9 @@ async function sendFrameConfigToServer(imageName, frameConfig, type) {
 
     const result = await response.json();
     if (result.success) {
-        document.getElementById("active_config").value = JSON.stringify(result.data);
+        const activeInput = document.getElementById("active_config");
+        const active = activeInput.value ? JSON.parse(activeInput.value) : null;
+        if (active?.filename === imageName) activeInput.value = JSON.stringify(result.data);
     } else {
         console.error("Failed to save frame configuration:", result.message);
     }
