@@ -211,6 +211,14 @@
                                 <div class="cartParent">
                                     <h5 class="pricedetails">Price Details</h5>
                                     <ul class="cartListpaymentdetails">
+                                        @php
+                                            $frameQuantity = collect($cart)->sum('quantity');
+                                            $averageFramePrice = $frameQuantity > 0 ? round($cartGrandTotal / $frameQuantity, 2) : 0;
+                                        @endphp
+                                        <li>
+                                            <p class="customTilename">Average Price per Frame</p>
+                                            <span>₹{{ $averageFramePrice }}</span>
+                                        </li>
                                         <li>
                                             <p class="customTilename">Sub Total</p>
                                             <span>₹{{ round($cartGrandTotal, 2) }}</span>

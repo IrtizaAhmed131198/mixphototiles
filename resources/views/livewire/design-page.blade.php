@@ -1023,7 +1023,7 @@
                                         </ul>
                                     </div>
                                     <div class="summary-card-footer">
-                                        <p class="para">Item Price</p>
+                                        <p class="para">Average Price per Frame</p>
                                         <h6 class="prizing" id="price-show" data-val="{{ $item_price ?? 0 }}">₹{{ $item_price ?? 0 }}</h6>
                                         <input type="hidden" name="quantity" id="quantity" value="1">
                                     </div>

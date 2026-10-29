@@ -388,6 +388,12 @@
             </table>
 
             <div class="text-end mt-3">
+                @php
+                    $frameQuantity = $order->orderItems->sum('quantity');
+                    $frameProductTotal = $order->orderItems->sum(fn ($entry) => (float) $entry->price * (int) $entry->quantity);
+                    $averageFramePrice = $frameQuantity > 0 ? round($frameProductTotal / $frameQuantity, 2) : 0;
+                @endphp
+                <p>Average Price per Frame: Rs.{{ $averageFramePrice }}</p>
                 <h4>Total Amount: Rs.{{ round($order->total_amount, 0) }}</h4>
             </div>
         </div>

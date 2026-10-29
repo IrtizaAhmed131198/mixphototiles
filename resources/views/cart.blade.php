@@ -195,7 +195,7 @@
                                         </div>
                                     </div>
                                     <div class="cartPrice">
-                                        <h5>₹{{ $averageFramePrice }}</h5>
+                                        <h5>₹{{ round($item['price'], 2) }}</h5>
                                     </div>
 
                                     <!-- Design Modal for Cart Item -->
@@ -411,6 +411,10 @@
                                             Price Details
                                         </h5>
                                         <ul class="cartListpaymentdetails">
+                                            <li>
+                                                <p class="customTilename">Average Price per Frame</p>
+                                                <span>₹{{ $averageFramePrice }}</span>
+                                            </li>
                                             <li>
                                                 <p class="customTilename">Sub Total</p>
                                                 <span id="subtotal" data-val="{{ round($subtotal, 2) }}">
