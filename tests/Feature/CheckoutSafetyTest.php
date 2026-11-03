@@ -46,6 +46,7 @@ class CheckoutSafetyTest extends TestCase
             });
         }
         (require database_path('migrations/2026_09_16_000001_add_checkout_tracking_to_orders.php'))->up();
+        (require database_path('migrations/2026_11_03_000001_create_checkout_events_table.php'))->up();
         DB::table('states')->insert(['id' => 1, 'name' => 'State']);
         DB::table('cities')->insert(['id' => 1, 'name' => 'City', 'state_id' => 1]);
         DB::table('products')->insert(['id' => 1, 'name' => 'Frame', 'price' => '1.00', 'status' => '1']);
@@ -82,6 +83,67 @@ class CheckoutSafetyTest extends TestCase
         $this->assertEquals(2168.92, (float) $order->total_amount);
         $this->assertEquals(0, (float) $order->shipping);
         $this->assertEquals(542.23, (float) $order->orderItems()->first()->price);
+    }
+
+    public function test_browser_tracking_records_events_without_confirming_payment(): void
+    {
+        $order = $this->prepare();
+        $order->razorpay_order_id = 'order_tracking';
+        $order->save();
+        foreach (['popup_open_requested', 'popup_closed', 'payment_failed', 'confirmation_pending'] as $event) {
+            $request = Request::create('/razorpay/checkout-event', 'POST', [
+                'website_order_id' => $order->id, 'razorpay_order_id' => 'order_tracking', 'event' => $event,
+            ]);
+            $request->setLaravelSession(app('session.store'));
+            $request->session()->put('checkout_order_id', $order->id);
+            $this->assertSame(200, app(RazorpayController::class)->trackCheckout($request)->getStatusCode());
+        }
+        $this->assertDatabaseCount('checkout_events', 4);
+        $this->assertSame('pending', $order->fresh()->status);
+        $this->assertNull($order->fresh()->paid_at);
+        $this->assertNull($order->fresh()->payment_id);
+    }
+
+    public function test_tracking_rejects_a_different_order(): void
+    {
+        $order = $this->prepare();
+        $order->razorpay_order_id = 'order_tracking';
+        $order->save();
+        $request = Request::create('/razorpay/checkout-event', 'POST', [
+            'website_order_id' => $order->id + 1, 'razorpay_order_id' => 'order_tracking', 'event' => 'popup_closed',
+        ]);
+        $request->setLaravelSession(app('session.store'));
+        $request->session()->put('checkout_order_id', $order->id);
+        try {
+            app(RazorpayController::class)->trackCheckout($request);
+            $this->fail('A different order must be rejected.');
+        } catch (\Symfony\Component\HttpKernel\Exception\HttpException $error) {
+            $this->assertSame(403, $error->getStatusCode());
+        }
+        $this->assertDatabaseCount('checkout_events', 0);
+    }
+
+    public function test_browser_cannot_submit_server_verified_event(): void
+    {
+        $request = Request::create('/razorpay/checkout-event', 'POST', [
+            'website_order_id' => 1, 'razorpay_order_id' => 'order_tracking', 'event' => 'payment_verified',
+        ]);
+        $this->expectException(ValidationException::class);
+        app(RazorpayController::class)->trackCheckout($request);
+    }
+
+    public function test_tracking_failure_does_not_undo_confirmed_payment(): void
+    {
+        Schema::drop('checkout_events');
+        $order = $this->prepare();
+        $order->razorpay_order_id = 'order_tracking';
+        $order->save();
+        app(CheckoutService::class)->recordPayment($order, [
+            'id' => 'pay_tracking', 'order_id' => 'order_tracking', 'currency' => 'INR',
+            'amount' => 8100, 'status' => 'captured',
+        ]);
+        $this->assertNotNull($order->fresh()->paid_at);
+        $this->assertSame('ordered', $order->fresh()->status);
     }
 
     private function address(): array

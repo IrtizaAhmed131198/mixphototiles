@@ -307,6 +307,7 @@ Route::get('/frame-defaults', [MainController::class, 'getFrameDefaults'])->name
 // Payment processing routes
 Route::post('/razorpay/create-order', [RazorpayController::class, 'createOrder'])->name('razorpay.create_order');
 Route::post('/razorpay/verify-payment', [RazorpayController::class, 'verifyPayment'])->name('razorpay.verify_payment');
+Route::post('/razorpay/checkout-event', [RazorpayController::class, 'trackCheckout'])->middleware('throttle:60,1')->name('razorpay.checkout_event');
 
 // Order payment and refund routes
 Route::get('/orders/payment-info/{id}', [ProfileController::class, 'getPaymentInfo']);

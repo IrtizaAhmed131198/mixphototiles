@@ -180,6 +180,28 @@
             </div>
 
             <h5>Order Items</h5>
+            @if (auth()->check() && in_array(auth()->user()->role, ['admin', 'super_admin']) && \Illuminate\Support\Facades\Schema::hasTable('checkout_events'))
+                <div class="card p-3 mb-4">
+                    <h5>Checkout activity</h5>
+                    <p>{{ $order->paid_at ? 'Payment verified by server' : 'Payment pending / checkout incomplete' }}</p>
+                    <p class="text-muted">Browser events are diagnostic reports, not proof of payment or that the popup was visible. Missing events can also mean a connection or tracking failure.</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead><tr><th>Recorded at (UTC)</th><th>Event</th><th>Source</th><th>Error code</th></tr></thead>
+                            <tbody>
+                                @forelse ($order->checkoutEvents as $event)
+                                    <tr>
+                                        <td>{{ $event->created_at->utc()->format('Y-m-d H:i:s') }}</td>
+                                        <td>{{ $event->label }}</td><td>{{ $event->source }}</td><td>{{ $event->error_code ?? '—' }}</td>
+                                    </tr>
+                                @empty
+                                    <tr><td colspan="4">No checkout activity recorded. Older orders have no event history.</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endif
             <table class="table table-bordered">
                 <thead>
                     <tr>

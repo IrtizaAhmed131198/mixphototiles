@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Services\CheckoutService;
+use App\Services\CheckoutTracking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -32,18 +33,25 @@ class RazorpayController extends Controller
                     $request->session()->put(['checkout_order_id' => $order->id, 'checkout_fingerprint' => $fingerprint]);
                     // Persist recovery information before making an external API call.
                     $request->session()->save();
+                    CheckoutTracking::record($order, 'order_prepared');
                 }
                 if ($order->payment_id || $order->paid_at) {
                     return response()->json(['error' => 'A payment already exists for this checkout. Please check your order before paying again.'], 409);
                 }
                 $amount = (int) round($order->total_amount * 100);
                 if (! $order->razorpay_order_id) {
-                    $remote = $this->api()->order->create([
+                    try {
+                        $remote = $this->api()->order->create([
                         'receipt' => 'website_'.$order->id, 'amount' => $amount, 'currency' => 'INR',
                         'notes' => ['website_order_id' => (string) $order->id],
-                    ]);
+                        ]);
+                    } catch (\Throwable $error) {
+                        CheckoutTracking::record($order, 'gateway_order_failed');
+                        throw $error;
+                    }
                     $order->razorpay_order_id = $remote['id'];
                     $order->save();
+                    CheckoutTracking::record($order, 'order_created');
                 }
                 $request->session()->put('razorpay_order_id', $order->razorpay_order_id);
 
@@ -56,6 +64,22 @@ class RazorpayController extends Controller
 
             return response()->json(['error' => 'Unable to prepare your order. Payment has not been started. Please try again.'], 503);
         }
+    }
+
+    public function trackCheckout(Request $request)
+    {
+        $data = $request->validate([
+            'website_order_id' => 'required|integer',
+            'razorpay_order_id' => 'required|string|max:100',
+            'event' => 'required|in:popup_open_requested,popup_closed,popup_open_failed,payment_failed,payment_callback_received,confirmation_pending',
+            'error_code' => ['nullable', 'string', 'max:100', 'regex:/^[a-zA-Z0-9_.-]+$/'],
+        ]);
+        $order = Order::findOrFail($request->session()->get('checkout_order_id'));
+        abort_unless((int) $order->id === (int) $data['website_order_id']
+            && $order->razorpay_order_id === $data['razorpay_order_id'], 403);
+        // Browser telemetry is diagnostic only; it cannot change payment status.
+        CheckoutTracking::record($order, $data['event'], 'browser', $data['error_code'] ?? null);
+        return response()->json(['success' => true]);
     }
 
     protected function reconcile(Order $order, string $paymentId, CheckoutService $checkout): Order

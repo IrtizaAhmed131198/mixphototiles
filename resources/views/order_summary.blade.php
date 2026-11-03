@@ -648,6 +648,17 @@
                                 if (!order.id) {
                                     throw new Error("Failed to retrieve a valid order ID from server.");
                                 }
+                                let receivedPayment = false;
+                                const trackCheckout = (event, errorCode = null) => {
+                                    console.info('[Checkout]', order.website_order_id, event, errorCode || '');
+                                    fetch("{{ route('razorpay.checkout_event') }}", {
+                                        method: 'POST', keepalive: true,
+                                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                                        body: JSON.stringify({ website_order_id: order.website_order_id, razorpay_order_id: order.id, event, error_code: errorCode })
+                                    }).then(response => {
+                                        if (!response.ok) console.warn('Checkout event was not recorded:', event, response.status);
+                                    }).catch(() => console.warn('Checkout tracking connection failed:', event));
+                                };
                                 let options = {
                                     "key": "{{ config('services.razorpay.key') }}",
                                     "amount": order.amount,
@@ -656,6 +667,8 @@
                                     "description": "Order Payment",
                                     "order_id": order.id,
                                     "handler": async function(response) {
+                                        receivedPayment = true;
+                                        trackCheckout('payment_callback_received');
                                         if (mainLoader) mainLoader.style.display = 'flex';
                                         try {
                                             const res = await fetch("{{ route('razorpay.verify_payment') }}", {
@@ -674,6 +687,7 @@
                                             await Swal.fire({ icon: 'success', title: 'Order confirmed', text: 'Order #' + data.order_id + ' placed successfully!' });
                                             window.location.href = "{{ route('home') }}";
                                         } catch (err) {
+                                            trackCheckout('confirmation_pending');
                                             if (mainLoader) mainLoader.style.display = 'none';
                                             Swal.fire({ icon: 'info', title: 'Check payment status', text: err.message || 'Your order is saved. Please contact support before paying again.' });
                                         } finally {
@@ -682,11 +696,13 @@
                                     },
                                     "modal": {
                                         "ondismiss": function () {
+                                            if (receivedPayment) return;
+                                            trackCheckout('popup_closed');
                                             if (mainLoader) mainLoader.style.display = 'none';
                                             Swal.fire({
                                                 icon: 'info',
-                                                title: 'Payment Cancelled',
-                                                text: 'You have cancelled the payment process.',
+                                                title: 'Checkout closed',
+                                                text: 'Checkout was closed. If money was deducted, please contact support before paying again.',
                                                 showClass: {
                                                     popup: 'animate__animated animate__fadeIn animate__slow'
                                                 },
@@ -711,8 +727,19 @@
                                 };
 
                                 if (mainLoader) mainLoader.style.display = 'none';
-                                let rzp = new Razorpay(options);
-                                rzp.open();
+                                trackCheckout('popup_open_requested');
+                                try {
+                                    if (typeof Razorpay !== 'function') throw new Error('Payment checkout could not load. Please check your connection and try again.');
+                                    const rzp = new Razorpay(options);
+                                    rzp.on('payment.failed', function(response) {
+                                        const code = response.error?.code;
+                                        trackCheckout('payment_failed', /^[a-zA-Z0-9_.-]{1,100}$/.test(code || '') ? code : null);
+                                    });
+                                    rzp.open();
+                                } catch (error) {
+                                    trackCheckout('popup_open_failed');
+                                    throw error;
+                                }
                             })
                             .catch(error => {
                                 if (mainLoader) mainLoader.style.display = 'none';

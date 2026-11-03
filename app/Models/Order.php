@@ -8,6 +8,16 @@ class Order extends Model
 {
     protected $table = "orders";
 
+    public function checkoutEvents()
+    {
+        return $this->hasMany(CheckoutEvent::class)->orderBy('id');
+    }
+
+    public function latestCheckoutEvent()
+    {
+        return $this->hasOne(CheckoutEvent::class)->latestOfMany();
+    }
+
     public function orderItems()
     {
         return $this->hasMany(OrderItems::class)->with('product');

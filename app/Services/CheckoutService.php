@@ -162,6 +162,7 @@ class CheckoutService
             }
             $order->save();
             if ($newlyPaid) {
+                DB::afterCommit(fn () => CheckoutTracking::record($order, 'payment_verified'));
                 DB::afterCommit(function () use ($order) {
                     try {
                         $order->load(['orderItems.product', 'user', 'address']);

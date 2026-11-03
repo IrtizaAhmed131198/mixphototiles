@@ -54,6 +54,9 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $ordersQuery = Order::with(['orderItems', 'user']);
+        if (in_array($user->role, ['admin', 'super_admin']) && \Illuminate\Support\Facades\Schema::hasTable('checkout_events')) {
+            $ordersQuery->with('latestCheckoutEvent');
+        }
 
         // If not admin or super admin, filter by user ID
         if (!in_array($user->role, ['admin', 'super_admin'])) {
@@ -90,6 +93,7 @@ class ProfileController extends Controller
             ->addColumn('status', function ($order) {
                 $user = Auth::user();
                 $statuses = [
+                    'pending' => 'secondary',
                     'ordered'   => 'warning',    // Pending action (yellow/orange)
                     'dispatched' => 'info',      // In transit (light blue)
                     'shipped'    => 'primary',   // Confirmed shipment (blue)
@@ -107,6 +111,11 @@ class ProfileController extends Controller
                         $html .= '<option value="'.$status.'" class="bg-'.$color.'" '.$selected.'>'.ucfirst($status).'</option>';
                     }
                     $html .= '</select>';
+                    $html .= '<small class="d-block mt-1">'.e($order->paid_at
+                        ? 'Payment verified by server'
+                        : ($order->relationLoaded('latestCheckoutEvent')
+                            ? ($order->latestCheckoutEvent?->label ?? 'Payment pending — no checkout tracking recorded')
+                            : 'Payment pending — checkout tracking migration required')).'</small>';
                     return $html;
                 }
 
