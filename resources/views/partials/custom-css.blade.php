@@ -34,6 +34,7 @@
         class="parentProperties dropdown-item frame-color {{ $key == 0 ? 'li-border-color' : '' }}"
         data-price="{{ $val->price }}"
         data-color="{{ $val->name }}"
+        style="display: {{ isset($defaultFrameType) && $defaultFrameType === 'indian' && strtolower(trim($val->name)) !== 'black' ? 'none' : 'flex' }};"
         data-src="{{ $val->frame_img }}"
         data-shadow="box-shadow-{{ $cssClassName }}">
         <figure class="PropertiesleftChild">

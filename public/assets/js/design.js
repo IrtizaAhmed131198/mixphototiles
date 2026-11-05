@@ -158,6 +158,15 @@ function filterFrameSizes(designClass) {
     });
 }
 
+function filterFrameColors(designClass) {
+    document.querySelectorAll('.frame-color').forEach((option, index) => {
+        const allowed = currentFrameType === 'indian'
+            ? option.getAttribute('data-color')?.trim().toLowerCase() === 'black'
+            : designClass !== 'frameless-card-design' || index === 0;
+        option.style.display = allowed ? 'flex' : 'none';
+    });
+}
+
 function applyInitialFrameDesign(imageObj) {
     if (!imageObj || !imageObj.frame_configuration) return;
 
@@ -210,18 +219,23 @@ function applyInitialFrameDesign(imageObj) {
     }
 
     filterFrameSizes(initialDesignClass);
+    filterFrameColors(initialDesignClass);
 }
 
 function applyInitialFrameColor(imageObj) {
     if (!imageObj || !imageObj.frame_configuration) return;
 
     const frameConfig = JSON.parse(imageObj.frame_configuration);
-    const colorText = frameConfig.color?.color_name || "Black";
-    const initialColor = frameConfig.color || {
+    const blackOption = Array.from(document.querySelectorAll('.frame-color')).find(option => option.getAttribute('data-color')?.trim().toLowerCase() === 'black');
+    const initialColor = (currentFrameType === 'indian' && blackOption ? {
+        img_src: blackOption.getAttribute('data-src'), color_name: blackOption.getAttribute('data-color'),
+        shadowClass: blackOption.getAttribute('data-shadow'), color_price: Number(blackOption.getAttribute('data-price'))
+    } : frameConfig.color) || {
         img_src: "assets/images/black-frame.png",
         color_name: "Black",
         shadowClass: "box-shadow-black",
     };
+    const colorText = initialColor.color_name;
 
     document.querySelectorAll(".frame-color.dropdown-item").forEach((item) => {
         item.classList.remove("li-border-color");
@@ -934,6 +948,7 @@ designOptions.forEach((option) => {
         }
 
         filterFrameSizes(designClass);
+        filterFrameColors(designClass);
         setTimeout(() => { updateFramePrice(get_active_config); }, 500);
     });
 });
@@ -952,6 +967,7 @@ document.querySelectorAll(".frame-color").forEach((item) => {
     item.addEventListener("click", function () {
         const img_src     = this.getAttribute("data-src");
         const color_name  = this.getAttribute("data-color");
+        if (currentFrameType === 'indian' && color_name.trim().toLowerCase() !== 'black') return;
         const shadowClass = this.getAttribute("data-shadow");
         const color_price = this.getAttribute("data-price");
 
@@ -1180,6 +1196,11 @@ window.chooseFrameType = function(type) {
     // Auto-select first matching size for this frame type
     if (firstMatchingSize) {
         firstMatchingSize.click();
+    }
+    filterFrameColors(document.querySelector('.frame-change.li-border-color')?.getAttribute('data-design'));
+    if (type === 'indian') {
+        const black = Array.from(document.querySelectorAll('.frame-color')).find(option => option.getAttribute('data-color')?.trim().toLowerCase() === 'black');
+        if (black) black.click();
     }
 
     // Save frame_type to active config

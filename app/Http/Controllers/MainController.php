@@ -65,7 +65,7 @@ class MainController extends Controller
 
         // Update the specified type (key) only
         $frameConfig[$type] = $newConfigPart;
-        if (in_array($type, ['size', 'frame_type'], true)) {
+        if (in_array($type, ['size', 'frame_type', 'color'], true)) {
             if ($request->filled('collection_type')) {
                 $frameConfig['frame_type'] = ['type' => $request->input('collection_type')];
             }
@@ -1218,7 +1218,7 @@ class MainController extends Controller
                 'displayText' => 'Border',
                 'design_price' => 0,
             ],
-            'color' => [
+            'color' => $frame_type === 'indian' ? indianFrameColor() : [
                 'img_src' => asset($color->frame_img),
                 'color_name' => $color->name,
                 'shadowClass' => 'box-shadow-black', // adjust based on color if needed

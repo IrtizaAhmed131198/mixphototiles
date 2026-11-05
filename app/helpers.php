@@ -41,6 +41,16 @@ function quantityDiscountRate(int $quantity): float
     };
 }
 
+function indianFrameColor(): array
+{
+    $black = \App\Models\CustomColor::where('status', 1)->whereRaw('LOWER(TRIM(name)) = ?', ['black'])->first();
+    if (!$black) {
+        throw \Illuminate\Validation\ValidationException::withMessages(['color' => 'Black frame color is unavailable. Please contact support.']);
+    }
+    return ['img_src' => $black->frame_img, 'color_name' => $black->name,
+        'shadowClass' => 'box-shadow-black', 'color_price' => (float) $black->price];
+}
+
 function normalizeDesignerConfiguration(array $config): array
 {
     $sizes = \App\Models\Sizes::where('status', 1)->where('price', '>', 0)->get();
@@ -60,6 +70,7 @@ function normalizeDesignerConfiguration(array $config): array
         'height' => rtrim((string) $size->height, 'px') . 'px',
         'frameSizeText' => $size->label, 'frame_price' => (float) $size->price,
     ]);
+    if ($type === 'indian') $config['color'] = indianFrameColor();
     return $config;
 }
 

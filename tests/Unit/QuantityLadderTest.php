@@ -14,6 +14,10 @@ class QuantityLadderTest extends TestCase
         parent::setUp();
         config(['database.default' => 'sqlite', 'database.connections.sqlite.database' => ':memory:']);
         DB::purge('sqlite');
+        Schema::create('custom_color', function (Blueprint $table) {
+            $table->id(); $table->string('name'); $table->string('frame_img'); $table->decimal('price', 10, 2); $table->integer('status');
+        });
+        DB::table('custom_color')->insert(['name' => 'Black', 'frame_img' => 'uploads/black.png', 'price' => 0, 'status' => 1]);
         Schema::create('settings', function (Blueprint $table) { $table->string('name'); $table->string('value'); });
         Schema::create('sizes', function (Blueprint $table) {
             $table->id(); $table->string('label'); $table->string('frame_type'); $table->decimal('price', 10, 2); $table->integer('status');
@@ -69,5 +73,24 @@ class QuantityLadderTest extends TestCase
         $this->assertSame(299.0, frameQuantityPricing([['config' => $config]])['subtotal']);
         $legacy = normalizeDesignerConfiguration(['size' => ['frameSizeText' => '6x8']]);
         $this->assertSame('indian', $legacy['frame_type']['type']);
+    }
+
+    public function test_indian_color_is_black_while_european_color_is_preserved(): void
+    {
+        $config = ['frame_type' => 'indian', 'size' => ['frameSizeText' => '6x8'],
+            'color' => ['color_name' => 'White', 'img_src' => 'uploads/white.png']];
+        $normalized = normalizeDesignerConfiguration($config);
+        $this->assertSame('Black', $normalized['color']['color_name']);
+        $this->assertSame('uploads/black.png', $normalized['color']['img_src']);
+        $config['frame_type'] = 'european';
+        $config['size']['frameSizeText'] = '8x11';
+        $this->assertSame($config['color'], normalizeDesignerConfiguration($config)['color']);
+    }
+
+    public function test_indian_cannot_fall_back_to_another_color_when_black_is_inactive(): void
+    {
+        DB::table('custom_color')->update(['status' => 0]);
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
+        normalizeDesignerConfiguration(['frame_type' => 'indian', 'size' => ['frameSizeText' => '6x8']]);
     }
 }
