@@ -239,24 +239,7 @@
                                             </div>
                                             <div class="modal-body text-center">
                                                 @if ($item->product && $item->product->type == 'manual')
-                                                    @php
-                                                        $config = json_decode($item->product->frame_config ?? '{}', true);
-                                                        $designClass = $config['design']['designClass'] ?? 'classic-card-design';
-                                                        $shadowClass = $config['color']['shadowClass'] ?? 'box-shadow-black';
-                                                        $imgSrc = $config['color']['img_src'] ?? null;
-                                                        $borderStyle = '';
-                                                        if ($designClass !== 'frameless-card-design' && $imgSrc) {
-                                                            $fullImgUrl = (str_starts_with($imgSrc, 'http') || str_starts_with($imgSrc, '/')) ? $imgSrc : asset($imgSrc);
-                                                            $borderStyle = "border-image-source: url('{$fullImgUrl}'); border-image-slice: 30; border-image-repeat: stretch;";
-                                                        }
-                                                    @endphp
-                                                    <div class="frame-main-wrap {{ $designClass }} {{ $shadowClass }} frame-main-wrap-main" style="{{ $borderStyle }}">
-                                                        <div class="frameborder inherit-design">
-                                                            <div class="frameinner-manual child-inherit-design">
-                                                                <img src="{{ asset($item->product->image) }}" class="img-fluid" alt="Preview">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    @include('partials.saved-frame-preview', ['previewProduct' => $item->product])
                                                     <button class="btn btn-brand-dark mt-3 print-btn" onclick="printModalContent('designModal{{ $item->id }}', 'dynamicPrintStyles')">Print Image</button>
                                                  @else
                                                     @php
