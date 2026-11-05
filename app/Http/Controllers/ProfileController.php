@@ -119,7 +119,7 @@ class ProfileController extends Controller
                         $html .= '<option value="'.$status.'" class="bg-'.$color.'" '.$selected.'>'.ucfirst($status).'</option>';
                     }
                     $html .= '</select>';
-                    $html .= '<small class="d-block mt-1">'.e($order->paid_at
+                    $html .= '<small class="d-block mt-1" style="display: none;">'.e($order->paid_at
                         ? 'Payment verified by server'
                         : ($order->relationLoaded('latestCheckoutEvent')
                             ? ($order->latestCheckoutEvent?->label ?? 'Payment pending — no checkout tracking recorded')
