@@ -49,8 +49,9 @@ class ProfileController extends Controller
         return view('profile.order');
     }
 
-    public function getOrders()
+    public function getOrders(Request $request)
     {
+        $request->validate(['checkout_status' => 'nullable|in:orders,pending,all']);
         $user = Auth::user();
 
         $ordersQuery = Order::with(['orderItems', 'user']);
@@ -61,6 +62,13 @@ class ProfileController extends Controller
         // If not admin or super admin, filter by user ID
         if (!in_array($user->role, ['admin', 'super_admin'])) {
             $ordersQuery->where('user_id', $user->id);
+        }
+
+        $checkoutStatus = $request->input('checkout_status') ?: 'orders';
+        if ($checkoutStatus === 'pending') {
+            $ordersQuery->where('status', 'pending');
+        } elseif ($checkoutStatus === 'orders') {
+            $ordersQuery->where('status', '!=', 'pending');
         }
 
         $orders = $ordersQuery->latest();

@@ -35,6 +35,14 @@
                 <div class="col-lg-9">
                     <div class="account-information">
                         <h1>Orders</h1>
+                        <div class="mb-3">
+                            <label for="checkout-status-filter" class="form-label">Show</label>
+                            <select id="checkout-status-filter" class="form-select" style="max-width: 300px;">
+                                <option value="orders" selected>Orders (excluding pending)</option>
+                                <option value="pending">Pending checkouts</option>
+                                <option value="all">All orders</option>
+                            </select>
+                        </div>
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -92,10 +100,15 @@
 @push('scripts')
 <script>
 $(document).ready(function () {
-    $('#example').DataTable({
+    const ordersTable = $('#example').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ route("get.orders") }}',
+        ajax: {
+            url: '{{ route("get.orders") }}',
+            data: function (data) {
+                data.checkout_status = $('#checkout-status-filter').val();
+            }
+        },
         columns: [
             { data: 'id', name: 'id' },
             { data: 'order_number', name: 'order_number' },
@@ -114,6 +127,9 @@ $(document).ready(function () {
             { data: 'datetime', name: 'datetime' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
+    });
+    $('#checkout-status-filter').on('change', function () {
+        ordersTable.ajax.reload();
     });
 });
 
