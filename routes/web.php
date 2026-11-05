@@ -324,3 +324,7 @@ Route::get('/check-user-address', function () {
 require __DIR__ . '/auth.php';
 
 Route::post('/razorpay/webhook', [RazorpayController::class, 'webhook'])->name('razorpay.webhook');
+
+if (config('app.local_checkout_bypass') === true && is_file(__DIR__.'/local-checkout.php')) {
+    require __DIR__.'/local-checkout.php';
+}

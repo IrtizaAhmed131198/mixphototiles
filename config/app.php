@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'local_checkout_bypass' => env('LOCAL_CHECKOUT_BYPASS', false),
+
 ];
