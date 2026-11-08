@@ -1,0 +1,138 @@
+.custom-collections-page { margin: 0; background: #fff; color: #000; }
+/* Scoped theme values from assets/css/custom.css and the homepage's card styles.
+   The global stylesheet has no shared brand palette variables. */
+.cc-page { --cc-brand: #eb2371; --cc-brand-hover: #cbbdcb; --cc-ink: #000; --cc-muted: #555; --cc-line: #f1e2ea; --cc-surface: #fff; --cc-blush: #f3eded; --cc-accent-soft: #fdf2f6; --cc-accent-border: #f8c3d9; --cc-font: 'Plus Jakarta Sans', sans-serif; font-family: var(--cc-font); font-size: 14px; line-height: 1.35; -webkit-font-smoothing: antialiased; }
+.cc-page *, .cc-page *::before, .cc-page *::after { box-sizing: border-box; }
+.cc-page button, .cc-page select { font: inherit; }
+.cc-page button { cursor: pointer; }
+.cc-page button:focus-visible, .cc-page a:focus-visible, .cc-page select:focus-visible { outline: 2px solid var(--cc-brand); outline-offset: 4px; }
+.cc-page h1, .cc-page h2, .cc-page h3, .cc-page p { margin: 0; }
+.cc-page .cc-container { width: calc(100% - 64px); max-width: 1180px; margin-inline: auto; }
+.cc-page .cc-choose { padding-top: 8px; background: var(--cc-blush); }
+.cc-page .cc-intro { position: relative; text-align: center; padding: 0 65px 19px; }
+.cc-page .cc-intro h1 { font: 700 clamp(36px, 4.8vw, 56px)/1.12 var(--cc-font); letter-spacing: -.5px; }
+.cc-page .cc-intro p { margin-top: 3px; font-size: clamp(13px, 1.85vw, 18px); }
+.cc-page .cc-handwritten { font-family: 'Great Vibes', cursive; font-weight: 400; font-size: 21px; line-height: 1.04; transform: rotate(-9deg); }
+.cc-page .cc-intro-note { position: absolute; right: -6px; top: 12px; }
+.cc-page .cc-intro-note i { display: block; width: 35px; margin: 9px auto 0; border-top: 1px solid var(--cc-brand); transform: rotate(2deg); }
+.cc-page .cc-collections { display: flex; flex-wrap: wrap; gap: 10px; }
+.cc-page .cc-collection-column { flex: 1 1 0; padding: 0; min-width: 0; }
+.cc-page .cc-collection { position: relative; display: block; width: 100%; overflow: hidden; padding: 0; border: 1px solid var(--cc-line); border-radius: 18px; background: var(--cc-surface); color: inherit; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, .04), 0 2px 6px rgba(235, 35, 113, .03); transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease; }
+.cc-page .cc-collection:hover { transform: translateY(-3px); border-color: var(--cc-accent-border); box-shadow: 0 12px 35px rgba(235, 35, 113, .09); }
+.cc-page .cc-collection.is-selected { border-color: var(--cc-brand); box-shadow: 0 0 0 1px var(--cc-brand); background: var(--cc-accent-soft); }
+.cc-page .cc-collection-image { display: block; width: 100%; aspect-ratio: 1.81; }
+.cc-page .cc-selected-mark { display: grid; place-items: center; position: absolute; right: 7px; top: 7px; width: 21px; height: 21px; border-radius: 50%; background: var(--cc-brand); color: white; opacity: 0; transform: scale(.75); transition: opacity .2s, transform .2s; font-size: 14px; }
+.cc-page .is-selected .cc-selected-mark { opacity: 1; transform: scale(1); }
+.cc-page .cc-collection-copy { display: block; padding: 5px 6px 10px; }
+.cc-page .cc-collection-title { display: block; font: 600 clamp(17px, 2.35vw, 26px)/1.2 var(--cc-font); letter-spacing: -.5px; }
+.cc-page .cc-collection-tagline { display: block; color: var(--cc-muted); font-size: 12px; margin-top: 2px; }
+.cc-page .cc-small-rule { display: block; width: 21px; height: 1px; background: var(--cc-accent-border); margin: 7px auto; }
+.cc-page .cc-collection-price { display: block; font-size: 13px; }
+.cc-page .cc-features { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); padding: 20px 0 17px; margin-block: 0; }
+.cc-page .cc-features li { display: flex; gap: 9px; align-items: center; justify-content: center; position: relative; font-size: 12px; line-height: 1.3; }
+.cc-page .cc-features li + li::before { content: ''; position: absolute; left: 0; height: 33px; border-left: 1px solid var(--cc-line); }
+.cc-page .cc-features svg { width: 41px; height: 41px; flex-shrink: 0; fill: none; stroke: var(--cc-brand); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.cc-page .cc-banner { position: relative; isolation: isolate; min-height: 134px; overflow: hidden; background: var(--cc-blush); }
+.cc-page .cc-banner-art { position: absolute; inset: 0 0 0 50%; z-index: -1; }
+.cc-page .cc-banner-art svg { height: 100%; width: 100%; display: block; }
+.cc-page .cc-banner-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--cc-blush), transparent 22%); }
+.cc-page .cc-banner-copy { padding: 20px 8px 18px; }
+.cc-page .cc-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .7px; color: var(--cc-brand); }
+.cc-page .cc-banner h2 { font: 700 clamp(27px, 3.65vw, 43px)/1.15 var(--cc-font); letter-spacing: -.5px; margin: 5px 0 4px; max-width: 66%; }
+.cc-page .cc-banner-copy > p:last-child { max-width: 48%; font-size: 14px; line-height: 1.25; color: #444; }
+.cc-page .cc-shop { padding: 0 7px 22px; }
+.cc-page .cc-toolbar { gap: 12px; padding: 3px 0 11px; }
+.cc-page .cc-filters { display: flex; gap: 7px; }
+.cc-page .cc-filter { min-width: 69px; border: 0; border-radius: 20px; padding: 5px 16px; background: var(--cc-accent-soft); color: var(--cc-brand); font-size: 11px; font-weight: 600; transition: color .3s ease-in-out, background .3s ease-in-out, transform .3s ease-in-out; }
+.cc-page .cc-filter:first-child { min-width: 61px; }
+.cc-page .cc-filter:hover { background: var(--cc-brand-hover); transform: scale(.97); }
+.cc-page .cc-filter.is-active { color: #fff; background: var(--cc-brand); }
+.cc-page .cc-sort { display: flex; align-items: center; gap: 8px; font-size: 10px; }
+.cc-page .cc-sort select { width: 94px; padding: 4px 20px 4px 6px; border: 1px solid var(--cc-line); border-radius: 20px; background-color: var(--cc-surface); background-size: 10px; background-position: right 6px center; color: var(--cc-ink); font-size: 10px; box-shadow: none; }
+.cc-page .cc-product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.cc-page .cc-product { overflow: hidden; background: var(--cc-surface); border: 1px solid var(--cc-line); border-radius: 18px; box-shadow: 0 10px 30px rgba(0, 0, 0, .04), 0 2px 6px rgba(235, 35, 113, .03); transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease; animation: cc-product-enter .25s ease both; }
+.cc-page .cc-product:hover { transform: translateY(-3px); border-color: var(--cc-accent-border); box-shadow: 0 12px 35px rgba(235, 35, 113, .09); }
+.cc-page .cc-product-photo { background: var(--cc-blush); overflow: hidden; }
+.cc-page .cc-product-photo svg { display: block; width: 100%; aspect-ratio: 1.39; transition: transform .35s; }
+.cc-page .cc-product:hover .cc-product-photo svg { transform: scale(1.025); }
+.cc-page .cc-product-info { padding: 6px 6px 7px; }
+.cc-page .cc-product h3 { font-size: 11px; font-weight: 600; line-height: 1.2; }
+.cc-page .cc-product-size { color: var(--cc-muted); font-size: 11px; margin-top: 1px; }
+.cc-page .cc-product-price { font-size: 14px; font-weight: 700; line-height: 1.25; margin-top: 2px; }
+.cc-page .cc-colors { display: flex; gap: 7px; margin: 7px 0; }
+.cc-page .cc-color { width: 13px; height: 13px; border: 1px solid var(--cc-line); border-radius: 50%; padding: 0; transition: box-shadow .15s; }
+.cc-page .cc-color[aria-pressed=true] { box-shadow: 0 0 0 2px var(--cc-surface), 0 0 0 3px var(--cc-brand); }
+.cc-page .cc-color-black { background: #171715; border-color: #171715; }
+.cc-page .cc-color-white { background: #faf9f6; }
+.cc-page .cc-color-oak { background: #cba16e; border-color: #b98c58; }
+.cc-page .cc-create { display: flex; gap: 8px; align-items: center; justify-content: center; width: 100%; padding: 12px 20px; border: 0; border-radius: 20px; background: var(--cc-brand); color: #fff; font-size: 13px; font-weight: 600; text-decoration: none; line-height: 1.35; backdrop-filter: blur(40px); transition: background .3s ease-in-out, transform .3s ease-in-out; }
+.cc-page .cc-create:hover { background: var(--cc-brand-hover); color: #fff; font-weight: bolder; backdrop-filter: blur(60px); transform: scale(.97); }
+.cc-page .cc-create:active { background: var(--cc-brand); color: #fff; }
+.cc-page .cc-create span { font-size: 15px; line-height: .9; }
+.cc-page .cc-empty { padding: 36px 16px; text-align: center; color: var(--cc-muted); }
+.cc-page .cc-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.cc-page .cc-selection-dialog { width: min(440px, calc(100% - 32px)); padding: 32px; border: 1px solid var(--cc-line); border-radius: 18px; background: var(--cc-surface); color: var(--cc-ink); }
+.cc-page .cc-selection-dialog::backdrop { background: rgba(0, 0, 0, .35); backdrop-filter: blur(3px); }
+.cc-page .cc-selection-dialog h2 { font: 600 30px/1.25 var(--cc-font); margin: 10px 0; }
+.cc-page .cc-selection-dialog p { margin-bottom: 15px; }
+.cc-page .cc-dialog-close { position: absolute; top: 8px; right: 12px; border: 0; background: transparent; font-size: 25px; color: inherit; }
+@keyframes cc-product-enter { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@media (min-width: 1100px) {
+    .cc-page .cc-choose { padding-top: 22px; }
+    .cc-page .cc-intro { padding-bottom: 26px; }
+    .cc-page .cc-collection-copy { padding: 12px 10px 16px; }
+    .cc-page .cc-features { padding-block: 26px; }
+    .cc-page .cc-features li { font-size: 14px; }
+    .cc-page .cc-banner { min-height: 180px; }
+    .cc-page .cc-banner-copy { padding-block: 30px; }
+    .cc-page .cc-banner-copy > p:last-child { font-size: 16px; }
+    .cc-page .cc-toolbar { padding-block: 14px; }
+    .cc-page .cc-product-info { padding: 10px; }
+    .cc-page .cc-product h3, .cc-page .cc-product-size, .cc-page .cc-create { font-size: 14px; }
+    .cc-page .cc-create { font-size: 16px; }
+    .cc-page .cc-product-price { font-size: 18px; }
+    .cc-page .cc-color { width: 16px; height: 16px; }
+}
+@media (max-width: 767px) {
+    .cc-page .cc-container { width: calc(100% - 32px); }
+    .cc-page .cc-intro { padding: 12px 0 22px; }
+    .cc-page .cc-intro h1 { font-size: 38px; }
+    .cc-page .cc-intro p { max-width: 340px; margin: 8px auto 0; font-size: 14px; }
+    .cc-page .cc-intro-note { display: none; }
+    .cc-page .cc-collection-title { font-size: 18px; }
+    .cc-page .cc-collection-tagline { min-height: 29px; font-size: 11px; }
+    .cc-page .cc-collection-price { font-size: 11px; }
+    .cc-page .cc-features { gap: 17px 8px; grid-template-columns: repeat(3, 1fr); padding-block: 22px; }
+    .cc-page .cc-features li { gap: 5px; font-size: 10px; }
+    .cc-page .cc-features svg { width: 32px; height: 32px; }
+    .cc-page .cc-features li:nth-child(4)::before { display: none; }
+    .cc-page .cc-banner { padding-top: 130px; }
+    .cc-page .cc-banner-art { inset: 0 0 auto; height: 140px; }
+    .cc-page .cc-banner-art::after { background: linear-gradient(0deg, var(--cc-blush), transparent 35%); }
+    .cc-page .cc-banner-copy { padding: 12px 0 20px; }
+    .cc-page .cc-banner h2 { max-width: 100%; font-size: 30px; }
+    .cc-page .cc-banner-copy > p:last-child { max-width: 100%; }
+    .cc-page .cc-shop { padding-inline: 0; }
+    .cc-page .cc-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .cc-page .cc-product h3, .cc-page .cc-product-size, .cc-page .cc-create { font-size: 12px; }
+    .cc-page .cc-create { padding: 12px 8px; }
+    .cc-page .cc-product-info { padding: 9px; }
+    .cc-page .cc-product-price { font-size: 16px; }
+    .cc-page .cc-colors { margin-block: 10px; }
+    .cc-page .cc-color { width: 16px; height: 16px; }
+}
+@media (max-width: 480px) {
+    .cc-page .cc-collections { flex-direction: column; gap: 12px; }
+    .cc-page .cc-collection { display: flex; align-items: stretch; text-align: left; min-height: 125px; }
+    .cc-page .cc-collection-image { width: 44%; flex-shrink: 0; aspect-ratio: auto; }
+    .cc-page .cc-collection-copy { align-self: center; padding: 12px; }
+    .cc-page .cc-collection-title { font-size: 21px; }
+    .cc-page .cc-collection-tagline { min-height: 0; margin-top: 5px; }
+    .cc-page .cc-small-rule { margin: 8px 0; }
+    .cc-page .cc-selected-mark { width: 18px; height: 18px; font-size: 12px; top: 5px; right: 5px; }
+    .cc-page .cc-filter { min-width: 0; padding-inline: 13px; }
+    .cc-page .cc-sort { margin-left: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .cc-page *, .cc-page *::before, .cc-page *::after { animation: none !important; transition: none !important; }
+}

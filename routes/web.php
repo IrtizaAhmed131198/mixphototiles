@@ -62,6 +62,7 @@ use App\Http\Middleware\CustomAuthMiddleware;
 
 // Basic pages routes
 Route::get('/', [PagesController::class, 'index'])->name('home');
+Route::view('/custom-collections', 'custom-collections')->name('custom-collections');
 Route::get('/design', [DesignController::class, 'show'])->name('design');
 Route::get('/your-collection', [CollectionsController::class, 'index'])->name('collections');
 Route::get('/your-collection/load', [CollectionsController::class, 'loadMoreProducts'])->name('collections.load');

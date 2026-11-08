@@ -31,3 +31,4 @@ tests/Feature/ImpersonationTest.php
 /routes/local-checkout.php
 /tests/Feature/LocalCheckoutTest.php
 tests/Feature/SavedFramePreviewTest.php
+public/assets/images/custom-collections-reference.jpg
