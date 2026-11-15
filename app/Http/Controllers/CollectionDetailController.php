@@ -46,6 +46,11 @@ class CollectionDetailController extends Controller
 
         if ($data) {
             $config = json_decode($data->configuration);
+            if ($product->isTileCollection()) {
+                $config = json_decode(json_encode($product->normalizeCollectionConfiguration(
+                    json_decode($data->configuration, true) ?: []
+                )));
+            }
             $price = $data->price;
             $collectionImages = CollectionImages::where('collection_id', $data->id)->get();
             $temp_id = $data->product_id;

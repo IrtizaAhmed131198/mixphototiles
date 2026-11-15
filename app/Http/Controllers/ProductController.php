@@ -30,6 +30,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string',
+            'collection_category' => 'required|in:frames,tiles',
             'price' => 'required|numeric',
             'indian_price' => 'nullable|numeric|min:0',
             'frame_note' => 'nullable|string|max:255',
@@ -100,6 +101,7 @@ class ProductController extends Controller
             'coordinates_image' => $cordImagePath,
             'status' => $request->status,
             'type' => 'collections',
+            'collection_category' => $request->collection_category,
         ]);
 
         return redirect()->back()->with('success', 'Product created successfully!');
@@ -153,7 +155,10 @@ class ProductController extends Controller
             'slug' => $product->slug,
             'description' => $product->description,
             'price' => $product->price,
+            'indian_price' => $product->indian_price,
             'frame_note' => $product->frame_note,
+            'indian_frame_note' => $product->indian_frame_note,
+            'collection_category' => $product->collection_category ?? 'frames',
             'discount' => $product->discount,
             'status' => $product->status,
             'main_image' => asset($product->image),
@@ -173,6 +178,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
+            'collection_category' => 'required|in:frames,tiles',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'indian_price' => 'nullable|numeric|min:0',
@@ -201,6 +207,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->slug = $slug;
         $product->description = $request->description;
+        $product->collection_category = $request->collection_category;
         $product->price = $request->price;
         $product->indian_price = $request->indian_price;
         $product->frame_note = $request->frame_note;

@@ -6,6 +6,7 @@
 
     // Collection / product name
     $collectionName = $product->name ?? Str::headline($product->slug ?? 'Photo Frame Collection');
+    $isTileCollection = $product->isTileCollection();
 @endphp
 
 @section(
@@ -326,9 +327,9 @@
                                         $indianDiscountAmount = ($indianBase * $product->discount) / 100;
                                         $indianFinalPrice = $indianBase - $indianDiscountAmount;
 
-                                        $defaultColType = 'indian';
-                                        $defaultFrameType = $defaultFrameType ?? 'indian';
-                                        $initialBasePrice = $indianFinalPrice;
+                                        $defaultColType = $isTileCollection ? 'european' : 'indian';
+                                        $defaultFrameType = $isTileCollection ? 'european' : ($defaultFrameType ?? 'indian');
+                                        $initialBasePrice = $isTileCollection ? $europeanFinalPrice : $indianFinalPrice;
                                     @endphp
                                     @if ($total_price != null)
                                         <span class="currency" data-base="{{ $total_price }}"
@@ -342,7 +343,9 @@
                                     {{ $product->discount }}% OFF
                                 </p>
                                 @php
-                                    $initialNote = !empty($product->indian_frame_note) ? $product->indian_frame_note : ($product->frame_note ?? 'Standard Indian wall sizes');
+                                    $initialNote = $isTileCollection
+                                        ? $product->frame_note
+                                        : (!empty($product->indian_frame_note) ? $product->indian_frame_note : ($product->frame_note ?? 'Standard Indian wall sizes'));
                                 @endphp
                                 @if (!empty($initialNote))
                                     <span class="frameNote ms-2" style="font-size: 15px; color: #555; font-weight: 500;">{{ $initialNote }}</span>
@@ -358,10 +361,10 @@
                             <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom" style="border-color: #f7eaf0 !important;">
                                 <span class="fw-bold fs-14 text-dark d-flex align-items-center" id="col-feature-card-title">
                                     <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #eb2371; margin-right: 8px;" id="col-feature-card-dot"></span>
-                                    <span id="col-feature-card-heading" style="font-weight: 700; color: #1a1a1a;">Indian Standard Frames</span>
+                                    <span id="col-feature-card-heading" style="font-weight: 700; color: #1a1a1a;">{{ $isTileCollection ? 'European Style Frames' : 'Indian Standard Frames' }}</span>
                                 </span>
                             </div>
-                            <div id="col-feature-indian-content">
+                            <div id="col-feature-indian-content" @if ($isTileCollection) style="display: none;" @endif>
                                 <ul class="list-unstyled mb-0 fs-13 text-secondary ps-0">
                                     <li class="mb-1 d-flex align-items-start">
                                         <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
@@ -377,7 +380,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div id="col-feature-european-content" style="display: none;">
+                            <div id="col-feature-european-content" @unless ($isTileCollection) style="display: none;" @endunless>
                                 <ul class="list-unstyled mb-0 fs-13 text-secondary ps-0">
                                     <li class="mb-1 d-flex align-items-start">
                                         <span style="color: #eb2371; font-weight: 800; margin-right: 8px;">✓</span>
@@ -402,6 +405,7 @@
                             <div class="accordion accordion-flush" id="customizedoptions">
 
                                 <!-- Frame Type Accordion -->
+                                @unless ($isTileCollection)
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button" type="button"
@@ -463,6 +467,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                @endunless
 
                                 @if (get_setting('finish') == 1)
                                     <div class="accordion-item">
@@ -1144,6 +1150,7 @@
         });
 
 
+        const isTileCollection = @json($isTileCollection);
         let selectedConfig = {};
 
         function updateSelectedConfig() {
@@ -1155,6 +1162,9 @@
                     type: activeFrameType.getAttribute("data-type"),
                     name: activeFrameType.getAttribute("data-name"),
                 };
+            }
+            if (isTileCollection) {
+                selectedConfig.frame_type = { type: 'european', name: 'European Style Frames' };
             }
 
             // Get the active finish
@@ -2080,6 +2090,7 @@
                     formData.append("slug", "{{ $product->slug }}");
                     formData.append("colImageArr", JSON.stringify(colImageArr));
                     formData.append("colImageOrignalArr", JSON.stringify(colImageOrignalArr));
+                    if (isTileCollection) updateSelectedConfig();
                     formData.append("configuration", JSON.stringify(selectedConfig));
 
                     // Send AJAX request to save image and add to cart
@@ -2202,6 +2213,7 @@
                     formData.append("exist_image", "{{ $image_name }}");
                     formData.append("colImageArr", JSON.stringify(colImageArr));
                     formData.append("colImageOrignalArr", JSON.stringify(colImageOrignalArr));
+                    if (isTileCollection) updateSelectedConfig();
                     formData.append("configuration", JSON.stringify(selectedConfig));
                     formData.append("temp_id", temp_id);
 

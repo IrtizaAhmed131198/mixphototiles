@@ -609,6 +609,10 @@ class MainController extends Controller
 
         // Build product name with customization details
         $config = json_decode($request->input('configuration'), true);
+        if ($exist_prod && $exist_prod->isTileCollection()) {
+            $config = $exist_prod->normalizeCollectionConfiguration($config ?: []);
+            $request->merge(['configuration' => json_encode($config)]);
+        }
         if ($config) {
             $details = [];
             if (!empty($config['frame_type']['name'])) {
@@ -646,6 +650,7 @@ class MainController extends Controller
                     'coordinates_image' => $exist_prod->coordinates_image,
                     'coordinates' => $exist_prod->coordinates,
                     'frame_config' => $request->input('configuration') ?? '',
+                    'collection_category' => $exist_prod->collection_category ?? 'frames',
                 ]);
 
                 // Delete old product images and collection images associated with this temp product
@@ -671,6 +676,7 @@ class MainController extends Controller
                 'frame_config' => $request->input('configuration') ?? '',
                 'status' => 1,
                 'type' => 'manual_collection',
+                'collection_category' => $exist_prod->collection_category ?? 'frames',
             ]);
         }
 

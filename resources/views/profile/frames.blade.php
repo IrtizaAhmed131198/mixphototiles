@@ -111,6 +111,20 @@
                                     </div>
                                 </div>
 
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="add-collection-category">Collection Type</label>
+                                        <select class="form-control" name="collection_category" id="add-collection-category" required>
+                                            <option value="frames" @selected(old('collection_category', 'frames') === 'frames')>Frames</option>
+                                            <option value="tiles" @selected(old('collection_category') === 'tiles')>Tiles</option>
+                                        </select>
+                                        <small class="text-muted">Tiles use European pricing only. Indian price and note apply to Frames.</small>
+                                        @error('collection_category')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <div class="col-6">
                                     <div class="form-group label-hover">
                                         <input type="number" class="form-control" name="price" placeholder="European Price (₹)" required value="{{ old('price') }}">
@@ -248,6 +262,17 @@
                                 <div class="col-12">
                                     <div class="form-group label-hover">
                                         <textarea name="description" class="form-control" id="descriptionEditor2" placeholder="Description" rows="4"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="edit-collection-category">Collection Type</label>
+                                        <select class="form-control" name="collection_category" id="edit-collection-category" required>
+                                            <option value="frames">Frames</option>
+                                            <option value="tiles">Tiles</option>
+                                        </select>
+                                        <small class="text-muted">Tiles use European pricing only. Indian price and note apply to Frames.</small>
                                     </div>
                                 </div>
 
@@ -434,11 +459,12 @@
             $.get(url, function (data) {
                 $('#framesModalLabel').text('Edit Collection');
                 $('#product_id').val(data.id);
+                $('#edit-collection-category').val(data.collection_category ?? 'frames');
                 $('[name="name"]').val(data.name);
                 $('[name="slug"]').val(data.slug);
                 $('[name="description"]').text(data.description);
                 $('[name="price"]').val(data.price);
-                $('[name="indian_price"]').val(data.indian_price || '');
+                $('[name="indian_price"]').val(data.indian_price ?? '');
                 $('[name="frame_note"]').val(data.frame_note || '');
                 $('[name="indian_frame_note"]').val(data.indian_frame_note || '');
                 $('[name="discount"]').val(data.discount);
