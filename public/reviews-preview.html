@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Customer Stories · Reviews Design Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/reviews-preview.css">
+    <script src="js/reviews-preview.js" defer></script>
+</head>
+<body class="reviews-preview">
+    <div class="preview-notice">DESIGN PREVIEW <span>Sample content only · Reviews are not saved or published.</span></div>
+    <header class="site-header wrap">
+        <a href="./" aria-label="Home"><img src="assets/images/logo.jpg" alt="Magnetick" class="logo"></a>
+        <nav aria-label="Main navigation"><a href="./">Home</a><a href="your-collection">Collections</a><a href="reviews-preview.html" aria-current="page">Reviews</a></nav>
+        <a class="button button-outline header-action" href="#write-review">Write a review <span aria-hidden="true">↗</span></a>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="wrap hero-inner">
+                <p class="eyebrow">LITTLE MOMENTS. LASTING MEMORIES.</p>
+                <h1>Your walls.<br>Your stories.</h1>
+                <p class="hero-description">A home feels more like you with memories on the wall.<br>Read our community’s stories, or share a little of your own.</p>
+                <a href="#write-review" class="button">Share your experience <span aria-hidden="true">↗</span></a>
+                <div class="hero-caption"><span aria-hidden="true">♡</span> Every experience helps us make yours better.</div>
+                <div class="hero-gallery" aria-hidden="true"><img src="assets/images/1704465682987.jpeg" alt=""><img src="assets/images/1704466334764.jpeg" alt=""><img src="assets/images/1704698692581.jpeg" alt=""></div>
+            </div>
+        </section>
+        <section class="wrap community" aria-labelledby="community-heading">
+            <div class="section-heading"><div><p class="eyebrow">THE COMMUNITY WALL</p><h2 id="community-heading">Memories worth sharing.</h2></div><p>Real feedback belongs here.<br>These cards show sample content for approval.</p></div>
+            <div class="reviews-layout">
+                <div class="review-list">
+                    <div class="review-toolbar"><p><strong id="review-count">3</strong> sample reviews</p><label>Show <select id="review-filter"><option value="all">All ratings</option><option value="5">5 stars</option><option value="4">4 stars</option><option value="3">3 stars</option><option value="2">2 stars</option><option value="1">1 star</option></select></label></div>
+                    <article class="review-card" data-rating="5"><div class="review-top"><div class="reviewer"><span class="avatar">PS</span><div><h3>Priya S.</h3><p>Pune · <span>Demo review</span></p></div></div><span class="stars" aria-label="5 out of 5 stars">★★★★★</span></div><h4>A little corner, a lot of memories.</h4><p>Our family photos finally have a home. I loved being able to move the frames around until the arrangement felt right.</p><div class="review-bottom"><span>Family gallery wall</span><span>Illustrative feedback</span></div></article>
+                    <article class="review-card" data-rating="5"><div class="review-top"><div class="reviewer"><span class="avatar avatar-lilac">AM</span><div><h3>Arjun M.</h3><p>Bengaluru · <span>Demo review</span></p></div></div><span class="stars" aria-label="5 out of 5 stars">★★★★★</span></div><h4>Our favourite trip, every single day.</h4><p>We picked photos from our first holiday together. The gallery makes our living room feel so much more personal.</p><div class="review-bottom"><span>Travel memories</span><span>Illustrative feedback</span></div></article>
+                    <article class="review-card" data-rating="4"><div class="review-top"><div class="reviewer"><span class="avatar avatar-sand">NK</span><div><h3>Neha K.</h3><p>Delhi · <span>Demo review</span></p></div></div><span class="stars" aria-label="4 out of 5 stars">★★★★<span class="star-muted">★</span></span></div><h4>A thoughtful gift for our parents.</h4><p>The photos brought back so many stories. I would love a few more layout ideas to help choose the perfect arrangement.</p><div class="review-bottom"><span>A gift to remember</span><span>Illustrative feedback</span></div></article>
+                    <p id="empty-reviews" class="empty-reviews" hidden>No sample reviews with this rating. Try another filter.</p>
+                    <div class="moderation-note"><span aria-hidden="true">✓</span><p>A thoughtful space for every experience.<br><span>Customer reviews appear here after moderation.</span></p></div>
+                </div>
+                <aside class="write-card" id="write-review" aria-labelledby="write-heading">
+                    <span class="form-icon" aria-hidden="true">✎</span><p class="eyebrow">YOUR EXPERIENCE MATTERS</p><h2 id="write-heading">How did we do?</h2><p class="form-description">Tell us what you loved, or what we can do better. We’re listening.</p>
+                    <form id="review-form">
+                        <fieldset class="rating-field"><legend>Your rating <span>*</span></legend><div class="rating-options"><label><input type="radio" name="rating" value="1" required><span aria-hidden="true">★</span><span class="sr-only">1 star</span></label><label><input type="radio" name="rating" value="2"><span aria-hidden="true">★</span><span class="sr-only">2 stars</span></label><label><input type="radio" name="rating" value="3"><span aria-hidden="true">★</span><span class="sr-only">3 stars</span></label><label><input type="radio" name="rating" value="4"><span aria-hidden="true">★</span><span class="sr-only">4 stars</span></label><label><input type="radio" name="rating" value="5"><span aria-hidden="true">★</span><span class="sr-only">5 stars</span></label></div><p id="rating-description" aria-live="polite">Select a star to rate your experience</p></fieldset>
+                        <label class="field" for="review-name">Your name <span>*</span><input id="review-name" name="name" placeholder="How should we call you?" maxlength="80" required autocomplete="name"></label>
+                        <label class="field" for="review-email">Email address <span>*</span><input id="review-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email"><small>Your email will stay private.</small></label>
+                        <label class="field" for="review-title">A few words to sum it up <span class="optional">Optional</span><input id="review-title" name="title" placeholder="A new favourite corner of our home…" maxlength="120"></label>
+                        <label class="field" for="review-message">Your review <span>*</span><textarea id="review-message" name="message" placeholder="How was your experience with your frames or tiles?" rows="4" minlength="10" maxlength="2000" required></textarea></label>
+                        <label class="consent"><input type="checkbox" required><span>I agree to have my name, rating and review displayed publicly after approval.</span></label>
+                        <button type="submit" class="button submit-button">Submit review <span aria-hidden="true">↗</span></button>
+                        <p class="form-footnote">Reviewed with care before it goes live.</p>
+                    </form>
+                    <div class="submission-status" id="submission-status" role="status" tabindex="-1" hidden><span class="success-icon" aria-hidden="true">✓</span><h3>Thank you for sharing!</h3><p>In the finished page, your review will be sent for approval and appear here once approved.</p><p class="demo-disclaimer">This is a demo. Nothing has been submitted or saved.</p><button type="button" class="button button-outline" id="write-again">Try the form again</button></div>
+                </aside>
+            </div>
+        </section>
+        <section class="closing wrap"><div><p class="eyebrow">MAKE ROOM FOR YOUR MEMORIES</p><h2>Your next favourite wall starts here.</h2></div><a href="your-collection" class="button button-outline">Explore collections <span aria-hidden="true">↗</span></a></section>
+    </main>
+    <footer class="page-footer wrap"><span>Magnetick · Made for your memories.</span><span>Reviews page concept · Design preview</span></footer>
+</body>
+</html>
