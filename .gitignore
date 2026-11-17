@@ -31,3 +31,11 @@ tests/Feature/ImpersonationTest.php
 /routes/local-checkout.php
 /tests/Feature/LocalCheckoutTest.php
 tests/Feature/SavedFramePreviewTest.php
+resources/views/partials/README.txt
+resources/views/partials/md/p003-smart-lock-sdk-veh3-2511/s0005.md
+resources/views/partials/md/p002-supremehotelsng/s0004.md
+resources/views/partials/md/p002-supremehotelsng/s0003.md
+resources/views/partials/md/p001-mixphototiles/s0002.md
+resources/views/partials/md/p001-mixphototiles/s0001.md
+resources/views/partials/manifest.json
+resources/views/partials/index.md
