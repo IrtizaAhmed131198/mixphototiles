@@ -1,0 +1,13 @@
+/* Live page adjustments; the approved preview provides the scoped design. */
+.reviews-page { display: block; }
+.reviews-page .rating-field legend { float: none; width: auto; margin-bottom: 0; }
+.reviews-page .customer-review-text { margin-top: 16px; white-space: pre-line; overflow-wrap: anywhere; }
+.reviews-page .reviewer h3 { overflow-wrap: anywhere; }
+.reviews-page .closing-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.reviews-page .closing-actions .button { gap: 12px; }
+.reviews-page .review-errors { border: 1px solid #f8c3d9; background: #fdf2f6; color: #ab0749; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-size: 12px; }
+.reviews-page .review-errors ul { margin: 8px 0 0; padding-left: 18px; }
+.reviews-page .review-pagination { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; padding-block: 16px; color: var(--muted); font-size: 12px; }
+.reviews-page .review-pagination a { color: var(--pink); font-weight: 600; }
+.reviews-page .filter-submit { border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; background: #fdf2f6; color: var(--pink); }
+@media (max-width: 640px) { .reviews-page .closing-actions { width: 100%; } .reviews-page .closing-actions .button { flex: 1 1 180px; } }

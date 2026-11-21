@@ -11,6 +11,11 @@ use App\Models\Testimonial;
 
 class TestimonialController extends Controller
 {
+    private function authorizeAdmin(): void
+    {
+        abort_unless(Auth::check() && in_array(Auth::user()->role, ['super_admin', 'admin']), 403);
+    }
+
     public function index()
     {
         if (!Auth::check()) {
@@ -26,6 +31,7 @@ class TestimonialController extends Controller
 
     public function getData()
     {
+        $this->authorizeAdmin();
         $query = Testimonial::orderBy('sort_order', 'asc')->orderBy('id', 'desc')->get();
 
         return DataTables::of($query)
@@ -45,6 +51,9 @@ class TestimonialController extends Controller
                 $html = '<div class="fw-bold">' . htmlspecialchars($row->name) . '</div>';
                 if (!empty($row->designation)) {
                     $html .= '<small class="text-muted">' . htmlspecialchars($row->designation) . '</small>';
+                }
+                if ($row->is_customer_submission) {
+                    $html .= '<br><small class="text-muted">Customer submission · ' . e($row->email) . '</small>';
                 }
                 return $html;
             })
@@ -66,6 +75,11 @@ class TestimonialController extends Controller
                     : '<span class="badge bg-secondary">Standard</span>';
             })
             ->addColumn('status', function ($row) {
+                if ($row->is_customer_submission) {
+                    return $row->status
+                        ? '<span class="badge bg-success">Approved</span>'
+                        : '<span class="badge bg-warning text-dark">Pending approval / Hidden</span>';
+                }
                 return $row->status
                     ? '<span class="badge bg-success">Active</span>'
                     : '<span class="badge bg-danger">Inactive</span>';
@@ -80,6 +94,7 @@ class TestimonialController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorizeAdmin();
         $validator = Validator::make($request->all(), [
             'name'          => 'required|string|max:255',
             'review'        => 'required|string',
@@ -135,6 +150,7 @@ class TestimonialController extends Controller
 
     public function edit($id)
     {
+        $this->authorizeAdmin();
         $testimonial = Testimonial::find($id);
         if (!$testimonial) {
             return response()->json(['success' => false, 'message' => 'Testimonial not found'], 404);
@@ -150,12 +166,14 @@ class TestimonialController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->authorizeAdmin();
         $testimonial = Testimonial::find($id);
         if (!$testimonial) {
             return response()->json(['success' => false, 'message' => 'Testimonial not found'], 404);
         }
 
         $validator = Validator::make($request->all(), [
+            'title'         => 'nullable|string|max:120',
             'name'          => 'required|string|max:255',
             'review'        => 'required|string',
             'rating'        => 'required|integer|min:1|max:5',
@@ -199,7 +217,10 @@ class TestimonialController extends Controller
         $testimonial->name = $request->name;
         $testimonial->review = $request->review;
         $testimonial->rating = $request->rating;
-        $testimonial->designation = $request->designation ?: 'Verified Buyer';
+        $testimonial->designation = $request->designation ?: ($testimonial->is_customer_submission ? 'Customer' : 'Verified Buyer');
+        if ($request->has('title')) {
+            $testimonial->title = $request->title;
+        }
         $testimonial->is_featured = $isFeatured;
         $testimonial->status = $request->status;
         $testimonial->sort_order = $request->sort_order ?: 0;
@@ -210,6 +231,7 @@ class TestimonialController extends Controller
 
     public function destroy(Request $request)
     {
+        $this->authorizeAdmin();
         $testimonial = Testimonial::find($request->id);
         if (!$testimonial) {
             return response()->json(['success' => false, 'message' => 'Testimonial not found'], 404);

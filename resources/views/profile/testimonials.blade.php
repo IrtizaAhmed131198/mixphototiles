@@ -36,6 +36,7 @@
                             <button class="btn design-btn" type="button" data-bs-toggle="modal"
                                     data-bs-target="#addTestimonialModal">Add New Testimonial</button>
                         </div>
+                        <p class="text-muted mb-3">Customer submissions start hidden. Edit a review and set its status to Active to approve and publish it. Set Inactive to hide it. Approved customer reviews also become available to the homepage reviews section.</p>
                         <div class="table-responsive">
                             <table id="testimonialsTable" class="table table-striped align-middle" style="width:100%">
                                 <thead>
@@ -186,6 +187,10 @@
                                 <label class="form-label fw-bold">Review Content <span class="text-danger">*</span></label>
                                 <textarea class="form-control" name="review" id="edit_review" rows="3" required></textarea>
                             </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold" for="edit_title">Review Title (Optional)</label>
+                                <input class="form-control" name="title" id="edit_title" maxlength="120">
+                            </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Customer Avatar Image</label>
                                 <input type="file" class="form-control" name="avatar" accept="image/*" onchange="previewImage(event, 'edit_avatar_preview')">
@@ -302,6 +307,7 @@
                         $('#edit_is_featured').val(t.is_featured ? '1' : '0');
                         $('#edit_status').val(t.status ? '1' : '0');
                         $('#edit_review').val(t.review);
+                        $('#edit_title').val(t.title ?? '');
                         $('#edit_sort_order').val(t.sort_order);
 
                         if (res.avatar_url) {

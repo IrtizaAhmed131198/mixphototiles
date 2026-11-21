@@ -125,4 +125,6 @@ return [
 
     'local_checkout_bypass' => env('LOCAL_CHECKOUT_BYPASS', false),
 
+    'feature_hide' => filter_var(env('FEATURE_HIDE', 'on'), FILTER_VALIDATE_BOOLEAN),
+
 ];

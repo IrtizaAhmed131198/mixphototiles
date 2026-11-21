@@ -24,6 +24,7 @@ class Testimonial extends Model
     ];
 
     protected $casts = [
+        'is_customer_submission' => 'boolean',
         'rating' => 'integer',
         'is_featured' => 'boolean',
         'status' => 'boolean',

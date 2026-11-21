@@ -51,6 +51,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RazorpayController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Middleware\CustomAuthMiddleware;
 
 /*
@@ -62,7 +63,13 @@ use App\Http\Middleware\CustomAuthMiddleware;
 
 // Basic pages routes
 Route::get('/', [PagesController::class, 'index'])->name('home');
-Route::view('/custom-collections', 'custom-collections')->name('custom-collections');
+Route::get('/custom-collections', function () {
+    abort_if(config('app.feature_hide'), 404);
+
+    return view('custom-collections');
+})->name('custom-collections');
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::post('/reviews', [ReviewController::class, 'store'])->middleware('throttle:5,60')->name('reviews.store');
 Route::get('/design', [DesignController::class, 'show'])->name('design');
 Route::get('/your-collection', [CollectionsController::class, 'index'])->name('collections');
 Route::get('/your-collection/load', [CollectionsController::class, 'loadMoreProducts'])->name('collections.load');
